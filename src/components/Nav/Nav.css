@@ -1,0 +1,28 @@
+@layer sprint.components {
+  [data-sprint="Nav"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-4);
+    min-width: 0;
+  }
+
+  [data-sprint="Nav"] [data-sprint="Link"] {
+    display: block;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border-bottom: 0;
+    border-left: var(--sprint-keyline-width-thick) solid transparent;
+    color: var(--sprint-ink);
+    font-size: var(--sprint-text-2xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="Nav"] [data-sprint="Link"]:hover {
+    background: var(--sprint-neutral-hover);
+  }
+
+  [data-sprint="Nav"] [data-sprint="Link"][data-sprint-active] {
+    border-left-color: var(--sprint-action);
+    color: var(--sprint-action);
+  }
+}

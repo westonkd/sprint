@@ -1,0 +1,15 @@
+@layer sprint.components {
+  [data-sprint="NavGroup"] {
+    display: block;
+    min-width: 0;
+  }
+
+  [data-sprint="NavGroup"] > span:first-child {
+    display: block;
+    margin-block-end: var(--sprint-space-2);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-wide);
+    text-transform: uppercase;
+  }
+}

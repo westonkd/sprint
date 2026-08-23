@@ -1,0 +1,52 @@
+@layer sprint.components {
+  [data-sprint="PageHeader"] {
+    display: block;
+    padding-bottom: var(--sprint-space-5);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    min-width: 0;
+  }
+
+  [data-sprint="PageHeader"] > div:first-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sprint-space-3);
+  }
+
+  [data-sprint="PageHeader"] > div:first-child > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sprint-space-3);
+    min-width: 0;
+  }
+
+  [data-sprint="PageHeader"] h1 {
+    margin: 0;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-display);
+    font-size: var(--sprint-text-lg);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-tight);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  [data-sprint="PageHeader"] > div:first-child span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sprint-space-2);
+    flex-wrap: wrap;
+  }
+
+  [data-sprint="PageHeader"] > div:first-child + div {
+    margin-top: var(--sprint-space-3);
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="PageHeader"] h1 {
+      font-size: var(--sprint-text-xl);
+    }
+  }
+}

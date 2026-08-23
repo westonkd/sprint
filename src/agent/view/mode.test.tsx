@@ -30,24 +30,26 @@ async function call(
 }
 
 describe("agent view rendering", () => {
-  it("renders exactly one element, the control an agent can click", () => {
+  it("renders exactly one element inside the text container, the control an agent can click", () => {
     const view = render(
       <SprintProvider defaultView="agent" pageTools={false}>
         <Button tone="action">Prepare launch</Button>
       </SprintProvider>,
     );
-    const elements = view.container.querySelectorAll("*");
+    const container = view.container.firstElementChild;
+    expect(container).toHaveAttribute("data-sprint-view", "agent");
+    const elements = container?.querySelectorAll("*") ?? [];
     expect(elements).toHaveLength(1);
     expect(elements[0]?.tagName).toBe("BUTTON");
   });
 
-  it("renders no elements at all when controls are turned off", () => {
+  it("renders no elements beyond the text container when controls are turned off", () => {
     const view = render(
       <SprintProvider defaultView="agent" agentControls="never" pageTools={false}>
         <Button tone="action">Prepare launch</Button>
       </SprintProvider>,
     );
-    expect(view.container.querySelectorAll("*")).toHaveLength(0);
+    expect(view.container.firstElementChild?.querySelectorAll("*")).toHaveLength(0);
   });
 
   it("renders the component as one Markdown line", () => {
@@ -173,7 +175,7 @@ describe("agent view interactivity", () => {
         <Button disabled>Save</Button>
       </SprintProvider>,
     );
-    expect(view.container.querySelectorAll("*")).toHaveLength(0);
+    expect(view.container.firstElementChild?.querySelectorAll("*")).toHaveLength(0);
   });
 
   it("still renders a control for a button that registers no tool", () => {

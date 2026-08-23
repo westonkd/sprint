@@ -1,0 +1,106 @@
+@layer sprint.components {
+  [data-sprint="Shell"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 100vh;
+    min-width: 0;
+  }
+
+  [data-sprint="Shell"] > button:first-child {
+    position: fixed;
+    top: var(--sprint-space-2);
+    left: var(--sprint-space-2);
+    z-index: 3;
+    padding: var(--sprint-space-2) var(--sprint-space-4);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    background: var(--sprint-action);
+    color: var(--sprint-action-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-label-size);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: uppercase;
+    transform: translateY(calc(-100% - var(--sprint-space-4)));
+  }
+
+  [data-sprint="Shell"] > button:first-child:focus-visible {
+    transform: none;
+  }
+
+  [data-sprint="Shell"] > aside {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-raised);
+  }
+
+  [data-sprint="Shell"] > aside > div:first-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sprint-space-4);
+    padding: var(--sprint-space-3) var(--sprint-space-4);
+  }
+
+  [data-sprint="Shell"] > aside > div:first-of-type > span:last-child {
+    flex-shrink: 0;
+  }
+
+  [data-sprint="Shell"] > aside > div:last-of-type {
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: var(--sprint-space-4);
+    border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
+  }
+
+  [data-sprint="Shell"][data-sprint-open] > aside > div:last-of-type {
+    display: block;
+  }
+
+  [data-sprint="Shell"] > main {
+    min-width: 0;
+    padding: var(--sprint-space-4);
+  }
+
+  [data-sprint="Shell"] > main:focus {
+    outline: none;
+  }
+
+  @media (min-width: 48rem) {
+    [data-sprint="Shell"] > main {
+      padding: var(--sprint-space-6);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    [data-sprint="Shell"] {
+      grid-template-columns: 15rem minmax(0, 1fr);
+    }
+
+    [data-sprint="Shell"] > aside {
+      height: 100vh;
+      overflow-y: auto;
+      align-self: start;
+      border-right: var(--sprint-keyline-width) solid var(--sprint-keyline);
+      border-bottom: 0;
+    }
+
+    [data-sprint="Shell"] > aside > div:first-of-type {
+      padding: var(--sprint-space-5) var(--sprint-space-5) var(--sprint-space-3);
+    }
+
+    [data-sprint="Shell"] > aside > div:first-of-type > span:last-child {
+      display: none;
+    }
+
+    [data-sprint="Shell"] > aside > div:last-of-type {
+      display: block;
+      max-height: none;
+      overflow: visible;
+      padding: 0 var(--sprint-space-5) var(--sprint-space-5);
+      border-top: 0;
+    }
+  }
+}

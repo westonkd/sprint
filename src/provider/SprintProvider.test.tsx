@@ -1,5 +1,7 @@
 import { act, render } from "@testing-library/react";
+import { useEffect } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
 import { TOOL_OUTPUT_LIMIT } from "@/agent/webmcp/adapter.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
 import { Button } from "@/components/Button/index.ts";
@@ -30,13 +32,52 @@ async function call(
 }
 
 describe("SprintProvider", () => {
-  it("renders children without introducing a wrapper element", () => {
+  it("renders a layout-neutral container marked with the current view", () => {
     const view = render(
       <SprintProvider>
         <span data-testid="child">hi</span>
       </SprintProvider>,
     );
-    expect(view.container.firstElementChild).toBe(view.getByTestId("child"));
+    const container = view.container.firstElementChild;
+    expect(container).toHaveAttribute(VIEW_ATTRIBUTE, "human");
+    expect(container?.firstElementChild).toBe(view.getByTestId("child"));
+  });
+
+  it("marks the container as the agent text surface in agent view", () => {
+    const view = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    expect(view.container.firstElementChild).toHaveAttribute(VIEW_ATTRIBUTE, "agent");
+  });
+
+  it("does not remount its subtree when the view flips", () => {
+    const mounts = vi.fn();
+
+    function Probe() {
+      useEffect(() => {
+        mounts();
+      }, []);
+      return <Button>Save</Button>;
+    }
+
+    const view = render(
+      <SprintProvider view="human" pageTools={false}>
+        <Probe />
+      </SprintProvider>,
+    );
+    view.rerender(
+      <SprintProvider view="agent" pageTools={false}>
+        <Probe />
+      </SprintProvider>,
+    );
+    view.rerender(
+      <SprintProvider view="human" pageTools={false}>
+        <Probe />
+      </SprintProvider>,
+    );
+    expect(mounts).toHaveBeenCalledTimes(1);
   });
 
   it("registers both page tools", () => {

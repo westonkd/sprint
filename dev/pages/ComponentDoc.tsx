@@ -5,6 +5,7 @@ import {
   COMPONENT_ATTRIBUTE,
   CodeBlock,
   Heading,
+  PageHeader,
   Panel,
   SprintProvider,
   Stack,
@@ -215,21 +216,22 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
   return (
     <article className="doc">
       <Stack gap="loose">
-        <header className="doc-head">
-          <Stack gap="tight">
-            <Stack direction="row" gap="tight" align="center" justify="between" wrap>
-              <Stack direction="row" gap="tight" align="center" wrap>
-                <Heading level={1}>{meta.name}</Heading>
-                <Tag tone={STATUS_TONE[meta.status] ?? "neutral"} filled>
-                  {meta.status}
-                </Tag>
-                <Tag>{meta.category}</Tag>
-              </Stack>
-              <ViewSwitch view={pageView} onChange={setPageView} label="Whole page" />
-            </Stack>
-            <Text>{meta.summary}</Text>
-          </Stack>
-        </header>
+        <PageHeader
+          label={meta.name}
+          tags={
+            <>
+              <Tag tone={STATUS_TONE[meta.status] ?? "neutral"} filled>
+                {meta.status}
+              </Tag>
+              <Tag>{meta.category}</Tag>
+            </>
+          }
+          actions={
+            <ViewSwitch view={pageView} onChange={setPageView} label="Whole page" />
+          }
+        >
+          <Text>{meta.summary}</Text>
+        </PageHeader>
 
         {specimens.gallery === undefined ? null : (
           <Panel headingLevel={2} label="Every variant">

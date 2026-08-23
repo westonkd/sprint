@@ -1,4 +1,5 @@
 import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
 import {
   defaultAgentFormat,
   type SprintAgentControls,
@@ -9,6 +10,7 @@ import {
 import type { AgentFormatter } from "@/agent/view/node.ts";
 import { AgentScopeProvider, useAgentScope } from "@/agent/webmcp/scope.ts";
 import { usePageTools } from "./pageTools.ts";
+import "./SprintProvider.css";
 
 export interface SprintProviderProps {
   children: ReactNode;
@@ -77,7 +79,9 @@ export function SprintProvider(props: SprintProviderProps) {
 
   return (
     <SprintViewProvider value={viewValue}>
-      <AgentScopeProvider value={scopeValue}>{children}</AgentScopeProvider>
+      <AgentScopeProvider value={scopeValue}>
+        <div {...{ [VIEW_ATTRIBUTE]: effective }}>{children}</div>
+      </AgentScopeProvider>
     </SprintViewProvider>
   );
 }

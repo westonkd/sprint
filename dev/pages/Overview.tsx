@@ -3,8 +3,8 @@ import {
   buildAgentManifest,
   Card,
   CodeBlock,
-  Heading,
   isModelContextAvailable,
+  PageHeader,
   Panel,
   Stack,
   Table,
@@ -48,19 +48,13 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
   return (
     <article className="doc">
       <Stack gap="loose">
-        <header className="doc-head">
-          <Stack gap="tight">
-            <Stack direction="row" gap="tight" align="center" wrap>
-              <Heading level={1}>Sprint</Heading>
-              <Tag>v{version}</Tag>
-            </Stack>
-            <Text>
-              An agent-forward React component library. Every component renders normally
-              for people and projects a machine-readable view for agents, from one
-              definition.
-            </Text>
-          </Stack>
-        </header>
+        <PageHeader label="Sprint" tags={<Tag>v{version}</Tag>}>
+          <Text>
+            An agent-forward React component library. Every component renders normally
+            for people and projects a machine-readable view for agents, from one
+            definition.
+          </Text>
+        </PageHeader>
 
         <Panel headingLevel={2} label="These docs are the manifest">
           <Stack gap="tight">

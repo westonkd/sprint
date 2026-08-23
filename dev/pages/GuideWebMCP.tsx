@@ -1,8 +1,8 @@
 import {
   CodeBlock,
-  Heading,
   Link,
   List,
+  PageHeader,
   Panel,
   Stack,
   Table,
@@ -170,19 +170,13 @@ export function GuideWebMCP() {
   return (
     <article className="doc">
       <Stack gap="loose">
-        <header className="doc-head">
-          <Stack gap="tight">
-            <Stack direction="row" gap="tight" align="center" wrap>
-              <Heading level={1}>WebMCP</Heading>
-              <Tag>background</Tag>
-            </Stack>
-            <Text>
-              A web platform API that lets a page hand an agent a set of callable tools,
-              instead of making the agent guess at your DOM. This page is background on
-              the platform itself. What Sprint does with it is on the next page.
-            </Text>
-          </Stack>
-        </header>
+        <PageHeader label="WebMCP" tags={<Tag>background</Tag>}>
+          <Text>
+            A web platform API that lets a page hand an agent a set of callable tools,
+            instead of making the agent guess at your DOM. This page is background on
+            the platform itself. What Sprint does with it is on the next page.
+          </Text>
+        </PageHeader>
 
         <Panel headingLevel={2} label="The problem it solves">
           <Stack gap="tight">

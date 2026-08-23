@@ -11,26 +11,8 @@ body {
   line-height: 1.6;
 }
 
-.shell {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  min-height: 100vh;
-}
-
-.side {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
-  background: var(--sprint-surface-raised);
-}
-
-.side-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sprint-space-4);
-  padding: var(--sprint-space-3) var(--sprint-space-4);
+.app[data-view="agent"] {
+  padding: var(--sprint-space-4);
 }
 
 .brand {
@@ -50,59 +32,9 @@ body {
   letter-spacing: var(--sprint-tracking-label);
 }
 
-.nav {
-  display: none;
-  max-height: 70vh;
-  overflow-y: auto;
-  padding: var(--sprint-space-4);
-  border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
-}
-
-.side[data-open] .nav {
-  display: block;
-}
-
-.nav-label {
-  display: block;
-  color: var(--sprint-ink-muted);
-  font-size: var(--sprint-text-3xs);
-  letter-spacing: var(--sprint-tracking-wide);
-  text-transform: uppercase;
-}
-
-.nav .nav-link {
-  display: block;
-  padding: var(--sprint-space-2) var(--sprint-space-3);
-  border-bottom: 0;
-  border-left: var(--sprint-keyline-width-thick) solid transparent;
-  color: var(--sprint-ink);
-  font-size: var(--sprint-text-2xs);
-  letter-spacing: var(--sprint-tracking-label);
-  text-transform: uppercase;
-}
-
-.nav .nav-link:hover {
-  background: var(--sprint-neutral-hover);
-}
-
-.nav .nav-link[data-sprint-active] {
-  border-left-color: var(--sprint-action);
-  color: var(--sprint-action);
-}
-
-.content {
-  min-width: 0;
-  padding: var(--sprint-space-4);
-}
-
 .doc {
   max-width: 62rem;
   margin: 0 auto;
-}
-
-.doc-head {
-  padding-bottom: var(--sprint-space-5);
-  border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
 }
 
 .stage {
@@ -114,55 +46,9 @@ body {
   overflow-x: auto;
 }
 
-.shell[data-view="agent"] .content {
-  white-space: pre-wrap;
-}
-
-.shell[data-view="agent"] .nav {
-  white-space: pre-wrap;
-  font-size: var(--sprint-text-3xs);
-}
-
 .stage.as-text {
   display: block;
   color: var(--sprint-ink-muted);
   font-size: var(--sprint-text-2xs);
   line-height: 1.7;
-  white-space: pre-wrap;
-}
-
-@media (min-width: 48rem) {
-  .content {
-    padding: var(--sprint-space-6);
-  }
-}
-
-@media (min-width: 64rem) {
-  .shell {
-    grid-template-columns: 15rem minmax(0, 1fr);
-  }
-
-  .side {
-    height: 100vh;
-    overflow-y: auto;
-    align-self: start;
-    border-right: var(--sprint-keyline-width) solid var(--sprint-keyline);
-    border-bottom: 0;
-  }
-
-  .side-bar {
-    padding: var(--sprint-space-5) var(--sprint-space-5) var(--sprint-space-3);
-  }
-
-  .menu-toggle {
-    display: none;
-  }
-
-  .nav {
-    display: block;
-    max-height: none;
-    overflow: visible;
-    padding: 0 var(--sprint-space-5) var(--sprint-space-5);
-    border-top: 0;
-  }
 }

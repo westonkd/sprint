@@ -16,6 +16,7 @@ export {
   RESERVED_STATE_KEYS,
   STATE_ATTRIBUTE_PREFIX,
   TOOL_ATTRIBUTE,
+  VIEW_ATTRIBUTE,
 } from "./agent/attributes.ts";
 export {
   buildAgentManifest,

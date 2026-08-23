@@ -1,4 +1,4 @@
-import { CodeBlock, Heading, Panel, Stack, Tag, Text } from "../../src/index.ts";
+import { CodeBlock, PageHeader, Panel, Stack, Tag, Text } from "../../src/index.ts";
 
 const FREE = `<Button onClick={prepare}>Prepare launch</Button>
 // registers: press-prepare-launch`;
@@ -64,18 +64,12 @@ export function GuidePhilosophy() {
   return (
     <article className="doc">
       <Stack gap="loose">
-        <header className="doc-head">
-          <Stack gap="tight">
-            <Stack direction="row" gap="tight" align="center" wrap>
-              <Heading level={1}>Integration philosophy</Heading>
-              <Tag>background</Tag>
-            </Stack>
-            <Text>
-              WebMCP gives you a registration API and no opinions. Sprint's opinions are
-              below, along with what each one costs.
-            </Text>
-          </Stack>
-        </header>
+        <PageHeader label="Integration philosophy" tags={<Tag>background</Tag>}>
+          <Text>
+            WebMCP gives you a registration API and no opinions. Sprint's opinions are
+            below, along with what each one costs.
+          </Text>
+        </PageHeader>
 
         <Panel headingLevel={2} label="1. Agent-operability is not a feature you add">
           <Stack gap="tight">

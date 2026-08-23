@@ -1,10 +1,11 @@
 import { type ReactNode, useEffect, useState } from "react";
 import {
-  Button,
   Link,
   listAgentMeta,
+  Nav,
+  NavGroup,
+  Shell,
   SprintProvider,
-  Stack,
   useSprintViewControl,
   version,
 } from "../src/index.ts";
@@ -44,12 +45,10 @@ function WorkbenchShell() {
   const { view } = useSprintViewControl();
   const components = listAgentMeta();
   const [route, setRoute] = useState(currentRoute);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const sync = () => {
       setRoute(currentRoute());
-      setMenuOpen(false);
       window.scrollTo(0, 0);
     };
     window.addEventListener("hashchange", sync);
@@ -62,72 +61,51 @@ function WorkbenchShell() {
   const component = components.find((meta) => meta.name === route);
 
   return (
-    <div className="shell" data-view={view}>
-      <aside className="side" data-open={menuOpen ? "" : undefined}>
-        <div className="side-bar">
-          <a className="brand" href="#/">
-            SPRINT
-            <span className="brand-version">v{version}</span>
-          </a>
-          <span className="menu-toggle">
-            <Button agentTool={false} onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? "Close" : "Menu"}
-            </Button>
-          </span>
-        </div>
-
-        <nav className="nav" aria-label="Workbench">
-          <Stack gap="tight">
-            <span className="nav-label">Guides</span>
-            <Stack gap="none">
+    <div className="app" data-view={view}>
+      <Shell
+        sideLabel="Workbench sidebar"
+        bar={
+          <Link className="brand" href="#/">
+            SPRINT <span className="brand-version">v{version}</span>
+          </Link>
+        }
+        side={
+          <Nav label="Workbench">
+            <NavGroup label="Guides">
               {GUIDES.map((entry) => (
                 <Link
                   key={entry.id}
-                  className="nav-link"
                   href={`#/guide/${entry.id}`}
                   active={guide?.id === entry.id}
                 >
                   {entry.title}
                 </Link>
               ))}
-            </Stack>
+            </NavGroup>
 
-            <span className="nav-label">Components</span>
-            <Stack gap="none">
+            <NavGroup label="Components">
               {components.map((meta) => (
                 <Link
                   key={meta.name}
-                  className="nav-link"
                   href={`#/${meta.name}`}
                   active={meta.name === route}
                 >
                   {meta.name}
                 </Link>
               ))}
-            </Stack>
+            </NavGroup>
 
-            <span className="nav-label">Reference</span>
-            <Stack gap="none">
-              <Link
-                className="nav-link"
-                href="https://developer.chrome.com/docs/ai/webmcp"
-                external
-              >
+            <NavGroup label="Reference">
+              <Link href="https://developer.chrome.com/docs/ai/webmcp" external>
                 Chrome docs
               </Link>
-              <Link
-                className="nav-link"
-                href="https://github.com/webmachinelearning/webmcp"
-                external
-              >
+              <Link href="https://github.com/webmachinelearning/webmcp" external>
                 Specification
               </Link>
-            </Stack>
-          </Stack>
-        </nav>
-      </aside>
-
-      <main className="content">
+            </NavGroup>
+          </Nav>
+        }
+      >
         {guide !== undefined ? (
           guide.render()
         ) : component !== undefined ? (
@@ -135,7 +113,7 @@ function WorkbenchShell() {
         ) : (
           <Overview components={components} />
         )}
-      </main>
+      </Shell>
     </div>
   );
 }

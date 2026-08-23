@@ -126,8 +126,10 @@ a code string. The docs flag any example missing one.
 **The workbench is also built out of Sprint.** Every panel, table, chip, list, and snippet on these
 pages is a component from the catalog, so no hand-written markup goes into `dev/` where a component
 could exist, and flipping the page-level view switch renders the entire documentation page as agent
-text. `dev/` keeps only the app shell: the grid, the sidebar, the route. If a page needs something
-the library does not have, that is a missing component, not a `div`.
+text. Even the frame is the library: `Shell` owns the sidebar-and-main grid, `Nav` and `NavGroup`
+the sidebar links, `PageHeader` the top of every page. `dev/` keeps only the route switch and the
+brand. If a page needs something the library does not have, that is a missing component, not a
+`div`.
 
 `dev/pages/GuideWebMCP.tsx` and `dev/pages/GuidePhilosophy.tsx` are the two hand-written pages:
 background on the platform API, and the reasoning behind Sprint's use of it. Add a guide by
@@ -144,6 +146,10 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   Boolean state renders as a valueless attribute so `[data-sprint-loading]` matches.
 - `data-sprint-tool="<name>"` names the WebMCP tool that drives this element.
 - `data-sprint-owner="<tool-name>"` marks a portaled root as belonging to another component.
+- `data-sprint-view="human|agent"` marks the one container `SprintProvider` always renders around
+  its subtree: `display: contents` in human view so it never affects layout, and the block that
+  makes the text stream readable (`pre-wrap`, mono) in agent view. It is provider chrome, not a
+  component root, and it is why flipping the view re-renders without remounting.
 
 `part`, `tool`, and `owner` are reserved and never read as state. These attributes are part of the
 public API. Changing or removing one is a breaking change, because agents write selectors against

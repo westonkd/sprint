@@ -1,0 +1,12 @@
+@layer sprint.components {
+  [data-sprint-view="human"] {
+    display: contents;
+  }
+
+  [data-sprint-view="agent"] {
+    display: block;
+    font-family: var(--sprint-font-mono);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

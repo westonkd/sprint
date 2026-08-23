@@ -4,6 +4,7 @@ export const STATE_ATTRIBUTE_PREFIX = "data-sprint-";
 export const TOOL_ATTRIBUTE = "data-sprint-tool";
 export const OWNER_ATTRIBUTE = "data-sprint-owner";
 export const AGENT_ATTRIBUTE = "data-sprint-agent";
+export const VIEW_ATTRIBUTE = "data-sprint-view";
 
 export const RESERVED_STATE_KEYS: readonly string[] = [
   "part",
