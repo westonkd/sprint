@@ -5,6 +5,7 @@ export const TOOL_ATTRIBUTE = "data-sprint-tool";
 export const OWNER_ATTRIBUTE = "data-sprint-owner";
 export const AGENT_ATTRIBUTE = "data-sprint-agent";
 export const VIEW_ATTRIBUTE = "data-sprint-view";
+export const VIEW_COPY_ATTRIBUTE = "data-sprint-view-copy";
 export const THEME_ATTRIBUTE = "data-sprint-theme";
 
 export const RESERVED_STATE_KEYS: readonly string[] = [
@@ -13,6 +14,7 @@ export const RESERVED_STATE_KEYS: readonly string[] = [
   "owner",
   "agent",
   "view",
+  "view-copy",
   "theme",
 ];
 

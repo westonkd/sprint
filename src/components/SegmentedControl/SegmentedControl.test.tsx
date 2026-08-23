@@ -179,7 +179,7 @@ describe("SegmentedControl agent view", () => {
       </SprintProvider>,
     );
 
-    expect(container.querySelector("button")).toBeNull();
+    expect(container.querySelector("[data-sprint-view] button")).toBeNull();
     expect(container.textContent).toContain("[disabled, value=human]");
   });
 

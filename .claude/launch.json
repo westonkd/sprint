@@ -6,6 +6,10 @@
       "runtimeExecutable": "docker",
       "runtimeArgs": ["compose", "watch", "dev"],
       "port": 5173
+    },
+    {
+      "name": "workbench-attach",
+      "url": "http://localhost:5173"
     }
   ]
 }

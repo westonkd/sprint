@@ -18,6 +18,7 @@ export {
   THEME_ATTRIBUTE,
   TOOL_ATTRIBUTE,
   VIEW_ATTRIBUTE,
+  VIEW_COPY_ATTRIBUTE,
 } from "./agent/attributes.ts";
 export {
   buildAgentManifest,

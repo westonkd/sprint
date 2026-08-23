@@ -1,5 +1,16 @@
-import { type ReactNode, useCallback, useMemo, useState } from "react";
-import { THEME_ATTRIBUTE, VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  THEME_ATTRIBUTE,
+  VIEW_ATTRIBUTE,
+  VIEW_COPY_ATTRIBUTE,
+} from "@/agent/attributes.ts";
 import {
   defaultAgentFormat,
   type SprintAgentControls,
@@ -11,6 +22,8 @@ import type { AgentFormatter } from "@/agent/view/node.ts";
 import { AgentScopeProvider, useAgentScope } from "@/agent/webmcp/scope.ts";
 import { usePageTools } from "./pageTools.ts";
 import "./SprintProvider.css";
+
+const COPIED_FOR = 1200;
 
 export type SprintTheme = "dark" | "light";
 
@@ -81,10 +94,41 @@ export function SprintProvider(props: SprintProviderProps) {
     setView,
   });
 
+  const surface = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), COPIED_FOR);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  const copy = () => {
+    const clipboard = navigator.clipboard;
+    if (clipboard === undefined) return;
+    const text = (surface.current?.textContent ?? "").replace(/\n{3,}/g, "\n\n").trim();
+    clipboard.writeText(text).then(
+      () => setCopied(true),
+      () => setCopied(false),
+    );
+  };
+
+  const copyControl = owns && effective === "agent" && controls !== "never";
+
   return (
     <SprintViewProvider value={viewValue}>
       <AgentScopeProvider value={scopeValue}>
+        {copyControl ? (
+          <button
+            type="button"
+            aria-label={copied ? "Copied" : "Copy agent view"}
+            {...{ [VIEW_COPY_ATTRIBUTE]: "" }}
+            {...(copied ? { "data-sprint-copied": "" } : {})}
+            onClick={copy}
+          />
+        ) : null}
         <div
+          ref={surface}
           {...{ [VIEW_ATTRIBUTE]: effective }}
           {...(theme === undefined ? {} : { [THEME_ATTRIBUTE]: theme })}
         >
