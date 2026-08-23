@@ -35,7 +35,7 @@
   },
   "overrides": [
     {
-      "includes": ["src/components/Table/Table.tsx"],
+      "includes": ["src/components/Table/Table.tsx", "src/components/List/List.tsx"],
       "linter": {
         "rules": {
           "a11y": { "noRedundantRoles": "off" }

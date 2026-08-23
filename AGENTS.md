@@ -193,6 +193,12 @@ Never turn an `AgentNode` into text yourself. `AgentLine`, `AgentControl`, and a
 returns all go through `useAgentFormat()`, the one formatter `SprintProvider` resolves for the whole
 subtree. Markdown is only its default; a consumer passing `format` must change the rendered page and
 `read-region` together, and calling `nodeLine` or `toMarkdown` directly is what breaks that.
+A custom formatter also has a shape to honour: `AgentControlGroup` maps its node's formatted lines
+back onto part controls positionally, so a formatter must emit the node's own line (plus one summary
+line when a summary is present) followed by exactly one line per part, in part order.
+A custom formatter also has a shape to honour: `AgentControlGroup` maps its node's formatted lines
+back onto part controls positionally, so a formatter must emit the node's own line (plus one summary
+line when a summary is present) followed by exactly one line per part, in part order.
 
 `serializeElement` / `serializeWithin` still project the agent view from the DOM, but only for
 reading a page that is in *human* mode. Because attributes are generated from the node, the

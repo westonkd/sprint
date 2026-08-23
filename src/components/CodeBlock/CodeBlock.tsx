@@ -55,7 +55,10 @@ export function CodeBlock(props: CodeBlockProps) {
   const copy = () => {
     const clipboard = navigator.clipboard;
     if (clipboard === undefined) return;
-    void clipboard.writeText(code).then(() => setCopied(true));
+    clipboard.writeText(code).then(
+      () => setCopied(true),
+      () => setCopied(false),
+    );
   };
 
   return (
@@ -64,6 +67,7 @@ export function CodeBlock(props: CodeBlockProps) {
         <span>{label}</span>
         <button
           type="button"
+          aria-live="polite"
           {...agentPartAttributesFor({ part: "copy", state: {} })}
           onClick={copy}
         >

@@ -56,6 +56,32 @@ describe("Table rendering", () => {
     ]);
   });
 
+  it("carries a column's alignment on the cell and in the agent view alike", () => {
+    const columns: readonly TableColumn[] = [
+      { key: "name", header: "Name" },
+      { key: "count", header: "Count", align: "end" },
+    ];
+    const { container } = render(
+      <Table
+        label="Counts"
+        columns={columns}
+        rows={[{ cells: { name: "a", count: "1" } }]}
+      />,
+    );
+
+    const cell = document.querySelector(
+      '[data-sprint-column="count"][data-sprint-part="cell"]',
+    );
+    expect(cell).toHaveAttribute("data-sprint-align", "end");
+
+    const [node] = serializeWithin(container);
+    expect(node?.parts[1]).toEqual({
+      part: "cell",
+      label: "1",
+      state: { column: "count", row: "1", align: "end" },
+    });
+  });
+
   it("falls back to the row position when no id was given", () => {
     render(<Table label="Props" columns={COLUMNS} rows={[{ cells: { prop: "a" } }]} />);
     expect(cells()[0]).toHaveAttribute("data-sprint-row", "1");

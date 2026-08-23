@@ -74,6 +74,6 @@ export const codeBlockMeta = defineAgentMeta({
   ],
   a11y: {
     notes:
-      "The frame is a figure named by its caption. The copy control is a real button and reports back in its own label once the snippet is on the clipboard.",
+      "The frame is a figure named by its caption. The copy control is a real button and reports back in its own label once the snippet is on the clipboard; the label swap is a polite live region, so a screen reader hears the confirmation too.",
   },
 });

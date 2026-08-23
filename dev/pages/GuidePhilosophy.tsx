@@ -77,7 +77,7 @@ export function GuidePhilosophy() {
           </Stack>
         </header>
 
-        <Panel label="1. Agent-operability is not a feature you add">
+        <Panel headingLevel={2} label="1. Agent-operability is not a feature you add">
           <Stack gap="tight">
             <Text>
               The stated goal is that adopting Sprint requires no agent-specific work.
@@ -98,7 +98,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="2. Instances are addressed by composition">
+        <Panel headingLevel={2} label="2. Instances are addressed by composition">
           <Stack gap="tight">
             <Text>
               Two identical buttons need distinguishable tools. The usual answers are a
@@ -115,7 +115,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="3. An ambiguous name registers nothing">
+        <Panel headingLevel={2} label="3. An ambiguous name registers nothing">
           <Stack gap="tight">
             <Text>
               When two components resolve to the same tool name,{" "}
@@ -133,7 +133,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="4. A tool that cannot work does not exist">
+        <Panel headingLevel={2} label="4. A tool that cannot work does not exist">
           <Text>
             A disabled or loading Button unregisters its tool and re-registers when it
             recovers. An agent cannot double-submit a form whose button has entered a
@@ -141,7 +141,10 @@ export function GuidePhilosophy() {
           </Text>
         </Panel>
 
-        <Panel label="5. A tool exists only where an agent gains something">
+        <Panel
+          headingLevel={2}
+          label="5. A tool exists only where an agent gains something"
+        >
           <Stack gap="tight">
             <Text>
               Registration is not free, so it is not automatic. A Button acts and
@@ -160,7 +163,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="6. Tools drive the real thing">
+        <Panel headingLevel={2} label="6. Tools drive the real thing">
           <Stack gap="tight">
             <Text>
               <code>execute</code> does not call your <code>onClick</code> prop. It
@@ -180,7 +183,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="7. A result describes the new state">
+        <Panel headingLevel={2} label="7. A result describes the new state">
           <Stack gap="tight">
             <Text>
               Returning <code>"ok"</code> forces the agent into another round trip to
@@ -195,7 +198,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="8. One spec, two consumers">
+        <Panel headingLevel={2} label="8. One spec, two consumers">
           <Stack gap="tight">
             <Text>
               A hand-written tool block in metadata would be a design-time description
@@ -218,7 +221,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="9. Exactly one call site">
+        <Panel headingLevel={2} label="9. Exactly one call site">
           <Stack gap="tight">
             <Text>
               Every <code>document.modelContext</code> call lives in one adapter module.
@@ -234,7 +237,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="10. Imperative only, for now">
+        <Panel headingLevel={2} label="10. Imperative only, for now">
           <Stack gap="tight">
             <Text>
               Sprint uses the imperative API exclusively. Nothing uses{" "}
@@ -257,7 +260,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="11. There are two kinds of agent">
+        <Panel headingLevel={2} label="11. There are two kinds of agent">
           <Stack gap="tight">
             <Text>
               WebMCP needs no elements at all, since <code>execute</code> is just a
@@ -286,7 +289,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="12. One control per actionable part">
+        <Panel headingLevel={2} label="12. One control per actionable part">
           <Stack gap="tight">
             <Text>
               "Exactly one control" was written with Button in mind, and a control with
@@ -305,7 +308,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="13. Layout is not meaning">
+        <Panel headingLevel={2} label="13. Layout is not meaning">
           <Stack gap="tight">
             <Text>
               Stack renders nothing in agent view: no line, no element, no indentation.
@@ -322,7 +325,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="14. It has to work with none of this">
+        <Panel headingLevel={2} label="14. It has to work with none of this">
           <Stack gap="tight">
             <Text>
               If <code>document.modelContext</code> is absent, registration is a no-op
@@ -336,7 +339,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel label="What is still unproven">
+        <Panel headingLevel={2} label="What is still unproven">
           <Stack gap="tight">
             <Text tone="warning">
               Everything above is verified in jsdom and in a normal browser. No

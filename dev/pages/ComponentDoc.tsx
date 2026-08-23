@@ -75,7 +75,7 @@ function Props(props: { meta: AgentComponentMeta }) {
   }));
 
   return (
-    <Panel label="Props" flush>
+    <Panel headingLevel={2} label="Props" flush>
       <Table
         label={`${props.meta.name} props`}
         columns={[
@@ -104,7 +104,7 @@ function State(props: { meta: AgentComponentMeta }) {
   }));
 
   return (
-    <Panel label="State attributes">
+    <Panel headingLevel={2} label="State attributes">
       <Stack gap="tight">
         <Text tone="muted" size="small">
           Public API. Agents write selectors against these, and the agent view is
@@ -135,7 +135,7 @@ function Tools(props: { meta: AgentComponentMeta }) {
   if (entries.length === 0) return null;
 
   return (
-    <Panel label="WebMCP tools">
+    <Panel headingLevel={2} label="WebMCP tools">
       <Stack gap="tight">
         <Text tone="muted" size="small">
           Registered with <code>document.modelContext</code> when available. The
@@ -144,7 +144,7 @@ function Tools(props: { meta: AgentComponentMeta }) {
         </Text>
 
         {entries.map(([key, tool]) => (
-          <Panel key={key} label={`<scope>-${tool.verb}-<label>`}>
+          <Panel key={key} headingLevel={3} label={`<scope>-${tool.verb}-<label>`}>
             <Stack gap="tight">
               <Tag tone={tool.readOnly ? "info" : "danger"}>
                 {tool.readOnly ? "read only" : "changes state"}
@@ -194,7 +194,7 @@ function Accessibility(props: { meta: AgentComponentMeta }) {
   ];
 
   return (
-    <Panel label="Accessibility" flush>
+    <Panel headingLevel={2} label="Accessibility" flush>
       <Table
         label={`${props.meta.name} accessibility`}
         columns={[
@@ -232,7 +232,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
         </header>
 
         {specimens.gallery === undefined ? null : (
-          <Panel label="Every variant">
+          <Panel headingLevel={2} label="Every variant">
             <div className={pageView === "agent" ? "stage as-text" : "stage"}>
               <SprintProvider view={pageView} pageTools={false}>
                 {specimens.gallery}
@@ -241,7 +241,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
           </Panel>
         )}
 
-        <Panel label="When to use">
+        <Panel headingLevel={2} label="When to use">
           <Stack gap="tight">
             <Text>{meta.whenToUse}</Text>
             {meta.whenNotToUse === undefined ? null : (
@@ -253,11 +253,11 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
           </Stack>
         </Panel>
 
-        <Panel label="Install">
+        <Panel headingLevel={2} label="Install">
           <CodeBlock code={importSnippet(meta.name)} />
         </Panel>
 
-        <Panel label="Examples">
+        <Panel headingLevel={2} label="Examples">
           <Stack>
             <Stack gap="tight">
               <Text tone="muted" size="small">
@@ -302,7 +302,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
         <Tools meta={meta} />
 
         {meta.agentView === undefined ? null : (
-          <Panel label="Agent view">
+          <Panel headingLevel={2} label="Agent view">
             <Stack gap="tight">
               <Text tone="muted" size="small">
                 The component renders this itself, from the same node that produces its{" "}
@@ -326,7 +326,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
 
         <Accessibility meta={meta} />
 
-        <Panel label="Root attribute">
+        <Panel headingLevel={2} label="Root attribute">
           <CodeBlock
             caption="dom"
             language="text"

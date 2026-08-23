@@ -67,6 +67,16 @@ describe("Card rendering", () => {
     expect(root()).toBeDisabled();
     expect(root()).toHaveAttribute("data-sprint-disabled", "");
   });
+
+  it("ignores disabled on a card that navigates", () => {
+    render(
+      <Card label="Button" href="#/Button" disabled>
+        A single action.
+      </Card>,
+    );
+    expect(screen.getByRole("link", { name: "Button" })).toBe(root());
+    expect(root()).not.toHaveAttribute("data-sprint-disabled");
+  });
 });
 
 describe("Card agent tool", () => {
@@ -126,6 +136,18 @@ describe("Card agent view", () => {
     expect(anchor).toHaveAttribute("href", "#/Button");
     expect(container.textContent).toContain('- **Card** "Button" [href=#/Button]');
     expect(container.textContent).toContain('- part `body` "A single action."');
+  });
+
+  it("keeps its anchor when a navigating card is marked disabled", () => {
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Card label="Button" href="#/Button" disabled>
+          A single action.
+        </Card>
+      </SprintProvider>,
+    );
+
+    expect(container.querySelector("a")).toHaveAttribute("href", "#/Button");
   });
 
   it("agrees with the projection of its own human rendering", () => {

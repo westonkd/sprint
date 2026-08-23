@@ -19,6 +19,10 @@
     counter-increment: sprint-list;
   }
 
+  [data-sprint="List"] > li > span {
+    min-width: 0;
+  }
+
   [data-sprint="List"] > li::before {
     content: "+";
     color: var(--sprint-action);

@@ -95,13 +95,9 @@ export function SegmentedControl(props: SegmentedControlProps) {
 
   const execute = useCallback(
     async (inputs: Record<string, unknown>) => {
-      const requested = typeof inputs.option === "string" ? inputs.option.trim() : "";
+      const requested = typeof inputs.option === "string" ? inputs.option : "";
       const available = optionsRef.current;
-      const match = available.find(
-        (entry) =>
-          entry.label.toLowerCase() === requested.toLowerCase() ||
-          entry.value.toLowerCase() === requested.toLowerCase(),
-      );
+      const match = available.find((entry) => entry.label === requested);
 
       if (match === undefined) {
         return `No option named "${requested}". This control offers: ${available

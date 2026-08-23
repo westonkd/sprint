@@ -16,7 +16,7 @@
   }
 
   [data-sprint="Link"][data-sprint-external]::after {
-    content: " ↗";
+    content: " ↗" / "";
     font-size: 0.9em;
   }
 }

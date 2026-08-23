@@ -42,6 +42,10 @@
     color: var(--sprint-info);
   }
 
+  [data-sprint="Text"] [data-sprint="Link"] {
+    border-bottom-color: currentcolor;
+  }
+
   [data-sprint="Text"] strong {
     font-weight: var(--sprint-weight-bold);
   }

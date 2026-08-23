@@ -16,7 +16,8 @@
     background: var(--sprint-surface-inset);
   }
 
-  [data-sprint="Panel"] > header > span:first-child {
+  [data-sprint="Panel"] > header > :first-child {
+    margin: 0;
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-mono);
     font-size: var(--sprint-text-3xs);
@@ -28,7 +29,7 @@
     white-space: nowrap;
   }
 
-  [data-sprint="Panel"] > header > span + span {
+  [data-sprint="Panel"] > header > :first-child + span {
     display: flex;
     align-items: center;
     gap: var(--sprint-space-2);

@@ -38,6 +38,22 @@ describe("Panel rendering", () => {
     expect(root()).toHaveTextContent("Use it for any discrete action.");
   });
 
+  it("renders its label as a heading when given an outline depth", () => {
+    render(
+      <Panel label="Props" headingLevel={2}>
+        body
+      </Panel>,
+    );
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Props" }),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps the label out of the outline by default", () => {
+    render(<Panel label="Props">body</Panel>);
+    expect(screen.queryByRole("heading")).toBeNull();
+  });
+
   it("renders header actions", () => {
     render(
       <Panel label="Preview" actions={<Button>Reset preview</Button>}>
@@ -65,6 +81,11 @@ describe("Panel rendering", () => {
   it("is not empty once it has content", () => {
     render(<Panel label="Registered tools">one</Panel>);
     expect(root()).not.toHaveAttribute("data-sprint-empty");
+  });
+
+  it("treats conditionally absent children as empty", () => {
+    render(<Panel label="Registered tools">{false}</Panel>);
+    expect(root()).toHaveAttribute("data-sprint-empty", "");
   });
 
   it("forwards ref and spreads the rest onto the root", () => {

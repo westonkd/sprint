@@ -8,7 +8,7 @@ export const headingMeta = defineAgentMeta({
   whenToUse:
     "Use it for the title of a page or of a region inside one, and keep levels in document order so the outline an agent or a screen reader builds is the outline you meant.",
   whenNotToUse:
-    "Do not use it for the label on a bordered region; Panel takes a label prop and draws its own header. Do not pick a level for its size, only for its place in the outline.",
+    "Do not use it for the label on a bordered region; Panel takes a label prop, draws its own header, and joins the outline through its headingLevel prop. Do not pick a level for its size, only for its place in the outline.",
   status: "experimental",
   props: {
     children: {

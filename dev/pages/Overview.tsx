@@ -62,7 +62,7 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           </Stack>
         </header>
 
-        <Panel label="These docs are the manifest">
+        <Panel headingLevel={2} label="These docs are the manifest">
           <Stack gap="tight">
             <Text>
               Every page in this workbench is generated from{" "}
@@ -79,7 +79,7 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           </Stack>
         </Panel>
 
-        <Panel label="Two views, one definition">
+        <Panel headingLevel={2} label="Two views, one definition">
           <Stack gap="tight">
             <Text>
               A containing <code>SprintProvider</code> holds the current view. In{" "}
@@ -104,7 +104,7 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           </Stack>
         </Panel>
 
-        <Panel label="Getting started">
+        <Panel headingLevel={2} label="Getting started">
           <Stack gap="tight">
             <CodeBlock code={INSTALL} />
             <Text tone="muted" size="small">
@@ -114,7 +114,7 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           </Stack>
         </Panel>
 
-        <Panel label="Components">
+        <Panel headingLevel={2} label="Components">
           <Stack direction="grid" min="16rem" gap="tight">
             {components.map((meta) => (
               <Card key={meta.name} label={meta.name} href={`#/${meta.name}`}>
@@ -124,11 +124,11 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           </Stack>
         </Panel>
 
-        <Panel label="Reading the manifest">
+        <Panel headingLevel={2} label="Reading the manifest">
           <CodeBlock code={READ} />
         </Panel>
 
-        <Panel label="Conventions" flush>
+        <Panel headingLevel={2} label="Conventions" flush>
           <Table
             label="Manifest conventions"
             columns={[
@@ -139,7 +139,7 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           />
         </Panel>
 
-        <Panel label="WebMCP">
+        <Panel headingLevel={2} label="WebMCP">
           <Stack gap="tight">
             <Text>
               Tools register with <code>document.modelContext</code>, the web platform

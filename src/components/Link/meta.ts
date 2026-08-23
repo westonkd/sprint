@@ -88,6 +88,6 @@ export const linkMeta = defineAgentMeta({
     role: "link",
     keyboard: ["Enter follows the link"],
     notes:
-      "active sets aria-current=page. External links open in a new context with rel=noreferrer noopener, and carry their outward mark as a pseudo-element so it never reaches the accessible name or the tool name.",
+      "active sets aria-current=page. External links open in a new context with rel=noreferrer noopener, and carry their outward mark as a pseudo-element with empty alternative text so it never reaches the accessible name or the tool name. Inside Text a link is underlined all the time, so colour is never the only thing distinguishing it from the prose around it.",
   },
 });

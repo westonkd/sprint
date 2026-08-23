@@ -34,6 +34,14 @@ function rowId(row: TableRow, index: number): string {
   return row.id ?? String(index + 1);
 }
 
+function cellState(column: TableColumn, row: string): Record<string, string> {
+  return {
+    column: column.key,
+    row,
+    ...(column.align === undefined ? {} : { align: column.align }),
+  };
+}
+
 function cellParts(
   columns: readonly TableColumn[],
   rows: readonly TableRow[],
@@ -43,7 +51,7 @@ function cellParts(
       const label = reactText(row.cells[column.key]);
       return {
         part: "cell",
-        state: { column: column.key, row: rowId(row, index) },
+        state: cellState(column, rowId(row, index)),
         ...(label === undefined ? {} : { label }),
       };
     }),
@@ -102,9 +110,8 @@ export function Table(props: TableProps) {
                   role="cell"
                   {...agentPartAttributesFor({
                     part: "cell",
-                    state: { column: column.key, row: rowId(row, index) },
+                    state: cellState(column, rowId(row, index)),
                   })}
-                  data-sprint-align={column.align}
                 >
                   <span aria-hidden="true">{column.header}</span>
                   <div>{row.cells[column.key]}</div>

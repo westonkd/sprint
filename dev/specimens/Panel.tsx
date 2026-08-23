@@ -19,7 +19,7 @@ const ROWS = [
 
 export const panelSpecimens: Record<string, ReactNode> = {
   "A section of a page": (
-    <Panel label="When to use">
+    <Panel label="When to use" headingLevel={2}>
       <Text>Use it for any discrete action.</Text>
     </Panel>
   ),

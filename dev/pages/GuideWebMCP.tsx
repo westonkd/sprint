@@ -184,7 +184,7 @@ export function GuideWebMCP() {
           </Stack>
         </header>
 
-        <Panel label="The problem it solves">
+        <Panel headingLevel={2} label="The problem it solves">
           <Stack gap="tight">
             <Text>
               Agents operating web UIs today work from the wrong artifact. They get a
@@ -207,7 +207,7 @@ export function GuideWebMCP() {
           </Stack>
         </Panel>
 
-        <Panel label="Not the same as an MCP server">
+        <Panel headingLevel={2} label="Not the same as an MCP server">
           <Text>
             MCP servers run outside the browser and speak to a backend. WebMCP tools run{" "}
             <em>in the page</em>, in the user's own session, with their cookies, their
@@ -217,7 +217,7 @@ export function GuideWebMCP() {
           </Text>
         </Panel>
 
-        <Panel label="The imperative API">
+        <Panel headingLevel={2} label="The imperative API">
           <Stack gap="tight">
             <Text>
               The entry point is <code>document.modelContext</code>. A tool is a
@@ -236,7 +236,7 @@ export function GuideWebMCP() {
           </Stack>
         </Panel>
 
-        <Panel label="The declarative API">
+        <Panel headingLevel={2} label="The declarative API">
           <Stack gap="tight">
             <Text>
               For forms, the browser can derive the whole schema from the markup. Four
@@ -255,7 +255,7 @@ export function GuideWebMCP() {
           </Stack>
         </Panel>
 
-        <Panel label="Availability, and why you must degrade">
+        <Panel headingLevel={2} label="Availability, and why you must degrade">
           <Stack gap="tight">
             <Text>
               Chrome 149 and later, behind an origin trial or{" "}
@@ -275,7 +275,7 @@ export function GuideWebMCP() {
           </Stack>
         </Panel>
 
-        <Panel label="Hard limits">
+        <Panel headingLevel={2} label="Hard limits">
           <Stack gap="tight">
             <Table
               label="Platform limits"
@@ -293,7 +293,7 @@ export function GuideWebMCP() {
           </Stack>
         </Panel>
 
-        <Panel label="Security worth internalising">
+        <Panel headingLevel={2} label="Security worth internalising">
           <Stack gap="tight">
             <Text>
               A tool's output becomes model input. If it can contain user-generated or
@@ -317,11 +317,11 @@ export function GuideWebMCP() {
           </Stack>
         </Panel>
 
-        <Panel label="Writing tools an agent can actually use">
+        <Panel headingLevel={2} label="Writing tools an agent can actually use">
           <List label="Rules for writing tools" items={RULES} />
         </Panel>
 
-        <Panel label="Further reading">
+        <Panel headingLevel={2} label="Further reading">
           <List
             label="Further reading"
             items={[

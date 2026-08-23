@@ -50,6 +50,7 @@ export function Card(props: CardProps) {
   const controls = useAgentControls();
   const formatter = useAgentFormat();
   const navigates = href !== undefined;
+  const inert = !navigates && disabled;
   const element = useRef<HTMLElement | null>(null);
 
   const setRef = useCallback(
@@ -89,7 +90,7 @@ export function Card(props: CardProps) {
   const toolName = useAgentTool({
     spec: OPEN_CARD_TOOL,
     label: agentName ?? label,
-    enabled: (agentTool ?? !navigates) && !disabled,
+    enabled: (agentTool ?? !navigates) && !inert,
     execute,
   });
 
@@ -103,13 +104,13 @@ export function Card(props: CardProps) {
     component: cardMeta.name,
     label,
     tool: toolName,
-    state: { href, disabled },
+    state: { href, disabled: inert },
     parts,
   });
   nodeRef.current = node;
 
   if (view === "agent") {
-    if (disabled || controls === "never") return <AgentLine node={node} />;
+    if (inert || controls === "never") return <AgentLine node={node} />;
     return (
       <AgentControl
         node={node}

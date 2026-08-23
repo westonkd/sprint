@@ -22,6 +22,12 @@ export const panelMeta = defineAgentMeta({
       description:
         "The region's content. An empty panel says it is empty rather than collapsing.",
     },
+    headingLevel: {
+      kind: "enum",
+      description:
+        "Render the label as a real heading at this outline depth, so the section is reachable when a screen reader navigates by headings. Set it on every panelled section of a page; leave it unset only for chrome such as a preview frame.",
+      values: ["2", "3", "4"],
+    },
     actions: {
       kind: "node",
       description:
@@ -53,10 +59,17 @@ export const panelMeta = defineAgentMeta({
   agentView: {
     example: '- **Panel** "WebMCP tools"',
   },
+  a11y: {
+    role: "region",
+    notes:
+      "The section is a named landmark either way: the label is its accessible name. With headingLevel the label is also a heading element, so the page outline includes the region; without it the region is reachable only by landmark navigation.",
+  },
   examples: [
     {
       title: "A section of a page",
-      code: '<Panel label="When to use">\n  <Text>Use it for any discrete action.</Text>\n</Panel>',
+      description:
+        "headingLevel puts the label in the page outline, so a screen reader finds the section by heading as well as by landmark.",
+      code: '<Panel label="When to use" headingLevel={2}>\n  <Text>Use it for any discrete action.</Text>\n</Panel>',
     },
     {
       title: "A panel with a control in its header",

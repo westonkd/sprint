@@ -17,6 +17,7 @@ describe("List rendering", () => {
   it("is a list named by its label", () => {
     render(<List label="Tool rules" items={ITEMS} />);
     expect(screen.getByRole("list", { name: "Tool rules" })).toBe(root());
+    expect(root()).toHaveAttribute("role", "list");
     expect(within(root()).getAllByRole("listitem")).toHaveLength(2);
     expect(root()).toHaveAttribute("data-sprint-items", "2");
   });
@@ -33,6 +34,25 @@ describe("List rendering", () => {
     expect(
       Array.from(items).map((item) => item.getAttribute("data-sprint-index")),
     ).toEqual(["1", "2"]);
+  });
+
+  it("keeps mixed inline content in one container beside the marker", () => {
+    render(
+      <List
+        label="Tool rules"
+        items={[
+          <>
+            <strong>One tool, one action.</strong> Overlapping tools make selection
+            harder.
+          </>,
+        ]}
+      />,
+    );
+    const item = document.querySelector(agentSelector("List", "item"));
+    expect(item?.children).toHaveLength(1);
+    expect(item?.children[0]).toHaveTextContent(
+      "One tool, one action. Overlapping tools make selection harder.",
+    );
   });
 
   it("says it is empty rather than rendering nothing", () => {

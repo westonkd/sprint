@@ -48,6 +48,7 @@ export function List(props: ListProps) {
     <Element
       {...(rest as ComponentPropsWithRef<"ol">)}
       {...agentAttributesFor(node)}
+      role="list"
       aria-label={label}
     >
       {empty ? (
@@ -61,7 +62,7 @@ export function List(props: ListProps) {
               state: { index: String(index + 1) },
             })}
           >
-            {item}
+            <span>{item}</span>
           </li>
         ))
       )}

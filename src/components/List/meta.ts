@@ -70,6 +70,6 @@ export const listMeta = defineAgentMeta({
   a11y: {
     role: "list",
     notes:
-      "A real ul or ol named by its label, so the item count is announced. Markers are drawn as pseudo-elements and never reach the accessible name.",
+      "A real ul or ol named by its label, with an explicit list role because the custom markers require list-style none and Safari would otherwise drop the list semantics. The item count is announced, and the markers are drawn as pseudo-elements.",
   },
 });

@@ -46,6 +46,7 @@ export function AgentPreview(props: AgentPreviewProps) {
 
   return (
     <Panel
+      headingLevel={4}
       label={view === "human" ? "Human view" : "Agent view"}
       actions={<ViewSwitch view={view} onChange={setView} label="Preview view" />}
     >
