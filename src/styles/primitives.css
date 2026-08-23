@@ -17,6 +17,17 @@
     --sprint-color-panel-500: #6b6b6b;
     --sprint-color-panel-600: #9a9a9a;
 
+    --sprint-color-paper-100: #eaeaea;
+    --sprint-color-paper-200: #e2e2e2;
+    --sprint-color-paper-300: #d6d6d6;
+    --sprint-color-paper-400: #bdbdbd;
+    --sprint-color-paper-500: #8f8f8f;
+    --sprint-color-paper-600: #595959;
+
+    --sprint-color-magenta-deep: #b8003e;
+    --sprint-color-cyan-deep: #00687f;
+    --sprint-color-warning-deep: #7a5d00;
+
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
     --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
 

@@ -15,6 +15,7 @@ export {
   PART_ATTRIBUTE,
   RESERVED_STATE_KEYS,
   STATE_ATTRIBUTE_PREFIX,
+  THEME_ATTRIBUTE,
   TOOL_ATTRIBUTE,
   VIEW_ATTRIBUTE,
 } from "./agent/attributes.ts";
@@ -108,6 +109,7 @@ export * from "./components/index.ts";
 export type {
   AgentRegionProps,
   SprintProviderProps,
+  SprintTheme,
 } from "./provider/SprintProvider.tsx";
 export { AgentRegion, SprintProvider } from "./provider/SprintProvider.tsx";
 export { version } from "./version.ts";

@@ -2,6 +2,10 @@
   color-scheme: dark;
 }
 
+:root[data-sprint-theme="light"] {
+  color-scheme: light;
+}
+
 body {
   margin: 0;
   background: var(--sprint-surface);
@@ -19,6 +23,7 @@ body {
   display: inline-flex;
   align-items: baseline;
   gap: var(--sprint-space-2);
+  white-space: nowrap;
   color: var(--sprint-action);
   font-size: var(--sprint-text-lg);
   font-weight: var(--sprint-weight-bold);

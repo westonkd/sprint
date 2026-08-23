@@ -4,8 +4,11 @@ import {
   listAgentMeta,
   Nav,
   NavGroup,
+  SegmentedControl,
   Shell,
   SprintProvider,
+  type SprintTheme,
+  THEME_ATTRIBUTE,
   useSprintViewControl,
   version,
 } from "../src/index.ts";
@@ -33,15 +36,32 @@ function currentRoute(): string {
   return window.location.hash.replace(/^#\/?/, "");
 }
 
+const THEMES = [
+  { value: "dark", label: "dark" },
+  { value: "light", label: "light" },
+];
+
 export function Workbench() {
+  const [theme, setTheme] = useState<SprintTheme>("dark");
+
+  useEffect(() => {
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, theme);
+  }, [theme]);
+
   return (
-    <SprintProvider>
-      <WorkbenchShell />
+    <SprintProvider theme={theme}>
+      <WorkbenchShell theme={theme} onThemeChange={setTheme} />
     </SprintProvider>
   );
 }
 
-function WorkbenchShell() {
+interface WorkbenchShellProps {
+  theme: SprintTheme;
+  onThemeChange: (theme: SprintTheme) => void;
+}
+
+function WorkbenchShell(props: WorkbenchShellProps) {
+  const { theme, onThemeChange } = props;
   const { view } = useSprintViewControl();
   const components = listAgentMeta();
   const [route, setRoute] = useState(currentRoute);
@@ -65,9 +85,18 @@ function WorkbenchShell() {
       <Shell
         sideLabel="Workbench sidebar"
         bar={
-          <Link className="brand" href="#/">
-            SPRINT <span className="brand-version">v{version}</span>
-          </Link>
+          <>
+            <Link className="brand" href="#/">
+              SPRINT <span className="brand-version">v{version}</span>
+            </Link>
+            <SegmentedControl
+              label="Theme"
+              options={THEMES}
+              value={theme}
+              agentTool={false}
+              onChange={(next) => onThemeChange(next === "light" ? "light" : "dark")}
+            />
+          </>
         }
         side={
           <Nav label="Workbench">

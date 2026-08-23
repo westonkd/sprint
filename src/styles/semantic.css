@@ -40,4 +40,39 @@
     --sprint-label-size: var(--sprint-text-2xs);
     --sprint-label-tracking: var(--sprint-tracking-label);
   }
+
+  [data-sprint-theme="light"] {
+    --sprint-surface: var(--sprint-color-paper);
+    --sprint-surface-raised: var(--sprint-color-paper-100);
+    --sprint-surface-inset: var(--sprint-color-paper-200);
+
+    --sprint-ink: var(--sprint-color-void);
+    --sprint-ink-muted: var(--sprint-color-paper-600);
+    --sprint-ink-inverse: var(--sprint-color-paper);
+
+    --sprint-keyline: var(--sprint-color-paper-300);
+    --sprint-keyline-strong: var(--sprint-color-paper-500);
+
+    --sprint-action: var(--sprint-color-ultramarine);
+    --sprint-action-ink: var(--sprint-color-acid);
+    --sprint-action-hover: #1414a0;
+
+    --sprint-danger: var(--sprint-color-magenta-deep);
+    --sprint-danger-ink: var(--sprint-color-paper);
+    --sprint-danger-hover: #99062f;
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-void);
+    --sprint-neutral-hover: var(--sprint-color-paper-200);
+
+    --sprint-inert: var(--sprint-color-paper-200);
+    --sprint-inert-ink: var(--sprint-color-paper-600);
+
+    --sprint-info: var(--sprint-color-cyan-deep);
+    --sprint-info-ink: var(--sprint-color-paper);
+    --sprint-warning: var(--sprint-color-warning-deep);
+    --sprint-warning-ink: var(--sprint-color-paper);
+
+    --sprint-focus: var(--sprint-color-ultramarine);
+  }
 }
