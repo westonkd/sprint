@@ -185,6 +185,9 @@ elements otherwise**:
   DOM-driving agent has something to click. Use when the component has a single action.
 - `AgentControlGroup` — the node's line as text, then one `<button>` per actionable part. Use when
   the component has several targets, like a SegmentedControl's options.
+- `AgentFieldControl` — the node's lines as text, then one live `<input>` or `<textarea>` synced to
+  the component's value, because a button cannot receive typed text. A form element's value is not
+  part of `textContent`, so the copyable stream is unchanged; the field is pure affordance.
 
 Control count and tool count are independent: a SegmentedControl renders one control per option and
 registers one tool with an `enum`. Elements serve agents without WebMCP; tools serve agents with it.

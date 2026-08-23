@@ -299,6 +299,13 @@ export function GuidePhilosophy() {
               without WebMCP; tools are for agents with it, and they are sized by
               different pressures.
             </Text>
+            <Text>
+              Text entry bends the rule a second time: a button cannot receive typed
+              text, so a TextInput renders its Markdown lines as text followed by one
+              live field an agent can type into. A form element's value is not part of{" "}
+              <code>textContent</code>, so the copyable stream stays exactly the node's
+              own lines; the field is pure affordance, like every other control.
+            </Text>
           </Stack>
         </Panel>
 

@@ -2,6 +2,8 @@ export type { ButtonProps, ButtonTone } from "./Button/index.ts";
 export { Button, buttonMeta, PRESS_TOOL } from "./Button/index.ts";
 export type { CardProps } from "./Card/index.ts";
 export { Card, cardMeta, OPEN_CARD_TOOL } from "./Card/index.ts";
+export type { CheckboxProps } from "./Checkbox/index.ts";
+export { Checkbox, checkboxMeta, SET_CHECKBOX_TOOL } from "./Checkbox/index.ts";
 export type {
   CodeBlockProps,
   CodeLanguage,
@@ -32,6 +34,8 @@ export {
   SegmentedControl,
   segmentedControlMeta,
 } from "./SegmentedControl/index.ts";
+export type { SelectOption, SelectProps } from "./Select/index.ts";
+export { SELECT_OPTION_TOOL, Select, selectMeta } from "./Select/index.ts";
 export type { ShellProps } from "./Shell/index.ts";
 export { Shell, shellMeta } from "./Shell/index.ts";
 export type {
@@ -42,9 +46,15 @@ export type {
   StackProps,
 } from "./Stack/index.ts";
 export { Stack, stackMeta } from "./Stack/index.ts";
+export type { SwitchProps } from "./Switch/index.ts";
+export { SET_SWITCH_TOOL, Switch, switchMeta } from "./Switch/index.ts";
 export type { TableColumn, TableProps, TableRow } from "./Table/index.ts";
 export { Table, tableMeta } from "./Table/index.ts";
 export type { TagProps, TagTone } from "./Tag/index.ts";
 export { Tag, tagMeta } from "./Tag/index.ts";
 export type { TextProps, TextSize, TextTone } from "./Text/index.ts";
 export { Text, textMeta } from "./Text/index.ts";
+export type { TextareaProps } from "./Textarea/index.ts";
+export { FILL_TEXTAREA_TOOL, Textarea, textareaMeta } from "./Textarea/index.ts";
+export type { TextInputProps, TextInputType } from "./TextInput/index.ts";
+export { FILL_TOOL, TextInput, textInputMeta } from "./TextInput/index.ts";

@@ -1,0 +1,117 @@
+@layer sprint.components {
+  [data-sprint="Checkbox"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-2);
+  }
+
+  [data-sprint="Checkbox"] label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sprint-space-3);
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-2xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  [data-sprint="Checkbox"][data-sprint-required] label::after {
+    content: " *";
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="Checkbox"] [data-sprint-part="input"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Checkbox"] [data-sprint-part="box"] {
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    background: var(--sprint-surface);
+  }
+
+  [data-sprint="Checkbox"] label:hover [data-sprint-part="box"] {
+    border-color: var(--sprint-ink);
+  }
+
+  [data-sprint="Checkbox"]
+    [data-sprint-part="input"]:checked
+    + [data-sprint-part="box"] {
+    border-color: var(--sprint-action);
+    background:
+      linear-gradient(var(--sprint-action) 0 0) center / 0.5rem 0.5rem no-repeat,
+      var(--sprint-surface);
+  }
+
+  [data-sprint="Checkbox"]
+    [data-sprint-part="input"]:focus-visible
+    + [data-sprint-part="box"] {
+    outline: var(--sprint-focus-width) solid var(--sprint-focus);
+    outline-offset: var(--sprint-focus-offset);
+  }
+
+  [data-sprint="Checkbox"][data-sprint-invalid] [data-sprint-part="box"] {
+    border-color: var(--sprint-danger);
+  }
+
+  [data-sprint="Checkbox"]
+    [data-sprint-part="input"]:disabled
+    + [data-sprint-part="box"] {
+    border-color: var(--sprint-keyline);
+    background: var(--sprint-inert);
+  }
+
+  [data-sprint="Checkbox"]
+    [data-sprint-part="input"]:checked:disabled
+    + [data-sprint-part="box"] {
+    background:
+      linear-gradient(var(--sprint-inert-ink) 0 0) center / 0.5rem 0.5rem no-repeat,
+      var(--sprint-inert);
+  }
+
+  [data-sprint="Checkbox"][data-sprint-disabled] label {
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  [data-sprint="Checkbox"] [data-sprint-part="hint"],
+  [data-sprint="Checkbox"] [data-sprint-part="error"] {
+    margin: 0;
+    padding-left: calc(0.875rem + var(--sprint-space-3));
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="Checkbox"] [data-sprint-part="hint"] {
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="Checkbox"] [data-sprint-part="error"] {
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="Checkbox"] [data-sprint-part="error"]::before {
+    content: "! ";
+  }
+
+  @media (pointer: coarse) {
+    [data-sprint="Checkbox"] label {
+      min-height: 2.25rem;
+    }
+  }
+}
