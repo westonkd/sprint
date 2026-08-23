@@ -35,6 +35,8 @@
     --sprint-focus-width: var(--sprint-keyline-width-thick);
     --sprint-focus-offset: 2px;
 
+    --sprint-font-display: var(--sprint-font-serif);
+
     --sprint-label-size: var(--sprint-text-2xs);
     --sprint-label-tracking: var(--sprint-tracking-label);
   }

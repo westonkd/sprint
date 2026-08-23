@@ -26,10 +26,11 @@
     margin: 0;
     color: var(--sprint-ink);
     font-family: var(--sprint-font-display);
-    font-size: var(--sprint-text-lg);
-    font-weight: var(--sprint-weight-bold);
+    font-size: var(--sprint-text-xl);
+    font-weight: var(--sprint-weight-regular);
     letter-spacing: var(--sprint-tracking-tight);
-    line-height: 1.3;
+    line-height: 1.1;
+    text-transform: uppercase;
     overflow-wrap: anywhere;
   }
 
@@ -46,7 +47,7 @@
 
   @media (min-width: 40rem) {
     [data-sprint="PageHeader"] h1 {
-      font-size: var(--sprint-text-xl);
+      font-size: var(--sprint-text-2xl);
     }
   }
 }

@@ -28,7 +28,8 @@ polish.
 2. **Two colors per surface.** Any given panel is a saturated field and its inverse. Not a spectrum.
    The full palette is wide, but a single component uses two, occasionally three, colors.
 3. **Type is uppercase and tracked.** Small labels are uppercase monospace with wide letter-spacing.
-   Display type is condensed, heavy, and tight. There is no in-between voice.
+   Display type is a high-contrast serif, uppercase and set large against the mono — a deliberate
+   register clash, rationed to one moment per screen. There is no in-between voice.
 4. **Everything is labeled.** Panels announce what they are in a tiny header. Values are prefixed
    with a unit or a glyph. Empty states say they are empty rather than rendering nothing.
 5. **The grid is visible.** Keylines, corner ticks, registration crosses, and slot borders are shown
@@ -67,20 +68,18 @@ Rules:
 
 ## Typography
 
-Three voices, no others.
+Two voices, no others.
 
-**Display** — condensed, very heavy, uppercase, flat-sided grotesque with squared and clipped
-terminals. Tracking is tight, letters nearly touching. Used for page and section titles, wordmarks,
-and nothing else. This is the loudest element on any screen.
+**Display** — a high-contrast display serif, uppercase, regular weight, set large and tightly
+tracked. Used for the page title and nothing else, at most once per screen. Against the monospace
+it is a deliberate register clash — the PERIMETER poster move, a serif title floating over mono
+data lines — and it is the signature of the system, which is exactly why it stops working the
+moment it appears twice. This is the loudest element on any screen.
 
 **UI / data** — monospace, uppercase for labels, wide letter-spacing (0.08em–0.16em), small sizes.
 This carries the majority of the interface: field labels, panel headers, coordinates, counts,
 timestamps, serials, status strings. Monospace is not reserved for code here; it is the default
 interface voice, and it is what makes the system read as instrumentation.
-
-**Serif accent** — a high-contrast display serif, used sparingly against the monospace for a single
-title or mark. It is a deliberate register clash and it stops working the moment it is used twice on
-a screen. Optional; a Sprint app that never uses it is still correct.
 
 Conventions:
 
@@ -152,7 +151,8 @@ icons. An icon should look like it was drawn by the same tool that set the type.
 - Split the token layer: primitives (`--sprint-color-acid`) map to semantic roles
   (`--sprint-color-action`), and components only ever reference the semantic layer. Otherwise
   re-theming means rewriting every component.
-- Display and monospace faces need to be either self-hosted or fall back gracefully to a stack. The
-  library cannot depend on a font CDN. Font choice is unresolved and needs its own ADR.
+- The display face is a system serif stack (Didot / Bodoni MT / Bodoni 72 / Georgia); the library
+  cannot depend on a font CDN. Choosing a licensed, self-hosted serif and monospace pair is still
+  open and needs its own ADR.
 - The agent view (PRD R1) inherits none of this. It is plain text. A component's visual identity and
   its agent identity are independent, which is the point.

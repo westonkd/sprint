@@ -18,7 +18,7 @@
     --sprint-color-panel-600: #9a9a9a;
 
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
-    --sprint-font-display: var(--sprint-font-mono);
+    --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
 
     --sprint-text-3xs: 0.625rem;
     --sprint-text-2xs: 0.6875rem;
@@ -27,6 +27,7 @@
     --sprint-text-md: 0.875rem;
     --sprint-text-lg: 1rem;
     --sprint-text-xl: 1.375rem;
+    --sprint-text-2xl: 1.75rem;
 
     --sprint-tracking-tight: 0.02em;
     --sprint-tracking-label: 0.12em;
