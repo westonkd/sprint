@@ -13,6 +13,8 @@ import {
   version,
 } from "../src/index.ts";
 import { ComponentDoc } from "./pages/ComponentDoc.tsx";
+import { GuideForms } from "./pages/GuideForms.tsx";
+import { GuideLayout } from "./pages/GuideLayout.tsx";
 import { GuidePhilosophy } from "./pages/GuidePhilosophy.tsx";
 import { GuideWebMCP } from "./pages/GuideWebMCP.tsx";
 import { Overview } from "./pages/Overview.tsx";
@@ -30,6 +32,8 @@ const GUIDES: readonly Guide[] = [
     title: "Integration philosophy",
     render: () => <GuidePhilosophy />,
   },
+  { id: "layout", title: "Composing a page", render: () => <GuideLayout /> },
+  { id: "forms", title: "Composing a form", render: () => <GuideForms /> },
 ];
 
 function currentRoute(): string {
