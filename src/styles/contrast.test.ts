@@ -3,26 +3,46 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const AA_NORMAL = 4.5;
+const LIGHT_SELECTOR = '[data-sprint-theme="light"]';
 
-function loadTokens(): Map<string, string> {
-  const tokens = new Map<string, string>();
+function loadThemes(): { dark: Map<string, string>; light: Map<string, string> } {
+  const dark = new Map<string, string>();
+  const lightOverrides = new Map<string, string>();
 
   for (const file of ["primitives.css", "semantic.css"]) {
     const css = readFileSync(resolve(process.cwd(), "src/styles", file), "utf8");
-    for (const match of css.matchAll(/(--sprint-[\w-]+)\s*:\s*([^;]+);/g)) {
-      const name = match[1];
-      const value = match[2];
-      if (name === undefined || value === undefined) continue;
-      tokens.set(name, value.trim());
+    for (const block of css.matchAll(/(:root|\[[^\]]+\])\s*\{([^{}]*)\}/g)) {
+      const selector = block[1];
+      const body = block[2];
+      if (selector === undefined || body === undefined) continue;
+
+      const target =
+        selector === ":root"
+          ? dark
+          : selector === LIGHT_SELECTOR
+            ? lightOverrides
+            : undefined;
+      if (target === undefined) throw new Error(`Unexpected token scope ${selector}`);
+
+      for (const match of body.matchAll(/(--sprint-[\w-]+)\s*:\s*([^;]+);/g)) {
+        const name = match[1];
+        const value = match[2];
+        if (name === undefined || value === undefined) continue;
+        target.set(name, value.trim());
+      }
     }
   }
 
-  return tokens;
+  return { dark, light: new Map([...dark, ...lightOverrides]) };
 }
 
-const tokens = loadTokens();
+const themes = loadThemes();
 
-function resolveToken(name: string, seen = new Set<string>()): string {
+function resolveToken(
+  tokens: Map<string, string>,
+  name: string,
+  seen = new Set<string>(),
+): string {
   if (seen.has(name)) throw new Error(`Circular token reference at ${name}`);
   seen.add(name);
 
@@ -30,7 +50,9 @@ function resolveToken(name: string, seen = new Set<string>()): string {
   if (value === undefined) throw new Error(`Unknown token ${name}`);
 
   const reference = /^var\((--[\w-]+)\)$/.exec(value);
-  return reference?.[1] === undefined ? value : resolveToken(reference[1], seen);
+  return reference?.[1] === undefined
+    ? value
+    : resolveToken(tokens, reference[1], seen);
 }
 
 function luminance(hex: string): number {
@@ -64,44 +86,69 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-focus", "--sprint-surface"],
   ["--sprint-focus", "--sprint-surface-raised"],
   ["--sprint-action", "--sprint-surface"],
+  ["--sprint-danger", "--sprint-surface"],
   ["--sprint-info", "--sprint-surface"],
   ["--sprint-info-ink", "--sprint-info"],
   ["--sprint-warning", "--sprint-surface"],
   ["--sprint-warning-ink", "--sprint-warning"],
 ];
 
-describe("token contrast", () => {
+describe.each([
+  ["dark", themes.dark],
+  ["light", themes.light],
+])("token contrast in the %s theme", (_theme, tokens) => {
   it.each(PAIRINGS)("%s on %s meets WCAG AA", (ink, ground) => {
-    const ratio = contrast(resolveToken(ink), resolveToken(ground));
+    const ratio = contrast(resolveToken(tokens, ink), resolveToken(tokens, ground));
     expect(
       ratio,
       `${ink} on ${ground} is ${ratio.toFixed(2)}:1`,
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 
+  it("resolves every semantic role to a literal color", () => {
+    for (const [ink, ground] of PAIRINGS) {
+      expect(resolveToken(tokens, ink)).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(resolveToken(tokens, ground)).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+  });
+});
+
+describe("theme-specific findings", () => {
   it("keeps acid off light grounds, where it fails badly", () => {
     expect(
       contrast(
-        resolveToken("--sprint-color-acid"),
-        resolveToken("--sprint-color-paper"),
+        resolveToken(themes.dark, "--sprint-color-acid"),
+        resolveToken(themes.dark, "--sprint-color-paper"),
       ),
     ).toBeLessThan(AA_NORMAL);
   });
 
-  it("uses void ink on danger rather than paper, which would fail", () => {
-    const danger = resolveToken("--sprint-danger");
-    expect(contrast(resolveToken("--sprint-color-paper"), danger)).toBeLessThan(
-      AA_NORMAL,
+  it("keeps acid off the light action role, so it survives only as ink on ultramarine", () => {
+    expect(resolveToken(themes.light, "--sprint-action")).not.toBe(
+      resolveToken(themes.light, "--sprint-color-acid"),
     );
+    expect(resolveToken(themes.light, "--sprint-action-ink")).toBe(
+      resolveToken(themes.light, "--sprint-color-acid"),
+    );
+  });
+
+  it("uses void ink on dark danger rather than paper, which would fail", () => {
+    const danger = resolveToken(themes.dark, "--sprint-danger");
     expect(
-      contrast(resolveToken("--sprint-danger-ink"), danger),
+      contrast(resolveToken(themes.dark, "--sprint-color-paper"), danger),
+    ).toBeLessThan(AA_NORMAL);
+    expect(
+      contrast(resolveToken(themes.dark, "--sprint-danger-ink"), danger),
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 
-  it("resolves every semantic role to a literal color", () => {
-    for (const [ink, ground] of PAIRINGS) {
-      expect(resolveToken(ink)).toMatch(/^#[0-9a-f]{6}$/i);
-      expect(resolveToken(ground)).toMatch(/^#[0-9a-f]{6}$/i);
-    }
+  it("uses paper ink on light danger, where void would fail", () => {
+    const danger = resolveToken(themes.light, "--sprint-danger");
+    expect(
+      contrast(resolveToken(themes.light, "--sprint-color-void"), danger),
+    ).toBeLessThan(AA_NORMAL);
+    expect(
+      contrast(resolveToken(themes.light, "--sprint-danger-ink"), danger),
+    ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 });

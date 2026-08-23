@@ -1,7 +1,7 @@
 import { act, render } from "@testing-library/react";
 import { useEffect } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
+import { THEME_ATTRIBUTE, VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
 import { TOOL_OUTPUT_LIMIT } from "@/agent/webmcp/adapter.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
 import { Button } from "@/components/Button/index.ts";
@@ -50,6 +50,25 @@ describe("SprintProvider", () => {
       </SprintProvider>,
     );
     expect(view.container.firstElementChild).toHaveAttribute(VIEW_ATTRIBUTE, "agent");
+  });
+
+  it("stamps the theme on its container only when one is chosen", () => {
+    const themed = render(
+      <SprintProvider theme="light" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    expect(themed.container.firstElementChild).toHaveAttribute(
+      THEME_ATTRIBUTE,
+      "light",
+    );
+
+    const unthemed = render(
+      <SprintProvider pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    expect(unthemed.container.firstElementChild).not.toHaveAttribute(THEME_ATTRIBUTE);
   });
 
   it("does not remount its subtree when the view flips", () => {

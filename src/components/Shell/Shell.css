@@ -37,6 +37,7 @@
 
   [data-sprint="Shell"] > aside > div:first-of-type {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: var(--sprint-space-4);

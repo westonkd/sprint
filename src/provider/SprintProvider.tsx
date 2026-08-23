@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback, useMemo, useState } from "react";
-import { VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
+import { THEME_ATTRIBUTE, VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
 import {
   defaultAgentFormat,
   type SprintAgentControls,
@@ -12,6 +12,8 @@ import { AgentScopeProvider, useAgentScope } from "@/agent/webmcp/scope.ts";
 import { usePageTools } from "./pageTools.ts";
 import "./SprintProvider.css";
 
+export type SprintTheme = "dark" | "light";
+
 export interface SprintProviderProps {
   children: ReactNode;
   label?: string;
@@ -21,6 +23,7 @@ export interface SprintProviderProps {
   defaultView?: SprintView;
   onViewChange?: (view: SprintView) => void;
   agentControls?: SprintAgentControls;
+  theme?: SprintTheme;
 }
 
 export function SprintProvider(props: SprintProviderProps) {
@@ -33,6 +36,7 @@ export function SprintProvider(props: SprintProviderProps) {
     defaultView,
     onViewChange,
     agentControls,
+    theme,
   } = props;
 
   const parentScope = useAgentScope();
@@ -80,7 +84,12 @@ export function SprintProvider(props: SprintProviderProps) {
   return (
     <SprintViewProvider value={viewValue}>
       <AgentScopeProvider value={scopeValue}>
-        <div {...{ [VIEW_ATTRIBUTE]: effective }}>{children}</div>
+        <div
+          {...{ [VIEW_ATTRIBUTE]: effective }}
+          {...(theme === undefined ? {} : { [THEME_ATTRIBUTE]: theme })}
+        >
+          {children}
+        </div>
       </AgentScopeProvider>
     </SprintViewProvider>
   );

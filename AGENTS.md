@@ -150,8 +150,12 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   its subtree: `display: contents` in human view so it never affects layout, and the block that
   makes the text stream readable (`pre-wrap`, mono) in agent view. It is provider chrome, not a
   component root, and it is why flipping the view re-renders without remounting.
+- `data-sprint-theme="dark|light"` selects the semantic token mapping for everything beneath it.
+  Pure CSS: put it on any element, or pass `theme` to `SprintProvider` to stamp it on the view
+  container. Dark is the `:root` default. The light mapping keeps acid off light grounds by making
+  ultramarine the action color with acid as its ink. The agent view ignores theme entirely.
 
-`part`, `tool`, and `owner` are reserved and never read as state. These attributes are part of the
+`part`, `tool`, `owner`, `view`, and `theme` are reserved and never read as state. These attributes are part of the
 public API. Changing or removing one is a breaking change, because agents write selectors against
 them, and because the agent view is projected from them.
 
