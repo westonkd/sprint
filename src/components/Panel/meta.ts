@@ -8,7 +8,7 @@ export const panelMeta = defineAgentMeta({
   whenToUse:
     "Use it for every distinct region of a page: a section of documentation, a form, a readout, a preview. The label is the region's accessible name, so a person, a screen reader, and an agent all address the region by the same words.",
   whenNotToUse:
-    "Do not use it as a spacer or a plain box; that is Stack. Do not nest panels more than two deep, or the keylines stop meaning anything.",
+    "Do not use it as a spacer or a plain box; that is Stack. Nesting reads clearly to about three deep, because each level alternates its ground and demotes its frame; past that, the depth cues repeat and the region wants a page of its own.",
   status: "experimental",
   props: {
     label: {
@@ -82,6 +82,12 @@ export const panelMeta = defineAgentMeta({
       description:
         "Content that draws its own keylines sits flush, so borders do not double up.",
       code: '<Panel label="Conventions" flush>\n  <Table label="Conventions" columns={columns} rows={rows} />\n</Panel>',
+    },
+    {
+      title: "Nested panels",
+      description:
+        "Depth styles itself: the outermost panel carries a doubled keyline, each nested level alternates its ground, and nested headers demote to a dashed rule, so a reader ranks the levels without counting borders.",
+      code: '<Panel label="The shape" headingLevel={2}>\n  <Panel label="Human view" headingLevel={3}>\n    <Panel label="Crew" headingLevel={4}>\n      <Text>Registration fields live here.</Text>\n    </Panel>\n  </Panel>\n</Panel>',
     },
     {
       title: "An empty region",
