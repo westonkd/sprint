@@ -1,11 +1,8 @@
 import { fireEvent, render } from "@testing-library/react";
 import { StrictMode, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  installMockModelContext,
-  type MockModelContext,
-} from "../../test/modelContext.ts";
-import type { AgentToolSpec } from "../types.ts";
+import type { AgentToolSpec } from "@/agent/types.ts";
+import { installMockModelContext, type MockModelContext } from "@/test/modelContext.ts";
 import { __resetToolNames, AgentScopeProvider } from "./scope.ts";
 import { useAgentTool } from "./useAgentTool.ts";
 

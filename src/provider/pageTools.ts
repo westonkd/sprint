@@ -1,15 +1,14 @@
-import type { AgentToolSpec } from "../agent/types.ts";
-import { toMarkdown } from "../agent/view/markdown.ts";
-import type { SprintView } from "../agent/view/mode.ts";
-import type { AgentFormatter, AgentNode } from "../agent/view/node.ts";
-import { countNodes } from "../agent/view/node.ts";
-import { serializeWithin } from "../agent/view/serialize.ts";
-import { clamp, paginate } from "../agent/view/truncate.ts";
-import { TOOL_OUTPUT_LIMIT } from "../agent/webmcp/adapter.ts";
-import { afterCommit } from "../agent/webmcp/afterCommit.ts";
-import { commitSync } from "../agent/webmcp/flush.ts";
-import { slug } from "../agent/webmcp/scope.ts";
-import { useAgentTool } from "../agent/webmcp/useAgentTool.ts";
+import type { AgentToolSpec } from "@/agent/types.ts";
+import type { SprintView } from "@/agent/view/mode.ts";
+import type { AgentFormatter, AgentNode } from "@/agent/view/node.ts";
+import { countNodes } from "@/agent/view/node.ts";
+import { serializeWithin } from "@/agent/view/serialize.ts";
+import { clamp, paginate } from "@/agent/view/truncate.ts";
+import { TOOL_OUTPUT_LIMIT } from "@/agent/webmcp/adapter.ts";
+import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
+import { commitSync } from "@/agent/webmcp/flush.ts";
+import { slug } from "@/agent/webmcp/scope.ts";
+import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
 
 const PAGE_FOOTER_BUDGET = 40;
 
@@ -141,14 +140,13 @@ export function pageText(): string {
 
 export interface UsePageToolsOptions {
   enabled: boolean;
-  format?: AgentFormatter | undefined;
+  format: AgentFormatter;
   view: SprintView;
   setView: (view: SprintView) => void;
 }
 
 export function usePageTools(options: UsePageToolsOptions): void {
-  const { enabled, view, setView } = options;
-  const format = options.format ?? ((nodes) => toMarkdown(nodes));
+  const { enabled, format, view, setView } = options;
 
   useAgentTool({
     spec: LIST_REGIONS_SPEC,

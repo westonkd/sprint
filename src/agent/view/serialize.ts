@@ -5,9 +5,9 @@ import {
   RESERVED_STATE_KEYS,
   STATE_ATTRIBUTE_PREFIX,
   TOOL_ATTRIBUTE,
-} from "../attributes.ts";
-import { getAgentMeta } from "../registry.ts";
-import type { AgentComponentMeta } from "../types.ts";
+} from "@/agent/attributes.ts";
+import { getAgentMeta } from "@/agent/registry.ts";
+import type { AgentComponentMeta } from "@/agent/types.ts";
 import type { AgentNode, AgentPart, AgentStateValue } from "./node.ts";
 import { accessibleText } from "./text.ts";
 

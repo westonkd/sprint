@@ -252,9 +252,15 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
         <section className="pane">
           <h2>Agent view</h2>
           <p className="note">
-            Projected from the rendered DOM. No component implements this.
+            The component renders this itself, from the same node that produces its{" "}
+            <code>data-sprint*</code> attributes in the human view. Flip{" "}
+            <strong>Whole page</strong> at the top to see every specimen above in it.
           </p>
-          <CodeBlock caption="markdown" code={meta.agentView.example} />
+          <p className="note">
+            The snippet below is the copy carried in <code>agent-manifest.json</code>,
+            for an agent reading the catalogue before it renders anything.
+          </p>
+          <CodeBlock caption="manifest" code={meta.agentView.example} />
         </section>
       )}
 

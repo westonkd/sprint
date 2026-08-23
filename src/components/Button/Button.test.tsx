@@ -1,12 +1,9 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { createRef, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { agentSelector } from "../../agent/attributes.ts";
-import { __resetToolNames } from "../../agent/webmcp/scope.ts";
-import {
-  installMockModelContext,
-  type MockModelContext,
-} from "../../test/modelContext.ts";
+import { agentSelector } from "@/agent/attributes.ts";
+import { __resetToolNames } from "@/agent/webmcp/scope.ts";
+import { installMockModelContext, type MockModelContext } from "@/test/modelContext.ts";
 import { Button } from "./Button.tsx";
 
 let mock: MockModelContext;

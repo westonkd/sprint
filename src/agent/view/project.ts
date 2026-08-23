@@ -1,4 +1,8 @@
-import { AGENT_ATTRIBUTE, agentAttributes, TOOL_ATTRIBUTE } from "../attributes.ts";
+import {
+  AGENT_ATTRIBUTE,
+  agentAttributes,
+  TOOL_ATTRIBUTE,
+} from "@/agent/attributes.ts";
 import type { AgentNode, AgentPart, AgentStateValue } from "./node.ts";
 
 export interface NodeInput {

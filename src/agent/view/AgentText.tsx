@@ -1,16 +1,10 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
-import { nodeLine } from "./markdown.ts";
-import { AgentDepthProvider, useAgentDepth } from "./mode.ts";
-import type { AgentNode } from "./node.ts";
+import { AgentDepthProvider, useAgentDepth, useAgentFormat } from "./mode.ts";
+import type { AgentFormatter, AgentNode } from "./node.ts";
 import { agentControlAttributes } from "./project.ts";
 
-function partLines(node: AgentNode, indent: string): string[] {
-  return node.parts.map(
-    (part) =>
-      `${indent}  - part \`${part.part}\`${
-        part.label === undefined ? "" : ` "${part.label}"`
-      }`,
-  );
+function format(node: AgentNode, formatter: AgentFormatter): string[] {
+  return formatter([node]).split("\n");
 }
 
 export interface AgentLineProps {
@@ -21,8 +15,9 @@ export interface AgentLineProps {
 export function AgentLine(props: AgentLineProps) {
   const { node, children } = props;
   const depth = useAgentDepth();
+  const formatter = useAgentFormat();
   const indent = "  ".repeat(depth);
-  const lines = [`${indent}${nodeLine(node)}`, ...partLines(node, indent)];
+  const lines = format(node, formatter).map((line) => `${indent}${line}`);
 
   return (
     <AgentDepthProvider value={depth + 1}>
@@ -42,8 +37,10 @@ export type AgentControlProps = Omit<ComponentPropsWithRef<"button">, "children"
 export function AgentControl(props: AgentControlProps) {
   const { node, as = "button", href, children, ...rest } = props;
   const depth = useAgentDepth();
+  const formatter = useAgentFormat();
   const indent = "  ".repeat(depth);
-  const tail = partLines(node, indent);
+  const [head = "", ...rows] = format(node, formatter);
+  const tail = rows.map((line) => `${indent}${line}`);
   const attributes = agentControlAttributes(node);
 
   const control =
@@ -53,11 +50,11 @@ export function AgentControl(props: AgentControlProps) {
         {...attributes}
         href={href ?? "#"}
       >
-        {nodeLine(node)}
+        {head}
       </a>
     ) : (
       <button {...rest} {...attributes}>
-        {nodeLine(node)}
+        {head}
       </button>
     );
 

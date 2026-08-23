@@ -7,14 +7,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { AgentControl, AgentLine } from "../../agent/view/AgentText.tsx";
-import { nodeLine } from "../../agent/view/markdown.ts";
-import { useAgentControls, useSprintView } from "../../agent/view/mode.ts";
-import { agentAttributesFor, buildAgentNode } from "../../agent/view/project.ts";
-import { accessibleText } from "../../agent/view/text.ts";
-import { afterCommit } from "../../agent/webmcp/afterCommit.ts";
-import { commitSync } from "../../agent/webmcp/flush.ts";
-import { useAgentTool } from "../../agent/webmcp/useAgentTool.ts";
+import { AgentControl, AgentLine } from "@/agent/view/AgentText.tsx";
+import { useAgentControls, useAgentFormat, useSprintView } from "@/agent/view/mode.ts";
+import { agentAttributesFor, buildAgentNode } from "@/agent/view/project.ts";
+import { accessibleText } from "@/agent/view/text.ts";
+import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
+import { commitSync } from "@/agent/webmcp/flush.ts";
+import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
 import { buttonMeta } from "./meta.ts";
 import { PRESS_TOOL } from "./tool.ts";
 import "./Button.css";
@@ -51,6 +50,7 @@ export function Button(props: ButtonProps) {
 
   const view = useSprintView();
   const controls = useAgentControls();
+  const formatter = useAgentFormat();
   const element = useRef<HTMLButtonElement | null>(null);
 
   const setRef = useCallback(
@@ -80,6 +80,8 @@ export function Button(props: ButtonProps) {
   onClickRef.current = onClick;
 
   const nodeRef = useRef(buildAgentNode({ component: buttonMeta.name }));
+  const formatRef = useRef(formatter);
+  formatRef.current = formatter;
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -104,7 +106,7 @@ export function Button(props: ButtonProps) {
 
     await afterCommit();
     if (!mounted.current) return "The press removed this button from the page.";
-    return `Pressed. The button is now:\n${nodeLine(nodeRef.current)}`;
+    return `Pressed. The button is now:\n${formatRef.current([nodeRef.current])}`;
   }, []);
 
   const toolName = useAgentTool({

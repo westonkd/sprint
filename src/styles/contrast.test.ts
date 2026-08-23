@@ -65,6 +65,9 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-focus", "--sprint-surface-raised"],
   ["--sprint-action", "--sprint-surface"],
   ["--sprint-info", "--sprint-surface"],
+  ["--sprint-info-ink", "--sprint-info"],
+  ["--sprint-warning", "--sprint-surface"],
+  ["--sprint-warning-ink", "--sprint-warning"],
 ];
 
 describe("token contrast", () => {

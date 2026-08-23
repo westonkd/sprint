@@ -1,4 +1,4 @@
-import { COMPONENT_ATTRIBUTE } from "../attributes.ts";
+import { COMPONENT_ATTRIBUTE } from "@/agent/attributes.ts";
 
 function normalize(value: string): string {
   return value.replace(/\s+/g, " ").trim();

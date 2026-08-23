@@ -1,13 +1,10 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Button } from "../../components/Button/index.ts";
-import { AgentRegion, SprintProvider } from "../../provider/SprintProvider.tsx";
-import {
-  installMockModelContext,
-  type MockModelContext,
-} from "../../test/modelContext.ts";
-import { __resetToolNames } from "../webmcp/scope.ts";
+import { __resetToolNames } from "@/agent/webmcp/scope.ts";
+import { Button } from "@/components/Button/index.ts";
+import { AgentRegion, SprintProvider } from "@/provider/SprintProvider.tsx";
+import { installMockModelContext, type MockModelContext } from "@/test/modelContext.ts";
 
 let mock: MockModelContext;
 

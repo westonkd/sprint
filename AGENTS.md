@@ -84,22 +84,26 @@ Imports use explicit `.ts` / `.tsx` extensions and the `@/*` alias for `src/*`.
 
 ## Adding a component
 
-Use `src/components/Button/` as the reference. Six files, in this order:
+Use `src/components/Button/` as the reference. Seven files, in this order:
 
 1. `tool.ts` — one `AgentToolSpec` per tool, if the component has any. Declared once and shared
    by the runtime descriptor and the manifest, so the two cannot drift.
 2. `meta.ts` — `export const <name>Meta = defineAgentMeta({...})`, embedding the specs from
    `tool.ts`. Export the value; do not rely on import side effects.
-3. `<Name>.tsx` — spread `agentAttributes(<name>Meta.name, { state })` onto the root and each
-   interactive part. Call `useAgentTool` for each action. Import `<name>Meta` and *use* it, which
-   is what keeps the registration from being tree-shaken.
+3. `<Name>.tsx` — build one `AgentNode` per render with `buildAgentNode()` and spread
+   `agentAttributesFor(node)` onto the root, `agentPartAttributesFor()` onto each interactive part.
+   Call `useAgentTool` for each action. Import `<name>Meta` and *use* it, which is what keeps the
+   registration from being tree-shaken.
 4. `<Name>.css` — style through the agent attributes (`[data-sprint="Button"]`), never class
    names, inside `@layer sprint.components`. Reference only semantic tokens.
 5. `<Name>.test.tsx` — assert through `agentSelector()`, never class names. Cover the tool
    lifecycle, not just rendering.
-6. `index.ts` — re-export, then add it to `src/components/index.ts` and `src/index.ts`.
+6. `index.ts` — re-export, then add it to `src/components/index.ts`. `src/index.ts` re-exports that
+   barrel wholesale, so it needs no edit.
 7. `dev/specimens/<Name>.tsx` — a live node per `examples[].title`, plus an optional `gallery`
    showing every variant. Register it in `dev/specimens/index.ts`.
+   `dev/specimens/coverage.test.ts` fails `verify` if an example has no specimen, or a specimen no
+   example.
 
 Then `docker compose run --rm verify`.
 
@@ -158,6 +162,11 @@ In agent view a component emits **no elements unless it is interactive, then exa
 WebMCP itself needs no elements, but agents outside Chrome 149 have no WebMCP, so a control is the
 only affordance they get. Render `AgentLine` when the component is disabled or busy, and respect
 `useAgentControls() === "never"` for consumers who want literally zero markup.
+
+Never turn an `AgentNode` into text yourself. `AgentLine`, `AgentControl`, and anything a tool
+returns all go through `useAgentFormat()`, the one formatter `SprintProvider` resolves for the whole
+subtree. Markdown is only its default; a consumer passing `format` must change the rendered page and
+`read-region` together, and calling `nodeLine` or `toMarkdown` directly is what breaks that.
 
 `serializeElement` / `serializeWithin` still project the agent view from the DOM, but only for
 reading a page that is in *human* mode. Because attributes are generated from the node, the

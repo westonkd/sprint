@@ -27,7 +27,9 @@
     --sprint-inert-ink: var(--sprint-color-panel-600);
 
     --sprint-info: var(--sprint-color-cyan);
+    --sprint-info-ink: var(--sprint-color-void);
     --sprint-warning: var(--sprint-color-warning);
+    --sprint-warning-ink: var(--sprint-color-void);
 
     --sprint-focus: var(--sprint-color-cyan);
     --sprint-focus-width: var(--sprint-keyline-width-thick);

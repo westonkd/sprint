@@ -24,6 +24,17 @@ for (const relative of required) {
   }
 }
 
+const bundles = ["dist/index.js", "dist/index.cjs", "dist/index.d.ts"];
+const aliasSpecifier = /from\s+["']@\//;
+
+for (const relative of bundles) {
+  const file = Bun.file(resolve(root, relative));
+  if (!(await file.exists())) continue;
+  if (aliasSpecifier.test(await file.text())) {
+    failures.push(`${relative} still imports from "@/", which no consumer can resolve`);
+  }
+}
+
 if (failures.length > 0) {
   console.error("Build output check failed:");
   for (const failure of failures) console.error(`  - ${failure}`);

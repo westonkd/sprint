@@ -1,12 +1,13 @@
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import {
+  defaultAgentFormat,
   type SprintAgentControls,
   type SprintView,
   SprintViewProvider,
   useSprintViewControl,
-} from "../agent/view/mode.ts";
-import type { AgentFormatter } from "../agent/view/node.ts";
-import { AgentScopeProvider, useAgentScope } from "../agent/webmcp/scope.ts";
+} from "@/agent/view/mode.ts";
+import type { AgentFormatter } from "@/agent/view/node.ts";
+import { AgentScopeProvider, useAgentScope } from "@/agent/webmcp/scope.ts";
 import { usePageTools } from "./pageTools.ts";
 
 export interface SprintProviderProps {
@@ -55,10 +56,11 @@ export function SprintProvider(props: SprintProviderProps) {
   );
 
   const controls = agentControls ?? inherited.controls;
+  const formatter = format ?? inherited.format ?? defaultAgentFormat;
 
   const viewValue = useMemo(
-    () => ({ view: effective, setView, controls, owned: owns }),
-    [effective, setView, controls, owns],
+    () => ({ view: effective, setView, controls, format: formatter, owned: owns }),
+    [effective, setView, controls, formatter, owns],
   );
 
   const scopeValue = useMemo(
@@ -68,7 +70,7 @@ export function SprintProvider(props: SprintProviderProps) {
 
   usePageTools({
     enabled: root && pageTools,
-    format,
+    format: formatter,
     view: effective,
     setView,
   });

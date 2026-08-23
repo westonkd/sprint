@@ -1,4 +1,4 @@
-import { defineAgentMeta } from "../../agent/registry.ts";
+import { defineAgentMeta } from "@/agent/registry.ts";
 import { PRESS_TOOL } from "./tool.ts";
 
 export const buttonMeta = defineAgentMeta({

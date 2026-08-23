@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { listAgentMeta } from "../agent/registry.ts";
+import { listAgentMeta } from "@/agent/registry.ts";
 import {
   PARAM_DESCRIPTION_LIMIT,
   TOOL_DESCRIPTION_LIMIT,
-} from "../agent/webmcp/adapter.ts";
-import { slug } from "../agent/webmcp/scope.ts";
+} from "@/agent/webmcp/adapter.ts";
+import { slug } from "@/agent/webmcp/scope.ts";
 import "./index.ts";
 
 const catalog = listAgentMeta();
@@ -82,6 +82,24 @@ describe("catalog", () => {
             `${key} requires "${required}" but does not declare it`,
           ).toBeDefined();
         }
+      }
+    },
+  );
+
+  it.each(catalog.map((meta) => [meta.name, meta] as const))(
+    "%s shows an agent view line it could actually produce",
+    (_name, meta) => {
+      const example = meta.agentView?.example;
+      if (example === undefined) return;
+
+      expect(example.startsWith(`- **${meta.name}**`)).toBe(true);
+
+      const verbs = Object.values(meta.tools ?? {}).map((tool) => tool.verb);
+      for (const [, named] of example.matchAll(/→ tool `([a-z0-9-]+)`/g)) {
+        expect(
+          verbs.some((verb) => named?.includes(verb)),
+          `the agent view example names tool "${named}", whose verb is not declared in tools`,
+        ).toBe(true);
       }
     },
   );

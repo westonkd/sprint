@@ -1,4 +1,4 @@
-import type { AgentToolSpec } from "../../agent/types.ts";
+import type { AgentToolSpec } from "@/agent/types.ts";
 
 export const PRESS_TOOL: AgentToolSpec = {
   verb: "press",

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { AgentToolSpec } from "../types.ts";
+import type { AgentToolSpec } from "@/agent/types.ts";
 import { registerTool } from "./adapter.ts";
 import {
   claimToolName,

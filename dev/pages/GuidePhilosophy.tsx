@@ -27,7 +27,7 @@ export const PRESS_TOOL: AgentToolSpec = {
 const CLICK = `execute: async () => {
   element.click();          // a real event: bubbles, submits forms, respects disabled
   await afterCommit();      // wait for React to paint
-  return \`Pressed. The button is now:\\n\${nodeLine(node)}\`;
+  return \`Pressed. The button is now:\\n\${format([node])}\`;
 }`;
 
 const NODE = `const node = buildAgentNode({

@@ -2,7 +2,7 @@ import type {
   ModelContext,
   RegisterToolOptions,
   ToolDescriptor,
-} from "../agent/webmcp/types.ts";
+} from "@/agent/webmcp/types.ts";
 
 export interface MockTool {
   descriptor: ToolDescriptor;

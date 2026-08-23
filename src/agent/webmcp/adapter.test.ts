@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { installMockModelContext } from "../../test/modelContext.ts";
-import { TRUNCATION_MARKER } from "../view/truncate.ts";
+import { TRUNCATION_MARKER } from "@/agent/view/truncate.ts";
+import { installMockModelContext } from "@/test/modelContext.ts";
 import {
   getModelContext,
   isModelContextAvailable,

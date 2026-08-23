@@ -1,12 +1,9 @@
 import { act, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { TOOL_OUTPUT_LIMIT } from "../agent/webmcp/adapter.ts";
-import { __resetToolNames } from "../agent/webmcp/scope.ts";
-import { Button } from "../components/Button/index.ts";
-import {
-  installMockModelContext,
-  type MockModelContext,
-} from "../test/modelContext.ts";
+import { TOOL_OUTPUT_LIMIT } from "@/agent/webmcp/adapter.ts";
+import { __resetToolNames } from "@/agent/webmcp/scope.ts";
+import { Button } from "@/components/Button/index.ts";
+import { installMockModelContext, type MockModelContext } from "@/test/modelContext.ts";
 import { AgentRegion, SprintProvider } from "./SprintProvider.tsx";
 
 let mock: MockModelContext;

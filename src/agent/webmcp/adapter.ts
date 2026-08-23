@@ -1,4 +1,4 @@
-import { clamp } from "../view/truncate.ts";
+import { clamp } from "@/agent/view/truncate.ts";
 import type {
   JsonSchemaObject,
   ModelContext,

@@ -44,7 +44,9 @@ export type {
   SprintViewValue,
 } from "./agent/view/mode.ts";
 export {
+  defaultAgentFormat,
   useAgentControls,
+  useAgentFormat,
   useSprintView,
   useSprintViewControl,
 } from "./agent/view/mode.ts";
