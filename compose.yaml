@@ -1,6 +1,6 @@
 name: sprint
 
-x-workspace: &workspace
+x-base: &base
   build:
     context: .
     target: dev
@@ -8,20 +8,31 @@ x-workspace: &workspace
   working_dir: /app
   init: true
   user: "${SPRINT_UID:-1000}:${SPRINT_GID:-1000}"
-  volumes:
-    - .:/app
-    - node_modules:/app/node_modules
   environment:
     CI: "true"
 
+x-workspace: &workspace
+  <<: *base
+  volumes:
+    - .:/app
+
 services:
   dev:
-    <<: *workspace
+    <<: *base
     environment:
       CI: "false"
     command: bun run dev
     ports:
       - "${SPRINT_DEV_PORT:-5173}:5173"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: bun.lock
 
   test:
     <<: *workspace
@@ -38,6 +49,11 @@ services:
   lint:
     <<: *workspace
     command: bun run lint
+    profiles: ["tools"]
+
+  format:
+    <<: *workspace
+    command: bun run format
     profiles: ["tools"]
 
   typecheck:
@@ -68,6 +84,3 @@ services:
     stdin_open: true
     tty: true
     profiles: ["tools"]
-
-volumes:
-  node_modules:

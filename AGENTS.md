@@ -9,8 +9,12 @@ compose it correctly, and drive it in a browser without scraping class names.
 Do not run `bun`, `vite`, or `vitest` on the host. Use Compose.
 
 ```bash
-docker compose up dev
+docker compose watch dev
 ```
+
+`watch`, not `up`. The dev server gets its source from the image and Compose syncs your edits in;
+without `watch` you are serving a snapshot that never changes. Editing `package.json` or `bun.lock`
+rebuilds the image automatically.
 
 ```bash
 docker compose run --rm test
@@ -20,11 +24,33 @@ docker compose run --rm test
 docker compose run --rm verify
 ```
 
-Other one-shot services: `lint`, `typecheck`, `build`, `install`, `test-watch`, `shell`.
+Biome is both the linter and the formatter, and `verify` fails on either. To apply every safe
+fix, reformat, and sort imports:
+
+```bash
+docker compose run --rm format
+```
+
+Other one-shot services: `lint`, `format`, `typecheck`, `build`, `install`, `test-watch`, `shell`.
 They live behind the `tools` profile so `docker compose up` only starts the dev server.
 
-After changing `package.json`, run `docker compose run --rm install` so `bun.lock` and the
-`node_modules` volume stay in sync.
+After changing `package.json`, run `docker compose run --rm install` so `bun.lock` and
+`node_modules` on your host stay in sync.
+
+### Why `dev` and the tool services mount differently
+
+`dev` has no bind mount and uses `develop.watch`. Sync is one-way, host to container, and honours
+`.dockerignore`, so the container keeps the `node_modules` built into the image and your host tree
+never leaks into it.
+
+Every tool service does bind-mount the repo at `/app`, because each one exists to write something
+back: `install` updates `bun.lock` and `node_modules`, `build` emits `dist/` and
+`agent-manifest.json`, `format` rewrites source. Watch cannot do that; it only pushes inward.
+
+The bind mount is also what puts `node_modules` on your host, which is the only reason a host
+editor's TypeScript server can resolve `react`, `vitest/globals`, or the `@/*` alias. If your
+editor lights up with unresolved imports, run `docker compose run --rm install`. Those packages
+are Alpine builds and are there to be read, not executed.
 
 ## Stack
 

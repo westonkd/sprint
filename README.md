@@ -35,8 +35,11 @@ Docker with Compose v2. Nothing else, everything runs in containers.
 ## Getting started
 
 ```bash
-docker compose up dev
+docker compose watch dev
 ```
+
+Use `watch` rather than `up`. Compose syncs your edits into the container as you save them; plain
+`up` serves the snapshot baked into the image.
 
 The workbench serves on http://localhost:5173. It is the documentation. Component pages are
 generated entirely from `agent-manifest.json` — props, state attributes, tool descriptors, and every
@@ -54,6 +57,12 @@ docker compose run --rm verify
 ```
 
 Runs typecheck, lint, tests, and the library build.
+
+```bash
+docker compose run --rm format
+```
+
+Applies Biome's safe fixes, formatting, and import sorting in place.
 
 ## Layout
 

@@ -221,7 +221,7 @@ Nothing spiked yet. What exists is scaffolding, not evaluation:
 
 - The attribute contract and registry (`src/agent/`) are in place and predate this PRD.
 - `agent-manifest.json` generation works.
-- Docker toolchain (`dev`, `test`, `verify`, `lint`, `typecheck`, `build`) works.
+- Docker toolchain (`dev`, `test`, `verify`, `lint`, `format`, `typecheck`, `build`) works.
 - WebMCP has not been integrated in this repo, but the target is settled (ADR 20260822183250). What
   the platform gives us, for reference while designing:
 
