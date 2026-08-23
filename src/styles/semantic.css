@@ -1,0 +1,39 @@
+@layer sprint.tokens {
+  :root {
+    --sprint-surface: var(--sprint-color-void);
+    --sprint-surface-raised: var(--sprint-color-panel-100);
+    --sprint-surface-inset: var(--sprint-color-panel-200);
+
+    --sprint-ink: var(--sprint-color-paper);
+    --sprint-ink-muted: var(--sprint-color-panel-600);
+    --sprint-ink-inverse: var(--sprint-color-void);
+
+    --sprint-keyline: var(--sprint-color-panel-400);
+    --sprint-keyline-strong: var(--sprint-color-panel-500);
+
+    --sprint-action: var(--sprint-color-acid);
+    --sprint-action-ink: var(--sprint-color-void);
+    --sprint-action-hover: #d4ff1a;
+
+    --sprint-danger: var(--sprint-color-magenta);
+    --sprint-danger-ink: var(--sprint-color-void);
+    --sprint-danger-hover: #ff2e70;
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-paper);
+    --sprint-neutral-hover: var(--sprint-color-panel-300);
+
+    --sprint-inert: var(--sprint-color-panel-200);
+    --sprint-inert-ink: var(--sprint-color-panel-600);
+
+    --sprint-info: var(--sprint-color-cyan);
+    --sprint-warning: var(--sprint-color-warning);
+
+    --sprint-focus: var(--sprint-color-cyan);
+    --sprint-focus-width: var(--sprint-keyline-width-thick);
+    --sprint-focus-offset: 2px;
+
+    --sprint-label-size: var(--sprint-text-2xs);
+    --sprint-label-tracking: var(--sprint-tracking-label);
+  }
+}

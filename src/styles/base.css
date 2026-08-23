@@ -1,0 +1,40 @@
+@layer sprint.base {
+  :where([data-sprint]),
+  :where([data-sprint] *) {
+    box-sizing: border-box;
+    border-radius: 0;
+  }
+
+  :where([data-sprint]) {
+    font-family: var(--sprint-font-mono);
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :where([data-sprint]):focus-visible,
+  :where([data-sprint] [data-sprint-part]):focus-visible,
+  :where([data-sprint-agent]):focus-visible {
+    outline: var(--sprint-focus-width) solid var(--sprint-focus);
+    outline-offset: var(--sprint-focus-offset);
+  }
+
+  :where([data-sprint-agent]) {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    text-decoration: none;
+    text-transform: none;
+    white-space: pre-wrap;
+    cursor: pointer;
+  }
+
+  :where([data-sprint-agent]):disabled {
+    cursor: default;
+  }
+}

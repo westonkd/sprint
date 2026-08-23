@@ -1,0 +1,54 @@
+@layer sprint.tokens, sprint.base, sprint.components;
+
+@layer sprint.tokens {
+  :root {
+    --sprint-color-acid: #c6f000;
+    --sprint-color-void: #0a0a0a;
+    --sprint-color-ultramarine: #1a1ac8;
+    --sprint-color-magenta: #ff0f5a;
+    --sprint-color-cyan: #00d4ff;
+    --sprint-color-warning: #ffe800;
+    --sprint-color-paper: #f2f2f2;
+
+    --sprint-color-panel-100: #161616;
+    --sprint-color-panel-200: #1d1d1d;
+    --sprint-color-panel-300: #242424;
+    --sprint-color-panel-400: #3a3a3a;
+    --sprint-color-panel-500: #6b6b6b;
+    --sprint-color-panel-600: #9a9a9a;
+
+    --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+    --sprint-font-display: var(--sprint-font-mono);
+
+    --sprint-text-3xs: 0.625rem;
+    --sprint-text-2xs: 0.6875rem;
+    --sprint-text-xs: 0.75rem;
+    --sprint-text-sm: 0.8125rem;
+    --sprint-text-md: 0.875rem;
+    --sprint-text-lg: 1rem;
+
+    --sprint-tracking-tight: 0.02em;
+    --sprint-tracking-label: 0.12em;
+    --sprint-tracking-wide: 0.16em;
+
+    --sprint-weight-regular: 400;
+    --sprint-weight-bold: 700;
+
+    --sprint-space-0: 0;
+    --sprint-space-1: 0.25rem;
+    --sprint-space-2: 0.375rem;
+    --sprint-space-3: 0.5rem;
+    --sprint-space-4: 0.75rem;
+    --sprint-space-5: 1rem;
+    --sprint-space-6: 1.5rem;
+
+    --sprint-keyline-width: 1px;
+    --sprint-keyline-width-thick: 2px;
+
+    --sprint-duration-instant: 80ms;
+    --sprint-duration-fast: 120ms;
+    --sprint-duration-slow: 160ms;
+    --sprint-easing: linear;
+    --sprint-steps: steps(4, end);
+  }
+}

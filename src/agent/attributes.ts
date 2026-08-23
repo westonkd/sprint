@@ -1,6 +1,16 @@
 export const COMPONENT_ATTRIBUTE = "data-sprint";
 export const PART_ATTRIBUTE = "data-sprint-part";
 export const STATE_ATTRIBUTE_PREFIX = "data-sprint-";
+export const TOOL_ATTRIBUTE = "data-sprint-tool";
+export const OWNER_ATTRIBUTE = "data-sprint-owner";
+export const AGENT_ATTRIBUTE = "data-sprint-agent";
+
+export const RESERVED_STATE_KEYS: readonly string[] = [
+  "part",
+  "tool",
+  "owner",
+  "agent",
+];
 
 export type AgentAttributeValue = string | number | boolean | null | undefined;
 

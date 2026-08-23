@@ -4,7 +4,9 @@
   "description": "An agent-forward React component library",
   "type": "module",
   "license": "MIT",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
     "agent-manifest.json"
@@ -24,8 +26,9 @@
   },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build && bun run manifest",
+    "build": "vite build && bun run manifest && bun run check:dist",
     "manifest": "bun run scripts/generate-manifest.ts",
+    "check:dist": "bun run scripts/check-dist.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

@@ -1,3 +1,15 @@
+import type { JsonSchemaObject } from "./webmcp/types.ts";
+
+export interface AgentToolSpec {
+  verb: string;
+  description: string;
+  inputSchema: JsonSchemaObject;
+  readOnly: boolean;
+  untrustedContent: boolean;
+  registeredWhen: string;
+  unregisteredWhen?: string;
+}
+
 export type AgentPropKind =
   | "string"
   | "number"
@@ -47,6 +59,10 @@ export interface AgentComponentMeta {
   actions?: Record<string, AgentActionSpec>;
   state?: Record<string, AgentStateSpec>;
   examples: readonly AgentExample[];
+  tools?: Record<string, AgentToolSpec>;
+  agentView?: {
+    example: string;
+  };
   a11y?: {
     role?: string;
     keyboard?: readonly string[];
@@ -62,6 +78,11 @@ export interface AgentManifest {
     componentAttribute: string;
     partAttribute: string;
     stateAttributePrefix: string;
+    toolAttribute: string;
+    ownerAttribute: string;
+    agentViewFormat: "markdown";
+    toolNaming: string;
+    toolOutputLimit: number;
   };
   components: readonly AgentComponentMeta[];
 }
