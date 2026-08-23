@@ -4,6 +4,13 @@
 >
 > **Status (2026-08-22, later):** The catalog is 12 components, and the workbench is now built out of them rather than out of hand-written markup ([ADR](ADR/20260822220043_the_workbench_is_built_from_sprint_components.md)). Stack, Panel, Heading, Text, Tag, Table, List, CodeBlock, SegmentedControl, Link, and Card landed together, driven by what a documentation page needs. 393 tests, `verify` green. Three design rules came out of it, none of which Button could have surfaced: tools register only where an agent gains something ([ADR](ADR/20260822220043_tools_are_registered_only_where_an_agent_gains_something.md)), agent controls are one per actionable part and layout renders none ([ADR](ADR/20260822220043_agent_controls_are_one_per_actionable_part_and_layout_renders_none.md)), and data components take data and restack on narrow screens ([ADR](ADR/20260822220043_data_components_take_data_and_are_responsive_by_restacking.md)).
 >
+> **Status (2026-08-23):** The form set landed: TextInput, Textarea, Select, Checkbox, Switch. The
+> phase-6 churn question is answered by construction — a keystroke touches no registration, and
+> TextInput's tests pin it ([ADR](ADR/20260823083431_form_tools_take_the_explicit_end_state_and_secrets_stay_off_the_agent_surface.md)).
+> Text entry forced the one extension the control rule has needed so far: a live field as the agent
+> control ([ADR](ADR/20260823083431_text_entry_renders_a_live_field_as_its_agent_control.md)).
+> 590 tests, `verify` green.
+>
 > **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike has not been run, and the catalog grew ahead of it deliberately, so it now has more to invalidate than it did.
 >
 > **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from the reference imagery in `marathon/`. R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.
@@ -326,7 +333,7 @@ lifecycle but is a *guess about the real API* until the Chrome spike runs.
    that abort actually unregisters, and that the mock's shape matches reality. **This is the gate.**
    Everything to date is jsdom-verified only. SegmentedControl's per-instance `inputSchema` and its
    `enum` are new surface for the spike to check.
-6. **A text input and a state-carrying container.** Dialog or Disclosure. Still the two that stress
-   what nothing has yet: registration churn under per-keystroke state, and the portal path the
-   serializer reserved but has never exercised.
+6. **A text input and a state-carrying container.** Half done: the form set landed (TextInput,
+   Textarea, Select, Checkbox, Switch) and registration held flat under per-keystroke state. Dialog
+   or Disclosure remains, for the portal path the serializer reserved but has never exercised.
 7. **Breadth.** Once the machinery has held through the spike and those two.

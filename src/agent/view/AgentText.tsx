@@ -75,6 +75,52 @@ export function AgentControlGroup(props: AgentControlGroupProps) {
   );
 }
 
+export type AgentFieldControlProps = {
+  node: AgentNode;
+  value: string;
+  onValueChange: (value: string) => void;
+  multiline?: boolean;
+  masked?: boolean;
+  ref?: Ref<HTMLInputElement> | Ref<HTMLTextAreaElement> | undefined;
+};
+
+export function AgentFieldControl(props: AgentFieldControlProps) {
+  const { node, value, onValueChange, multiline = false, masked = false, ref } = props;
+  const depth = useAgentDepth();
+  const formatter = useAgentFormat();
+  const indent = "  ".repeat(depth);
+  const lines = format(node, formatter).map((line) => `${indent}${line}`);
+  const attributes = agentControlAttributes(node);
+
+  const control = multiline ? (
+    <textarea
+      {...attributes}
+      aria-label={node.label}
+      value={value}
+      onChange={(event) => onValueChange(event.currentTarget.value)}
+      ref={ref as Ref<HTMLTextAreaElement>}
+    />
+  ) : (
+    <input
+      {...attributes}
+      aria-label={node.label}
+      type={masked ? "password" : "text"}
+      value={value}
+      onChange={(event) => onValueChange(event.currentTarget.value)}
+      ref={ref as Ref<HTMLInputElement>}
+    />
+  );
+
+  return (
+    <AgentDepthProvider value={depth + 1}>
+      {`${lines.join("\n")}\n`}
+      {indent}
+      {control}
+      {"\n"}
+    </AgentDepthProvider>
+  );
+}
+
 export type AgentControlProps = Omit<
   ComponentPropsWithRef<"button">,
   "children" | "ref"

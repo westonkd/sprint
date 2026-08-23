@@ -1,0 +1,85 @@
+@layer sprint.components {
+  [data-sprint="TextInput"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-2);
+  }
+
+  [data-sprint="TextInput"] label {
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="TextInput"][data-sprint-required] label::after {
+    content: " *";
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="input"] {
+    padding: var(--sprint-space-3);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface);
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1.4;
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="input"]::placeholder {
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-text-2xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="input"]:hover:not(:disabled) {
+    border-color: var(--sprint-keyline-strong);
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="input"]:focus-visible {
+    border-color: var(--sprint-keyline-strong);
+    outline: var(--sprint-focus-width) solid var(--sprint-focus);
+    outline-offset: var(--sprint-focus-offset);
+  }
+
+  [data-sprint="TextInput"][data-sprint-invalid] [data-sprint-part="input"] {
+    border-color: var(--sprint-danger);
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="input"]:disabled {
+    background: var(--sprint-inert);
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="hint"],
+  [data-sprint="TextInput"] [data-sprint-part="error"] {
+    margin: 0;
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="hint"] {
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="error"] {
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="TextInput"] [data-sprint-part="error"]::before {
+    content: "! ";
+  }
+
+  @media (pointer: coarse) {
+    [data-sprint="TextInput"] [data-sprint-part="input"] {
+      min-height: 2.25rem;
+    }
+  }
+}

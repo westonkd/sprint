@@ -1,0 +1,80 @@
+@layer sprint.components {
+  [data-sprint="Switch"] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sprint-space-3);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-2xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  [data-sprint="Switch"] [data-sprint-part="track"] {
+    flex: none;
+    display: block;
+    width: 1.75rem;
+    height: 0.875rem;
+    padding: 2px;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    background: var(--sprint-surface);
+  }
+
+  [data-sprint="Switch"] [data-sprint-part="thumb"] {
+    display: block;
+    width: 0.5rem;
+    height: 100%;
+    background: var(--sprint-ink-muted);
+    transition: transform var(--sprint-duration-fast) var(--sprint-steps);
+  }
+
+  [data-sprint="Switch"][data-sprint-on] [data-sprint-part="track"] {
+    border-color: var(--sprint-action);
+    background: var(--sprint-action);
+  }
+
+  [data-sprint="Switch"][data-sprint-on] [data-sprint-part="thumb"] {
+    background: var(--sprint-action-ink);
+    transform: translateX(0.875rem);
+  }
+
+  [data-sprint="Switch"]:hover:not(:disabled) [data-sprint-part="track"] {
+    border-color: var(--sprint-ink);
+  }
+
+  [data-sprint="Switch"]:focus-visible {
+    outline: var(--sprint-focus-width) solid var(--sprint-focus);
+    outline-offset: var(--sprint-focus-offset);
+  }
+
+  [data-sprint="Switch"]:disabled {
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  [data-sprint="Switch"]:disabled [data-sprint-part="track"] {
+    border-color: var(--sprint-keyline);
+    background: var(--sprint-inert);
+  }
+
+  [data-sprint="Switch"]:disabled [data-sprint-part="thumb"] {
+    background: var(--sprint-inert-ink);
+  }
+
+  @media (pointer: coarse) {
+    [data-sprint="Switch"] {
+      min-height: 2.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="Switch"] [data-sprint-part="thumb"] {
+      transition: none;
+    }
+  }
+}
