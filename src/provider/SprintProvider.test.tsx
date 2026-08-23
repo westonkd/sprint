@@ -1,4 +1,4 @@
-import { act, render } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useEffect } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { THEME_ATTRIBUTE, VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
@@ -49,7 +49,8 @@ describe("SprintProvider", () => {
         <Button>Save</Button>
       </SprintProvider>,
     );
-    expect(view.container.firstElementChild).toHaveAttribute(VIEW_ATTRIBUTE, "agent");
+    const container = view.container.querySelector(`[${VIEW_ATTRIBUTE}]`);
+    expect(container).toHaveAttribute(VIEW_ATTRIBUTE, "agent");
   });
 
   it("stamps the theme on its container only when one is chosen", () => {
@@ -156,6 +157,110 @@ describe("SprintProvider", () => {
       </SprintProvider>,
     );
     expect(mock.names().filter((name) => name === "read-region")).toHaveLength(1);
+  });
+});
+
+describe("the copy control", () => {
+  let written: string[];
+
+  beforeEach(() => {
+    written = [];
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: (text: string) => {
+          written.push(text);
+          return Promise.resolve();
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  function copyControl(): HTMLElement {
+    return screen.getByRole("button", { name: "Copy agent view" });
+  }
+
+  it("renders beside the agent text surface, before it, with no text of its own", () => {
+    const view = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    const control = copyControl();
+    const container = view.container.querySelector(`[${VIEW_ATTRIBUTE}]`);
+    expect(control.textContent).toBe("");
+    expect(control.nextElementSibling).toBe(container);
+    expect(control.closest(`[${VIEW_ATTRIBUTE}]`)).toBeNull();
+  });
+
+  it("does not render in human view", () => {
+    render(
+      <SprintProvider view="human" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    expect(screen.queryByRole("button", { name: "Copy agent view" })).toBeNull();
+  });
+
+  it("copies the agent text stream, not markup", async () => {
+    const view = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    fireEvent.click(copyControl());
+    await act(async () => {});
+
+    const container = view.container.querySelector(`[${VIEW_ATTRIBUTE}]`);
+    expect(written).toEqual([(container?.textContent ?? "").trim()]);
+    expect(written[0]).toContain("**Button**");
+    expect(written[0]).not.toContain("<");
+    expect(written[0]).not.toContain("Copy agent view");
+  });
+
+  it("reports back through its label and resets", async () => {
+    vi.useFakeTimers();
+    render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    fireEvent.click(copyControl());
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    const control = screen.getByRole("button", { name: "Copied" });
+    expect(control).toHaveAttribute("data-sprint-copied");
+
+    act(() => {
+      vi.advanceTimersByTime(1200);
+    });
+    expect(copyControl()).not.toHaveAttribute("data-sprint-copied");
+  });
+
+  it("renders once when a nested provider inherits the view", () => {
+    render(
+      <SprintProvider view="agent" pageTools={false}>
+        <SprintProvider>
+          <Button>Save</Button>
+        </SprintProvider>
+      </SprintProvider>,
+    );
+    expect(screen.getAllByRole("button", { name: "Copy agent view" })).toHaveLength(1);
+  });
+
+  it("respects agentControls never", () => {
+    render(
+      <SprintProvider view="agent" agentControls="never" pageTools={false}>
+        <Button>Save</Button>
+      </SprintProvider>,
+    );
+    expect(screen.queryByRole("button")).toBeNull();
   });
 });
 

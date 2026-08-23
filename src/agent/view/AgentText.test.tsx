@@ -124,7 +124,9 @@ describe("a custom formatter", () => {
         <Button>Save</Button>
       </SprintProvider>,
     );
-    expect(view.container.querySelector("button")?.textContent).toBe("BUTTON!");
+    expect(view.container.querySelector("[data-sprint-view] button")?.textContent).toBe(
+      "BUTTON!",
+    );
   });
 
   it("changes what a tool reports after acting", async () => {

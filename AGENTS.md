@@ -150,12 +150,17 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   its subtree: `display: contents` in human view so it never affects layout, and the block that
   makes the text stream readable (`pre-wrap`, mono) in agent view. It is provider chrome, not a
   component root, and it is why flipping the view re-renders without remounting.
+- `data-sprint-view-copy` marks the copy control the view-owning `SprintProvider` renders as the
+  container's preceding sibling in agent view. It puts the container's `textContent` — the exact
+  Markdown stream — on the clipboard, a human affordance with no WebMCP tool. Its visible label is
+  CSS-generated from `aria-label`, so it contributes nothing to the page text an agent reads;
+  `agentControls="never"` removes it along with every other control.
 - `data-sprint-theme="dark|light"` selects the semantic token mapping for everything beneath it.
   Pure CSS: put it on any element, or pass `theme` to `SprintProvider` to stamp it on the view
   container. Dark is the `:root` default. The light mapping keeps acid off light grounds by making
   ultramarine the action color with acid as its ink. The agent view ignores theme entirely.
 
-`part`, `tool`, `owner`, `view`, and `theme` are reserved and never read as state. These attributes are part of the
+`part`, `tool`, `owner`, `view`, `view-copy`, and `theme` are reserved and never read as state. These attributes are part of the
 public API. Changing or removing one is a breaking change, because agents write selectors against
 them, and because the agent view is projected from them.
 
@@ -203,9 +208,6 @@ Never turn an `AgentNode` into text yourself. `AgentLine`, `AgentControl`, and a
 returns all go through `useAgentFormat()`, the one formatter `SprintProvider` resolves for the whole
 subtree. Markdown is only its default; a consumer passing `format` must change the rendered page and
 `read-region` together, and calling `nodeLine` or `toMarkdown` directly is what breaks that.
-A custom formatter also has a shape to honour: `AgentControlGroup` maps its node's formatted lines
-back onto part controls positionally, so a formatter must emit the node's own line (plus one summary
-line when a summary is present) followed by exactly one line per part, in part order.
 A custom formatter also has a shape to honour: `AgentControlGroup` maps its node's formatted lines
 back onto part controls positionally, so a formatter must emit the node's own line (plus one summary
 line when a summary is present) followed by exactly one line per part, in part order.

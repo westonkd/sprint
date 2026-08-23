@@ -121,7 +121,7 @@ describe("Shell agent view", () => {
 
     expect(screen.queryByRole("main")).toBeNull();
     expect(screen.queryByRole("complementary")).toBeNull();
-    expect(screen.queryByRole("button")).toBeNull();
+    expect(container.querySelector("[data-sprint-view] button")).toBeNull();
     expect(container.textContent).toBe(
       '- **Nav** "Main"\n  - **Link** "Reports" [href=#/reports]\n- **Text** "Quarterly numbers land here." [size=normal, tone=default]\n',
     );

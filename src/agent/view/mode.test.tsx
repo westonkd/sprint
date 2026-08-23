@@ -36,7 +36,7 @@ describe("agent view rendering", () => {
         <Button tone="action">Prepare launch</Button>
       </SprintProvider>,
     );
-    const container = view.container.firstElementChild;
+    const container = view.container.querySelector("[data-sprint-view]");
     expect(container).toHaveAttribute("data-sprint-view", "agent");
     const elements = container?.querySelectorAll("*") ?? [];
     expect(elements).toHaveLength(1);
@@ -141,7 +141,7 @@ describe("agent view interactivity", () => {
         <Button onClick={onClick}>Save</Button>
       </SprintProvider>,
     );
-    const control = view.container.querySelector("button");
+    const control = view.container.querySelector("[data-sprint-view] button");
     if (control === null) throw new Error("no control rendered");
     fireEvent.click(control);
     expect(onClick).toHaveBeenCalledTimes(1);
@@ -153,7 +153,7 @@ describe("agent view interactivity", () => {
         <Button>Save</Button>
       </SprintProvider>,
     );
-    expect(view.container.querySelector("button")?.textContent).toBe(
+    expect(view.container.querySelector("[data-sprint-view] button")?.textContent).toBe(
       '- **Button** "Save" [tone=neutral] → tool `press-save`',
     );
   });
@@ -164,7 +164,7 @@ describe("agent view interactivity", () => {
         <Button>Save</Button>
       </SprintProvider>,
     );
-    const control = view.container.querySelector("button");
+    const control = view.container.querySelector("[data-sprint-view] button");
     expect(control).toHaveAttribute("data-sprint-agent", "Button");
     expect(control).toHaveAttribute("data-sprint-tool", "press-save");
   });
