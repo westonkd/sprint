@@ -4,6 +4,24 @@ Sprint is an agent-forward React component library. "Agent-forward" means every 
 ships machine-readable metadata and stable DOM hooks, so an AI agent can discover it,
 compose it correctly, and drive it in a browser without scraping class names.
 
+## Load the project skill first
+
+`.claude/skills/sprint/` is the project skill. Load it at the start of every session, not only
+when a change looks architectural, because by the time a change looks architectural you have
+usually already made it.
+
+- `references/PRD.md` — what Sprint is for, its requirements, and its open questions.
+- `references/DESIGN.md` — the visual language.
+- `references/ADR/` — one file per decision, filename-sorted. Read the recent ones first.
+  Superseded decisions are kept rather than deleted, so an old file is not automatically wrong.
+
+Most of what looks arbitrary here is a decision recorded in an ADR. Record new ones with the
+script rather than editing the PRD in place:
+
+```bash
+.claude/skills/sprint/scripts/new_adr.sh "Title of the decision"
+```
+
 ## Everything runs in Docker
 
 Do not run `bun`, `vite`, or `vitest` on the host. Use Compose.
@@ -87,7 +105,7 @@ Then `docker compose run --rm verify`.
 
 ## The workbench is the docs
 
-`docker compose up dev` serves documentation generated entirely from the registry. There are no
+`docker compose watch dev` serves documentation generated entirely from the registry. There are no
 hand-written component pages: props tables, state tables, tool descriptors, code snippets, and the
 agent view all come from `meta.ts`. Adding a component adds its documentation.
 
@@ -168,6 +186,6 @@ the floor.
   layer in `src/styles/semantic.css`, never a raw color from `primitives.css`.
 - Every color pairing meets WCAG AA. `src/styles/contrast.test.ts` enforces it.
 - `react` and `react-dom` are peer dependencies and stay external in the bundle.
-- The project skill in `.claude/skills/sprint/` holds the PRD, the visual language, and the
-  decision log. Read it before making an architectural change, and record decisions with
-  `.claude/skills/sprint/scripts/new_adr.sh`.
+- Commit messages are short. A subject line and nothing else. Reach for a body only when the
+  change is genuinely inexplicable without one, which is rare, because the reasoning belongs
+  in an ADR where it can be found later and revised.
