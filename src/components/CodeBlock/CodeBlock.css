@@ -1,0 +1,92 @@
+@layer sprint.components {
+  [data-sprint="CodeBlock"] {
+    display: block;
+    margin: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface);
+    min-width: 0;
+  }
+
+  [data-sprint="CodeBlock"] > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sprint-space-3);
+    padding: var(--sprint-space-1) var(--sprint-space-3);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-inset);
+  }
+
+  [data-sprint="CodeBlock"] > header > span {
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-wide);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-part="copy"] {
+    padding: 2px var(--sprint-space-2);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: none;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-part="copy"]:hover {
+    border-color: var(--sprint-action);
+    color: var(--sprint-action);
+  }
+
+  [data-sprint="CodeBlock"][data-sprint-copied] [data-sprint-part="copy"] {
+    border-color: var(--sprint-action);
+    background: var(--sprint-action);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-part="code"] {
+    margin: 0;
+    padding: var(--sprint-space-4);
+    overflow-x: auto;
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-2xs);
+    line-height: 1.7;
+    tab-size: 2;
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-token="tag"] {
+    color: var(--sprint-action);
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-token="attr"] {
+    color: var(--sprint-info);
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-token="string"] {
+    color: var(--sprint-warning);
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-token="keyword"] {
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-token="number"] {
+    color: var(--sprint-info);
+  }
+
+  [data-sprint="CodeBlock"] [data-sprint-token="punct"],
+  [data-sprint="CodeBlock"] [data-sprint-token="comment"] {
+    color: var(--sprint-ink-muted);
+  }
+
+  @media (pointer: coarse) {
+    [data-sprint="CodeBlock"] [data-sprint-part="copy"] {
+      min-height: 2.25rem;
+      padding: var(--sprint-space-2) var(--sprint-space-3);
+    }
+  }
+}

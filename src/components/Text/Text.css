@@ -1,0 +1,48 @@
+@layer sprint.components {
+  [data-sprint="Text"] {
+    margin: 0;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  [data-sprint="Text"][data-sprint-size="small"] {
+    font-size: var(--sprint-text-2xs);
+  }
+
+  [data-sprint="Text"][data-sprint-tone="muted"] {
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="Text"][data-sprint-tone="action"] {
+    color: var(--sprint-action);
+  }
+
+  [data-sprint="Text"][data-sprint-tone="info"] {
+    color: var(--sprint-info);
+  }
+
+  [data-sprint="Text"][data-sprint-tone="warning"] {
+    color: var(--sprint-warning);
+  }
+
+  [data-sprint="Text"][data-sprint-tone="danger"] {
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="Text"] code {
+    color: var(--sprint-action);
+    font-family: var(--sprint-font-mono);
+    overflow-wrap: anywhere;
+  }
+
+  [data-sprint="Text"] a {
+    color: var(--sprint-info);
+  }
+
+  [data-sprint="Text"] strong {
+    font-weight: var(--sprint-weight-bold);
+  }
+}

@@ -2,7 +2,9 @@
 
 > **Status (2026-08-22):** First slice landed. The agent runtime exists and **Button** is the first component. All three load-bearing ideas are now validated in code, not just stated: the agent view is a DOM projection ([ADR](ADR/20260822192124_agent_view_is_a_dom_projection_not_a_second_render_path.md)), tools register against `document.modelContext` with label-derived names ([ADR](ADR/20260822192124_tool_names_derive_from_the_accessible_label_and_compose_by_scope.md)), and the visual system ships as an enforced two-layer token set ([ADR](ADR/20260822192124_css_token_layer_cascade_layers_and_semantic_roles_as_public_contract.md)). 162 tests, `verify` green.
 >
-> **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike (phase 1) has not been run and remains the gate before catalog breadth.
+> **Status (2026-08-22, later):** The catalog is 12 components, and the workbench is now built out of them rather than out of hand-written markup ([ADR](ADR/20260822220043_the_workbench_is_built_from_sprint_components.md)). Stack, Panel, Heading, Text, Tag, Table, List, CodeBlock, SegmentedControl, Link, and Card landed together, driven by what a documentation page needs. 393 tests, `verify` green. Three design rules came out of it, none of which Button could have surfaced: tools register only where an agent gains something ([ADR](ADR/20260822220043_tools_are_registered_only_where_an_agent_gains_something.md)), agent controls are one per actionable part and layout renders none ([ADR](ADR/20260822220043_agent_controls_are_one_per_actionable_part_and_layout_renders_none.md)), and data components take data and restack on narrow screens ([ADR](ADR/20260822220043_data_components_take_data_and_are_responsive_by_restacking.md)).
+>
+> **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike has not been run, and the catalog grew ahead of it deliberately, so it now has more to invalidate than it did.
 >
 > **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from the reference imagery in `marathon/`. R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.
 >
@@ -267,8 +269,12 @@ reachable both by reading attributes directly and via the `read-region` tool; th
 mode" to trigger, because there is no mode; components register their own tools rather than a
 provider batching them; and names are label-derived and scope-composed. See the ADRs.
 
-- Does a page's tool count stay manageable as the catalog grows? The tripwire is ~15 tools on a
-  realistic page, at which point Button's default-on registration should be reconsidered.
+- Does a page's tool count stay manageable as the catalog grows? Half answered: the workbench blew
+  through the ~15 tripwire on its first page, and the answer was not to raise it but to register
+  only where an agent gains something
+  ([ADR](ADR/20260822220043_tools_are_registered_only_where_an_agent_gains_something.md)).
+  Navigation is settled. Still open for actions: a page with fifteen genuinely actionable Buttons
+  would put Button's default-on registration back on the table.
 - Should a lint rule catch labels containing changing values, which churn tool names?
 - Localized labels produce localized tool names. Is that right, or should tool names be pinned to a
   source language?
@@ -310,12 +316,17 @@ lifecycle but is a *guess about the real API* until the Chrome spike runs.
 3. ~~**Manifest and tooling catch-up.**~~ Done. `AgentComponentMeta` carries `tools` and `agentView`;
    manifest `conventions` carries the tool attribute, owner attribute, agent view format, naming
    convention, and output limit.
-4. **Spike WebMCP in Chrome 149.** Load the workbench behind
+4. ~~**Enough catalog to build the workbench out of Sprint.**~~ Done, and taken ahead of the
+   Chrome spike on purpose
+   ([ADR](ADR/20260822220043_the_workbench_is_built_from_sprint_components.md)). Eleven
+   components, chosen by what a documentation page actually needs. It found three holes Button
+   could not have.
+5. **Spike WebMCP in Chrome 149.** Load the workbench behind
    `chrome://flags/#enable-webmcp-testing` and confirm the platform accepts Sprint's descriptors,
    that abort actually unregisters, and that the mock's shape matches reality. **This is the gate.**
-   Everything to date is jsdom-verified only.
-5. **Second and third components.** A text input and a state-carrying container (Dialog or
-   Disclosure). These are what stress the parts of the design Button could not: a real input schema,
-   registration churn under per-keystroke state, and the portal path the serializer reserved but has
-   never exercised.
-6. **Breadth.** Only once the machinery has held unchanged across four components.
+   Everything to date is jsdom-verified only. SegmentedControl's per-instance `inputSchema` and its
+   `enum` are new surface for the spike to check.
+6. **A text input and a state-carrying container.** Dialog or Disclosure. Still the two that stress
+   what nothing has yet: registration churn under per-keystroke state, and the portal path the
+   serializer reserved but has never exercised.
+7. **Breadth.** Once the machinery has held through the spike and those two.

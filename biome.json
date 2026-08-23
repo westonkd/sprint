@@ -33,6 +33,24 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/components/Table/Table.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": { "noRedundantRoles": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["src/components/SegmentedControl/SegmentedControl.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": { "useSemanticElements": "off" }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "double",

@@ -1,0 +1,72 @@
+@layer sprint.components {
+  [data-sprint="Tag"] {
+    display: inline-block;
+    padding: 2px var(--sprint-space-2);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    line-height: 1.4;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Tag"][data-sprint-tone="action"] {
+    border-color: var(--sprint-action);
+    color: var(--sprint-action);
+  }
+
+  [data-sprint="Tag"][data-sprint-tone="danger"] {
+    border-color: var(--sprint-danger);
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="Tag"][data-sprint-tone="info"] {
+    border-color: var(--sprint-info);
+    color: var(--sprint-info);
+  }
+
+  [data-sprint="Tag"][data-sprint-tone="warning"] {
+    border-color: var(--sprint-warning);
+    color: var(--sprint-warning);
+  }
+
+  [data-sprint="Tag"][data-sprint-tone="inert"] {
+    border-color: var(--sprint-keyline);
+    color: var(--sprint-inert-ink);
+  }
+
+  [data-sprint="Tag"][data-sprint-filled] {
+    background: var(--sprint-neutral-hover);
+    border-color: var(--sprint-neutral-hover);
+    color: var(--sprint-ink);
+  }
+
+  [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="action"] {
+    background: var(--sprint-action);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="danger"] {
+    background: var(--sprint-danger);
+    color: var(--sprint-danger-ink);
+  }
+
+  [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="info"] {
+    background: var(--sprint-info);
+    color: var(--sprint-info-ink);
+  }
+
+  [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="warning"] {
+    background: var(--sprint-warning);
+    color: var(--sprint-warning-ink);
+  }
+
+  [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="inert"] {
+    background: var(--sprint-inert);
+    border-color: var(--sprint-keyline);
+    color: var(--sprint-inert-ink);
+  }
+}

@@ -1,0 +1,22 @@
+@layer sprint.components {
+  [data-sprint="Link"] {
+    color: var(--sprint-info);
+    font-family: var(--sprint-font-mono);
+    text-decoration: none;
+    border-bottom: var(--sprint-keyline-width) solid transparent;
+    overflow-wrap: anywhere;
+  }
+
+  [data-sprint="Link"]:hover {
+    border-bottom-color: currentcolor;
+  }
+
+  [data-sprint="Link"][data-sprint-active] {
+    color: var(--sprint-action);
+  }
+
+  [data-sprint="Link"][data-sprint-external]::after {
+    content: " ↗";
+    font-size: 0.9em;
+  }
+}

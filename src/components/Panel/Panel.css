@@ -1,0 +1,75 @@
+@layer sprint.components {
+  [data-sprint="Panel"] {
+    display: block;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-raised);
+    min-width: 0;
+  }
+
+  [data-sprint="Panel"] > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sprint-space-3);
+    padding: var(--sprint-space-2) var(--sprint-space-4);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-inset);
+  }
+
+  [data-sprint="Panel"] > header > span:first-child {
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-wide);
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Panel"] > header > span + span {
+    display: flex;
+    align-items: center;
+    gap: var(--sprint-space-2);
+    flex-shrink: 0;
+  }
+
+  [data-sprint="Panel"] > div {
+    padding: var(--sprint-space-4);
+    min-width: 0;
+  }
+
+  [data-sprint="Panel"][data-sprint-flush] > div {
+    padding: 0;
+  }
+
+  [data-sprint="Panel"][data-sprint-empty] > div {
+    padding: var(--sprint-space-6) var(--sprint-space-4);
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--sprint-keyline) 0 1px,
+      transparent 1px 8px
+    );
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  [data-sprint="Panel"][data-sprint-empty] > div > span {
+    background: var(--sprint-surface-raised);
+    padding: 2px var(--sprint-space-3);
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="Panel"] > div {
+      padding: var(--sprint-space-5);
+    }
+
+    [data-sprint="Panel"][data-sprint-flush] > div {
+      padding: 0;
+    }
+  }
+}

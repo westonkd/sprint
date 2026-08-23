@@ -1,0 +1,51 @@
+@layer sprint.components {
+  [data-sprint="Card"] {
+    display: grid;
+    gap: var(--sprint-space-2);
+    justify-items: start;
+    align-content: start;
+    width: 100%;
+    height: 100%;
+    padding: var(--sprint-space-4);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface);
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-2xs);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color var(--sprint-duration-instant) var(--sprint-easing);
+  }
+
+  [data-sprint="Card"]:hover:not(:disabled) {
+    border-color: var(--sprint-action);
+  }
+
+  [data-sprint="Card"] [data-sprint-part="title"] {
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="Card"] [data-sprint-part="body"] {
+    color: var(--sprint-ink-muted);
+    line-height: 1.6;
+  }
+
+  [data-sprint="Card"]:disabled {
+    background: var(--sprint-inert);
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  [data-sprint="Card"]:disabled [data-sprint-part="body"] {
+    color: var(--sprint-inert-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="Card"] {
+      transition: none;
+    }
+  }
+}

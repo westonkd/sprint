@@ -8,12 +8,13 @@ import {
   toolNameHolderCount,
   useAgentScope,
 } from "./scope.ts";
-import type { ToolExecuteContext } from "./types.ts";
+import type { JsonSchemaObject, ToolExecuteContext } from "./types.ts";
 
 export interface UseAgentToolOptions {
   spec: AgentToolSpec;
   label: string | undefined;
   nameOverride?: string | undefined;
+  inputSchema?: JsonSchemaObject | undefined;
   enabled?: boolean;
   execute: (
     inputs: Record<string, unknown>,
@@ -22,8 +23,17 @@ export interface UseAgentToolOptions {
 }
 
 export function useAgentTool(options: UseAgentToolOptions): string | undefined {
-  const { spec, label, nameOverride, enabled = true, execute } = options;
+  const { spec, label, nameOverride, inputSchema, enabled = true, execute } = options;
   const scope = useAgentScope();
+
+  const schemaKey = `${spec.verb}|${
+    inputSchema === undefined ? "" : JSON.stringify(inputSchema)
+  }`;
+  const schemaRef = useRef({ key: schemaKey, value: inputSchema ?? spec.inputSchema });
+  if (schemaRef.current.key !== schemaKey) {
+    schemaRef.current = { key: schemaKey, value: inputSchema ?? spec.inputSchema };
+  }
+  const schema = schemaRef.current.value;
 
   const holderRef = useRef<symbol | null>(null);
   if (holderRef.current === null) holderRef.current = Symbol("sprint-tool");
@@ -75,7 +85,7 @@ export function useAgentTool(options: UseAgentToolOptions): string | undefined {
       {
         name: resolved,
         description: spec.description,
-        inputSchema: spec.inputSchema,
+        inputSchema: schema,
         annotations: {
           readOnlyHint: spec.readOnly,
           untrustedContentHint: spec.untrustedContent,
@@ -88,7 +98,7 @@ export function useAgentTool(options: UseAgentToolOptions): string | undefined {
     return () => {
       controller.abort();
     };
-  }, [held, resolved, spec]);
+  }, [held, resolved, spec, schema]);
 
   return held && resolved !== null ? resolved : undefined;
 }

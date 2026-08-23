@@ -1,6 +1,8 @@
 import {
   AGENT_ATTRIBUTE,
   agentAttributes,
+  COMPONENT_ATTRIBUTE,
+  PART_ATTRIBUTE,
   TOOL_ATTRIBUTE,
 } from "@/agent/attributes.ts";
 import type { AgentNode, AgentPart, AgentStateValue } from "./node.ts";
@@ -52,12 +54,22 @@ export function agentControlAttributes(node: AgentNode): Record<string, string> 
   return attributes;
 }
 
-export function agentPartAttributesFor(
+export function agentPartControlAttributes(
   component: string,
   part: AgentPart,
 ): Record<string, string> {
-  return agentAttributes(component, {
+  const attributes: Record<string, string> = {
+    [AGENT_ATTRIBUTE]: component,
+    [PART_ATTRIBUTE]: part.part,
+  };
+  if (part.tool !== undefined) attributes[TOOL_ATTRIBUTE] = part.tool;
+  return attributes;
+}
+
+export function agentPartAttributesFor(part: AgentPart): Record<string, string> {
+  const { [COMPONENT_ATTRIBUTE]: _root, ...attributes } = agentAttributes("", {
     part: part.part,
     state: { ...part.state, tool: part.tool },
   });
+  return attributes;
 }

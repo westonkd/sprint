@@ -1,15 +1,28 @@
-import { useState } from "react";
 import {
   type AgentComponentMeta,
   AgentRegion,
   agentSelector,
   COMPONENT_ATTRIBUTE,
+  CodeBlock,
+  Heading,
+  Panel,
   SprintProvider,
-  type SprintView,
+  Stack,
+  Table,
+  type TableRow,
+  Tag,
+  type TagTone,
+  Text,
+  useSprintViewControl,
 } from "../../src/index.ts";
 import { specimensFor } from "../specimens/index.ts";
 import { AgentPreview, ViewSwitch } from "../ui/AgentPreview.tsx";
-import { CodeBlock } from "../ui/CodeBlock.tsx";
+
+const STATUS_TONE: Record<string, TagTone> = {
+  experimental: "warning",
+  stable: "action",
+  deprecated: "danger",
+};
 
 function importSnippet(name: string): string {
   return `import { ${name} } from "sprint";\nimport "sprint/styles.css";`;
@@ -44,44 +57,36 @@ function Props(props: { meta: AgentComponentMeta }) {
   const entries = Object.entries(props.meta.props);
   if (entries.length === 0) return null;
 
+  const rows: TableRow[] = entries.map(([name, spec]) => ({
+    id: name,
+    cells: {
+      prop: <code>{name}</code>,
+      kind: (
+        <>
+          {spec.kind}
+          {spec.required === true ? " · required" : ""}
+          {spec.values === undefined ? null : <div>{spec.values.join(" | ")}</div>}
+        </>
+      ),
+      default:
+        spec.default === undefined ? "—" : <code>{JSON.stringify(spec.default)}</code>,
+      description: spec.description,
+    },
+  }));
+
   return (
-    <section className="pane">
-      <h2>Props</h2>
-      <table className="grid">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Kind</th>
-            <th>Default</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {entries.map(([name, spec]) => (
-            <tr key={name}>
-              <td>
-                <code>{name}</code>
-                {spec.required ? <span className="req">required</span> : null}
-              </td>
-              <td>
-                <span className="kind">{spec.kind}</span>
-                {spec.values === undefined ? null : (
-                  <span className="values">{spec.values.join(" | ")}</span>
-                )}
-              </td>
-              <td>
-                {spec.default === undefined ? (
-                  <span className="muted">—</span>
-                ) : (
-                  <code>{JSON.stringify(spec.default)}</code>
-                )}
-              </td>
-              <td>{spec.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <Panel label="Props" flush>
+      <Table
+        label={`${props.meta.name} props`}
+        columns={[
+          { key: "prop", header: "Prop", width: "9rem" },
+          { key: "kind", header: "Kind", width: "9rem" },
+          { key: "default", header: "Default", width: "7rem" },
+          { key: "description", header: "Description" },
+        ]}
+        rows={rows}
+      />
+    </Panel>
   );
 }
 
@@ -89,46 +94,39 @@ function State(props: { meta: AgentComponentMeta }) {
   const entries = Object.entries(props.meta.state ?? {});
   if (entries.length === 0) return null;
 
+  const rows: TableRow[] = entries.map(([name, spec]) => ({
+    id: name,
+    cells: {
+      attribute: <code>{spec.attribute}</code>,
+      values: spec.values === undefined ? "present or absent" : spec.values.join(" | "),
+      description: spec.description,
+    },
+  }));
+
   return (
-    <section className="pane">
-      <h2>State attributes</h2>
-      <p className="note">
-        Public API. Agents write selectors against these, and the agent view is
-        projected from them.
-      </p>
-      <table className="grid">
-        <thead>
-          <tr>
-            <th>Attribute</th>
-            <th>Values</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {entries.map(([name, spec]) => (
-            <tr key={name}>
-              <td>
-                <code>{spec.attribute}</code>
-              </td>
-              <td>
-                {spec.values === undefined ? (
-                  <span className="muted">present or absent</span>
-                ) : (
-                  <span className="values">{spec.values.join(" | ")}</span>
-                )}
-              </td>
-              <td>{spec.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <CodeBlock
-        caption="selector"
-        code={`document.querySelector(agentSelector("${props.meta.name}"));\n// ${agentSelector(
-          props.meta.name,
-        )}`}
-      />
-    </section>
+    <Panel label="State attributes">
+      <Stack gap="tight">
+        <Text tone="muted" size="small">
+          Public API. Agents write selectors against these, and the agent view is
+          projected from them.
+        </Text>
+        <Table
+          label={`${props.meta.name} state attributes`}
+          columns={[
+            { key: "attribute", header: "Attribute", width: "14rem" },
+            { key: "values", header: "Values", width: "12rem" },
+            { key: "description", header: "Description" },
+          ]}
+          rows={rows}
+        />
+        <CodeBlock
+          caption="selector"
+          code={`document.querySelector(agentSelector("${props.meta.name}"));\n// ${agentSelector(
+            props.meta.name,
+          )}`}
+        />
+      </Stack>
+    </Panel>
   );
 }
 
@@ -137,170 +135,205 @@ function Tools(props: { meta: AgentComponentMeta }) {
   if (entries.length === 0) return null;
 
   return (
-    <section className="pane">
-      <h2>WebMCP tools</h2>
-      <p className="note">
-        Registered with <code>document.modelContext</code> when available. The
-        descriptor below is generated from the same spec the component registers at
-        runtime, so it cannot drift.
-      </p>
-      <ul className="tools">
+    <Panel label="WebMCP tools">
+      <Stack gap="tight">
+        <Text tone="muted" size="small">
+          Registered with <code>document.modelContext</code> when available. The
+          descriptor below is generated from the same spec the component registers at
+          runtime, so it cannot drift.
+        </Text>
+
         {entries.map(([key, tool]) => (
-          <li key={key}>
-            <code className="tool-name">&lt;scope&gt;-{tool.verb}-&lt;label&gt;</code>
-            <span className={tool.readOnly ? "chip chip-read" : "chip chip-write"}>
-              {tool.readOnly ? "read only" : "changes state"}
-            </span>
-            <p>{tool.description}</p>
-            <p className="note">
-              <strong>Registered</strong> {tool.registeredWhen}
-            </p>
-            {tool.unregisteredWhen === undefined ? null : (
-              <p className="note">
-                <strong>Unregistered</strong> {tool.unregisteredWhen}
-              </p>
-            )}
-          </li>
+          <Panel key={key} label={`<scope>-${tool.verb}-<label>`}>
+            <Stack gap="tight">
+              <Tag tone={tool.readOnly ? "info" : "danger"}>
+                {tool.readOnly ? "read only" : "changes state"}
+              </Tag>
+              <Text>{tool.description}</Text>
+              <Text tone="muted" size="small">
+                <strong>Registered</strong> {tool.registeredWhen}
+              </Text>
+              {tool.unregisteredWhen === undefined ? null : (
+                <Text tone="muted" size="small">
+                  <strong>Unregistered</strong> {tool.unregisteredWhen}
+                </Text>
+              )}
+            </Stack>
+          </Panel>
         ))}
-      </ul>
-      <CodeBlock caption="descriptor" code={schemaSnippet(props.meta)} />
-    </section>
+
+        <CodeBlock
+          caption="descriptor"
+          language="json"
+          code={schemaSnippet(props.meta)}
+        />
+      </Stack>
+    </Panel>
+  );
+}
+
+function Accessibility(props: { meta: AgentComponentMeta }) {
+  const { a11y } = props.meta;
+  if (a11y === undefined) return null;
+
+  const rows: TableRow[] = [
+    ...(a11y.role === undefined
+      ? []
+      : [{ id: "role", cells: { field: "Role", value: <code>{a11y.role}</code> } }]),
+    ...(a11y.keyboard === undefined
+      ? []
+      : [
+          {
+            id: "keyboard",
+            cells: { field: "Keyboard", value: a11y.keyboard.join(", ") },
+          },
+        ]),
+    ...(a11y.notes === undefined
+      ? []
+      : [{ id: "notes", cells: { field: "Notes", value: a11y.notes } }]),
+  ];
+
+  return (
+    <Panel label="Accessibility" flush>
+      <Table
+        label={`${props.meta.name} accessibility`}
+        columns={[
+          { key: "field", header: "Field", width: "8rem" },
+          { key: "value", header: "Value" },
+        ]}
+        rows={rows}
+      />
+    </Panel>
   );
 }
 
 export function ComponentDoc(props: { meta: AgentComponentMeta }) {
   const { meta } = props;
   const specimens = specimensFor(meta.name);
-  const [pageView, setPageView] = useState<SprintView>("human");
+  const { view: pageView, setView: setPageView } = useSprintViewControl();
 
   return (
     <article className="doc">
-      <header className="doc-head">
-        <div className="doc-title">
-          <h1>{meta.name}</h1>
-          <span className={`status status-${meta.status}`}>{meta.status}</span>
-          <span className="chip">{meta.category}</span>
-          <ViewSwitch view={pageView} onChange={setPageView} label="Whole page" />
-        </div>
-        <p className="lede">{meta.summary}</p>
-      </header>
+      <Stack gap="loose">
+        <header className="doc-head">
+          <Stack gap="tight">
+            <Stack direction="row" gap="tight" align="center" justify="between" wrap>
+              <Stack direction="row" gap="tight" align="center" wrap>
+                <Heading level={1}>{meta.name}</Heading>
+                <Tag tone={STATUS_TONE[meta.status] ?? "neutral"} filled>
+                  {meta.status}
+                </Tag>
+                <Tag>{meta.category}</Tag>
+              </Stack>
+              <ViewSwitch view={pageView} onChange={setPageView} label="Whole page" />
+            </Stack>
+            <Text>{meta.summary}</Text>
+          </Stack>
+        </header>
 
-      {specimens.gallery === undefined ? null : (
-        <section className="pane">
-          <h2>Every variant</h2>
-          <div className={pageView === "agent" ? "row as-text" : "row"}>
-            <SprintProvider view={pageView} pageTools={false}>
-              {specimens.gallery}
-            </SprintProvider>
-          </div>
-        </section>
-      )}
-
-      <section className="pane">
-        <h2>When to use</h2>
-        <p>{meta.whenToUse}</p>
-        {meta.whenNotToUse === undefined ? null : (
-          <>
-            <h3>When not to</h3>
-            <p>{meta.whenNotToUse}</p>
-          </>
-        )}
-      </section>
-
-      <section className="pane">
-        <h2>Install</h2>
-        <CodeBlock code={importSnippet(meta.name)} />
-      </section>
-
-      <section className="pane">
-        <h2>Examples</h2>
-        <p className="note">
-          Each snippet is the exact <code>examples[].code</code> string an agent
-          receives from the manifest. Nothing here is written twice.
-        </p>
-        <p className="note">
-          Every example below is scoped as <code>ex{"{n}"}</code> so specimens on this
-          page do not claim the same tool name. In your own app the prefix would be
-          whatever region the component sits in, or nothing at all.
-        </p>
-        {meta.examples.map((example, index) => {
-          const live = specimens.byExample[example.title];
-          return (
-            <div className="example" key={example.title}>
-              <h3>{example.title}</h3>
-              {example.description === undefined ? null : (
-                <p className="note">{example.description}</p>
-              )}
-              {live === undefined ? (
-                <p className="warn">No live specimen registered for this example.</p>
-              ) : (
-                <AgentRegion label={`ex${index + 1}`}>
-                  <AgentPreview pageView={pageView}>{live}</AgentPreview>
-                </AgentRegion>
-              )}
-              <CodeBlock code={example.code} />
+        {specimens.gallery === undefined ? null : (
+          <Panel label="Every variant">
+            <div className={pageView === "agent" ? "stage as-text" : "stage"}>
+              <SprintProvider view={pageView} pageTools={false}>
+                {specimens.gallery}
+              </SprintProvider>
             </div>
-          );
-        })}
-      </section>
+          </Panel>
+        )}
 
-      <Props meta={meta} />
-      <State meta={meta} />
-      <Tools meta={meta} />
+        <Panel label="When to use">
+          <Stack gap="tight">
+            <Text>{meta.whenToUse}</Text>
+            {meta.whenNotToUse === undefined ? null : (
+              <>
+                <Heading level={3}>When not to</Heading>
+                <Text>{meta.whenNotToUse}</Text>
+              </>
+            )}
+          </Stack>
+        </Panel>
 
-      {meta.agentView === undefined ? null : (
-        <section className="pane">
-          <h2>Agent view</h2>
-          <p className="note">
-            The component renders this itself, from the same node that produces its{" "}
-            <code>data-sprint*</code> attributes in the human view. Flip{" "}
-            <strong>Whole page</strong> at the top to see every specimen above in it.
-          </p>
-          <p className="note">
-            The snippet below is the copy carried in <code>agent-manifest.json</code>,
-            for an agent reading the catalogue before it renders anything.
-          </p>
-          <CodeBlock caption="manifest" code={meta.agentView.example} />
-        </section>
-      )}
+        <Panel label="Install">
+          <CodeBlock code={importSnippet(meta.name)} />
+        </Panel>
 
-      {meta.a11y === undefined ? null : (
-        <section className="pane">
-          <h2>Accessibility</h2>
-          <table className="grid">
-            <tbody>
-              {meta.a11y.role === undefined ? null : (
-                <tr>
-                  <th>Role</th>
-                  <td>
-                    <code>{meta.a11y.role}</code>
-                  </td>
-                </tr>
-              )}
-              {meta.a11y.keyboard === undefined ? null : (
-                <tr>
-                  <th>Keyboard</th>
-                  <td>{meta.a11y.keyboard.join(", ")}</td>
-                </tr>
-              )}
-              {meta.a11y.notes === undefined ? null : (
-                <tr>
-                  <th>Notes</th>
-                  <td>{meta.a11y.notes}</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </section>
-      )}
+        <Panel label="Examples">
+          <Stack>
+            <Stack gap="tight">
+              <Text tone="muted" size="small">
+                Each snippet is the exact <code>examples[].code</code> string an agent
+                receives from the manifest. Nothing here is written twice.
+              </Text>
+              <Text tone="muted" size="small">
+                Every example below is scoped as <code>ex{"{n}"}</code> so specimens on
+                this page do not claim the same tool name. In your own app the prefix
+                would be whatever region the component sits in, or nothing at all.
+              </Text>
+            </Stack>
 
-      <section className="pane">
-        <h2>Root attribute</h2>
-        <CodeBlock
-          caption="dom"
-          code={`<button ${COMPONENT_ATTRIBUTE}="${meta.name}" data-sprint-tone="neutral" data-sprint-tool="press-save">`}
-        />
-      </section>
+            {meta.examples.map((example, index) => {
+              const live = specimens.byExample[example.title];
+              return (
+                <Stack gap="tight" key={example.title}>
+                  <Heading level={3}>{example.title}</Heading>
+                  {example.description === undefined ? null : (
+                    <Text tone="muted" size="small">
+                      {example.description}
+                    </Text>
+                  )}
+                  {live === undefined ? (
+                    <Text tone="warning" size="small">
+                      No live specimen registered for this example.
+                    </Text>
+                  ) : (
+                    <AgentRegion label={`ex${index + 1}`}>
+                      <AgentPreview pageView={pageView}>{live}</AgentPreview>
+                    </AgentRegion>
+                  )}
+                  <CodeBlock code={example.code} />
+                </Stack>
+              );
+            })}
+          </Stack>
+        </Panel>
+
+        <Props meta={meta} />
+        <State meta={meta} />
+        <Tools meta={meta} />
+
+        {meta.agentView === undefined ? null : (
+          <Panel label="Agent view">
+            <Stack gap="tight">
+              <Text tone="muted" size="small">
+                The component renders this itself, from the same node that produces its{" "}
+                <code>data-sprint*</code> attributes in the human view. Flip{" "}
+                <strong>Whole page</strong> at the top to see every specimen above in
+                it.
+              </Text>
+              <Text tone="muted" size="small">
+                The snippet below is the copy carried in{" "}
+                <code>agent-manifest.json</code>, for an agent reading the catalogue
+                before it renders anything.
+              </Text>
+              <CodeBlock
+                caption="manifest"
+                language="text"
+                code={meta.agentView.example}
+              />
+            </Stack>
+          </Panel>
+        )}
+
+        <Accessibility meta={meta} />
+
+        <Panel label="Root attribute">
+          <CodeBlock
+            caption="dom"
+            language="text"
+            code={`<button ${COMPONENT_ATTRIBUTE}="${meta.name}" data-sprint-tone="neutral" data-sprint-tool="press-save">`}
+          />
+        </Panel>
+      </Stack>
     </article>
   );
 }

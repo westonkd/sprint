@@ -1,0 +1,54 @@
+@layer sprint.components {
+  [data-sprint="List"] {
+    display: grid;
+    gap: var(--sprint-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: sprint-list;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1.6;
+  }
+
+  [data-sprint="List"] > li {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: var(--sprint-space-2);
+    counter-increment: sprint-list;
+  }
+
+  [data-sprint="List"] > li::before {
+    content: "+";
+    color: var(--sprint-action);
+    font-size: var(--sprint-text-2xs);
+  }
+
+  [data-sprint="List"][data-sprint-ordered] > li::before {
+    content: counter(sprint-list) ".";
+    color: var(--sprint-ink-muted);
+    letter-spacing: var(--sprint-tracking-label);
+  }
+
+  [data-sprint="List"][data-sprint-empty] > li {
+    grid-template-columns: minmax(0, 1fr);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="List"][data-sprint-empty] > li::before {
+    content: none;
+  }
+
+  [data-sprint="List"] code {
+    color: var(--sprint-action);
+    overflow-wrap: anywhere;
+  }
+
+  [data-sprint="List"] strong {
+    font-weight: var(--sprint-weight-bold);
+  }
+}

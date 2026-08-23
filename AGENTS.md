@@ -91,11 +91,14 @@ Use `src/components/Button/` as the reference. Seven files, in this order:
 2. `meta.ts` — `export const <name>Meta = defineAgentMeta({...})`, embedding the specs from
    `tool.ts`. Export the value; do not rely on import side effects.
 3. `<Name>.tsx` — build one `AgentNode` per render with `buildAgentNode()` and spread
-   `agentAttributesFor(node)` onto the root, `agentPartAttributesFor()` onto each interactive part.
-   Call `useAgentTool` for each action. Import `<name>Meta` and *use* it, which is what keeps the
+   `agentAttributesFor(node)` onto the root, `agentPartAttributesFor(part)` onto each addressable
+   part. Call `useAgentTool` for each action, and only where an agent gains something a URL or the
+   agent view does not already give it. Import `<name>Meta` and *use* it, which is what keeps the
    registration from being tree-shaken.
 4. `<Name>.css` — style through the agent attributes (`[data-sprint="Button"]`), never class
-   names, inside `@layer sprint.components`. Reference only semantic tokens.
+   names, inside `@layer sprint.components`. Reference only semantic tokens. Mobile first: the
+   narrow layout is the base rule, wider layouts arrive in `min-width` queries (40rem for a row
+   that collapses, 48rem for a table that restacks).
 5. `<Name>.test.tsx` — assert through `agentSelector()`, never class names. Cover the tool
    lifecycle, not just rendering.
 6. `index.ts` — re-export, then add it to `src/components/index.ts`. `src/index.ts` re-exports that
@@ -119,6 +122,12 @@ verbatim as the snippet, so it must be real, runnable code.
 
 The only thing written twice is the live specimen in `dev/specimens/`, which cannot be derived from
 a code string. The docs flag any example missing one.
+
+**The workbench is also built out of Sprint.** Every panel, table, chip, list, and snippet on these
+pages is a component from the catalog, so no hand-written markup goes into `dev/` where a component
+could exist, and flipping the page-level view switch renders the entire documentation page as agent
+text. `dev/` keeps only the app shell: the grid, the sidebar, the route. If a page needs something
+the library does not have, that is a missing component, not a `div`.
 
 `dev/pages/GuideWebMCP.tsx` and `dev/pages/GuidePhilosophy.tsx` are the two hand-written pages:
 background on the platform API, and the reasoning behind Sprint's use of it. Add a guide by
@@ -153,15 +162,32 @@ return <button {...agentAttributesFor(node)}>{children}</button>;
 
 Both renderings come from that one node, so they cannot disagree. Never render both at once.
 
-In agent view a component emits **no elements unless it is interactive, then exactly one**:
+In agent view a component emits **one control per addressable part it can act on right now, and no
+elements otherwise**:
 
 - `AgentLine` — strings and a depth context provider, zero DOM. Use for anything not actionable.
 - `AgentControl` — one `<button>` or `<a>` whose text content is the Markdown line, so a
-  DOM-driving agent has something to click. Use when the component is actionable right now.
+  DOM-driving agent has something to click. Use when the component has a single action.
+- `AgentControlGroup` — the node's line as text, then one `<button>` per actionable part. Use when
+  the component has several targets, like a SegmentedControl's options.
+
+Control count and tool count are independent: a SegmentedControl renders one control per option and
+registers one tool with an `enum`. Elements serve agents without WebMCP; tools serve agents with it.
+
+A component that carries no meaning renders **nothing at all**, not even a line: `Stack` returns its
+children and no depth provider, because an agent does not care how a region is arranged. `Panel`
+does render a line, because a labelled region says what the things inside it have to do with each
+other. The test is whether deleting the component would lose an agent anything.
 
 WebMCP itself needs no elements, but agents outside Chrome 149 have no WebMCP, so a control is the
 only affordance they get. Render `AgentLine` when the component is disabled or busy, and respect
 `useAgentControls() === "never"` for consumers who want literally zero markup.
+
+**Components hold data, not children, when they hold more than a label.** `Table` takes `columns`
+and `rows`, `List` takes `items`. In agent view a component never renders its children, so content
+it needs to describe has to be reachable as data; `reactText()` flattens inline cell content the way
+`accessibleText()` flattens DOM. Components are not allowed inside those props, and each such
+component says so in `whenNotToUse`.
 
 Never turn an `AgentNode` into text yourself. `AgentLine`, `AgentControl`, and anything a tool
 returns all go through `useAgentFormat()`, the one formatter `SprintProvider` resolves for the whole
@@ -176,7 +202,13 @@ projection and the agent render agree by construction.
 `src/agent/webmcp/adapter.ts` — the only place that API may be touched. Names derive from the
 accessible label and compose with the surrounding scope (`billing-press-save`). A tool's `execute`
 should drive the real DOM (`element.click()`) rather than call a prop, and should return the
-component's state after the action.
+component's state after the action. Pass `inputSchema` to `useAgentTool` when a value set is only
+known at runtime; the prose still lives once in `tool.ts`.
+
+Registration is justified per component, not automatic. Ask what an agent can do with the tool that
+it could not do without it: `Button` registers by default, `Link` does not (a URL is reachable, and
+`data-sprint-href` publishes it), `Card` follows whether it acts or navigates, and `CodeBlock` never
+does. A tool-less component is still fully present in the agent view.
 
 WebMCP is Chrome 149+ only. Everything must work without it; registration is a no-op when
 `document.modelContext` is absent.

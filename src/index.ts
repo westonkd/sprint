@@ -34,8 +34,16 @@ export type {
   AgentStateSpec,
   AgentToolSpec,
 } from "./agent/types.ts";
-export type { AgentControlProps, AgentLineProps } from "./agent/view/AgentText.tsx";
-export { AgentControl, AgentLine } from "./agent/view/AgentText.tsx";
+export type {
+  AgentControlGroupProps,
+  AgentControlProps,
+  AgentLineProps,
+} from "./agent/view/AgentText.tsx";
+export {
+  AgentControl,
+  AgentControlGroup,
+  AgentLine,
+} from "./agent/view/AgentText.tsx";
 export type { MarkdownOptions } from "./agent/view/markdown.ts";
 export { nodeLine, toMarkdown } from "./agent/view/markdown.ts";
 export type {
@@ -60,10 +68,12 @@ export type { NodeInput } from "./agent/view/project.ts";
 export {
   agentAttributesFor,
   agentPartAttributesFor,
+  agentPartControlAttributes,
   buildAgentNode,
 } from "./agent/view/project.ts";
 export type { SerializeOptions } from "./agent/view/serialize.ts";
 export { serializeElement, serializeWithin } from "./agent/view/serialize.ts";
+export { accessibleText, reactText } from "./agent/view/text.ts";
 export { clamp, paginate } from "./agent/view/truncate.ts";
 export {
   getModelContext,

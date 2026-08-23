@@ -1,7 +1,46 @@
+import { isValidElement, type ReactNode } from "react";
 import { COMPONENT_ATTRIBUTE } from "@/agent/attributes.ts";
 
 function normalize(value: string): string {
   return value.replace(/\s+/g, " ").trim();
+}
+
+interface TextualProps {
+  children?: ReactNode;
+  "aria-hidden"?: boolean | string;
+  "aria-label"?: string;
+}
+
+function gatherReact(node: ReactNode, out: string[]): void {
+  if (node === null || node === undefined || typeof node === "boolean") return;
+
+  if (typeof node === "string" || typeof node === "number") {
+    out.push(String(node));
+    return;
+  }
+
+  if (Array.isArray(node)) {
+    for (const child of node) gatherReact(child as ReactNode, out);
+    return;
+  }
+
+  if (!isValidElement(node)) return;
+
+  const props = node.props as TextualProps;
+  if (props["aria-hidden"] === true || props["aria-hidden"] === "true") return;
+  if (typeof props["aria-label"] === "string") {
+    out.push(props["aria-label"]);
+    return;
+  }
+
+  gatherReact(props.children, out);
+}
+
+export function reactText(node: ReactNode): string | undefined {
+  const parts: string[] = [];
+  gatherReact(node, parts);
+  const text = normalize(parts.join(""));
+  return text === "" ? undefined : text;
 }
 
 function isHidden(element: Element): boolean {

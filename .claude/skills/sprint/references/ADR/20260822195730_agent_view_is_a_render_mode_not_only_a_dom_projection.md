@@ -3,6 +3,7 @@
 - **Status**: Accepted
 - **Date**: 2026-08-22
 - **Supersedes**: [20260822192124_agent_view_is_a_dom_projection_not_a_second_render_path.md](20260822192124_agent_view_is_a_dom_projection_not_a_second_render_path.md)
+- **Amended by**: [20260822220043_agent_controls_are_one_per_actionable_part_and_layout_renders_none.md](20260822220043_agent_controls_are_one_per_actionable_part_and_layout_renders_none.md) — "exactly one control" became one per actionable part, and layout components now render no line at all.
 
 ## Context
 

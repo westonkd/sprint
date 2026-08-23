@@ -1,31 +1,33 @@
 import { type ReactNode, useEffect, useState } from "react";
-import { SprintProvider, type SprintView } from "../../src/index.ts";
+import {
+  Panel,
+  SegmentedControl,
+  SprintProvider,
+  type SprintView,
+} from "../../src/index.ts";
+
+const OPTIONS = [
+  { value: "human", label: "human" },
+  { value: "agent", label: "agent" },
+];
 
 export interface ViewSwitchProps {
   view: SprintView;
   onChange: (view: SprintView) => void;
-  label?: string;
+  label: string;
 }
 
 export function ViewSwitch(props: ViewSwitchProps) {
   const { view, onChange, label } = props;
 
   return (
-    <div className="switch-group">
-      {label === undefined ? null : <span className="slug-inline">{label}</span>}
-      <div className="switch">
-        {(["human", "agent"] as const).map((option) => (
-          <button
-            key={option}
-            type="button"
-            className={option === view ? "switch-option active" : "switch-option"}
-            onClick={() => onChange(option)}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-    </div>
+    <SegmentedControl
+      label={label}
+      options={OPTIONS}
+      value={view}
+      agentTool={false}
+      onChange={(next) => onChange(next === "agent" ? "agent" : "human")}
+    />
   );
 }
 
@@ -43,16 +45,15 @@ export function AgentPreview(props: AgentPreviewProps) {
   }, [pageView]);
 
   return (
-    <div className="preview">
-      <div className="preview-bar">
-        <span className="slug-inline">{view === "human" ? "Human" : "Agent"} view</span>
-        <ViewSwitch view={view} onChange={setView} />
-      </div>
-      <div className={view === "agent" ? "preview-stage as-text" : "preview-stage"}>
+    <Panel
+      label={view === "human" ? "Human view" : "Agent view"}
+      actions={<ViewSwitch view={view} onChange={setView} label="Preview view" />}
+    >
+      <div className={view === "agent" ? "stage as-text" : "stage"}>
         <SprintProvider view={view} pageTools={false}>
           {children}
         </SprintProvider>
       </div>
-    </div>
+    </Panel>
   );
 }

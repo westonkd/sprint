@@ -1,7 +1,7 @@
-import type { ComponentPropsWithRef, ReactNode } from "react";
+import { type ComponentPropsWithRef, Fragment, type ReactNode, type Ref } from "react";
 import { AgentDepthProvider, useAgentDepth, useAgentFormat } from "./mode.ts";
-import type { AgentFormatter, AgentNode } from "./node.ts";
-import { agentControlAttributes } from "./project.ts";
+import type { AgentFormatter, AgentNode, AgentPart } from "./node.ts";
+import { agentControlAttributes, agentPartControlAttributes } from "./project.ts";
 
 function format(node: AgentNode, formatter: AgentFormatter): string[] {
   return formatter([node]).split("\n");
@@ -27,15 +27,69 @@ export function AgentLine(props: AgentLineProps) {
   );
 }
 
-export type AgentControlProps = Omit<ComponentPropsWithRef<"button">, "children"> & {
+export interface AgentControlGroupProps {
   node: AgentNode;
-  as?: "button" | "a";
-  href?: string;
+  onActivate: (part: AgentPart, index: number) => void;
+  isActionable?: (part: AgentPart, index: number) => boolean;
+  children?: ReactNode;
+}
+
+export function AgentControlGroup(props: AgentControlGroupProps) {
+  const { node, onActivate, isActionable, children } = props;
+  const depth = useAgentDepth();
+  const formatter = useAgentFormat();
+  const indent = "  ".repeat(depth);
+  const lines = format(node, formatter);
+  const offset = node.summary === undefined ? 1 : 2;
+  const head = lines.slice(0, offset).map((line) => `${indent}${line}`);
+
+  return (
+    <AgentDepthProvider value={depth + 1}>
+      {`${head.join("\n")}\n`}
+      {node.parts.map((part, index) => {
+        const line = lines[offset + index] ?? "";
+        const body = line.trimStart();
+        const lead = `${indent}${line.slice(0, line.length - body.length)}`;
+        const key = `${part.part}-${part.label ?? index}`;
+
+        if (isActionable !== undefined && !isActionable(part, index)) {
+          return <Fragment key={key}>{`${lead}${body}\n`}</Fragment>;
+        }
+
+        return (
+          <Fragment key={key}>
+            {lead}
+            <button
+              type="button"
+              {...agentPartControlAttributes(node.component, part)}
+              onClick={() => onActivate(part, index)}
+            >
+              {body}
+            </button>
+            {"\n"}
+          </Fragment>
+        );
+      })}
+      {children}
+    </AgentDepthProvider>
+  );
+}
+
+export type AgentControlProps = Omit<
+  ComponentPropsWithRef<"button">,
+  "children" | "ref"
+> & {
+  node: AgentNode;
+  as?: "button" | "a" | undefined;
+  href?: string | undefined;
+  target?: string | undefined;
+  rel?: string | undefined;
+  ref?: Ref<HTMLButtonElement> | Ref<HTMLAnchorElement> | undefined;
   children?: ReactNode;
 };
 
 export function AgentControl(props: AgentControlProps) {
-  const { node, as = "button", href, children, ...rest } = props;
+  const { node, as = "button", href, children, ref, ...rest } = props;
   const depth = useAgentDepth();
   const formatter = useAgentFormat();
   const indent = "  ".repeat(depth);
@@ -49,11 +103,12 @@ export function AgentControl(props: AgentControlProps) {
         {...(rest as unknown as ComponentPropsWithRef<"a">)}
         {...attributes}
         href={href ?? "#"}
+        ref={ref as Ref<HTMLAnchorElement>}
       >
         {head}
       </a>
     ) : (
-      <button {...rest} {...attributes}>
+      <button {...rest} {...attributes} ref={ref as Ref<HTMLButtonElement>}>
         {head}
       </button>
     );
