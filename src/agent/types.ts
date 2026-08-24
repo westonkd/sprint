@@ -80,6 +80,7 @@ export interface AgentManifest {
     stateAttributePrefix: string;
     toolAttribute: string;
     ownerAttribute: string;
+    regionAttribute: string;
     agentViewFormat: "markdown";
     toolNaming: string;
     toolOutputLimit: number;

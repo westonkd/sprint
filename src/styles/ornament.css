@@ -1,0 +1,83 @@
+@layer sprint.tokens {
+  :root {
+    --sprint-ornament-ink: var(--sprint-keyline);
+    --sprint-ornament-hatch: repeating-linear-gradient(
+      135deg,
+      var(--sprint-ornament-ink) 0 1px,
+      transparent 1px 8px
+    );
+    --sprint-ornament-hatch-dense: repeating-linear-gradient(
+      135deg,
+      var(--sprint-ornament-ink) 0 2px,
+      transparent 2px 6px
+    );
+    --sprint-ornament-shade: repeating-linear-gradient(
+      135deg,
+      var(--sprint-ornament-ink) 0 4px,
+      transparent 4px 6px
+    );
+    --sprint-ornament-scanlines: repeating-linear-gradient(
+      0deg,
+      var(--sprint-ornament-ink) 0 1px,
+      transparent 1px 4px
+    );
+    --sprint-ornament-dots: radial-gradient(
+      var(--sprint-ornament-ink) 1px,
+      transparent 1.5px
+    );
+    --sprint-ornament-dots-size: 14px 14px;
+    --sprint-ornament-checker: conic-gradient(
+      var(--sprint-ornament-ink) 25%,
+      transparent 0 50%,
+      var(--sprint-ornament-ink) 0 75%,
+      transparent 0
+    );
+    --sprint-ornament-checker-size: 8px 8px;
+    --sprint-ornament-crosses:
+      radial-gradient(
+        ellipse 4px 1px at center,
+        var(--sprint-ornament-ink) 95%,
+        transparent
+      ),
+      radial-gradient(
+        ellipse 1px 4px at center,
+        var(--sprint-ornament-ink) 95%,
+        transparent
+      );
+    --sprint-ornament-crosses-size: 28px 28px;
+  }
+}
+
+@layer sprint.base {
+  [data-sprint-ornament="hatch"] {
+    background-image: var(--sprint-ornament-hatch);
+  }
+
+  [data-sprint-ornament="hatch-dense"] {
+    background-image: var(--sprint-ornament-hatch-dense);
+  }
+
+  [data-sprint-ornament="shade"] {
+    background-image: var(--sprint-ornament-shade);
+  }
+
+  [data-sprint-ornament="scanlines"] {
+    background-image: var(--sprint-ornament-scanlines);
+  }
+
+  [data-sprint-ornament="dots"] {
+    background-image: var(--sprint-ornament-dots);
+    background-size: var(--sprint-ornament-dots-size);
+  }
+
+  [data-sprint-ornament="checker"] {
+    background-image: var(--sprint-ornament-checker);
+    background-size: var(--sprint-ornament-checker-size);
+  }
+
+  [data-sprint-ornament="crosses"] {
+    background-image: var(--sprint-ornament-crosses);
+    background-size: var(--sprint-ornament-crosses-size);
+    background-position: center;
+  }
+}

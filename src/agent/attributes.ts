@@ -7,6 +7,7 @@ export const AGENT_ATTRIBUTE = "data-sprint-agent";
 export const VIEW_ATTRIBUTE = "data-sprint-view";
 export const VIEW_COPY_ATTRIBUTE = "data-sprint-view-copy";
 export const THEME_ATTRIBUTE = "data-sprint-theme";
+export const REGION_ATTRIBUTE = "data-sprint-region";
 
 export const RESERVED_STATE_KEYS: readonly string[] = [
   "part",
@@ -16,6 +17,8 @@ export const RESERVED_STATE_KEYS: readonly string[] = [
   "view",
   "view-copy",
   "theme",
+  "region",
+  "ornament",
 ];
 
 export type AgentAttributeValue = string | number | boolean | null | undefined;

@@ -13,20 +13,14 @@
 
   [data-sprint="Heading"][data-sprint-level="1"] {
     font-family: var(--sprint-font-display);
-    font-size: var(--sprint-text-xl);
+    font-size: var(--sprint-display-size);
     font-weight: var(--sprint-weight-regular);
     letter-spacing: var(--sprint-tracking-tight);
-    line-height: 1.1;
+    line-height: 1.05;
   }
 
   [data-sprint="Heading"][data-sprint-level="2"] {
     font-size: var(--sprint-label-size);
     color: var(--sprint-ink-muted);
-  }
-
-  @media (min-width: 40rem) {
-    [data-sprint="Heading"][data-sprint-level="1"] {
-      font-size: var(--sprint-text-2xl);
-    }
   }
 }

@@ -25,6 +25,39 @@ const STATUS_TONE: Record<string, TagTone> = {
   deprecated: "danger",
 };
 
+export interface DocSection {
+  id: string;
+  title: string;
+}
+
+export function docSections(meta: AgentComponentMeta): DocSection[] {
+  const specimens = specimensFor(meta.name);
+  const sections: DocSection[] = [];
+  if (specimens.gallery !== undefined) {
+    sections.push({ id: "variants", title: "Every variant" });
+  }
+  sections.push({ id: "when-to-use", title: "When to use" });
+  sections.push({ id: "install", title: "Install" });
+  sections.push({ id: "examples", title: "Examples" });
+  if (Object.keys(meta.props).length > 0) {
+    sections.push({ id: "props", title: "Props" });
+  }
+  if (Object.keys(meta.state ?? {}).length > 0) {
+    sections.push({ id: "state", title: "State attributes" });
+  }
+  if (Object.keys(meta.tools ?? {}).length > 0) {
+    sections.push({ id: "tools", title: "WebMCP tools" });
+  }
+  if (meta.agentView !== undefined) {
+    sections.push({ id: "agent-view", title: "Agent view" });
+  }
+  if (meta.a11y !== undefined) {
+    sections.push({ id: "accessibility", title: "Accessibility" });
+  }
+  sections.push({ id: "root-attribute", title: "Root attribute" });
+  return sections;
+}
+
 function importSnippet(name: string): string {
   return `import { ${name} } from "sprint";\nimport "sprint/styles.css";`;
 }
@@ -76,7 +109,7 @@ function Props(props: { meta: AgentComponentMeta }) {
   }));
 
   return (
-    <Panel headingLevel={2} label="Props" flush>
+    <Panel headingLevel={2} label="Props" flush id="props">
       <Table
         label={`${props.meta.name} props`}
         columns={[
@@ -105,7 +138,7 @@ function State(props: { meta: AgentComponentMeta }) {
   }));
 
   return (
-    <Panel headingLevel={2} label="State attributes">
+    <Panel headingLevel={2} label="State attributes" id="state">
       <Stack gap="tight">
         <Text tone="muted" size="small">
           Public API. Agents write selectors against these, and the agent view is
@@ -136,7 +169,7 @@ function Tools(props: { meta: AgentComponentMeta }) {
   if (entries.length === 0) return null;
 
   return (
-    <Panel headingLevel={2} label="WebMCP tools">
+    <Panel headingLevel={2} label="WebMCP tools" id="tools">
       <Stack gap="tight">
         <Text tone="muted" size="small">
           Registered with <code>document.modelContext</code> when available. The
@@ -195,7 +228,7 @@ function Accessibility(props: { meta: AgentComponentMeta }) {
   ];
 
   return (
-    <Panel headingLevel={2} label="Accessibility" flush>
+    <Panel headingLevel={2} label="Accessibility" flush id="accessibility">
       <Table
         label={`${props.meta.name} accessibility`}
         columns={[
@@ -234,7 +267,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
         </PageHeader>
 
         {specimens.gallery === undefined ? null : (
-          <Panel headingLevel={2} label="Every variant">
+          <Panel headingLevel={2} label="Every variant" id="variants">
             <div className={pageView === "agent" ? "stage as-text" : "stage"}>
               <SprintProvider view={pageView} pageTools={false}>
                 {specimens.gallery}
@@ -243,7 +276,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
           </Panel>
         )}
 
-        <Panel headingLevel={2} label="When to use">
+        <Panel headingLevel={2} label="When to use" id="when-to-use">
           <Stack gap="tight">
             <Text>{meta.whenToUse}</Text>
             {meta.whenNotToUse === undefined ? null : (
@@ -255,11 +288,11 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="Install">
+        <Panel headingLevel={2} label="Install" id="install">
           <CodeBlock code={importSnippet(meta.name)} />
         </Panel>
 
-        <Panel headingLevel={2} label="Examples">
+        <Panel headingLevel={2} label="Examples" id="examples">
           <Stack>
             <Stack gap="tight">
               <Text tone="muted" size="small">
@@ -304,7 +337,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
         <Tools meta={meta} />
 
         {meta.agentView === undefined ? null : (
-          <Panel headingLevel={2} label="Agent view">
+          <Panel headingLevel={2} label="Agent view" id="agent-view">
             <Stack gap="tight">
               <Text tone="muted" size="small">
                 The component renders this itself, from the same node that produces its{" "}
@@ -328,7 +361,7 @@ export function ComponentDoc(props: { meta: AgentComponentMeta }) {
 
         <Accessibility meta={meta} />
 
-        <Panel headingLevel={2} label="Root attribute">
+        <Panel headingLevel={2} label="Root attribute" id="root-attribute">
           <CodeBlock
             caption="dom"
             language="text"

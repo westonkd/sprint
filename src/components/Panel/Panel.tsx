@@ -32,6 +32,7 @@ export function Panel(props: PanelProps) {
   const node = buildAgentNode({
     component: panelMeta.name,
     label,
+    region: true,
     state: { flush, empty },
   });
 

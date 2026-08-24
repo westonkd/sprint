@@ -42,6 +42,35 @@ body {
   margin: 0 auto;
 }
 
+.doc [id] {
+  scroll-margin-top: var(--sprint-space-5);
+}
+
+.app-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--sprint-space-4);
+  max-width: 62rem;
+  margin: var(--sprint-space-6) auto 0;
+  border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
+  padding-top: var(--sprint-space-3);
+}
+
+.app-footer > [data-sprint-ornament] {
+  flex: 1;
+  align-self: stretch;
+  min-height: 16px;
+}
+
+[data-sprint-view="agent"] .app-footer {
+  display: block;
+  border-top: 0;
+}
+
+[data-sprint-view="agent"] .app-footer > [data-sprint-ornament] {
+  display: none;
+}
+
 .stage {
   --stage-bleed: calc(var(--sprint-focus-offset) + var(--sprint-focus-width));
   display: flex;

@@ -56,7 +56,7 @@ describe("Table rendering", () => {
     ]);
   });
 
-  it("carries a column's alignment on the cell and in the agent view alike", () => {
+  it("carries a column's alignment on the cell", () => {
     const columns: readonly TableColumn[] = [
       { key: "name", header: "Name" },
       { key: "count", header: "Count", align: "end" },
@@ -75,11 +75,9 @@ describe("Table rendering", () => {
     expect(cell).toHaveAttribute("data-sprint-align", "end");
 
     const [node] = serializeWithin(container);
-    expect(node?.parts[1]).toEqual({
-      part: "cell",
-      label: "1",
-      state: { column: "count", row: "1", align: "end" },
-    });
+    expect(node?.summary).toBe(
+      ["| row | name | count |", "| --- | --- | --- |", "| 1 | a | 1 |"].join("\n"),
+    );
   });
 
   it("falls back to the row position when no id was given", () => {
@@ -134,7 +132,7 @@ describe("Table rendering", () => {
 });
 
 describe("Table agent view", () => {
-  it("renders the data, one line per cell, and no element", () => {
+  it("renders the data as a Markdown table and no element", () => {
     const { container } = render(
       <SprintProvider view="agent" pageTools={false}>
         <Table label="Props" columns={COLUMNS} rows={[ROWS[0] as TableRow]} />
@@ -145,8 +143,9 @@ describe("Table agent view", () => {
     expect(container.textContent).toBe(
       [
         '- **Table** "Props" [columns=2, rows=1]',
-        '  - part `cell` "tone" [column=prop, row=tone]',
-        '  - part `cell` "enum" [column=kind, row=tone]',
+        "  | row | prop | kind |",
+        "  | --- | --- | --- |",
+        "  | tone | tone | enum |",
         "",
       ].join("\n"),
     );
@@ -158,11 +157,14 @@ describe("Table agent view", () => {
     const [node] = serializeWithin(container);
     expect(node?.label).toBe("Props");
     expect(node?.state).toMatchObject({ columns: "2", rows: "2" });
-    expect(node?.parts).toEqual([
-      { part: "cell", label: "tone", state: { column: "prop", row: "tone" } },
-      { part: "cell", label: "enum", state: { column: "kind", row: "tone" } },
-      { part: "cell", label: "block", state: { column: "prop", row: "block" } },
-      { part: "cell", label: "boolean", state: { column: "kind", row: "block" } },
-    ]);
+    expect(node?.parts).toEqual([]);
+    expect(node?.summary).toBe(
+      [
+        "| row | prop | kind |",
+        "| --- | --- | --- |",
+        "| tone | tone | enum |",
+        "| block | block | boolean |",
+      ].join("\n"),
+    );
   });
 });

@@ -40,7 +40,7 @@ export function AgentControlGroup(props: AgentControlGroupProps) {
   const formatter = useAgentFormat();
   const indent = "  ".repeat(depth);
   const lines = format(node, formatter);
-  const offset = node.summary === undefined ? 1 : 2;
+  const offset = lines.length - node.parts.length;
   const head = lines.slice(0, offset).map((line) => `${indent}${line}`);
 
   return (

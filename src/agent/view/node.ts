@@ -15,6 +15,7 @@ export interface AgentNode {
   parts: AgentPart[];
   tool?: string;
   owner?: string;
+  region?: true;
   children: AgentNode[];
   truncated?: true;
 }

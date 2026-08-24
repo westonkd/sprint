@@ -1,5 +1,6 @@
 import "./styles/primitives.css";
 import "./styles/semantic.css";
+import "./styles/ornament.css";
 import "./styles/base.css";
 
 export type {
@@ -13,6 +14,7 @@ export {
   COMPONENT_ATTRIBUTE,
   OWNER_ATTRIBUTE,
   PART_ATTRIBUTE,
+  REGION_ATTRIBUTE,
   RESERVED_STATE_KEYS,
   STATE_ATTRIBUTE_PREFIX,
   THEME_ATTRIBUTE,

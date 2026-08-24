@@ -2,6 +2,7 @@ import {
   COMPONENT_ATTRIBUTE,
   OWNER_ATTRIBUTE,
   PART_ATTRIBUTE,
+  REGION_ATTRIBUTE,
   STATE_ATTRIBUTE_PREFIX,
   TOOL_ATTRIBUTE,
 } from "./attributes.ts";
@@ -41,6 +42,7 @@ export function buildAgentManifest(version: string): AgentManifest {
       stateAttributePrefix: STATE_ATTRIBUTE_PREFIX,
       toolAttribute: TOOL_ATTRIBUTE,
       ownerAttribute: OWNER_ATTRIBUTE,
+      regionAttribute: REGION_ATTRIBUTE,
       agentViewFormat: "markdown",
       toolNaming: TOOL_NAMING_CONVENTION,
       toolOutputLimit: TOOL_OUTPUT_LIMIT,

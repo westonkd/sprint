@@ -1,0 +1,19 @@
+@layer sprint.components {
+  [data-sprint="MetaLine"] {
+    margin: 0;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-regular);
+    letter-spacing: var(--sprint-tracking-label);
+    line-height: 1.6;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  [data-sprint="MetaLine"] > span > span:last-child {
+    color: var(--sprint-ink);
+  }
+}

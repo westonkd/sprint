@@ -70,11 +70,7 @@
   [data-sprint="Table"][data-sprint-empty] td {
     display: block;
     padding: var(--sprint-space-5) var(--sprint-space-4);
-    background-image: repeating-linear-gradient(
-      135deg,
-      var(--sprint-keyline) 0 1px,
-      transparent 1px 8px
-    );
+    background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-3xs);
     letter-spacing: var(--sprint-tracking-label);

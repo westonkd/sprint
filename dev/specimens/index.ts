@@ -9,6 +9,7 @@ import { dialogSpecimens } from "./Dialog.tsx";
 import { headingGallery, headingSpecimens } from "./Heading.tsx";
 import { linkSpecimens } from "./Link.tsx";
 import { listSpecimens } from "./List.tsx";
+import { metaLineSpecimens } from "./MetaLine.tsx";
 import { navSpecimens } from "./Nav.tsx";
 import { navGroupSpecimens } from "./NavGroup.tsx";
 import { pageHeaderSpecimens } from "./PageHeader.tsx";
@@ -41,6 +42,7 @@ const registry: Record<string, Specimens> = {
   Heading: { gallery: headingGallery, byExample: headingSpecimens },
   Link: { byExample: linkSpecimens },
   List: { byExample: listSpecimens },
+  MetaLine: { byExample: metaLineSpecimens },
   Nav: { byExample: navSpecimens },
   NavGroup: { byExample: navGroupSpecimens },
   PageHeader: { byExample: pageHeaderSpecimens },
