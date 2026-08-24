@@ -1,0 +1,66 @@
+@layer sprint.components {
+  [data-sprint="DescriptionList"] {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-raised);
+  }
+
+  [data-sprint="DescriptionList"] > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-1);
+    padding: var(--sprint-space-2) var(--sprint-space-4);
+  }
+
+  [data-sprint="DescriptionList"] > div + div {
+    border-top: var(--sprint-keyline-width) dashed var(--sprint-keyline-muted);
+  }
+
+  [data-sprint="DescriptionList"] dt {
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="DescriptionList"] dd {
+    margin: 0;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  [data-sprint="DescriptionList"][data-sprint-empty] > div {
+    padding: var(--sprint-space-4);
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--sprint-keyline) 0 1px,
+      transparent 1px 8px
+    );
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="DescriptionList"] > div {
+      display: grid;
+      grid-template-columns: minmax(8rem, 14rem) 1fr;
+      gap: var(--sprint-space-4);
+      align-items: baseline;
+    }
+
+    [data-sprint="DescriptionList"][data-sprint-empty] > div {
+      display: flex;
+    }
+  }
+}

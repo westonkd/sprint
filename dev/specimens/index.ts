@@ -1,8 +1,11 @@
 import type { ReactNode } from "react";
+import { alertGallery, alertSpecimens } from "./Alert.tsx";
 import { buttonGallery, buttonSpecimens } from "./Button.tsx";
 import { cardSpecimens } from "./Card.tsx";
 import { checkboxSpecimens } from "./Checkbox.tsx";
 import { codeBlockSpecimens } from "./CodeBlock.tsx";
+import { descriptionListSpecimens } from "./DescriptionList.tsx";
+import { dialogSpecimens } from "./Dialog.tsx";
 import { headingGallery, headingSpecimens } from "./Heading.tsx";
 import { linkSpecimens } from "./Link.tsx";
 import { listSpecimens } from "./List.tsx";
@@ -10,6 +13,7 @@ import { navSpecimens } from "./Nav.tsx";
 import { navGroupSpecimens } from "./NavGroup.tsx";
 import { pageHeaderSpecimens } from "./PageHeader.tsx";
 import { panelSpecimens } from "./Panel.tsx";
+import { secretFieldSpecimens } from "./SecretField.tsx";
 import { segmentedControlSpecimens } from "./SegmentedControl.tsx";
 import { selectSpecimens } from "./Select.tsx";
 import { shellSpecimens } from "./Shell.tsx";
@@ -27,10 +31,13 @@ export interface Specimens {
 }
 
 const registry: Record<string, Specimens> = {
+  Alert: { gallery: alertGallery, byExample: alertSpecimens },
   Button: { gallery: buttonGallery, byExample: buttonSpecimens },
   Card: { byExample: cardSpecimens },
   Checkbox: { byExample: checkboxSpecimens },
   CodeBlock: { byExample: codeBlockSpecimens },
+  DescriptionList: { byExample: descriptionListSpecimens },
+  Dialog: { byExample: dialogSpecimens },
   Heading: { gallery: headingGallery, byExample: headingSpecimens },
   Link: { byExample: linkSpecimens },
   List: { byExample: listSpecimens },
@@ -38,6 +45,7 @@ const registry: Record<string, Specimens> = {
   NavGroup: { byExample: navGroupSpecimens },
   PageHeader: { byExample: pageHeaderSpecimens },
   Panel: { byExample: panelSpecimens },
+  SecretField: { byExample: secretFieldSpecimens },
   SegmentedControl: { byExample: segmentedControlSpecimens },
   Select: { byExample: selectSpecimens },
   Shell: { byExample: shellSpecimens },

@@ -1,0 +1,77 @@
+@layer sprint.components {
+  [data-sprint="Alert"] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-1);
+    padding: var(--sprint-space-3) var(--sprint-space-4);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-left: var(--sprint-keyline-width-thick) solid var(--sprint-info);
+    background: var(--sprint-surface-raised);
+    color: var(--sprint-ink);
+  }
+
+  [data-sprint="Alert"][data-sprint-tone="neutral"] {
+    border-left-color: var(--sprint-keyline-strong);
+  }
+
+  [data-sprint="Alert"][data-sprint-tone="warning"] {
+    border-left-color: var(--sprint-warning);
+  }
+
+  [data-sprint="Alert"][data-sprint-tone="danger"] {
+    border-left-color: var(--sprint-danger);
+  }
+
+  [data-sprint="Alert"] [data-sprint-part="title"] {
+    color: var(--sprint-info);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-label);
+    text-transform: uppercase;
+  }
+
+  [data-sprint="Alert"][data-sprint-tone="neutral"] [data-sprint-part="title"] {
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="Alert"][data-sprint-tone="warning"] [data-sprint-part="title"] {
+    color: var(--sprint-warning);
+  }
+
+  [data-sprint="Alert"][data-sprint-tone="danger"] [data-sprint-part="title"] {
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="Alert"] [data-sprint-part="message"] {
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1.5;
+  }
+
+  [data-sprint="Alert"][data-sprint-dismissible] {
+    padding-right: calc(var(--sprint-space-4) * 2 + 1.5rem);
+  }
+
+  [data-sprint="Alert"] [data-sprint-part="dismiss"] {
+    position: absolute;
+    top: var(--sprint-space-2);
+    right: var(--sprint-space-2);
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: transparent;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  [data-sprint="Alert"] [data-sprint-part="dismiss"]:hover {
+    border-color: var(--sprint-keyline-strong);
+    color: var(--sprint-ink);
+  }
+}

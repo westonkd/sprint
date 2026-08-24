@@ -1,3 +1,5 @@
+export type { AlertProps, AlertTone } from "./Alert/index.ts";
+export { Alert, alertMeta, DISMISS_ALERT_TOOL } from "./Alert/index.ts";
 export type { ButtonProps, ButtonTone } from "./Button/index.ts";
 export { Button, buttonMeta, PRESS_TOOL } from "./Button/index.ts";
 export type { CardProps } from "./Card/index.ts";
@@ -11,6 +13,13 @@ export type {
   TokenKind,
 } from "./CodeBlock/index.ts";
 export { CodeBlock, codeBlockMeta, tokenize } from "./CodeBlock/index.ts";
+export type {
+  DescriptionItem,
+  DescriptionListProps,
+} from "./DescriptionList/index.ts";
+export { DescriptionList, descriptionListMeta } from "./DescriptionList/index.ts";
+export type { DialogHeadingLevel, DialogProps } from "./Dialog/index.ts";
+export { CLOSE_DIALOG_TOOL, Dialog, dialogMeta } from "./Dialog/index.ts";
 export type { HeadingLevel, HeadingProps } from "./Heading/index.ts";
 export { Heading, headingMeta } from "./Heading/index.ts";
 export type { LinkProps } from "./Link/index.ts";
@@ -25,6 +34,8 @@ export type { PageHeaderProps } from "./PageHeader/index.ts";
 export { PageHeader, pageHeaderMeta } from "./PageHeader/index.ts";
 export type { PanelProps } from "./Panel/index.ts";
 export { Panel, panelMeta } from "./Panel/index.ts";
+export type { SecretFieldProps } from "./SecretField/index.ts";
+export { SecretField, secretFieldMeta } from "./SecretField/index.ts";
 export type {
   SegmentedControlProps,
   SegmentedOption,

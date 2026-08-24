@@ -1,0 +1,74 @@
+@layer sprint.components {
+  [data-sprint="Dialog"] {
+    margin: auto;
+    padding: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    outline: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    outline-offset: 2px;
+    background: var(--sprint-surface-raised);
+    color: var(--sprint-ink);
+    width: min(26rem, calc(100vw - var(--sprint-space-6) * 2));
+    max-height: calc(100vh - var(--sprint-space-6) * 2);
+  }
+
+  [data-sprint="Dialog"]::backdrop {
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--sprint-surface) 0 4px,
+      transparent 4px 6px
+    );
+  }
+
+  [data-sprint="Dialog"] > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sprint-space-3);
+    padding: var(--sprint-space-2) var(--sprint-space-4);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-inset);
+  }
+
+  [data-sprint="Dialog"] > header > :first-child {
+    margin: 0;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-tracking-wide);
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Dialog"] [data-sprint-part="close"] {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: transparent;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-sm);
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  [data-sprint="Dialog"] [data-sprint-part="close"]:hover {
+    border-color: var(--sprint-keyline-strong);
+    color: var(--sprint-ink);
+  }
+
+  [data-sprint="Dialog"] > div {
+    padding: var(--sprint-space-4);
+    overflow-y: auto;
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="Dialog"] > div {
+      padding: var(--sprint-space-5);
+    }
+  }
+}
