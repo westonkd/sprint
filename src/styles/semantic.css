@@ -10,6 +10,7 @@
 
     --sprint-keyline: var(--sprint-color-panel-400);
     --sprint-keyline-strong: var(--sprint-color-panel-500);
+    --sprint-keyline-muted: var(--sprint-color-panel-300);
 
     --sprint-action: var(--sprint-color-acid);
     --sprint-action-ink: var(--sprint-color-void);
@@ -52,6 +53,7 @@
 
     --sprint-keyline: var(--sprint-color-paper-300);
     --sprint-keyline-strong: var(--sprint-color-paper-500);
+    --sprint-keyline-muted: #dcdcdc;
 
     --sprint-action: var(--sprint-color-ultramarine);
     --sprint-action-ink: var(--sprint-color-acid);

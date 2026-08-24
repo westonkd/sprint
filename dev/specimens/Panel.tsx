@@ -33,6 +33,15 @@ export const panelSpecimens: Record<string, ReactNode> = {
       <Table label="Conventions" columns={COLUMNS} rows={ROWS} />
     </Panel>
   ),
+  "Nested panels": (
+    <Panel label="The shape" headingLevel={2}>
+      <Panel label="Human view" headingLevel={3}>
+        <Panel label="Crew" headingLevel={4}>
+          <Text>Registration fields live here.</Text>
+        </Panel>
+      </Panel>
+    </Panel>
+  ),
   "An empty region": (
     <Panel label="Registered tools" emptyLabel="No tools registered" />
   ),

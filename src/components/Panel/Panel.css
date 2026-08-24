@@ -1,9 +1,35 @@
 @layer sprint.components {
   [data-sprint="Panel"] {
+    --sprint-panel-ground: var(--sprint-surface-raised);
+    --sprint-panel-ground-role: raised;
     display: block;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
-    background: var(--sprint-surface-raised);
+    outline: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    outline-offset: 2px;
+    background: var(--sprint-panel-ground);
     min-width: 0;
+  }
+
+  @container style(--sprint-panel-ground-role: raised) {
+    [data-sprint="Panel"] {
+      --sprint-panel-ground: var(--sprint-surface-inset);
+      --sprint-panel-ground-role: inset;
+    }
+  }
+
+  @container style(--sprint-panel-ground-role: inset) {
+    [data-sprint="Panel"] {
+      --sprint-panel-ground: var(--sprint-surface-raised);
+      --sprint-panel-ground-role: raised;
+    }
+  }
+
+  [data-sprint="Panel"] [data-sprint="Panel"] {
+    outline: none;
+  }
+
+  [data-sprint="Panel"] [data-sprint="Panel"] [data-sprint="Panel"] {
+    border-color: var(--sprint-keyline-muted);
   }
 
   [data-sprint="Panel"] > header {
@@ -27,6 +53,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  [data-sprint="Panel"] [data-sprint="Panel"] > header {
+    background: none;
+    border-bottom-style: dashed;
+  }
+
+  [data-sprint="Panel"] [data-sprint="Panel"] [data-sprint="Panel"] > header {
+    border-bottom-color: var(--sprint-keyline-muted);
   }
 
   [data-sprint="Panel"] > header > :first-child + span {
@@ -60,7 +95,7 @@
   }
 
   [data-sprint="Panel"][data-sprint-empty] > div > span {
-    background: var(--sprint-surface-raised);
+    background: var(--sprint-panel-ground);
     padding: 2px var(--sprint-space-3);
   }
 
