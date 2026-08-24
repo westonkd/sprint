@@ -12,11 +12,8 @@
   }
 
   [data-sprint="Dialog"]::backdrop {
-    background-image: repeating-linear-gradient(
-      135deg,
-      var(--sprint-surface) 0 4px,
-      transparent 4px 6px
-    );
+    --sprint-ornament-ink: var(--sprint-surface);
+    background-image: var(--sprint-ornament-shade);
   }
 
   [data-sprint="Dialog"] > header {

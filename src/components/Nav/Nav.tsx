@@ -14,7 +14,7 @@ export function Nav(props: NavProps) {
 
   const view = useSprintView();
 
-  const node = buildAgentNode({ component: navMeta.name, label });
+  const node = buildAgentNode({ component: navMeta.name, label, region: true });
 
   if (view === "agent") return <AgentLine node={node}>{children}</AgentLine>;
 

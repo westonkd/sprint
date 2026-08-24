@@ -49,7 +49,9 @@ function nodeLines(
   const inner = `${indent}  `;
 
   if (options.includeSummary && node.summary !== undefined) {
-    lines.push(`${inner}${node.summary}`);
+    for (const line of node.summary.split("\n")) {
+      lines.push(`${inner}${line}`);
+    }
   }
 
   for (const part of node.parts) {

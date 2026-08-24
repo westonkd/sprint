@@ -22,6 +22,21 @@
 > workbench gained "Every component", a single page rendering the whole catalog from the registry
 > for eyeballing system-wide changes. 657 tests, `verify` green.
 >
+> **Status (2026-08-23, night):** A usability pass produced three agent-surface changes and a
+> visual one. Labelled landmarks are regions, so `list-page-regions` on a Shell-framed page
+> returns a table of contents instead of one entry
+> ([ADR](ADR/20260823220520_labelled_landmarks_are_regions_and_page_reading_recurses_into_them.md));
+> tabular data condenses to a Markdown pipe table in the stream, in the render mode and the DOM
+> projection alike
+> ([ADR](ADR/20260823220917_tabular_data_condenses_to_a_markdown_table_in_the_agent_stream.md));
+> and the workbench dev server now serves `agent-manifest.json`, `llms.txt`, and
+> `/components/<Name>.md` over HTTP, so an agent with nothing but fetch can read the catalogue.
+> The ornament vocabulary shipped as tokens and utilities
+> ([ADR](ADR/20260823221425_the_ornament_vocabulary_ships_as_tokens_and_attribute_utilities.md)),
+> the display voice got a true display size, and MetaLine landed as the 26th component. The
+> workbench gained URL-addressable views (`?view=agent`), per-section deep links, a
+> category-grouped sidebar, and a persisted theme. 679 tests, `verify` green.
+>
 > **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike has not been run, and the catalog grew ahead of it deliberately, so it now has more to invalidate than it did.
 >
 > **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from the reference imagery in `marathon/`. R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.
@@ -302,8 +317,9 @@ provider batching them; and names are label-derived and scope-composed. See the 
 - Which typefaces? R4.4 needs a heavy condensed uppercase display face and a monospace, both
   self-hosted (the library cannot depend on a font CDN) and both licensable for redistribution.
   Blocks phase 3. Its own ADR.
-- Does Sprint ship the ornament vocabulary (R4.6) as a documented set of CSS pattern utilities, or
-  do components each roll their own?
+- ~~Does Sprint ship the ornament vocabulary (R4.6) as a documented set of CSS pattern utilities, or
+  do components each roll their own?~~ Answered: utilities and tokens in `src/styles/ornament.css`
+  ([ADR](ADR/20260823221425_the_ornament_vocabulary_ships_as_tokens_and_attribute_utilities.md)).
 - Is any of this useful outside React? Assume no for now; revisit only if the core proves out.
 
 Also answered: WebMCP tools are tested in CI through `installMockModelContext()`

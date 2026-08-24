@@ -13,6 +13,7 @@ export interface NodeInput {
   summary?: string | undefined;
   tool?: string | undefined;
   owner?: string | undefined;
+  region?: boolean | undefined;
   state?: Record<string, AgentStateValue | false | null | undefined>;
   parts?: AgentPart[];
 }
@@ -33,12 +34,18 @@ export function buildAgentNode(input: NodeInput): AgentNode {
     ...(input.summary === undefined ? {} : { summary: input.summary }),
     ...(input.tool === undefined ? {} : { tool: input.tool }),
     ...(input.owner === undefined ? {} : { owner: input.owner }),
+    ...(input.region === true ? { region: true as const } : {}),
   };
 }
 
 export function agentAttributesFor(node: AgentNode): Record<string, string> {
   return agentAttributes(node.component, {
-    state: { ...node.state, tool: node.tool, owner: node.owner },
+    state: {
+      ...node.state,
+      tool: node.tool,
+      owner: node.owner,
+      region: node.region,
+    },
   });
 }
 

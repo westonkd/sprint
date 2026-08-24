@@ -2,6 +2,7 @@ import {
   COMPONENT_ATTRIBUTE,
   OWNER_ATTRIBUTE,
   PART_ATTRIBUTE,
+  REGION_ATTRIBUTE,
   RESERVED_STATE_KEYS,
   STATE_ATTRIBUTE_PREFIX,
   TOOL_ATTRIBUTE,
@@ -9,6 +10,7 @@ import {
 import { getAgentMeta } from "@/agent/registry.ts";
 import type { AgentComponentMeta } from "@/agent/types.ts";
 import type { AgentNode, AgentPart, AgentStateValue } from "./node.ts";
+import { condenseCells } from "./tabular.ts";
 import { accessibleText } from "./text.ts";
 
 const reserved = new Set(RESERVED_STATE_KEYS);
@@ -106,7 +108,7 @@ export function serializeElement(
   const owner = root.getAttribute(OWNER_ATTRIBUTE);
   const exhausted = maxDepth <= 0 && children.length > 0;
 
-  return {
+  return condenseCells({
     component,
     state: readState(root),
     parts: parts.map(toPart),
@@ -121,11 +123,12 @@ export function serializeElement(
     ...(label === undefined ? {} : { label }),
     ...(tool === null || tool === "" ? {} : { tool }),
     ...(owner === null || owner === "" ? {} : { owner }),
+    ...(root.hasAttribute(REGION_ATTRIBUTE) ? { region: true as const } : {}),
     ...(exhausted ? { truncated: true as const } : {}),
-  };
+  });
 }
 
-function topLevelRoots(root: ParentNode): Element[] {
+export function topLevelRoots(root: ParentNode): Element[] {
   const found: Element[] = [];
 
   const walk = (element: ParentNode): void => {

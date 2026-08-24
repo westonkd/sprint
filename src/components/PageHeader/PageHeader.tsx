@@ -16,7 +16,11 @@ export function PageHeader(props: PageHeaderProps) {
 
   const view = useSprintView();
 
-  const node = buildAgentNode({ component: pageHeaderMeta.name, label });
+  const node = buildAgentNode({
+    component: pageHeaderMeta.name,
+    label,
+    region: true,
+  });
 
   if (view === "agent") {
     return (

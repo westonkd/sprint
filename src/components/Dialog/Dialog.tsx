@@ -110,6 +110,7 @@ export function Dialog(props: DialogProps) {
     component: dialogMeta.name,
     label,
     owner,
+    region: true,
     state: { open: true },
     parts: [
       {

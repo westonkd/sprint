@@ -38,11 +38,7 @@
 
   [data-sprint="DescriptionList"][data-sprint-empty] > div {
     padding: var(--sprint-space-4);
-    background-image: repeating-linear-gradient(
-      135deg,
-      var(--sprint-keyline) 0 1px,
-      transparent 1px 8px
-    );
+    background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-mono);
     font-size: var(--sprint-text-3xs);

@@ -1,8 +1,13 @@
+import { REGION_ATTRIBUTE } from "@/agent/attributes.ts";
 import type { AgentToolSpec } from "@/agent/types.ts";
 import type { SprintView } from "@/agent/view/mode.ts";
 import type { AgentFormatter, AgentNode } from "@/agent/view/node.ts";
 import { countNodes } from "@/agent/view/node.ts";
-import { serializeWithin } from "@/agent/view/serialize.ts";
+import {
+  serializeElement,
+  serializeWithin,
+  topLevelRoots,
+} from "@/agent/view/serialize.ts";
 import { clamp, paginate } from "@/agent/view/truncate.ts";
 import { TOOL_OUTPUT_LIMIT } from "@/agent/webmcp/adapter.ts";
 import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
@@ -35,13 +40,23 @@ export function toRegions(nodes: readonly AgentNode[]): Region[] {
 
 function readRegions(): Region[] {
   if (typeof document === "undefined") return [];
-  return toRegions(serializeWithin(document.body));
+  const body = document.body;
+  const tops = new Set(topLevelRoots(body));
+  const nested = Array.from(body.querySelectorAll(`[${REGION_ATTRIBUTE}]`)).filter(
+    (element) => !tops.has(element),
+  );
+  return toRegions([
+    ...serializeWithin(body),
+    ...nested
+      .map((element) => serializeElement(element))
+      .filter((node): node is AgentNode => node !== null),
+  ]);
 }
 
 export const LIST_REGIONS_SPEC: AgentToolSpec = {
   verb: "list",
   description:
-    "List the Sprint component regions on this page, with a one-line state summary for each. Call this first to discover region keys, then call read-region to read one in full.",
+    "List the Sprint component regions on this page, with a one-line state summary for each. Call this first to discover region keys, then call read-region to read one in full. Regions nest: a page-level region contains the labelled panels listed after it, so read the smallest region that covers what you need.",
   inputSchema: { type: "object", properties: {} },
   readOnly: true,
   untrustedContent: true,

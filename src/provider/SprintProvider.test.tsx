@@ -5,6 +5,7 @@ import { THEME_ATTRIBUTE, VIEW_ATTRIBUTE } from "@/agent/attributes.ts";
 import { TOOL_OUTPUT_LIMIT } from "@/agent/webmcp/adapter.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
 import { Button } from "@/components/Button/index.ts";
+import { Panel } from "@/components/Panel/index.ts";
 import { installMockModelContext, type MockModelContext } from "@/test/modelContext.ts";
 import { AgentRegion, SprintProvider } from "./SprintProvider.tsx";
 
@@ -312,6 +313,43 @@ describe("list-page-regions", () => {
     await expect(call("list-page-regions")).resolves.toContain("no Sprint components");
   });
 
+  it("lists labelled landmarks nested inside a top-level root as regions", async () => {
+    render(
+      <SprintProvider>
+        <Panel label="Frame">
+          <Panel label="Props">
+            <Button>Save</Button>
+          </Panel>
+          <Panel label="Tools">
+            <Button>Purge</Button>
+          </Panel>
+        </Panel>
+      </SprintProvider>,
+    );
+    const result = await call("list-page-regions");
+    expect(result).toContain("panel-frame");
+    expect(result).toContain("panel-props");
+    expect(result).toContain("panel-tools");
+  });
+
+  it("suffixes identically-labelled nested regions", async () => {
+    render(
+      <SprintProvider>
+        <Panel label="Frame">
+          <Panel label="Details">
+            <Button>One</Button>
+          </Panel>
+          <Panel label="Details">
+            <Button agentName="Two">Two</Button>
+          </Panel>
+        </Panel>
+      </SprintProvider>,
+    );
+    const result = await call("list-page-regions");
+    expect(result).toContain("panel-details");
+    expect(result).toContain("panel-details-2");
+  });
+
   it("takes no parameters", () => {
     render(
       <SprintProvider>
@@ -335,6 +373,24 @@ describe("read-region", () => {
     expect(result).toContain("**Button**");
     expect(result).toContain("press-prepare-launch");
     expect(result).toContain("page 1 of 1");
+  });
+
+  it("reads one nested landmark without the rest of the page", async () => {
+    render(
+      <SprintProvider>
+        <Panel label="Frame">
+          <Panel label="Props">
+            <Button>Save</Button>
+          </Panel>
+          <Panel label="Tools">
+            <Button>Purge</Button>
+          </Panel>
+        </Panel>
+      </SprintProvider>,
+    );
+    const result = await call("read-region", { region: "panel-props" });
+    expect(result).toContain("press-save");
+    expect(result).not.toContain("press-purge");
   });
 
   it("names the valid regions when asked for an unknown one", async () => {

@@ -26,6 +26,8 @@ export type { LinkProps } from "./Link/index.ts";
 export { Link, linkMeta, OPEN_LINK_TOOL } from "./Link/index.ts";
 export type { ListProps } from "./List/index.ts";
 export { List, listMeta } from "./List/index.ts";
+export type { MetaLineEntry, MetaLineProps } from "./MetaLine/index.ts";
+export { MetaLine, metaLineMeta } from "./MetaLine/index.ts";
 export type { NavProps } from "./Nav/index.ts";
 export { Nav, navMeta } from "./Nav/index.ts";
 export type { NavGroupProps } from "./NavGroup/index.ts";

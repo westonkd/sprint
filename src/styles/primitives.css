@@ -39,6 +39,7 @@
     --sprint-text-lg: 1rem;
     --sprint-text-xl: 1.375rem;
     --sprint-text-2xl: 1.75rem;
+    --sprint-text-display: clamp(2.25rem, 1.25rem + 3.5vw, 4.25rem);
 
     --sprint-tracking-tight: 0.02em;
     --sprint-tracking-label: 0.12em;

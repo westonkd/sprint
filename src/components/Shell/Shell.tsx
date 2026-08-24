@@ -44,7 +44,11 @@ export function Shell(props: ShellProps) {
     if (target instanceof Element && target.closest("a") !== null) setOpen(false);
   }, []);
 
-  const node = buildAgentNode({ component: shellMeta.name, state: { open } });
+  const node = buildAgentNode({
+    component: shellMeta.name,
+    region: true,
+    state: { open },
+  });
 
   if (view === "agent") {
     return (

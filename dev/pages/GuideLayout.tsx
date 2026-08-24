@@ -71,12 +71,10 @@ const AGENT = `- **Link** "ACME" [href=#/]
   - **Text** "Every mission on the board, current first." [size=normal, tone=default]
 - **Panel** "Upcoming" [flush]
   - **Table** "Upcoming launches" [columns=3, rows=2]
-    - part \`cell\` "Artemis relay" [column=mission, row=relay]
-    - part \`cell\` "Mon 04:00" [column=window, row=relay]
-    - part \`cell\` "GO" [column=status, row=relay]
-    - part \`cell\` "Crater survey" [column=mission, row=survey]
-    - part \`cell\` "Tue 11:30" [column=window, row=survey]
-    - part \`cell\` "HOLD" [column=status, row=survey]
+    | row | mission | window | status |
+    | --- | --- | --- | --- |
+    | relay | Artemis relay | Mon 04:00 | GO |
+    | survey | Crater survey | Tue 11:30 | HOLD |
 - **Panel** "Recent" [empty]`;
 
 const LAUNCH_COLUMNS = [

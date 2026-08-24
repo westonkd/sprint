@@ -4,7 +4,7 @@ export const tableMeta = defineAgentMeta({
   name: "Table",
   category: "display",
   summary:
-    "A data grid built from columns and rows rather than from markup. Each cell is addressable as a part carrying its column and row, so an agent reads the data without parsing a layout, and on a narrow screen every row restacks into a labelled block instead of scrolling sideways.",
+    "A data grid built from columns and rows rather than from markup. In the agent stream it reads as a compact Markdown table; in the DOM each cell is addressable as a part carrying its column and row. On a narrow screen every row restacks into a labelled block instead of scrolling sideways.",
   whenToUse:
     "Use it for any set of records with the same shape: props, attributes, conventions, results. Passing data instead of children is what lets the agent view carry the cells and the human view restack them on a phone.",
   whenNotToUse:
@@ -64,7 +64,7 @@ export const tableMeta = defineAgentMeta({
   },
   agentView: {
     example:
-      '- **Table** "Props" [columns=2, rows=1]\n  - part `cell` "tone" [column=prop, row=1]\n  - part `cell` "enum" [column=kind, row=1]',
+      '- **Table** "Props" [columns=2, rows=1]\n  | row | prop | kind |\n  | --- | --- | --- |\n  | tone | tone | enum |',
   },
   examples: [
     {

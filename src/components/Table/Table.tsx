@@ -7,6 +7,7 @@ import {
   agentPartAttributesFor,
   buildAgentNode,
 } from "@/agent/view/project.ts";
+import { condenseCells } from "@/agent/view/tabular.ts";
 import { reactText } from "@/agent/view/text.ts";
 import { tableMeta } from "./meta.ts";
 import "./Table.css";
@@ -75,7 +76,7 @@ export function Table(props: TableProps) {
     parts: cellParts(columns, rows),
   });
 
-  if (view === "agent") return <AgentLine node={node} />;
+  if (view === "agent") return <AgentLine node={condenseCells(node)} />;
 
   return (
     <table {...rest} {...agentAttributesFor(node)} role="table" aria-label={label}>

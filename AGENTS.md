@@ -146,6 +146,11 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   Boolean state renders as a valueless attribute so `[data-sprint-loading]` matches.
 - `data-sprint-tool="<name>"` names the WebMCP tool that drives this element.
 - `data-sprint-owner="<tool-name>"` marks a portaled root as belonging to another component.
+- `data-sprint-region` marks a labelled landmark (`Shell`, `Panel`, `Nav`, `PageHeader`, `Dialog`)
+  as a readable region. `list-page-regions` lists every region-flagged element alongside the
+  top-level roots, so an agent can read one panel instead of paginating the whole page. Set it via
+  `region: true` on `buildAgentNode`; a region is a place worth reading on its own, not any
+  container.
 - `data-sprint-view="human|agent"` marks the one container `SprintProvider` always renders around
   its subtree: `display: contents` in human view so it never affects layout, and the block that
   makes the text stream readable (`pre-wrap`, mono) in agent view. It is provider chrome, not a
@@ -155,12 +160,17 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   Markdown stream — on the clipboard, a human affordance with no WebMCP tool. Its visible label is
   CSS-generated from `aria-label`, so it contributes nothing to the page text an agent reads;
   `agentControls="never"` removes it along with every other control.
+- `data-sprint-ornament="hatch|hatch-dense|shade|scanlines|dots|checker|crosses"` paints one mark
+  from the ornament vocabulary (`src/styles/ornament.css`) onto an element, drawn in
+  `--sprint-ornament-ink` (keyline by default — set it locally for another ink). Pure CSS texture
+  for dead space and state bands; it never carries meaning, never sits over content, and the agent
+  view ignores it entirely. Components reference the `--sprint-ornament-*` tokens directly.
 - `data-sprint-theme="dark|light"` selects the semantic token mapping for everything beneath it.
   Pure CSS: put it on any element, or pass `theme` to `SprintProvider` to stamp it on the view
   container. Dark is the `:root` default. The light mapping keeps acid off light grounds by making
   ultramarine the action color with acid as its ink. The agent view ignores theme entirely.
 
-`part`, `tool`, `owner`, `view`, `view-copy`, and `theme` are reserved and never read as state. These attributes are part of the
+`part`, `tool`, `owner`, `region`, `view`, `view-copy`, and `theme` are reserved and never read as state. These attributes are part of the
 public API. Changing or removing one is a breaking change, because agents write selectors against
 them, and because the agent view is projected from them.
 
@@ -212,8 +222,12 @@ returns all go through `useAgentFormat()`, the one formatter `SprintProvider` re
 subtree. Markdown is only its default; a consumer passing `format` must change the rendered page and
 `read-region` together, and calling `nodeLine` or `toMarkdown` directly is what breaks that.
 A custom formatter also has a shape to honour: `AgentControlGroup` maps its node's formatted lines
-back onto part controls positionally, so a formatter must emit the node's own line (plus one summary
-line when a summary is present) followed by exactly one line per part, in part order.
+back onto part controls positionally, so a formatter must emit the node's own line (plus the
+summary's lines when a summary is present) followed by exactly one line per part, in part order.
+A summary may span multiple lines only on a node with no parts — tabular data uses this: a node
+whose parts are all `cell` parts with `column`/`row` state is condensed by `condenseCells` into a
+part-less node whose summary is a Markdown pipe table, in the render mode and the DOM projection
+alike.
 
 `serializeElement` / `serializeWithin` still project the agent view from the DOM, but only for
 reading a page that is in *human* mode. Because attributes are generated from the node, the
