@@ -13,6 +13,7 @@ import {
   version,
 } from "../src/index.ts";
 import { ComponentDoc } from "./pages/ComponentDoc.tsx";
+import { Everything } from "./pages/Everything.tsx";
 import { GuideForms } from "./pages/GuideForms.tsx";
 import { GuideLayout } from "./pages/GuideLayout.tsx";
 import { GuidePhilosophy } from "./pages/GuidePhilosophy.tsx";
@@ -34,6 +35,7 @@ const GUIDES: readonly Guide[] = [
   },
   { id: "layout", title: "Composing a page", render: () => <GuideLayout /> },
   { id: "forms", title: "Composing a form", render: () => <GuideForms /> },
+  { id: "everything", title: "Every component", render: () => <Everything /> },
 ];
 
 function currentRoute(): string {
