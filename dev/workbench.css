@@ -43,12 +43,15 @@ body {
 }
 
 .stage {
+  --stage-bleed: calc(var(--sprint-focus-offset) + var(--sprint-focus-width));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--sprint-space-3);
   min-height: 2.5rem;
   overflow-x: auto;
+  padding: var(--stage-bleed);
+  margin: calc(-1 * var(--stage-bleed));
 }
 
 .stage.as-text {

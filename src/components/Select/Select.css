@@ -43,7 +43,7 @@
     content: "";
     position: absolute;
     top: 50%;
-    right: var(--sprint-space-3);
+    right: calc(var(--sprint-space-3) + 4px);
     width: 2px;
     height: 2px;
     margin-top: -2px;
