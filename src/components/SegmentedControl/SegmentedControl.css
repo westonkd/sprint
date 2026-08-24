@@ -26,6 +26,11 @@
     border-right: 0;
   }
 
+  [data-sprint="SegmentedControl"] [data-sprint-part="option"]:focus-visible {
+    position: relative;
+    z-index: 1;
+  }
+
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:hover:not(:disabled) {
     background: var(--sprint-neutral-hover);
     color: var(--sprint-ink);
