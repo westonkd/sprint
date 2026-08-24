@@ -169,6 +169,13 @@ export function GuidePhilosophy() {
               and respects <code>disabled</code>, not because we maintained parity, but
               because it is the same event. Sprint cannot drift from itself here.
             </Text>
+            <Text tone="muted" size="small">
+              It is also why a client-side router needs no adapter. Sprint ships no
+              router: intercept the click on a Link or a navigating Card with{" "}
+              <code>onClick</code> and <code>preventDefault</code>, keep the real{" "}
+              <code>href</code> on the anchor, and human clicks, agent-view clicks, and
+              tool calls all take the same path through your router.
+            </Text>
             <Text>
               The <code>afterCommit()</code> barrier is not optional. State updates are
               batched, so without it a tool reads pre-action DOM and reports it as the

@@ -25,6 +25,7 @@ export function Link(props: LinkProps) {
     agentName,
     children,
     ref,
+    onClick,
     ...rest
   } = props;
 
@@ -78,6 +79,7 @@ export function Link(props: LinkProps) {
         as="a"
         href={href}
         ref={setRef}
+        onClick={onClick}
         target={outward.target}
         rel={outward.rel}
       />
@@ -90,6 +92,7 @@ export function Link(props: LinkProps) {
       {...agentAttributesFor(node)}
       href={href}
       ref={setRef}
+      onClick={onClick}
       aria-current={active ? "page" : undefined}
       target={outward.target}
       rel={outward.rel}

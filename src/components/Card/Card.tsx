@@ -1,5 +1,6 @@
 import {
   type ComponentPropsWithRef,
+  type MouseEventHandler,
   type ReactNode,
   type Ref,
   useCallback,
@@ -26,7 +27,7 @@ export interface CardProps
   label: string;
   children?: ReactNode;
   href?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLElement>;
   disabled?: boolean;
   agentTool?: boolean;
   agentName?: string;
@@ -117,7 +118,7 @@ export function Card(props: CardProps) {
         as={navigates ? "a" : "button"}
         href={href}
         ref={setRef}
-        onClick={navigates ? undefined : onClick}
+        onClick={onClick}
       />
     );
   }
@@ -138,6 +139,7 @@ export function Card(props: CardProps) {
         {...agentAttributesFor(node)}
         href={href}
         aria-label={label}
+        onClick={onClick}
         ref={setRef as Ref<HTMLAnchorElement>}
       >
         {inner}

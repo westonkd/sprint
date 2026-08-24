@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { createRef } from "react";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { createRef, type MouseEvent } from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { serializeWithin } from "@/agent/view/serialize.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
@@ -53,6 +53,20 @@ describe("Link rendering", () => {
     expect(root()).toHaveAttribute("rel", "noreferrer noopener");
   });
 
+  it("lets a router intercept the click", () => {
+    const onClick = vi.fn((event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+    });
+    render(
+      <Link href="#/Button" onClick={onClick}>
+        Button
+      </Link>,
+    );
+    root().click();
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick.mock.calls[0]?.[0]?.defaultPrevented).toBe(true);
+  });
+
   it("forwards ref and spreads the rest onto the root", () => {
     const ref = createRef<HTMLAnchorElement>();
     render(
@@ -102,6 +116,22 @@ describe("Link agent view", () => {
     const anchor = container.querySelector("a");
     expect(anchor).toHaveAttribute("href", "#/Button");
     expect(anchor?.textContent).toBe('- **Link** "Button" [active, href=#/Button]');
+  });
+
+  it("honours a router's click handler on its control", () => {
+    const onClick = vi.fn((event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+    });
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Link href="#/Button" onClick={onClick}>
+          Button
+        </Link>
+      </SprintProvider>,
+    );
+
+    container.querySelector("a")?.click();
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   it("renders text only when the consumer wants zero markup", () => {
