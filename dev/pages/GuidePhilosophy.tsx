@@ -84,10 +84,9 @@ export function GuidePhilosophy() {
             </Text>
             <Text>
               <strong>The cost:</strong> a dense page could flood the tool list, and
-              more tools means slower, less accurate selection. We accepted that with a
-              tripwire: if a realistic page passes roughly 15 registered tools, Button's
-              default flips to opt-in. Better to have written the threshold down than to
-              discover it at component eight.
+              more tools means slower, less accurate selection. The tripwire: if a
+              realistic page passes roughly 15 registered tools, Button's default flips
+              to opt-in.
             </Text>
           </Stack>
         </Panel>
@@ -117,11 +116,10 @@ export function GuidePhilosophy() {
               warning.
             </Text>
             <Text>
-              Numeric suffixing would reintroduce <code>button-3</code>. First-wins is
-              worse: it depends on mount order and hands the agent a tool that presses
-              an arbitrary one of two identical controls. Silently pressing the wrong
-              button beats pressing nothing only if you never find out. If a name is
-              ambiguous to a machine it is ambiguous to a human, so it fails loudly. Set{" "}
+              Numeric suffixing would reintroduce <code>button-3</code>. First-wins
+              depends on mount order and hands the agent a tool that presses an
+              arbitrary one of two identical controls. If a name is ambiguous to a
+              machine it is ambiguous to a human, so it fails loudly. Set{" "}
               <code>agentName</code> to fix it.
             </Text>
           </Stack>
@@ -150,9 +148,8 @@ export function GuidePhilosophy() {
             </Text>
             <CodeBlock code={NO_TOOL} />
             <Text tone="muted" size="small">
-              The rule is the same one behind the tripwire in point 1. Ask what an agent
-              can do with the tool that it could not do without it. If the answer is
-              nothing, the tool is cost.
+              Ask what an agent can do with the tool that it could not do without it. If
+              the answer is nothing, the tool is cost.
             </Text>
           </Stack>
         </Panel>
@@ -245,18 +242,12 @@ export function GuidePhilosophy() {
               <code>toolname</code> or the declarative form attributes.
             </Text>
             <Text>
-              This was not really a choice yet. Button is not a form, its tool takes no
-              inputs, and its registration is conditional on runtime state, none of
-              which the declarative API expresses. It becomes a genuine decision when a
-              Field or Form component exists.
-            </Text>
-            <Text>
-              The pull will be real: the browser derives the entire schema from the
-              markup, including <code>enum</code> values from{" "}
-              <code>&lt;option&gt;</code> elements, with nothing to hand-maintain. The
-              argument against is that a declaratively registered tool bypasses the
-              adapter above, and is invisible to the naming and collision machinery.
-              Point 9 would stop being true.
+              The declarative form is tempting: the browser derives the whole schema
+              from the markup, <code>enum</code> values included, with nothing to
+              hand-maintain. But a declaratively registered tool bypasses the adapter
+              above and is invisible to the naming and collision machinery, so point 9
+              would stop being true. It also cannot express registration that depends on
+              runtime state: a loading button, a disabled field.
             </Text>
           </Stack>
         </Panel>
@@ -293,11 +284,9 @@ export function GuidePhilosophy() {
         <Panel headingLevel={2} label="12. One control per actionable part">
           <Stack gap="tight">
             <Text>
-              "Exactly one control" was written with Button in mind, and a control with
-              several distinct actions breaks it. A SegmentedControl cannot express
-              choosing an option through one button. So the rule generalises: a
-              component renders one control per addressable part that can be acted on
-              right now, and the group itself stays text.
+              A component renders one control per addressable part that can be acted on
+              right now, and the group itself stays text. A SegmentedControl cannot
+              express choosing an option through one button, so each option is its own.
             </Text>
             <CodeBlock language="text" code={PARTS} />
             <Text tone="muted" size="small">
@@ -353,14 +342,6 @@ export function GuidePhilosophy() {
               Everything above is verified in jsdom and in a normal browser. No
               descriptor has been accepted by a real WebMCP implementation yet. The test
               double is our reading of the documentation, not the platform.
-            </Text>
-            <Text tone="muted" size="small">
-              The catalogue grew ahead of that spike on purpose, so that these pages
-              could be built out of the library instead of out of hand-written markup.
-              The bet is that a documentation page is a demanding enough application to
-              find the design's holes, and it did: points 5, 12, and 13 are all things
-              this page forced. The bet's cost is that eleven more components now depend
-              on a descriptor shape no browser has accepted.
             </Text>
           </Stack>
         </Panel>

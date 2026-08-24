@@ -4,7 +4,7 @@ export const codeBlockMeta = defineAgentMeta({
   name: "CodeBlock",
   category: "display",
   summary:
-    "A snippet of code in a keylined frame, syntax-coloured from the palette, with a copy control and a caption band. In agent view the snippet is carried verbatim as the code part, so an agent reads the source instead of the highlighting.",
+    "A snippet of code with a caption band and a copy control. In agent view the snippet is carried verbatim as the code part, so an agent reads the source instead of the highlighting.",
   whenToUse:
     "Use it for any code a reader is meant to run or copy: an install snippet, an example, a generated tool descriptor. It scrolls horizontally rather than wrapping, so a long line stays a long line.",
   whenNotToUse:

@@ -56,23 +56,6 @@ export function Overview(props: { components: readonly AgentComponentMeta[] }) {
           </Text>
         </PageHeader>
 
-        <Panel headingLevel={2} label="These docs are the manifest">
-          <Stack gap="tight">
-            <Text>
-              Every page in this workbench is generated from{" "}
-              <code>agent-manifest.json</code>, the same artifact an agent reads to
-              learn what exists. There is no hand-written documentation to fall out of
-              date, and writing good agent metadata is what produces good human docs.
-            </Text>
-            <Text tone="muted" size="small">
-              The pages are also built out of the library itself. Every panel, table,
-              chip, and snippet below is a Sprint component, so a bug in the catalogue
-              is a bug in the documentation and you cannot ship one without seeing the
-              other.
-            </Text>
-          </Stack>
-        </Panel>
-
         <Panel headingLevel={2} label="Two views, one definition">
           <Stack gap="tight">
             <Text>

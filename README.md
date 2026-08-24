@@ -3,7 +3,8 @@
 An agent-forward React component library. Every component renders normally for people and
 projects a machine-readable view for agents, from one definition.
 
-Status: early. One component (Button) and the agent runtime behind it.
+Status: experimental. A full catalog of components on top of the agent runtime, verified in jsdom
+and normal browsers; no real WebMCP implementation has accepted a descriptor yet.
 
 ## What "agent-forward" means here
 
@@ -46,11 +47,12 @@ generated entirely from `agent-manifest.json` — props, state attributes, tool 
 code snippet come from the same metadata an agent reads. Each example can be toggled between the
 human and agent view, individually or a whole page at once.
 
-Two written guides sit alongside them:
+Four written guides sit alongside them:
 
-- **WebMCP** — what the platform API is, the imperative and declarative forms with examples,
-  availability, its hard limits, and the security annotations.
-- **Integration philosophy** — the eleven decisions behind how Sprint uses it, and what each costs.
+- **WebMCP** — the platform API: both forms, availability, hard limits, and security.
+- **Integration philosophy** — the decisions behind how Sprint uses it, and what each costs.
+- **Composing a page** — Shell, PageHeader, Panel, and Stack, top down.
+- **Composing a form** — fields, tool naming, and the submit lifecycle.
 
 ```bash
 docker compose run --rm verify

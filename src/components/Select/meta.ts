@@ -5,7 +5,7 @@ export const selectMeta = defineAgentMeta({
   name: "Select",
   category: "input",
   summary:
-    "A dropdown of mutually exclusive options behind a native select, with its own uppercase monospace label, an optional hint, and an optional error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
+    "A dropdown of mutually exclusive options behind a native select, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
   whenToUse:
     "Use it when one value is chosen from a list too long to lay out flat: a region, a squad, a category. Options are data ({ value, label }), the tool accepts the visible label, and in agent view every option renders as its own control, so an agent picks one without opening anything.",
   whenNotToUse:

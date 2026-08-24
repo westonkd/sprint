@@ -5,7 +5,7 @@ export const checkboxMeta = defineAgentMeta({
   name: "Checkbox",
   category: "input",
   summary:
-    "A single on/off choice recorded as form data: a flat keylined square with an uppercase monospace label, checked meaning a filled inner square. It registers one set tool that takes the end state rather than toggling.",
+    "A single on/off choice recorded as form data. It registers one set tool that takes the end state rather than toggling.",
   whenToUse:
     "Use it for a boolean a form will submit: accepting terms, opting in, including something in a request. The set tool takes checked as true or false, so an agent states the end state and never has to read before writing.",
   whenNotToUse:

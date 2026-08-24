@@ -4,7 +4,7 @@ export const navMeta = defineAgentMeta({
   name: "Nav",
   category: "navigation",
   summary:
-    "A labelled navigation landmark: the region that holds a page's links to elsewhere. Links inside it render as a vertical rail with the active item marked by a keyline.",
+    "A labelled navigation landmark: the region that holds a page's links to elsewhere.",
   whenToUse:
     "Use it around any set of links whose job is getting around the app: a sidebar, a table of contents, a footer link block. The label names the landmark, so a person navigating by landmark, a screen reader, and an agent reading the page all know these links are wayfinding rather than content. Group related links inside it with NavGroup.",
   whenNotToUse:

@@ -5,9 +5,9 @@ export const textInputMeta = defineAgentMeta({
   name: "TextInput",
   category: "input",
   summary:
-    "A single-line text field with its own uppercase monospace label, an optional hint, and an optional error. Fully controlled, and it registers one fill tool that replaces the field's text with an explicit value.",
+    "A single-line text field carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the field's text with an explicit value.",
   whenToUse:
-    "Use it for any free-form single-line value: a name, a callsign, an email address, a search term. The label is part of the component, so a form never needs a separate label element, and the error prop is how validation reaches both a person and an agent.",
+    "Use it for any free-form single-line value: a name, an email address, a search term. The label is part of the component, so a form never needs a separate label element, and the error prop is how validation reaches both a person and an agent.",
   whenNotToUse:
     "Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch.",
   status: "experimental",

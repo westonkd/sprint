@@ -5,7 +5,7 @@ export const alertMeta = defineAgentMeta({
   name: "Alert",
   category: "feedback",
   summary:
-    "A status message for the outcome of something that already happened: a notice, a warning, or a failure. Renders as a bordered bar with a tone-colored keyline, an optional uppercase title, and the message.",
+    "A status message for the outcome of something that already happened: a notice, a warning, or a failure.",
   whenToUse:
     'Use to report the result of an action or a condition the person did not just cause: "check your inbox", "invalid credentials", "this key expires soon". Use tone="danger" for failures, "warning" for conditions needing attention, "info" for neutral notices, and "neutral" for quiet confirmations. Pass onDismiss when the message can be acknowledged and cleared.',
   whenNotToUse:

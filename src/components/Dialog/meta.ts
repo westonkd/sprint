@@ -5,7 +5,7 @@ export const dialogMeta = defineAgentMeta({
   name: "Dialog",
   category: "overlay",
   summary:
-    "A modal that interrupts the page for one decision: confirm a destructive action, complete a short step, acknowledge something before continuing. Renders as a double-keylined panel over a hatched backdrop, in the browser's top layer.",
+    "A modal that interrupts the page for one decision: confirm a destructive action, complete a short step, acknowledge something before continuing.",
   whenToUse:
     "Use when the page must not continue until the person decides: confirming a revocation or deletion, a short focused form, a required acknowledgement. Keep one decision per dialog and put its actions inside as ordinary Buttons; tools registered inside the dialog compose their names under its label.",
   whenNotToUse:

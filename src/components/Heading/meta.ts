@@ -4,7 +4,7 @@ export const headingMeta = defineAgentMeta({
   name: "Heading",
   category: "typography",
   summary:
-    "A section title. Level 1 is the display voice, a high-contrast serif set large and uppercase; levels 2 to 4 are the wide-tracked uppercase monospace that labels everything else in the system.",
+    "A section title, rendered as a real h element at the level you pick so it joins the document outline.",
   whenToUse:
     "Use it for the title of a page or of a region inside one, and keep levels in document order so the outline an agent or a screen reader builds is the outline you meant.",
   whenNotToUse:

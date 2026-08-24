@@ -5,7 +5,7 @@ export const textareaMeta = defineAgentMeta({
   name: "Textarea",
   category: "input",
   summary:
-    "A multi-line text area with its own uppercase monospace label, an optional hint, and an optional error. Fully controlled, and it registers one fill tool that replaces the whole content with an explicit value, line breaks included.",
+    "A multi-line text area carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the whole content with an explicit value, line breaks included.",
   whenToUse:
     "Use it for free-form text that runs longer than a line: a description, a message body, a set of notes. In the agent view the current content is part of the component's state line, so an agent reads what is written without a separate query.",
   whenNotToUse:

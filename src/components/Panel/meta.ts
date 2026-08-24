@@ -4,7 +4,7 @@ export const panelMeta = defineAgentMeta({
   name: "Panel",
   category: "layout",
   summary:
-    "A keylined region that announces what it is in a small header band, with an optional slot for the controls that act on it. Everything on a Sprint page lives inside one.",
+    "A labelled region with a header band and an optional slot for the controls that act on it. Everything on a Sprint page lives inside one.",
   whenToUse:
     "Use it for every distinct region of a page: a section of documentation, a form, a readout, a preview. The label is the region's accessible name, so a person, a screen reader, and an agent all address the region by the same words.",
   whenNotToUse:

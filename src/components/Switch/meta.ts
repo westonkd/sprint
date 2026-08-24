@@ -5,7 +5,7 @@ export const switchMeta = defineAgentMeta({
   name: "Switch",
   category: "input",
   summary:
-    "An on/off setting that takes effect the moment it changes: a rectangular track whose square thumb sits left for off and right for on, labelled in uppercase monospace. It registers one set tool that takes the end state rather than toggling.",
+    "An on/off setting that takes effect the moment it changes. It registers one set tool that takes the end state rather than toggling.",
   whenToUse:
     "Use it for a live setting: enabling telemetry, muting alerts, switching a feed. The set tool takes on as true or false, so an agent states the end state and never has to read before writing.",
   whenNotToUse:

@@ -4,7 +4,7 @@ export const descriptionListMeta = defineAgentMeta({
   name: "DescriptionList",
   category: "display",
   summary:
-    "Labelled term–description pairs for the details of one thing: metadata, settings, profile fields. Renders as a keylined stack that becomes a two-column grid on wide screens.",
+    "Labelled term–description pairs for the details of one thing: metadata, settings, profile fields.",
   whenToUse:
     "Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description.",
   whenNotToUse:
