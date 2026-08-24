@@ -7,7 +7,7 @@ export const linkMeta = defineAgentMeta({
   summary:
     "A navigation link. It publishes its destination as state, so an agent reading the page in text learns the URL rather than having to click to find out, and it renders a real anchor in both views.",
   whenToUse:
-    "Use it for anything that changes the address: a nav item, a cross-reference, a link out to a specification. Set active on the item matching the current route so the agent view and the human view agree about where you are.",
+    "Use it for anything that changes the address: a nav item, a cross-reference, a link out to a specification. Set active on the item matching the current route so the agent view and the human view agree about where you are. Under a client-side router, pass an onClick that prevents default and navigates; the handler rides the anchor in both views, so agent clicks and open tools go through the router too.",
   whenNotToUse:
     "Do not use it for an action that stays on the page; that is a Button. Do not register a tool on ordinary navigation: an agent can already reach a URL, and a page of links would flood its tool list for no gain.",
   status: "experimental",

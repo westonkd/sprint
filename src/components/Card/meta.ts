@@ -31,7 +31,7 @@ export const cardMeta = defineAgentMeta({
     onClick: {
       kind: "handler",
       description:
-        "What clicking does, which makes the card a button. A card that acts registers an open tool by default.",
+        "What clicking does. Alone it makes the card a button that registers an open tool by default. Alongside href the card stays a link and the handler rides the click, so a client-side router can intercept the navigation.",
     },
     disabled: {
       kind: "boolean",

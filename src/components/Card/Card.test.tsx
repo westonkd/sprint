@@ -1,4 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
+import type { MouseEvent } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { serializeWithin } from "@/agent/view/serialize.ts";
@@ -62,6 +63,21 @@ describe("Card rendering", () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it("lets a router intercept a navigating card", () => {
+    const onClick = vi.fn((event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
+    render(
+      <Card label="Button" href="#/Button" onClick={onClick}>
+        A single action.
+      </Card>,
+    );
+    expect(screen.getByRole("link", { name: "Button" })).toBe(root());
+    root().click();
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick.mock.calls[0]?.[0]?.defaultPrevented).toBe(true);
+  });
+
   it("disables an acting card", () => {
     render(<Card label="Start from blank" onClick={() => {}} disabled />);
     expect(root()).toBeDisabled();
@@ -120,6 +136,23 @@ describe("Card agent tool", () => {
     );
     expect(mock.names()).toEqual(["open-checkout"]);
   });
+
+  it("routes a navigating card's tool through the intercepted click", async () => {
+    const onClick = vi.fn((event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
+    render(
+      <Card label="Checkout" href="#/checkout" onClick={onClick} agentTool>
+        Finish the order.
+      </Card>,
+    );
+
+    await act(async () => {
+      await mock.call("open-checkout");
+    });
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe("Card agent view", () => {
@@ -136,6 +169,22 @@ describe("Card agent view", () => {
     expect(anchor).toHaveAttribute("href", "#/Button");
     expect(container.textContent).toContain('- **Card** "Button" [href=#/Button]');
     expect(container.textContent).toContain('- part `body` "A single action."');
+  });
+
+  it("honours a router's click handler on a navigating card's control", () => {
+    const onClick = vi.fn((event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Card label="Button" href="#/Button" onClick={onClick}>
+          A single action.
+        </Card>
+      </SprintProvider>,
+    );
+
+    container.querySelector("a")?.click();
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   it("keeps its anchor when a navigating card is marked disabled", () => {

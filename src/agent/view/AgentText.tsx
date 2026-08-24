@@ -1,4 +1,10 @@
-import { type ComponentPropsWithRef, Fragment, type ReactNode, type Ref } from "react";
+import {
+  type ComponentPropsWithRef,
+  Fragment,
+  type MouseEventHandler,
+  type ReactNode,
+  type Ref,
+} from "react";
 import { AgentDepthProvider, useAgentDepth, useAgentFormat } from "./mode.ts";
 import type { AgentFormatter, AgentNode, AgentPart } from "./node.ts";
 import { agentControlAttributes, agentPartControlAttributes } from "./project.ts";
@@ -123,13 +129,17 @@ export function AgentFieldControl(props: AgentFieldControlProps) {
 
 export type AgentControlProps = Omit<
   ComponentPropsWithRef<"button">,
-  "children" | "ref"
+  "children" | "ref" | "onClick"
 > & {
   node: AgentNode;
   as?: "button" | "a" | undefined;
   href?: string | undefined;
   target?: string | undefined;
   rel?: string | undefined;
+  onClick?:
+    | MouseEventHandler<HTMLButtonElement>
+    | MouseEventHandler<HTMLAnchorElement>
+    | undefined;
   ref?: Ref<HTMLButtonElement> | Ref<HTMLAnchorElement> | undefined;
   children?: ReactNode;
 };
@@ -154,7 +164,11 @@ export function AgentControl(props: AgentControlProps) {
         {head}
       </a>
     ) : (
-      <button {...rest} {...attributes} ref={ref as Ref<HTMLButtonElement>}>
+      <button
+        {...(rest as unknown as ComponentPropsWithRef<"button">)}
+        {...attributes}
+        ref={ref as Ref<HTMLButtonElement>}
+      >
         {head}
       </button>
     );
