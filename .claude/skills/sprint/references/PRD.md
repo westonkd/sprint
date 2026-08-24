@@ -11,6 +11,17 @@
 > control ([ADR](ADR/20260823083431_text_entry_renders_a_live_field_as_its_agent_control.md)).
 > 590 tests, `verify` green.
 >
+> **Status (2026-08-23, later):** The identity-service set landed: Alert, Dialog, DescriptionList,
+> SecretField, chosen by walking an identity product's screens against the catalog. Dialog finishes
+> phase 6's remaining half, but not the way phase 6 expected: it is a native top-layer element, not
+> a portal, because a portal would escape the provider's view container
+> ([ADR](ADR/20260823204612_dialog_is_a_native_top_layer_element_not_a_portal.md)). SecretField
+> extends the secrets rule from entry to display: fixed-length mask, no tools, value reachable only
+> through pixels and clipboard
+> ([ADR](ADR/20260823204612_displayed_secrets_get_a_fixed_length_mask_and_no_tools.md)). The
+> workbench gained "Every component", a single page rendering the whole catalog from the registry
+> for eyeballing system-wide changes. 657 tests, `verify` green.
+>
 > **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike has not been run, and the catalog grew ahead of it deliberately, so it now has more to invalidate than it did.
 >
 > **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from the reference imagery in `marathon/`. R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.
