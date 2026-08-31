@@ -152,16 +152,14 @@ function HowItWorks() {
           label="What a Sprint component does"
           items={[
             <>
-              <strong>Two views, one component.</strong> A person sees the rendered
-              interface. An agent asks the same component to describe itself and gets
-              plain text back. There is no second implementation behind the second view,
-              so the two cannot disagree, and switching between them re-renders the
-              component rather than replacing it.
+              <strong>Two views, one component.</strong> Humans see the rendered
+              interface; agents switch the same component to a minimal text view, with
+              no second implementation behind it.
             </>,
             <>
-              <strong>Names you can rely on.</strong> Every component names itself, its
-              parts, and its current state in the markup, and those names are part of
-              the public API rather than a styling detail that moves.
+              <strong>Names you can rely on.</strong> A <code>div</code> tells an agent
+              nothing; every Sprint component publishes its identity, parts, and current
+              state as attributes it promises not to rename.
             </>,
             <>
               <strong>Actions, not clicks.</strong> In Chrome 149 a component registers
