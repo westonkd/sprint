@@ -2,18 +2,21 @@ import { useState } from "react";
 import {
   Button,
   Card,
+  Checkbox,
   CodeBlock,
+  List,
   listAgentMeta,
   MetaLine,
   PageHeader,
   Panel,
   SegmentedControl,
+  Select,
   SprintProvider,
   type SprintView,
   Stack,
-  Switch,
   Tag,
   Text,
+  TextInput,
   version,
 } from "../../src/index.ts";
 import { THEME_OPTIONS, useTheme, VIEW_OPTIONS } from "../theme.ts";
@@ -66,34 +69,34 @@ export function Landing() {
             </Card>
           </Stack>
 
-          <Panel headingLevel={2} label="The problem">
+          <Panel headingLevel={2} label="How it works">
             <Stack gap="tight">
-              <Text>
-                Agents drive applications by guessing. They read class names and
-                positions that were never meant to be a contract, so a routine styling
-                change quietly breaks the automation built on top of it.
-              </Text>
-              <Text>
-                Teams answer that by maintaining a second thing: an API, a set of test
-                identifiers, a written description of the interface. It drifts from the
-                interface almost immediately, because nothing forces the two to agree.
-              </Text>
-            </Stack>
-          </Panel>
-
-          <Panel headingLevel={2} label="What Sprint does about it">
-            <Stack gap="tight">
-              <Text>
-                A Sprint component describes itself. One definition produces the
-                interface a person sees, the plain-text description an agent reads, and
-                the actions an agent can call. There is no second copy to keep in sync,
-                so the two cannot disagree.
-              </Text>
-              <Text tone="muted" size="small">
-                For people, nothing changes. The components are ordinary, accessible
-                React components, and everything works in browsers that have never heard
-                of an agent.
-              </Text>
+              <List
+                label="What a Sprint component does"
+                items={[
+                  <>
+                    <strong>It describes itself.</strong> The interface a person sees
+                    and the plain-text description an agent reads come from one
+                    definition, so there is no second copy to keep in sync.
+                  </>,
+                  <>
+                    <strong>It publishes stable hooks.</strong> Every component names
+                    itself, its parts, and its current state in the markup, and those
+                    names are part of the public API rather than a styling detail that
+                    moves.
+                  </>,
+                  <>
+                    <strong>It offers its actions.</strong> In Chrome 149 a component
+                    registers what it can do with the browser, so an agent calls the
+                    action instead of aiming a click at it.
+                  </>,
+                  <>
+                    <strong>It stays an ordinary component.</strong> Accessible React,
+                    no runtime dependencies, and nothing that needs an agent to be
+                    present.
+                  </>,
+                ]}
+              />
             </Stack>
           </Panel>
 
@@ -155,7 +158,10 @@ export function Landing() {
 
 function Demo() {
   const [view, setView] = useState<SprintView>("human");
-  const [notify, setNotify] = useState(true);
+  const [callsign, setCallsign] = useState("");
+  const [slot, setSlot] = useState("");
+  const [notify, setNotify] = useState(false);
+  const [requested, setRequested] = useState(false);
 
   return (
     <Panel
@@ -173,9 +179,9 @@ function Demo() {
     >
       <Stack gap="tight">
         <Text>
-          The switch above changes this example only. Nothing is re-implemented between
-          the two, and nothing unmounts: the same components you see render themselves
-          as text when something asks them to.
+          A small form, and the same form as an agent reads it. The switch above changes
+          this example only. Nothing is re-implemented between the two, and nothing
+          unmounts.
         </Text>
         <div className="landing-demo">
           <SprintProvider
@@ -184,14 +190,34 @@ function Demo() {
             onViewChange={setView}
             pageTools={false}
           >
-            <Stack gap="tight">
-              <Switch label="Notify on launch" on={notify} onChange={setNotify} />
-              <Stack direction="row" gap="tight" wrap align="center">
-                <Button tone="action" onClick={() => setNotify(true)}>
-                  Prepare launch
-                </Button>
-                <Tag tone="warning">staged</Tag>
-              </Stack>
+            <Stack gap="normal">
+              <TextInput
+                label="Callsign"
+                value={callsign}
+                onChange={setCallsign}
+                placeholder="NOMAD"
+                hint="Three to eight letters."
+              />
+              <Select
+                label="Launch window"
+                value={slot}
+                onChange={setSlot}
+                placeholder="Choose a window"
+                options={[
+                  { value: "0600", label: "06:00, clear" },
+                  { value: "1400", label: "14:00, crosswind" },
+                  { value: "2200", label: "22:00, clear" },
+                ]}
+              />
+              <Checkbox
+                label="Notify me when it is confirmed"
+                checked={notify}
+                onChange={setNotify}
+              />
+              <Button tone="action" block onClick={() => setRequested(true)}>
+                Request window
+              </Button>
+              {requested ? <Tag tone="info">Requested</Tag> : null}
             </Stack>
           </SprintProvider>
         </div>
