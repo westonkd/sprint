@@ -12,7 +12,8 @@ rather than from code.
 
 # Visual language
 
-Derived from the reference imagery in `marathon/` at the repo root. This section is the source of
+Derived from a set of local reference imagery, third-party art that is deliberately not tracked in
+this repository. This section is the source of
 truth for R4 in the [PRD](PRD.md); if a component's styling and this document disagree, one of them
 is a bug.
 

@@ -85,13 +85,15 @@ scripts/            manifest generation, build output checks
 
 ## Consuming it
 
+Not published to npm yet. Once it is, the package name is `@westonkd/sprint`:
+
 ```tsx
-import { Button, SprintProvider } from "sprint";
-import "sprint/styles.css";
+import { Button, SprintProvider } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ```ts
-import manifest from "sprint/agent-manifest.json" with { type: "json" };
+import manifest from "@westonkd/sprint/agent-manifest.json" with { type: "json" };
 ```
 
 Wrap your app in `SprintProvider` to register the page-level `list-page-regions` and `read-region`
@@ -106,7 +108,14 @@ work normally — the agent view does not depend on it.
 
 ## Documentation
 
+The workbench is published at [westonkd.github.io/sprint](https://westonkd.github.io/sprint/),
+along with `agent-manifest.json`, `llms.txt`, and a Markdown page per component.
+
 - [AGENTS.md](AGENTS.md) — contribution workflow and the agent contract.
 - `.claude/skills/sprint/references/PRD.md` — what this is and why.
 - `.claude/skills/sprint/references/DESIGN.md` — the visual language.
 - `.claude/skills/sprint/references/ADR/` — why it is built this way.
+
+## License
+
+[MIT](LICENSE)

@@ -1,9 +1,27 @@
 {
-  "name": "sprint",
-  "version": "0.0.0",
+  "name": "@westonkd/sprint",
+  "version": "0.1.0",
   "description": "An agent-forward React component library",
   "type": "module",
   "license": "MIT",
+  "author": "Weston Dransfield",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/westonkd/sprint.git"
+  },
+  "homepage": "https://westonkd.github.io/sprint/",
+  "bugs": {
+    "url": "https://github.com/westonkd/sprint/issues"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "component-library",
+    "webmcp",
+    "agents",
+    "mcp",
+    "accessibility"
+  ],
   "sideEffects": [
     "**/*.css"
   ],

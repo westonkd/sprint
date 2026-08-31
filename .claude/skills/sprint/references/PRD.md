@@ -39,7 +39,7 @@
 >
 > **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike has not been run, and the catalog grew ahead of it deliberately, so it now has more to invalidate than it did.
 >
-> **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from the reference imagery in `marathon/`. R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.
+> **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from a set of local reference imagery (not tracked in this repository). R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.
 >
 > **Decided:** WebMCP means the web platform standard (`document.modelContext`, Chrome 149 origin trial), not the third-party webmcp.dev library — see [ADR 20260822183250](ADR/20260822183250_target_the_chrome_webmcp_standard_not_the_webmcp_dev_library.md). R2 below is written against that API and is no longer blocked. Phase 1 is now a spike, not a decision.
 
@@ -209,8 +209,8 @@ Targets the platform API per
 
 ### R4 — Visual system
 
-Full specification in [DESIGN.md](DESIGN.md#visual-language), derived from the reference imagery in
-`marathon/` at the repo root. That document is the source of truth; the requirements here are the
+Full specification in [DESIGN.md](DESIGN.md#visual-language), derived from a set of local reference
+imagery that is not tracked in this repository. That document is the source of truth; the requirements here are the
 load-bearing constraints extracted from it.
 
 - **R4.1** Flat, always. No gradient, drop shadow, blur, bevel, or non-zero border-radius. Depth

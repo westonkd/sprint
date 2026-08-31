@@ -14,8 +14,8 @@ import {
   version,
 } from "../../src/index.ts";
 
-const INSTALL = `import { Button, SprintProvider } from "sprint";
-import "sprint/styles.css";
+const INSTALL = `import { Button, SprintProvider } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 
 export function App() {
   return (
