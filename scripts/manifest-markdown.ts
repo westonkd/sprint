@@ -61,8 +61,8 @@ export function componentMarkdown(meta: AgentComponentMeta): string {
     "## Install",
     "",
     "```tsx",
-    `import { ${meta.name} } from "sprint";`,
-    `import "sprint/styles.css";`,
+    `import { ${meta.name} } from "@westonkd/sprint";`,
+    `import "@westonkd/sprint/styles.css";`,
     "```",
   );
 

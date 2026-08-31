@@ -287,3 +287,20 @@ the floor.
 - Commit messages are short. A subject line and nothing else. Reach for a body only when the
   change is genuinely inexplicable without one, which is rare, because the reasoning belongs
   in an ADR where it can be found later and revised.
+
+## Releasing
+
+Releases are cut from a clean, up-to-date `main` by a maintainer with npm publish rights:
+
+```bash
+scripts/release.sh patch
+```
+
+`patch`, `minor`, or `major`. The script bumps `package.json` first, then re-syncs the lockfile and
+runs the full containerized `verify`, because the bundle and `agent-manifest.json` bake the version
+in at build time. It then commits, tags `v<version>`, publishes to npm, and pushes the commit and
+tag. `npm version` and `npm publish` run on the host, so it needs Node and an `npm login` session;
+everything else stays in Docker.
+
+Release notes live in `CHANGELOG.md`. PRs add a line under `## Unreleased`; the release script
+stamps that section with the new version and date, and refuses to cut a release while it is empty.

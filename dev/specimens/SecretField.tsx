@@ -5,7 +5,7 @@ export const secretFieldSpecimens: Record<string, ReactNode> = {
   "A key shown once": (
     <SecretField
       label="API key"
-      value="sk_live_9f2ab41c77d05513"
+      value="sk_demo_9f2ab41c77d05513"
       hint="Store it now. It is not shown again."
     />
   ),

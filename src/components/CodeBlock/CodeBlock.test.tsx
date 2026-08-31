@@ -6,7 +6,7 @@ import { serializeWithin } from "@/agent/view/serialize.ts";
 import { SprintProvider } from "@/provider/SprintProvider.tsx";
 import { CodeBlock } from "./CodeBlock.tsx";
 
-const SNIPPET = 'import { Button } from "sprint";\nexport const go = true;';
+const SNIPPET = 'import { Button } from "@westonkd/sprint";\nexport const go = true;';
 
 let written: string[];
 

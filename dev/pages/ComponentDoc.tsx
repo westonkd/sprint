@@ -59,7 +59,7 @@ export function docSections(meta: AgentComponentMeta): DocSection[] {
 }
 
 function importSnippet(name: string): string {
-  return `import { ${name} } from "sprint";\nimport "sprint/styles.css";`;
+  return `import { ${name} } from "@westonkd/sprint";\nimport "@westonkd/sprint/styles.css";`;
 }
 
 function schemaSnippet(meta: AgentComponentMeta): string {
