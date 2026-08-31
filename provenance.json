@@ -11,7 +11,7 @@
     {
       "name": "agent-manifest.json",
       "digest": {
-        "sha256": "f4db9ef62c81a9f53bd9b56af778e8e040fed3de48541f9a4297beffa1aa33fb"
+        "sha256": "1c431321c17ebdb83d2fd0355d56532a4d04e1883f0aa3e1bee61741aef33ff7"
       }
     },
     {
@@ -21,9 +21,15 @@
       }
     },
     {
-      "name": "assets/index-ebetesw6.js",
+      "name": "assets/index-Ct4npBoP.js",
       "digest": {
-        "sha256": "df9acfb42b9a7e2f982e76b538f263cf41f0a1e8fdf0dbd6c9b199774e141e34"
+        "sha256": "64879582bc366e8095d9242767a86fd6eb13477c56bdfe37d9e6cc151178c3e7"
+      }
+    },
+    {
+      "name": "assets/workbench-CBx5mfju.js",
+      "digest": {
+        "sha256": "be362ff268ccbecb73861c03a4b454cfc4d516a904ba5ebeefd97a0144a00f6f"
       }
     },
     {
@@ -33,21 +39,15 @@
       }
     },
     {
-      "name": "assets/workbench-ChEYPsVO.js",
+      "name": "assets/workbench-DkUDSTo_.js",
       "digest": {
-        "sha256": "eb3b84d0f6da088dcb71a724df003bdc9e383b1541b98de2f1a2d6d55445f85a"
+        "sha256": "fb956bc23eac7d115bfb3dde510ef3a836472fde3ed33d74f95e4854c9a3af67"
       }
     },
     {
       "name": "assets/workbench-Dl_U1yit.css",
       "digest": {
         "sha256": "39a19a7463be28b8d5b19c6685c0a8cba615d6f3dc6d44a955fb39c5548277b2"
-      }
-    },
-    {
-      "name": "assets/workbench-MoE1gnGA.js",
-      "digest": {
-        "sha256": "f6fc5454c25f7f26753e727deeea0c855b73c2445f4bdabda2267926d3e1d600"
       }
     },
     {
@@ -209,7 +209,7 @@
     {
       "name": "index.html",
       "digest": {
-        "sha256": "3dcce0c7b0f9cedd363ddf6bc992b6f163bc4e709abcd4ad13241d44aea436c2"
+        "sha256": "a41f8d4e6cabbcbdcf8e48646c3bb267a608254ae10e3552366b8458de8f7468"
       }
     },
     {
@@ -221,7 +221,7 @@
     {
       "name": "workbench.html",
       "digest": {
-        "sha256": "eb0e0a65ad5925daa3269d7f10dba43d2fe5fa29e6c5f15ef7c0f1955168a66f"
+        "sha256": "e7556d52f75c14c3a1645f0bf20a060c636a999c6683efab1bfe2977b77c7935"
       }
     }
   ],
@@ -268,7 +268,7 @@
                 "target": "docs-site",
                 "vcs:localdir:context": ".",
                 "vcs:localdir:dockerfile": ".",
-                "vcs:revision": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
+                "vcs:revision": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
                 "vcs:source": "https://github.com/westonkd/sprint"
               }
             }
@@ -279,18 +279,18 @@
       "internalParameters": {
         "buildConfig": {
           "digestMapping": {
-            "sha256:0c2b53331881a3417cbc450fff26d8109f81c30aea2b9c2d0a7d9f2c11f42174": "step6",
-            "sha256:48f837049e9aeae16272c0cd9cf05504d5eeca5fc77c077e881168a609cee702": "step12",
-            "sha256:4a3d320e27d29489595400cc0fc28aa2b9e3eec15fa88141d24fe1c768324c44": "step8",
-            "sha256:4aa1204d825b85631221bb9cf86379ebfe10f4969a9536315d6c3e7909efb8b5": "step7",
+            "sha256:0905f5738f3dc37c69bb2a01207fda116519230eaf0cebd38f643326f05da3bb": "step7",
             "sha256:4edb64ec37a73292d6592c84386feae9ede45b57ff12c099a557ea2a234df5c0": "step4",
+            "sha256:7975f27bf96ab1278cf2c62b0eb212ebba612c1e40978860e08e423e7370135d": "step9",
+            "sha256:8155ca16cfe6173c42fd196b7961d548256512a8a6c2c5b2eaafd186bc6fa781": "step10",
+            "sha256:820d9d70eef8f7fd5c0933c1466ed944b96af0cea1d9e4d89ab3ba08ec24b425": "step12",
             "sha256:94f3d3d326d4ab5d0634a234e9a958bc784ebb915fbbce894a252360ef6d2ec0": "step1",
             "sha256:a879bb9aa12df798a0df56bc2178a0ce2148a8494dd89b74e2ba60610afdfcc7": "step3",
-            "sha256:b099647a8ab9fe4a47ed6d8dea8b3b21c8fe239766ff3d42b8ed773251c0ece5": "step11",
+            "sha256:b7d804ab3036579c56cb21dfe4316e815ca6eb9fff6b1c3e963d246eef9689a5": "step8",
             "sha256:b7da745ffc1f16c34b4ffa8af6263f5cc917f33357d31f2f08765d60fe6f5cd5": "step0",
-            "sha256:bcb6e3a2b94efaedd5b7a196f1e4dfe4e3319fba845adbacc4a4bf5d92ca7f38": "step10",
-            "sha256:ccdd98231e74174fd867813d8b5b9b3cb379facb0947d566637bf29ba78ac670": "step9",
+            "sha256:c83d7576e782085be94a035dd65e3fe2d438932735a181d74ae5d716a947e360": "step6",
             "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2",
+            "sha256:d1d64a2957b103e1fa96630694c26b45c38709a67f0ab5e3fab88a9e31195b61": "step11",
             "sha256:fddd05f042ca96e8f34c763de1e2c2a0de24317e6c39f4d6d6c9f67634c7aa24": "step5"
           },
           "llbDefinition": [
@@ -737,9 +737,9 @@
         "github_actor_id": "6128215",
         "github_event_name": "push",
         "github_event_payload": {
-          "after": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
+          "after": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
           "base_ref": null,
-          "before": "f4a57e7893833e3f79c716e0b9757842edea3f2f",
+          "before": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
           "commits": [
             {
               "author": {
@@ -748,19 +748,19 @@
                 "username": "westonkd"
               },
               "committer": {
-                "email": "noreply@github.com",
-                "name": "GitHub",
-                "username": "web-flow"
+                "email": "wdrans@gmail.com",
+                "name": "Weston Dransfield",
+                "username": "westonkd"
               },
               "distinct": true,
-              "id": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
-              "message": "Fix bug in menu (#16)",
-              "timestamp": "2026-08-31T17:25:43-06:00",
-              "tree_id": "670ab73230e96908e5ffce334b98d4b88241196b",
-              "url": "https://github.com/westonkd/sprint/commit/f18d72aaec066d18a924fcae863f65fcd41b9bf2"
+              "id": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
+              "message": "Release v0.1.2",
+              "timestamp": "2026-08-31T17:26:17-06:00",
+              "tree_id": "9907dc6d03215931ef4218eebec632a28f9b9c1e",
+              "url": "https://github.com/westonkd/sprint/commit/3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57"
             }
           ],
-          "compare": "https://github.com/westonkd/sprint/compare/f4a57e789383...f18d72aaec06",
+          "compare": "https://github.com/westonkd/sprint/compare/f18d72aaec06...3b13ed5619f7",
           "created": false,
           "deleted": false,
           "forced": false,
@@ -771,16 +771,16 @@
               "username": "westonkd"
             },
             "committer": {
-              "email": "noreply@github.com",
-              "name": "GitHub",
-              "username": "web-flow"
+              "email": "wdrans@gmail.com",
+              "name": "Weston Dransfield",
+              "username": "westonkd"
             },
             "distinct": true,
-            "id": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
-            "message": "Fix bug in menu (#16)",
-            "timestamp": "2026-08-31T17:25:43-06:00",
-            "tree_id": "670ab73230e96908e5ffce334b98d4b88241196b",
-            "url": "https://github.com/westonkd/sprint/commit/f18d72aaec066d18a924fcae863f65fcd41b9bf2"
+            "id": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
+            "message": "Release v0.1.2",
+            "timestamp": "2026-08-31T17:26:17-06:00",
+            "tree_id": "9907dc6d03215931ef4218eebec632a28f9b9c1e",
+            "url": "https://github.com/westonkd/sprint/commit/3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57"
           },
           "pusher": {
             "email": "wdrans@gmail.com",
@@ -878,7 +878,7 @@
             "private": false,
             "pull_request_creation_policy": "all",
             "pulls_url": "https://api.github.com/repos/westonkd/sprint/pulls{/number}",
-            "pushed_at": 1788218744,
+            "pushed_at": 1788218781,
             "releases_url": "https://api.github.com/repos/westonkd/sprint/releases{/id}",
             "size": 621,
             "ssh_url": "git@github.com:westonkd/sprint.git",
@@ -893,7 +893,7 @@
             "teams_url": "https://api.github.com/repos/westonkd/sprint/teams",
             "topics": [],
             "trees_url": "https://api.github.com/repos/westonkd/sprint/git/trees{/sha}",
-            "updated_at": "2026-08-31T23:08:31Z",
+            "updated_at": "2026-08-31T23:25:48Z",
             "url": "https://api.github.com/repos/westonkd/sprint",
             "visibility": "public",
             "watchers": 0,
@@ -932,35 +932,35 @@
         "github_repository_owner": "westonkd",
         "github_repository_owner_id": "6128215",
         "github_run_attempt": "1",
-        "github_run_id": "33450638001",
-        "github_run_number": "6",
+        "github_run_id": "33450684398",
+        "github_run_number": "7",
         "github_runner_arch": "X64",
         "github_runner_environment": "github-hosted",
         "github_runner_image_os": "ubuntu24",
         "github_runner_image_version": "20260823.283.1",
-        "github_runner_name": "GitHub Actions 1000000417",
+        "github_runner_name": "GitHub Actions 1000000420",
         "github_runner_os": "Linux",
-        "github_runner_tracking_id": "github_e285d28c-c198-4d3d-b43a-b9d4cd1edfd2",
+        "github_runner_tracking_id": "github_7c5438d6-b657-4896-b114-2542733474ff",
         "github_server_url": "https://github.com",
         "github_triggering_actor": "westonkd",
         "github_workflow": "Pages",
         "github_workflow_ref": "westonkd/sprint/.github/workflows/pages.yml@refs/heads/main",
-        "github_workflow_sha": "f18d72aaec066d18a924fcae863f65fcd41b9bf2"
+        "github_workflow_sha": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57"
       }
     },
     "runDetails": {
       "builder": {
-        "id": "https://github.com/westonkd/sprint/actions/runs/33450638001/attempts/1"
+        "id": "https://github.com/westonkd/sprint/actions/runs/33450684398/attempts/1"
       },
       "metadata": {
-        "invocationId": "hekqb6j41ge2nn2sum0ewwgi2",
-        "startedOn": "2026-08-31T23:26:00.529633109Z",
-        "finishedOn": "2026-08-31T23:26:16.535003221Z",
+        "invocationId": "4h5sru6kyu0v7evzde8i7fla7",
+        "startedOn": "2026-08-31T23:26:43.096482851Z",
+        "finishedOn": "2026-08-31T23:26:50.119079548Z",
         "buildkit_metadata": {
           "vcs": {
             "localdir:context": ".",
             "localdir:dockerfile": ".",
-            "revision": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
+            "revision": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
             "source": "https://github.com/westonkd/sprint"
           },
           "source": {
@@ -1176,8 +1176,8 @@
                   }
                 ],
                 "digestMapping": {
-                  "sha256:1cc2a285367b3b6148aa68866d0a729e0857faad100b644479465f39a337cb36": "step0",
-                  "sha256:c66c3e5fb0fa5d5e305439ab83b40536d145216cb5e73d9de89ff2bc1d2c3279": "step1"
+                  "sha256:0919a0b530c717056ead617e7bf04cfe5aef7c5bd385fd92cef3fecfe664957b": "step0",
+                  "sha256:d0229f93518c534a819e9f41adcf7c0d7e4d83f902a594bb8c81e9279f022e50": "step1"
                 }
               }
             ]
@@ -1326,109 +1326,6 @@
                   "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
                   "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
                   "size": 32
-                }
-              ]
-            ],
-            "step7:0": [
-              [
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4",
-                  "size": 3846391
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:a0f82f71477fc2e453be843cff60ca54b0f44a67df7a3f01fddf121b807826be",
-                  "size": 53377296
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:b38a07ecd3ea0a536a5bb94db11493f70753da22ae004e3fff49cb5d6add507f",
-                  "size": 1262109
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:502142e2f20261fd2b9cce9a5883e63c4f830a1f4f3dbf643d6f6dd4e56c16a9",
-                  "size": 448
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:e0b8572fcb1cb0dda95db4bf7651dd9613635193383971b8c5a986eade055e24",
-                  "size": 10358
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:3898814277812ba8b22983004f70bb3febc3dbdd0feed77ceb78410136b3eea7",
-                  "size": 38049835
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:9cdbbc33b8b2a8362f500d2fbac304e2a204d953247386c0eb8e6322b9272973",
-                  "size": 159
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
-                  "size": 32
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:b08fcde9b6018d6f820057f1d8545567c857cfd9f11a2d0577766fa10008ec17",
-                  "size": 34522
-                }
-              ]
-            ],
-            "step8:0": [
-              [
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4",
-                  "size": 3846391
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:a0f82f71477fc2e453be843cff60ca54b0f44a67df7a3f01fddf121b807826be",
-                  "size": 53377296
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:b38a07ecd3ea0a536a5bb94db11493f70753da22ae004e3fff49cb5d6add507f",
-                  "size": 1262109
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:502142e2f20261fd2b9cce9a5883e63c4f830a1f4f3dbf643d6f6dd4e56c16a9",
-                  "size": 448
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:e0b8572fcb1cb0dda95db4bf7651dd9613635193383971b8c5a986eade055e24",
-                  "size": 10358
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:3898814277812ba8b22983004f70bb3febc3dbdd0feed77ceb78410136b3eea7",
-                  "size": 38049835
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:9cdbbc33b8b2a8362f500d2fbac304e2a204d953247386c0eb8e6322b9272973",
-                  "size": 159
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
-                  "size": 32
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:b08fcde9b6018d6f820057f1d8545567c857cfd9f11a2d0577766fa10008ec17",
-                  "size": 34522
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:ef323353db08aebaabffd6149d5e896c45815dbc0d27d7e6c754b32ea6df7385",
-                  "size": 78962669
                 }
               ]
             ]
