@@ -5,6 +5,8 @@
 
   [data-sprint-view="agent"] {
     display: block;
+    color: var(--sprint-ink);
+    background: var(--sprint-surface);
     font-family: var(--sprint-font-mono);
     white-space: pre-wrap;
     overflow-wrap: anywhere;

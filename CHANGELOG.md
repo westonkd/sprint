@@ -5,6 +5,9 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- The agent view paints its own ink and surface from the tokens, instead of inheriting the
+  browser-default black text that was near-invisible on a dark ground.
+
 ## v0.1.2 - 2026-08-31
 
 - Landing page loads the design token stylesheets, fixing the unstyled docs site deploy.
