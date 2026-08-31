@@ -35,9 +35,12 @@ Publishing is a `docs-site` Docker stage, extracted by `.github/workflows/pages.
 to `main` and pushed to the `gh-pages` branch. A branch rather than the artifact-based Pages
 deployment, because the built site is then inspectable and revertable as ordinary git history.
 
-The landing page is built from Sprint components like every other page, and owns its own
-`SprintProvider` with a view switch. Flipping it renders the pitch itself as agent text, which is
-the claim the page is making.
+The landing page is built from Sprint components like every other page, but its view switch is
+scoped to one inline example rather than the page. A page-level switch would render the way back
+as agent text too, which is a poor trade for a first-time reader; a nested `SprintProvider` around
+a small example flips that example alone and leaves the control it is operated by in place. The
+page argues in prose and demonstrates in one box, and carries no implementation code, since a
+reader who wants the source is one link from the workbench.
 
 ## Consequences
 

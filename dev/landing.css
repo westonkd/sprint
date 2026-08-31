@@ -48,3 +48,9 @@
     min-height: 3rem;
   }
 }
+
+.landing-demo {
+  border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+  background: var(--sprint-surface-inset);
+  padding: var(--sprint-space-5);
+}

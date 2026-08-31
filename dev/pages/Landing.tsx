@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  Alert,
+  Button,
   Card,
   CodeBlock,
   listAgentMeta,
@@ -9,10 +9,9 @@ import {
   Panel,
   SegmentedControl,
   SprintProvider,
+  type SprintView,
   Stack,
   Switch,
-  Table,
-  type TableRow,
   Tag,
   Text,
   version,
@@ -21,90 +20,12 @@ import { THEME_OPTIONS, useTheme, VIEW_OPTIONS } from "../theme.ts";
 
 const REPOSITORY = "https://github.com/westonkd/sprint";
 
-const RENDER = `const node = buildAgentNode({
-  component: buttonMeta.name,
-  label: reactText(children),
-  tool: tool?.name,
-  state: { tone, loading },
-});
-
-if (useSprintView() === "agent") {
-  return <AgentControl node={node} onClick={onClick} />;
-}
-
-return (
-  <button {...rest} {...agentAttributesFor(node)}>
-    {children}
-  </button>
-);`;
-
-const TOOL = `export const PRESS_TOOL: AgentToolSpec = {
-  verb: "press",
-  description: "Press this button and return the state it lands in.",
-  readOnly: false,
-};`;
-
-const INSTALL = `bun add sprint`;
-
-const USE = `import { Button, SprintProvider } from "sprint";
-import "sprint/styles.css";
-
-export function App() {
-  return (
-    <SprintProvider label="billing">
-      <Button tone="action" onClick={prepare}>
-        Prepare launch
-      </Button>
-    </SprintProvider>
-  );
-}`;
-
-const SURFACES: TableRow[] = [
-  {
-    id: "manifest",
-    cells: {
-      surface: <code>agent-manifest.json</code>,
-      detail:
-        "Every component, prop, state, and tool descriptor, as one JSON artifact.",
-    },
-  },
-  {
-    id: "llms",
-    cells: {
-      surface: <code>llms.txt</code>,
-      detail:
-        "The same catalogue as plain text, for a model reading the site directly.",
-    },
-  },
-  {
-    id: "component",
-    cells: {
-      surface: <code>components/Button.md</code>,
-      detail: "One Markdown page per component, generated from the same metadata.",
-    },
-  },
-  {
-    id: "view",
-    cells: {
-      surface: <code>view=agent</code>,
-      detail: "Any page in the workbench, rendered as the text an agent would read.",
-    },
-  },
-];
-
 export function Landing() {
   const [theme, setTheme] = useTheme();
-  const [view, setView] = useState<"human" | "agent">("human");
-  const [notify, setNotify] = useState(true);
 
   return (
-    <SprintProvider
-      label="sprint"
-      theme={theme}
-      view={view}
-      onViewChange={(next) => setView(next)}
-    >
-      <div className="landing" data-view={view}>
+    <SprintProvider label="sprint" theme={theme}>
+      <div className="landing">
         <PageHeader
           label="Sprint"
           tags={
@@ -113,32 +34,23 @@ export function Landing() {
                 v{version}
               </Tag>
               <Tag>{listAgentMeta().length} components</Tag>
-              <Tag tone="info">WebMCP</Tag>
+              <Tag>MIT</Tag>
             </>
           }
           actions={
-            <Stack direction="row" gap="tight" wrap>
-              <SegmentedControl
-                label="View"
-                options={VIEW_OPTIONS}
-                value={view}
-                agentTool={false}
-                onChange={(next) => setView(next === "agent" ? "agent" : "human")}
-              />
-              <SegmentedControl
-                label="Theme"
-                options={THEME_OPTIONS}
-                value={theme}
-                agentTool={false}
-                onChange={(next) => setTheme(next === "light" ? "light" : "dark")}
-              />
-            </Stack>
+            <SegmentedControl
+              label="Theme"
+              options={THEME_OPTIONS}
+              value={theme}
+              agentTool={false}
+              onChange={(next) => setTheme(next === "light" ? "light" : "dark")}
+            />
           }
         >
           <Text>
-            An agent-forward React component library. Every component renders normally
-            for people and projects a machine-readable view for agents, from one
-            definition.
+            A React component library for products that people and AI agents both use.
+            Sprint components look and behave like any other interface, and can describe
+            themselves to an agent on request.
           </Text>
         </PageHeader>
 
@@ -147,75 +59,81 @@ export function Landing() {
         <Stack gap="loose">
           <Stack direction="grid" min="15rem" gap="tight">
             <Card label="Open the workbench" href="workbench.html#/">
-              Documentation for every component, generated from the manifest.
-            </Card>
-            <Card label="Read the manifest" href="agent-manifest.json">
-              The artifact an agent reads to learn what exists.
+              Live documentation for every component.
             </Card>
             <Card label="Source on GitHub" href={REPOSITORY}>
-              MIT licensed. React 19, TypeScript, no runtime dependencies.
+              React 19 and TypeScript. No runtime dependencies.
             </Card>
           </Stack>
 
-          <Panel headingLevel={2} label="Flip the switch on this page">
+          <Panel headingLevel={2} label="The problem">
             <Stack gap="tight">
               <Text>
-                The view control above is not a preview pane. It re-renders this entire
-                page as the text an agent reads, from the same components you are
-                looking at now. Nothing is duplicated and nothing unmounts.
+                Agents drive applications by guessing. They read class names and
+                positions that were never meant to be a contract, so a routine styling
+                change quietly breaks the automation built on top of it.
               </Text>
-              <Stack direction="row" gap="tight" wrap align="center">
-                <Switch label="Notify on launch" on={notify} onChange={setNotify} />
-                <Tag tone="warning">staged</Tag>
+              <Text>
+                Teams answer that by maintaining a second thing: an API, a set of test
+                identifiers, a written description of the interface. It drifts from the
+                interface almost immediately, because nothing forces the two to agree.
+              </Text>
+            </Stack>
+          </Panel>
+
+          <Panel headingLevel={2} label="What Sprint does about it">
+            <Stack gap="tight">
+              <Text>
+                A Sprint component describes itself. One definition produces the
+                interface a person sees, the plain-text description an agent reads, and
+                the actions an agent can call. There is no second copy to keep in sync,
+                so the two cannot disagree.
+              </Text>
+              <Text tone="muted" size="small">
+                For people, nothing changes. The components are ordinary, accessible
+                React components, and everything works in browsers that have never heard
+                of an agent.
+              </Text>
+            </Stack>
+          </Panel>
+
+          <Demo />
+
+          <Panel headingLevel={2} label="If you are an agent">
+            <Stack gap="tight">
+              <Text>
+                Everything on this site is published for you to read directly. Start
+                with the manifest.
+              </Text>
+              <Stack direction="grid" min="15rem" gap="tight">
+                <Card label="agent-manifest.json" href="agent-manifest.json">
+                  Every component, what it is for, when not to use it, and the tools it
+                  registers.
+                </Card>
+                <Card label="llms.txt" href="llms.txt">
+                  The same catalogue as plain text, in one request.
+                </Card>
+                <Card label="components/Button.md" href="components/Button.md">
+                  One Markdown page per component, if you only need one.
+                </Card>
+                <Card label="The workbench as text" href="workbench.html#/?view=agent">
+                  Any documentation page, rendered as the text you would read.
+                </Card>
               </Stack>
-              <Alert tone="info" label="Two renderings, one node">
-                Both come from a single AgentNode built during the same render, so they
-                cannot disagree.
-              </Alert>
-            </Stack>
-          </Panel>
-
-          <Panel headingLevel={2} label="One node, two renderings">
-            <Stack gap="tight">
-              <CodeBlock code={RENDER} caption="Button.tsx" />
               <Text tone="muted" size="small">
-                Attributes are generated from the node, so the DOM an agent scrapes and
-                the text it reads agree by construction.
+                In Chrome 149 the components on this page also register their actions as
+                WebMCP tools, so you can call them rather than click them.
               </Text>
             </Stack>
           </Panel>
 
-          <Panel headingLevel={2} label="Behaviour, not selectors">
+          <Panel headingLevel={2} label="Get started">
             <Stack gap="tight">
-              <Text>
-                Components register their actions with{" "}
-                <code>document.modelContext</code>, the WebMCP platform API in Chrome
-                149. A tool is declared once and shared by the runtime descriptor and
-                the manifest, so the two cannot drift.
-              </Text>
-              <CodeBlock code={TOOL} caption="Button/tool.ts" />
+              <CodeBlock code="bun add sprint" language="bash" />
               <Text tone="muted" size="small">
-                Registration is a no-op everywhere else, and every component works
-                without it.
+                The workbench has a page for every component, with live examples and the
+                tools each one registers.
               </Text>
-            </Stack>
-          </Panel>
-
-          <Panel headingLevel={2} label="What this site serves an agent" flush>
-            <Table
-              label="Agent surfaces"
-              columns={[
-                { key: "surface", header: "Surface", width: "16rem" },
-                { key: "detail", header: "What it is" },
-              ]}
-              rows={SURFACES}
-            />
-          </Panel>
-
-          <Panel headingLevel={2} label="Install">
-            <Stack gap="tight">
-              <CodeBlock code={INSTALL} language="bash" />
-              <CodeBlock code={USE} />
             </Stack>
           </Panel>
         </Stack>
@@ -225,7 +143,6 @@ export function Landing() {
             entries={[
               { term: "Sprint", detail: `v${version}` },
               { term: "License", detail: "MIT" },
-              { term: "View", detail: view },
               { term: "Theme", detail: theme },
             ]}
           />
@@ -233,5 +150,52 @@ export function Landing() {
         </footer>
       </div>
     </SprintProvider>
+  );
+}
+
+function Demo() {
+  const [view, setView] = useState<SprintView>("human");
+  const [notify, setNotify] = useState(true);
+
+  return (
+    <Panel
+      headingLevel={2}
+      label="The same components, either way"
+      actions={
+        <SegmentedControl
+          label="This example"
+          options={VIEW_OPTIONS}
+          value={view}
+          agentTool={false}
+          onChange={(next) => setView(next === "agent" ? "agent" : "human")}
+        />
+      }
+    >
+      <Stack gap="tight">
+        <Text>
+          The switch above changes this example only. Nothing is re-implemented between
+          the two, and nothing unmounts: the same components you see render themselves
+          as text when something asks them to.
+        </Text>
+        <div className="landing-demo">
+          <SprintProvider
+            label="launch"
+            view={view}
+            onViewChange={setView}
+            pageTools={false}
+          >
+            <Stack gap="tight">
+              <Switch label="Notify on launch" on={notify} onChange={setNotify} />
+              <Stack direction="row" gap="tight" wrap align="center">
+                <Button tone="action" onClick={() => setNotify(true)}>
+                  Prepare launch
+                </Button>
+                <Tag tone="warning">staged</Tag>
+              </Stack>
+            </Stack>
+          </SprintProvider>
+        </div>
+      </Stack>
+    </Panel>
   );
 }
