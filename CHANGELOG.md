@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- Landing page loads the design token stylesheets, fixing the unstyled docs site deploy.
+
 ## v0.1.1 - 2026-08-31
 
 - README aligned with the landing page: the three-pillar framing and the agent-facing surfaces.
