@@ -16,8 +16,8 @@ Do not use it for an action that stays on the page; that is a Button. Do not reg
 ## Install
 
 ```tsx
-import { Link } from "sprint";
-import "sprint/styles.css";
+import { Link } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

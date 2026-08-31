@@ -16,8 +16,8 @@ Do not use for validation on a specific field; the field's own error prop places
 ## Install
 
 ```tsx
-import { Alert } from "sprint";
-import "sprint/styles.css";
+import { Alert } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

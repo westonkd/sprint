@@ -16,8 +16,8 @@ Do not use it for a boolean a form will submit later; that is a Checkbox, and th
 ## Install
 
 ```tsx
-import { Switch } from "sprint";
-import "sprint/styles.css";
+import { Switch } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

@@ -16,8 +16,8 @@ Do not use for entering a secret; that is a TextInput with type password. Do not
 ## Install
 
 ```tsx
-import { SecretField } from "sprint";
-import "sprint/styles.css";
+import { SecretField } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

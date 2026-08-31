@@ -16,8 +16,8 @@ Do not use it for records with fields; that is Table. Do not use it as a layout 
 ## Install
 
 ```tsx
-import { List } from "sprint";
-import "sprint/styles.css";
+import { List } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

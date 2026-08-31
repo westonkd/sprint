@@ -16,8 +16,8 @@ Do not use for navigation between pages; use a link. Do not use for toggling a p
 ## Install
 
 ```tsx
-import { Button } from "sprint";
-import "sprint/styles.css";
+import { Button } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

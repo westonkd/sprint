@@ -16,8 +16,8 @@ Do not use it for multi-line text, which is a Textarea. Do not use it to pick fr
 ## Install
 
 ```tsx
-import { TextInput } from "sprint";
-import "sprint/styles.css";
+import { TextInput } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

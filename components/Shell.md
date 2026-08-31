@@ -16,8 +16,8 @@ Do not use it inside another Shell, or anywhere below the top of the page; a reg
 ## Install
 
 ```tsx
-import { Shell } from "sprint";
-import "sprint/styles.css";
+import { Shell } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

@@ -16,8 +16,8 @@ Do not use it for a section title; that is Heading. Do not put components inside
 ## Install
 
 ```tsx
-import { Text } from "sprint";
-import "sprint/styles.css";
+import { Text } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

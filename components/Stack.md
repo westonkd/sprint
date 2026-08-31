@@ -16,8 +16,8 @@ Do not use it to draw a bordered region with a header; that is Panel. Do not nes
 ## Install
 
 ```tsx
-import { Stack } from "sprint";
-import "sprint/styles.css";
+import { Stack } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

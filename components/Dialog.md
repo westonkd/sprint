@@ -16,8 +16,8 @@ Do not use for status messages; that is an Alert. Do not use for anything the pe
 ## Install
 
 ```tsx
-import { Dialog } from "sprint";
-import "sprint/styles.css";
+import { Dialog } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

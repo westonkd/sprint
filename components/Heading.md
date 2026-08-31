@@ -16,8 +16,8 @@ Do not use it for the label on a bordered region; Panel takes a label prop, draw
 ## Install
 
 ```tsx
-import { Heading } from "sprint";
-import "sprint/styles.css";
+import { Heading } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

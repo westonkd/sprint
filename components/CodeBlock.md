@@ -16,8 +16,8 @@ Do not use it for a short inline identifier inside a sentence; use a code elemen
 ## Install
 
 ```tsx
-import { CodeBlock } from "sprint";
-import "sprint/styles.css";
+import { CodeBlock } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

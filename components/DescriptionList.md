@@ -16,8 +16,8 @@ Do not use for many entities with the same fields; that is a Table. Do not put c
 ## Install
 
 ```tsx
-import { DescriptionList } from "sprint";
-import "sprint/styles.css";
+import { DescriptionList } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

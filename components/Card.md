@@ -16,8 +16,8 @@ Do not use it for a static region with a header; that is Panel. Do not put separ
 ## Install
 
 ```tsx
-import { Card } from "sprint";
-import "sprint/styles.css";
+import { Card } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

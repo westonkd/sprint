@@ -16,8 +16,8 @@ Do not use it for anything clickable; a Tag is inert, and a chip that acts is a 
 ## Install
 
 ```tsx
-import { Tag } from "sprint";
-import "sprint/styles.css";
+import { Tag } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

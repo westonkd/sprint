@@ -16,8 +16,8 @@ Do not use it for page layout; that is Stack. Do not put components in cells: ce
 ## Install
 
 ```tsx
-import { Table } from "sprint";
-import "sprint/styles.css";
+import { Table } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

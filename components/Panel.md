@@ -16,8 +16,8 @@ Do not use it as a spacer or a plain box; that is Stack. Nesting reads clearly t
 ## Install
 
 ```tsx
-import { Panel } from "sprint";
-import "sprint/styles.css";
+import { Panel } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

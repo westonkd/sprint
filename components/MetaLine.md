@@ -16,8 +16,8 @@ Do not use it for the details of a record a person is meant to study; that is a 
 ## Install
 
 ```tsx
-import { MetaLine } from "sprint";
-import "sprint/styles.css";
+import { MetaLine } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

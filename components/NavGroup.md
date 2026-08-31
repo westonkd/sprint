@@ -16,8 +16,8 @@ Do not use it outside a Nav; on its own it is just a heading over links, which P
 ## Install
 
 ```tsx
-import { NavGroup } from "sprint";
-import "sprint/styles.css";
+import { NavGroup } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

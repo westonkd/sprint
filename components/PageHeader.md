@@ -16,8 +16,8 @@ Do not use it for a section within a page; that is a Panel with a headingLevel. 
 ## Install
 
 ```tsx
-import { PageHeader } from "sprint";
-import "sprint/styles.css";
+import { PageHeader } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

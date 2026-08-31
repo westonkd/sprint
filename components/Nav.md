@@ -16,8 +16,8 @@ Do not use it for a link that sits inside prose; a bare Link is already readable
 ## Install
 
 ```tsx
-import { Nav } from "sprint";
-import "sprint/styles.css";
+import { Nav } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

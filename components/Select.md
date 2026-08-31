@@ -16,8 +16,8 @@ Do not use it for two to four short options a person should compare at a glance;
 ## Install
 
 ```tsx
-import { Select } from "sprint";
-import "sprint/styles.css";
+import { Select } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

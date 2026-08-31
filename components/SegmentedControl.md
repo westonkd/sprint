@@ -16,8 +16,8 @@ Do not use it for more than about four options or for long labels; that is a sel
 ## Install
 
 ```tsx
-import { SegmentedControl } from "sprint";
-import "sprint/styles.css";
+import { SegmentedControl } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

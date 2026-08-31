@@ -16,8 +16,8 @@ Do not use it for a single-line value, which is a TextInput. Do not use it for c
 ## Install
 
 ```tsx
-import { Textarea } from "sprint";
-import "sprint/styles.css";
+import { Textarea } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples

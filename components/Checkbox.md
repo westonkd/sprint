@@ -16,8 +16,8 @@ Do not use it for a setting that takes effect the moment it changes; that is a S
 ## Install
 
 ```tsx
-import { Checkbox } from "sprint";
-import "sprint/styles.css";
+import { Checkbox } from "@westonkd/sprint";
+import "@westonkd/sprint/styles.css";
 ```
 
 ## Examples
