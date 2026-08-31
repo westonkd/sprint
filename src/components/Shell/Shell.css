@@ -2,6 +2,7 @@
   [data-sprint="Shell"] {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
     min-height: 100vh;
     min-width: 0;
   }
@@ -78,6 +79,7 @@
   @media (min-width: 64rem) {
     [data-sprint="Shell"] {
       grid-template-columns: 15rem minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
     }
 
     [data-sprint="Shell"] > aside {
