@@ -1,0 +1,38 @@
+# Sprint
+
+> An agent-forward React component library. Every component renders a styled human view and projects a plain-Markdown agent view from the same definition, and registers its actions as WebMCP tools (document.modelContext, Chrome 149+).
+
+Component roots carry `data-sprint="<ComponentName>"`, addressable parts carry `data-sprint-part`, and runtime state is reflected as `data-sprint-<state>` attributes. WebMCP tool names follow `<scope>-<verb>-<label-slug>`.
+
+## Components
+
+- [Alert](/components/Alert.md): A status message for the outcome of something that already happened: a notice, a warning, or a failure.
+- [Button](/components/Button.md): A single action a person or an agent can trigger. Registers one press tool named from its own label.
+- [Card](/components/Card.md): One entry in a catalogue: a title, a line or two of body, and the whole block clickable. Give it an href and it is a link; give it onClick and it is an action that registers an open tool.
+- [Checkbox](/components/Checkbox.md): A single on/off choice recorded as form data. It registers one set tool that takes the end state rather than toggling.
+- [CodeBlock](/components/CodeBlock.md): A snippet of code with a caption band and a copy control. In agent view the snippet is carried verbatim as the code part, so an agent reads the source instead of the highlighting.
+- [DescriptionList](/components/DescriptionList.md): Labelled term–description pairs for the details of one thing: metadata, settings, profile fields.
+- [Dialog](/components/Dialog.md): A modal that interrupts the page for one decision: confirm a destructive action, complete a short step, acknowledge something before continuing.
+- [Heading](/components/Heading.md): A section title, rendered as a real h element at the level you pick so it joins the document outline.
+- [Link](/components/Link.md): A navigation link. It publishes its destination as state, so an agent reading the page in text learns the URL rather than having to click to find out, and it renders a real anchor in both views.
+- [List](/components/List.md): A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.
+- [MetaLine](/components/MetaLine.md): A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.
+- [Nav](/components/Nav.md): A labelled navigation landmark: the region that holds a page's links to elsewhere.
+- [NavGroup](/components/NavGroup.md): A labelled cluster of links inside a Nav. The label names the group for screen readers and agents alike.
+- [PageHeader](/components/PageHeader.md): The top of a page: its h1 title, the Tag chips that classify it, an optional page-level control, and a lede underneath.
+- [Panel](/components/Panel.md): A labelled region with a header band and an optional slot for the controls that act on it. Everything on a Sprint page lives inside one.
+- [SecretField](/components/SecretField.md): A sensitive value shown once or on demand: an API key, a recovery code, a signing secret. Masked by default with reveal and copy controls, and the value never reaches any agent surface.
+- [SegmentedControl](/components/SegmentedControl.md): A short row of mutually exclusive options, all visible at once: a radio group that registers a single select tool whose schema enumerates the options currently on screen.
+- [Select](/components/Select.md): A dropdown of mutually exclusive options behind a native select, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.
+- [Shell](/components/Shell.md): The page-level frame: a sidebar and a main content region, with the landmark wiring done once. On a phone the sidebar becomes a drawer behind a menu button.
+- [Stack](/components/Stack.md): The one-dimensional layout primitive: a row, a column, or an auto-filling grid, with spacing drawn from the space scale. It renders a plain box and nothing else.
+- [Switch](/components/Switch.md): An on/off setting that takes effect the moment it changes. It registers one set tool that takes the end state rather than toggling.
+- [Table](/components/Table.md): A data grid built from columns and rows rather than from markup. In the agent stream it reads as a compact Markdown table; in the DOM each cell is addressable as a part carrying its column and row. On a narrow screen every row restacks into a labelled block instead of scrolling sideways.
+- [Tag](/components/Tag.md): A small chip that classifies the thing next to it: a status, a category, a count, a build string.
+- [Text](/components/Text.md): A run of prose, sized and toned from the semantic scale. In agent view it renders as its own text content, so an agent reads the words rather than inferring them from styling.
+- [Textarea](/components/Textarea.md): A multi-line text area carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the whole content with an explicit value, line breaks included.
+- [TextInput](/components/TextInput.md): A single-line text field carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the field's text with an explicit value.
+
+## Reference
+
+- [agent-manifest.json](/agent-manifest.json): the machine-readable catalogue of every component, prop, state attribute, example, and WebMCP tool descriptor

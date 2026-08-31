@@ -1,0 +1,2256 @@
+{
+  "library": "sprint",
+  "version": "0.0.0",
+  "conventions": {
+    "componentAttribute": "data-sprint",
+    "partAttribute": "data-sprint-part",
+    "stateAttributePrefix": "data-sprint-",
+    "toolAttribute": "data-sprint-tool",
+    "ownerAttribute": "data-sprint-owner",
+    "regionAttribute": "data-sprint-region",
+    "agentViewFormat": "markdown",
+    "toolNaming": "<scope>-<verb>-<label-slug>",
+    "toolOutputLimit": 1500
+  },
+  "components": [
+    {
+      "name": "Alert",
+      "category": "feedback",
+      "summary": "A status message for the outcome of something that already happened: a notice, a warning, or a failure.",
+      "whenToUse": "Use to report the result of an action or a condition the person did not just cause: \"check your inbox\", \"invalid credentials\", \"this key expires soon\". Use tone=\"danger\" for failures, \"warning\" for conditions needing attention, \"info\" for neutral notices, and \"neutral\" for quiet confirmations. Pass onDismiss when the message can be acknowledged and cleared.",
+      "whenNotToUse": "Do not use for validation on a specific field; the field's own error prop places the message where the problem is. Do not use for confirmation of an action the person is about to take; that is a Dialog.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The message. Inline content only; it is flattened to text for the agent view.",
+          "required": true
+        },
+        "label": {
+          "kind": "string",
+          "description": "A short uppercase title above the message. Also derives the dismiss tool name, so prefer a stable phrase."
+        },
+        "tone": {
+          "kind": "enum",
+          "description": "The message's severity. Danger and warning announce assertively; info and neutral announce politely.",
+          "values": [
+            "neutral",
+            "info",
+            "warning",
+            "danger"
+          ],
+          "default": "info"
+        },
+        "onDismiss": {
+          "kind": "handler",
+          "description": "Called when the dismiss control is pressed. Providing it renders the control and registers the dismiss tool; the page owns removing the alert."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the dismiss tool name. Required for a dismissible alert with no label."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render a dismissible alert without registering a tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "tone": {
+          "description": "The alert's severity.",
+          "attribute": "data-sprint-tone",
+          "values": [
+            "neutral",
+            "info",
+            "warning",
+            "danger"
+          ]
+        },
+        "dismissible": {
+          "description": "Present when the alert has a dismiss control.",
+          "attribute": "data-sprint-dismissible"
+        }
+      },
+      "tools": {
+        "dismiss": {
+          "verb": "dismiss",
+          "description": "Dismiss this alert, exactly as a person clicking its dismiss control would. The page decides what dismissal means, usually removing the message. Returns the alert's state after the dismissal, or says the alert left the page.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The alert is mounted, has an onDismiss handler, and label or agentName provides a stable name.",
+          "unregisteredWhen": "The alert unmounts or loses its onDismiss handler."
+        }
+      },
+      "agentView": {
+        "example": "- **Alert** \"Check your inbox\" [dismissible, tone=info]"
+      },
+      "examples": [
+        {
+          "title": "A sign-in notice",
+          "description": "The default info tone for a neutral status message.",
+          "code": "<Alert label=\"Check your inbox\">We sent a sign-in link to nomad@escadrille.test.</Alert>"
+        },
+        {
+          "title": "A dismissible confirmation",
+          "description": "Providing onDismiss renders the dismiss control and registers the dismiss tool. Removing the alert is the page's job.",
+          "code": "<Alert tone=\"neutral\" label=\"Key revoked\" onDismiss={acknowledge}>The key can no longer authenticate.</Alert>"
+        },
+        {
+          "title": "A failure",
+          "description": "Danger announces assertively via role=alert.",
+          "code": "<Alert tone=\"danger\" label=\"Sign-in failed\">Wrong callsign or access code.</Alert>"
+        }
+      ],
+      "a11y": {
+        "role": "status",
+        "notes": "Danger and warning render role=alert and announce assertively; info and neutral render role=status. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost."
+      }
+    },
+    {
+      "name": "Button",
+      "category": "action",
+      "summary": "A single action a person or an agent can trigger. Registers one press tool named from its own label.",
+      "whenToUse": "Use for any discrete action: submitting, confirming, dismissing, advancing a step. tone=\"action\" with block marks the one primary action in a view; tone=\"danger\" marks destructive actions.",
+      "whenNotToUse": "Do not use for navigation between pages; use a link. Do not use for toggling a persistent on/off state; that needs a switch or a checkbox.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The button label. Its text also derives the WebMCP tool name, so prefer a verb phrase like \"Prepare launch\" over \"OK\".",
+          "required": true
+        },
+        "tone": {
+          "kind": "enum",
+          "description": "Visual and semantic weight. Acid is rationed to one primary action per view.",
+          "values": [
+            "neutral",
+            "action",
+            "danger"
+          ],
+          "default": "neutral"
+        },
+        "block": {
+          "kind": "boolean",
+          "description": "Render as a full-width bar. Combine with tone=\"action\" for the primary action of a region.",
+          "default": false
+        },
+        "loading": {
+          "kind": "boolean",
+          "description": "Mark work in progress. Sets aria-busy, disables the control, and unregisters the press tool until it clears.",
+          "default": false
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the control and unregister its press tool.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name. Set this on icon-only buttons, when two buttons would otherwise collide, and whenever the visible label contains changing values such as a count."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the button without registering any WebMCP tool.",
+          "default": true
+        },
+        "onClick": {
+          "kind": "handler",
+          "description": "Standard click handler. The press tool dispatches a real click, so this runs for agent presses too."
+        }
+      },
+      "state": {
+        "tone": {
+          "description": "The button's current tone.",
+          "attribute": "data-sprint-tone",
+          "values": [
+            "neutral",
+            "action",
+            "danger"
+          ]
+        },
+        "block": {
+          "description": "Present when the button renders as a full-width bar.",
+          "attribute": "data-sprint-block"
+        },
+        "loading": {
+          "description": "Present while the button is busy.",
+          "attribute": "data-sprint-loading"
+        },
+        "disabled": {
+          "description": "Present when the button cannot be pressed.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "press": {
+          "verb": "press",
+          "description": "Press this button, exactly as a person clicking it would. Returns the button's state after the press, so a follow-up read is usually unnecessary. Any work the press starts is not waited for; if the button enters a loading state the result says so.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The button is mounted, enabled, not loading, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The button unmounts, becomes disabled, or starts loading."
+        }
+      },
+      "agentView": {
+        "example": "- **Button** \"Prepare launch\" [tone=action] → tool `press-prepare-launch`"
+      },
+      "examples": [
+        {
+          "title": "Primary action",
+          "description": "The one rationed acid action bar for a view.",
+          "code": "<Button tone=\"action\" block onClick={prepare}>Prepare launch</Button>"
+        },
+        {
+          "title": "Destructive action",
+          "code": "<Button tone=\"danger\" onClick={purge}>Purge vault</Button>"
+        },
+        {
+          "title": "Busy state",
+          "description": "While loading the press tool is unregistered, so an agent cannot double-submit.",
+          "code": "<Button loading={saving} onClick={save}>Save loadout</Button>"
+        },
+        {
+          "title": "Disambiguating two identical labels",
+          "description": "Without agentName both buttons would claim press-save and neither would register a tool.",
+          "code": "<Button agentName=\"Save billing\">Save</Button>"
+        },
+        {
+          "title": "Keeping the tool name stable under a changing label",
+          "description": "A label carrying a value would otherwise rename the tool on every change, churning registration and staling any name an agent already holds.",
+          "code": "<Button agentName=\"Increment\">Increment ({count})</Button>"
+        }
+      ],
+      "a11y": {
+        "role": "button",
+        "keyboard": [
+          "Enter activates",
+          "Space activates"
+        ],
+        "notes": "Loading sets aria-busy and disables the control. Focus is an offset keyline, never a rounded ring."
+      }
+    },
+    {
+      "name": "Card",
+      "category": "navigation",
+      "summary": "One entry in a catalogue: a title, a line or two of body, and the whole block clickable. Give it an href and it is a link; give it onClick and it is an action that registers an open tool.",
+      "whenToUse": "Use it in a grid of comparable things a person picks between: components in a catalogue, results in a list, templates to start from. The title is the accessible name, so it is also what an agent selects on.",
+      "whenNotToUse": "Do not use it for a static region with a header; that is Panel. Do not put separate controls inside one, because the whole card is already a single control and nesting buttons inside a link is invalid.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The card's title, and its accessible name. Also derives the tool name when the card acts.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "A line or two describing the entry. Carried in the agent view as the body part."
+        },
+        "href": {
+          "kind": "string",
+          "description": "Destination, which makes the card a link. A card that navigates registers no tool by default."
+        },
+        "onClick": {
+          "kind": "handler",
+          "description": "What clicking does. Alone it makes the card a button that registers an open tool by default. Alongside href the card stays a link and the handler rides the click, so a client-side router can intercept the navigation."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable an acting card and unregister its tool. Has no effect on a card that navigates.",
+          "default": false
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Override the default: on for a card that acts, off for a card that navigates, because an agent can reach an href on its own."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two cards share a title."
+        }
+      },
+      "state": {
+        "href": {
+          "description": "Where the card goes, when it navigates.",
+          "attribute": "data-sprint-href"
+        },
+        "disabled": {
+          "description": "Present when the card cannot be opened.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "open": {
+          "verb": "open",
+          "description": "Open this card, exactly as a person clicking it would. What opening does is the card's own business: it may reveal detail in place, select this item, or start a flow. Returns the card's state after the click.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The card acts rather than navigates, is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The card unmounts, becomes disabled, or turns into a link by taking an href."
+        }
+      },
+      "agentView": {
+        "example": "- **Card** \"Button\" [href=#/Button]\n  - part `title` \"Button\"\n  - part `body` \"A single action a person or an agent can trigger.\""
+      },
+      "examples": [
+        {
+          "title": "A catalogue entry",
+          "description": "A card that navigates. No tool, because the href is already public.",
+          "code": "<Card label=\"Button\" href=\"#/Button\">\n  A single action a person or an agent can trigger.\n</Card>"
+        },
+        {
+          "title": "A card that acts",
+          "description": "onClick instead of href, so the card registers open-start-from-blank and an agent can take it.",
+          "code": "<Card label=\"Start from blank\" onClick={create}>\n  An empty page with the provider already wired up.\n</Card>"
+        }
+      ],
+      "a11y": {
+        "notes": "The whole block is one control: a link when it has an href, a button when it acts. The title names it, and the body is read as its content rather than as part of the name."
+      }
+    },
+    {
+      "name": "Checkbox",
+      "category": "input",
+      "summary": "A single on/off choice recorded as form data. It registers one set tool that takes the end state rather than toggling.",
+      "whenToUse": "Use it for a boolean a form will submit: accepting terms, opting in, including something in a request. The set tool takes checked as true or false, so an agent states the end state and never has to read before writing.",
+      "whenNotToUse": "Do not use it for a setting that takes effect the moment it changes; that is a Switch. Do not use it for choosing one of several options, which is a SegmentedControl or a Select.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What checking it means. Names the box for a screen reader and derives the tool name, so prefer a statement such as \"Accept the terms\".",
+          "required": true
+        },
+        "checked": {
+          "kind": "boolean",
+          "description": "Whether the box is checked. The box is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the new checked state. The set tool drives a real click, so this runs for agent changes too.",
+          "required": true
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance shown under the box and carried into the agent view. Replaced by error while one is set."
+        },
+        "error": {
+          "kind": "string",
+          "description": "A validation message. Marks the box invalid for people, screen readers, and agents alike."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name submitted with the surrounding form."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the box and unregister its set tool.",
+          "default": false
+        },
+        "required": {
+          "kind": "boolean",
+          "description": "Mark the box as one that must be checked.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two boxes on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the box without registering a set tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "checked": {
+          "description": "Present while the box is checked.",
+          "attribute": "data-sprint-checked"
+        },
+        "disabled": {
+          "description": "Present when the box cannot be changed.",
+          "attribute": "data-sprint-disabled"
+        },
+        "required": {
+          "description": "Present when the box must be checked.",
+          "attribute": "data-sprint-required"
+        },
+        "invalid": {
+          "description": "Present while an error is set.",
+          "attribute": "data-sprint-invalid"
+        }
+      },
+      "tools": {
+        "set": {
+          "verb": "set",
+          "description": "Check or uncheck this box by stating the end state, exactly as a person clicking it would. Setting the state it already has succeeds and changes nothing, so the call is safe to retry. Returns the box's state after the call, so a follow-up read is unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "checked": {
+                "type": "boolean",
+                "description": "The end state: true leaves the box checked, false leaves it unchecked."
+              }
+            },
+            "required": [
+              "checked"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The box is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The box unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **Checkbox** \"Accept the terms\" [required] → tool `set-accept-the-terms`\n  - part `error` \"Required before launch\""
+      },
+      "examples": [
+        {
+          "title": "A consent box",
+          "description": "In agent view the box renders as one control; pressing it toggles, while the set tool states the end state.",
+          "code": "<Checkbox\n  label=\"Accept the terms\"\n  checked={accepted}\n  onChange={setAccepted}\n  required\n/>"
+        },
+        {
+          "title": "An error on a required box",
+          "description": "The error marks the box invalid on every surface until it clears.",
+          "code": "<Checkbox\n  label=\"Confirm the manifest\"\n  checked={confirmed}\n  onChange={setConfirmed}\n  required\n  error=\"Confirm before launch.\"\n/>"
+        },
+        {
+          "title": "A disabled box",
+          "description": "Disabled unregisters the tool, so an agent cannot change what a person could not.",
+          "code": "<Checkbox\n  label=\"Telemetry\"\n  checked\n  disabled\n  onChange={setTelemetry}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "checkbox",
+        "keyboard": [
+          "Space toggles",
+          "Tab moves through the box"
+        ],
+        "notes": "A native checkbox input wrapped by its label, visually replaced by a keylined square. Focus draws an offset keyline around the square; errors set aria-invalid and link with aria-describedby."
+      }
+    },
+    {
+      "name": "CodeBlock",
+      "category": "display",
+      "summary": "A snippet of code with a caption band and a copy control. In agent view the snippet is carried verbatim as the code part, so an agent reads the source instead of the highlighting.",
+      "whenToUse": "Use it for any code a reader is meant to run or copy: an install snippet, an example, a generated tool descriptor. It scrolls horizontally rather than wrapping, so a long line stays a long line.",
+      "whenNotToUse": "Do not use it for a short inline identifier inside a sentence; use a code element inside Text. Do not use it for prose you want to look technical.",
+      "status": "experimental",
+      "props": {
+        "code": {
+          "kind": "string",
+          "description": "The snippet, verbatim. Newlines are preserved and this exact string is what an agent reads and what the copy control copies.",
+          "required": true
+        },
+        "caption": {
+          "kind": "string",
+          "description": "What the snippet is, shown in the band above it and used as the block's accessible name. Defaults to the language."
+        },
+        "language": {
+          "kind": "enum",
+          "description": "What the snippet is written in. Drives the caption default.",
+          "values": [
+            "tsx",
+            "json",
+            "bash",
+            "text"
+          ],
+          "default": "tsx"
+        },
+        "copyLabel": {
+          "kind": "string",
+          "description": "Label for the copy control.",
+          "default": "Copy"
+        }
+      },
+      "state": {
+        "language": {
+          "description": "The language the snippet is in.",
+          "attribute": "data-sprint-language",
+          "values": [
+            "tsx",
+            "json",
+            "bash",
+            "text"
+          ]
+        },
+        "lines": {
+          "description": "How many lines the snippet has.",
+          "attribute": "data-sprint-lines"
+        },
+        "copied": {
+          "description": "Present for a moment after the copy control has put the snippet on the clipboard.",
+          "attribute": "data-sprint-copied"
+        },
+        "token": {
+          "description": "On a highlight span: which token class it is. Colour comes from this, so a theme can recolour code without touching the component.",
+          "attribute": "data-sprint-token",
+          "values": [
+            "tag",
+            "attr",
+            "string",
+            "keyword",
+            "number",
+            "punct",
+            "comment"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **CodeBlock** \"install\" [language=bash, lines=1]\n  - part `copy` \"Copy\"\n  - part `code` \"npm install sprint\""
+      },
+      "examples": [
+        {
+          "title": "An example snippet",
+          "description": "No caption, so the language names the block. It registers no WebMCP tool: an agent has nothing to gain from putting text on a person's clipboard, and it can already read the code.",
+          "code": "<CodeBlock code={'<Button tone=\"action\">Prepare launch</Button>'} />"
+        },
+        {
+          "title": "A captioned descriptor",
+          "code": "<CodeBlock\n  caption=\"descriptor\"\n  language=\"json\"\n  code={JSON.stringify(descriptor, null, 2)}\n/>"
+        }
+      ],
+      "a11y": {
+        "notes": "The frame is a figure named by its caption. The copy control is a real button and reports back in its own label once the snippet is on the clipboard; the label swap is a polite live region, so a screen reader hears the confirmation too."
+      }
+    },
+    {
+      "name": "DescriptionList",
+      "category": "display",
+      "summary": "Labelled term–description pairs for the details of one thing: metadata, settings, profile fields.",
+      "whenToUse": "Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description.",
+      "whenNotToUse": "Do not use for many entities with the same fields; that is a Table. Do not put components inside term or description; both are flattened to text for the agent view, so only inline content survives. Do not use for prose sequences; that is a List.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The accessible name for the list, describing what entity it details.",
+          "required": true
+        },
+        "items": {
+          "kind": "array",
+          "description": "The pairs, in order. Each item is { term, description }; both are inline content flattened to text for the agent view.",
+          "required": true
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "Text shown when items is empty. The region keeps its frame.",
+          "default": "Empty"
+        }
+      },
+      "state": {
+        "items": {
+          "description": "The number of pairs.",
+          "attribute": "data-sprint-items"
+        },
+        "empty": {
+          "description": "Present when there are no pairs.",
+          "attribute": "data-sprint-empty"
+        }
+      },
+      "agentView": {
+        "example": "- **DescriptionList** \"Key sk-prod\" [items=2]"
+      },
+      "examples": [
+        {
+          "title": "Token metadata",
+          "code": "<DescriptionList\n  label=\"Key sk-prod\"\n  items={[\n    { term: \"Created\", description: \"2026-08-01\" },\n    { term: \"Last used\", description: \"2 hours ago\" },\n    { term: \"Scopes\", description: \"read, write\" },\n  ]}\n/>"
+        },
+        {
+          "title": "An empty list",
+          "description": "The region keeps its frame and states its emptiness.",
+          "code": "<DescriptionList label=\"Recovery codes\" items={[]} emptyLabel=\"None generated\" />"
+        }
+      ],
+      "a11y": {
+        "role": "definition list",
+        "notes": "Renders a native dl with an aria-label. Terms are dt elements and descriptions dd, so structure survives without styling."
+      }
+    },
+    {
+      "name": "Dialog",
+      "category": "overlay",
+      "summary": "A modal that interrupts the page for one decision: confirm a destructive action, complete a short step, acknowledge something before continuing.",
+      "whenToUse": "Use when the page must not continue until the person decides: confirming a revocation or deletion, a short focused form, a required acknowledgement. Keep one decision per dialog and put its actions inside as ordinary Buttons; tools registered inside the dialog compose their names under its label.",
+      "whenNotToUse": "Do not use for status messages; that is an Alert. Do not use for anything the person should be able to ignore; a modal takes the whole page hostage. Do not nest dialogs.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The dialog's title. Names the dialog for assistive tech, derives the close tool name, and scopes the names of tools registered inside.",
+          "required": true
+        },
+        "open": {
+          "kind": "boolean",
+          "description": "Whether the dialog is shown. A closed dialog renders nothing at all; the page owns this state.",
+          "required": true
+        },
+        "onClose": {
+          "kind": "handler",
+          "description": "Called when the person or an agent asks to close: the close control, Escape, or the close tool. Set open to false in response.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "The dialog's contents. Ordinary components; anything actionable registers its own tools, scoped under the dialog's label.",
+          "required": true
+        },
+        "headingLevel": {
+          "kind": "enum",
+          "description": "Render the title as a real heading at this level, joining the page outline.",
+          "values": [
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        "owner": {
+          "kind": "string",
+          "description": "The tool name of the control that opened this dialog. Published as data-sprint-owner so a reading agent can attach the dialog to its opener."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the close tool name."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render without registering the close tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "open": {
+          "description": "Present while the dialog is shown. A closed dialog is absent from the DOM entirely.",
+          "attribute": "data-sprint-open"
+        }
+      },
+      "tools": {
+        "close": {
+          "verb": "close",
+          "description": "Close this dialog without taking its action, exactly as pressing its close control or Escape would. Anything entered inside the dialog may be discarded by the page. To take the dialog's action instead, use the tools its contents register while it is open.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The dialog is open. A closed dialog renders nothing and has no tools.",
+          "unregisteredWhen": "The dialog closes or unmounts."
+        }
+      },
+      "agentView": {
+        "example": "- **Dialog** \"Revoke key\" [open] with part `close` → tool `close-revoke-key`"
+      },
+      "examples": [
+        {
+          "title": "A destructive confirmation",
+          "description": "The confirm Button registers its tool only while the dialog is open, and its name is scoped under the dialog's label.",
+          "code": "<Dialog label=\"Revoke key\" open={confirming} onClose={() => setConfirming(false)}>\n  <Stack gap=\"tight\">\n    <Text>The key stops authenticating immediately. This cannot be undone.</Text>\n    <Button tone=\"danger\" onClick={revoke}>Revoke sk-prod</Button>\n  </Stack>\n</Dialog>"
+        },
+        {
+          "title": "Owned by its opener",
+          "description": "Passing the opener's tool name lets a reading agent attach the dialog to the control that produced it.",
+          "code": "<Dialog\n  label=\"Rotate secret\"\n  open={rotating}\n  owner=\"press-rotate-secret\"\n  onClose={() => setRotating(false)}\n>\n  <Text>The current secret keeps working for one hour.</Text>\n</Dialog>"
+        }
+      ],
+      "a11y": {
+        "role": "dialog",
+        "keyboard": [
+          "Escape closes",
+          "Tab cycles within the dialog"
+        ],
+        "notes": "A native dialog element shown with showModal, so focus containment, inerting the page behind, and Escape come from the browser. The title names the dialog via aria-label."
+      }
+    },
+    {
+      "name": "Heading",
+      "category": "typography",
+      "summary": "A section title, rendered as a real h element at the level you pick so it joins the document outline.",
+      "whenToUse": "Use it for the title of a page or of a region inside one, and keep levels in document order so the outline an agent or a screen reader builds is the outline you meant.",
+      "whenNotToUse": "Do not use it for the label on a bordered region; Panel takes a label prop, draws its own header, and joins the outline through its headingLevel prop. Do not pick a level for its size, only for its place in the outline.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The title. Keep it short; long titles truncate in chrome.",
+          "required": true
+        },
+        "level": {
+          "kind": "enum",
+          "description": "Outline depth, rendered as the matching h element. 1 is the page title and there should be one per page.",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "default": "2"
+        }
+      },
+      "state": {
+        "level": {
+          "description": "The outline depth, and so the type voice in use.",
+          "attribute": "data-sprint-level",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Heading** \"WebMCP tools\" [level=2]"
+      },
+      "examples": [
+        {
+          "title": "A page title",
+          "code": "<Heading level={1}>Button</Heading>"
+        },
+        {
+          "title": "A section title",
+          "description": "The default level, for a region inside a page.",
+          "code": "<Heading>Every variant</Heading>"
+        }
+      ]
+    },
+    {
+      "name": "Link",
+      "category": "navigation",
+      "summary": "A navigation link. It publishes its destination as state, so an agent reading the page in text learns the URL rather than having to click to find out, and it renders a real anchor in both views.",
+      "whenToUse": "Use it for anything that changes the address: a nav item, a cross-reference, a link out to a specification. Set active on the item matching the current route so the agent view and the human view agree about where you are. Under a client-side router, pass an onClick that prevents default and navigates; the handler rides the anchor in both views, so agent clicks and open tools go through the router too.",
+      "whenNotToUse": "Do not use it for an action that stays on the page; that is a Button. Do not register a tool on ordinary navigation: an agent can already reach a URL, and a page of links would flood its tool list for no gain.",
+      "status": "experimental",
+      "props": {
+        "href": {
+          "kind": "string",
+          "description": "The destination. Published as data-sprint-href and carried in the agent view, so the URL is readable without a click.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "The link text. It names the destination, so prefer the page's name over here or read more.",
+          "required": true
+        },
+        "active": {
+          "kind": "boolean",
+          "description": "Mark the link as the current location. Sets aria-current so a screen reader and an agent learn it the same way.",
+          "default": false
+        },
+        "external": {
+          "kind": "boolean",
+          "description": "Mark a destination outside this app. Opens in a new context and adds the usual rel protections.",
+          "default": false
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set true to register an open tool for this link. Off by default: navigation is reachable by URL, so a tool per link is cost without benefit.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, for icon-only links or two links with the same text."
+        }
+      },
+      "state": {
+        "href": {
+          "description": "Where this link goes.",
+          "attribute": "data-sprint-href"
+        },
+        "active": {
+          "description": "Present when this link is the current location.",
+          "attribute": "data-sprint-active"
+        },
+        "external": {
+          "description": "Present when the destination is outside this app.",
+          "attribute": "data-sprint-external"
+        }
+      },
+      "tools": {
+        "open": {
+          "verb": "open",
+          "description": "Follow this link and load its destination, exactly as a person clicking it would. The current page is replaced, so anything unsaved on it is lost and any tool registered by this page stops existing.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The link opts in with agentTool, is mounted, has a resolvable label, and no other component claims the same tool name. Links register nothing by default.",
+          "unregisteredWhen": "The link unmounts or opts back out."
+        }
+      },
+      "agentView": {
+        "example": "- **Link** \"Button\" [active, href=#/Button]"
+      },
+      "examples": [
+        {
+          "title": "A nav item",
+          "code": "<Link href=\"#/Button\" active={route === \"Button\"}>Button</Link>"
+        },
+        {
+          "title": "A link out",
+          "code": "<Link href=\"https://developer.chrome.com/docs/ai/webmcp\" external>\n  Chrome docs\n</Link>"
+        },
+        {
+          "title": "A link an agent may follow itself",
+          "description": "Opting in is for the one link that completes a task, not for a nav list.",
+          "code": "<Link href=\"#/checkout\" agentTool>Go to checkout</Link>"
+        }
+      ],
+      "a11y": {
+        "role": "link",
+        "keyboard": [
+          "Enter follows the link"
+        ],
+        "notes": "active sets aria-current=page. External links open in a new context with rel=noreferrer noopener, and carry their outward mark as a pseudo-element with empty alternative text so it never reaches the accessible name or the tool name. Inside Text a link is underlined all the time, so colour is never the only thing distinguishing it from the prose around it."
+      }
+    },
+    {
+      "name": "List",
+      "category": "display",
+      "summary": "A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.",
+      "whenToUse": "Use it for a short sequence of related points: rules, steps, links, caveats. Passing items as data rather than as children is what lets the agent view carry each one as its own part.",
+      "whenNotToUse": "Do not use it for records with fields; that is Table. Do not use it as a layout for cards or controls; that is Stack.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the list is a list of. Names it for a screen reader and for the agent view.",
+          "required": true
+        },
+        "items": {
+          "kind": "array",
+          "description": "The items in order. Inline content, not components: each is flattened to text for the agent view.",
+          "required": true
+        },
+        "ordered": {
+          "kind": "boolean",
+          "description": "Number the items instead of bulleting them. Use it when the order is the point.",
+          "default": false
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the list says when it has no items.",
+          "default": "Empty"
+        }
+      },
+      "state": {
+        "items": {
+          "description": "How many items the list has.",
+          "attribute": "data-sprint-items"
+        },
+        "ordered": {
+          "description": "Present when the items are numbered rather than bulleted.",
+          "attribute": "data-sprint-ordered"
+        },
+        "empty": {
+          "description": "Present when the list has no items.",
+          "attribute": "data-sprint-empty"
+        },
+        "index": {
+          "description": "On an item: its 1-based position in the list.",
+          "attribute": "data-sprint-index"
+        }
+      },
+      "agentView": {
+        "example": "- **List** \"Tool rules\" [items=1]\n  - part `item` \"One tool, one action.\" [index=1]"
+      },
+      "examples": [
+        {
+          "title": "A list of rules",
+          "code": "<List\n  label=\"Tool rules\"\n  items={[\n    <>\n      <strong>One tool, one action.</strong> Overlapping tools make selection\n      harder.\n    </>,\n  ]}\n/>"
+        },
+        {
+          "title": "A numbered sequence",
+          "code": "<List\n  ordered\n  label=\"Steps\"\n  items={[\"Register the tool.\", \"Drive the DOM.\", \"Return the new state.\"]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "list",
+        "notes": "A real ul or ol named by its label, with an explicit list role because the custom markers require list-style none and Safari would otherwise drop the list semantics. The item count is announced, and the markers are drawn as pseudo-elements."
+      }
+    },
+    {
+      "name": "MetaLine",
+      "category": "display",
+      "summary": "A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.",
+      "whenToUse": "Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short and the line truncates rather than wraps.",
+      "whenNotToUse": "Do not use it for the details of a record a person is meant to study; that is a DescriptionList. Do not put anything interactive in it, and do not use it for prose.",
+      "status": "experimental",
+      "props": {
+        "entries": {
+          "kind": "array",
+          "description": "Term–detail pairs in display order: { term, detail }, both strings. Rendered as TERM: DETAIL, slash-separated, and carried as one line in the agent view. An empty array renders nothing.",
+          "required": true
+        }
+      },
+      "state": {
+        "entries": {
+          "description": "How many term–detail pairs the line carries.",
+          "attribute": "data-sprint-entries"
+        }
+      },
+      "agentView": {
+        "example": "- **MetaLine** \"SERIAL: NU-TYPE-CORE-A1 / ISSUED: 2744.07.22\" [entries=2]"
+      },
+      "examples": [
+        {
+          "title": "A build strip",
+          "description": "The manifest voice: uppercase mono, slash-separated, terms muted and details in ink.",
+          "code": "<MetaLine\n  entries={[\n    { term: \"Serial\", detail: \"NU-TYPE-CORE-A1\" },\n    { term: \"Issued\", detail: \"2744.07.22\" },\n  ]}\n/>"
+        },
+        {
+          "title": "Version chrome for a footer",
+          "description": "The line an app pins under its content or into a Shell rail.",
+          "code": "<MetaLine\n  entries={[\n    { term: \"Sprint\", detail: \"v0.0.0\" },\n    { term: \"Channel\", detail: \"dev\" },\n    { term: \"WebMCP\", detail: \"chrome 149\" },\n  ]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "paragraph",
+        "notes": "The separators are real text, so the accessible name is the same line the agent view carries. Nothing in the line is interactive."
+      }
+    },
+    {
+      "name": "Nav",
+      "category": "navigation",
+      "summary": "A labelled navigation landmark: the region that holds a page's links to elsewhere.",
+      "whenToUse": "Use it around any set of links whose job is getting around the app: a sidebar, a table of contents, a footer link block. The label names the landmark, so a person navigating by landmark, a screen reader, and an agent reading the page all know these links are wayfinding rather than content. Group related links inside it with NavGroup.",
+      "whenNotToUse": "Do not use it for a link that sits inside prose; a bare Link is already readable there. Do not use it for a set of actions that stay on the page; those are Buttons in a Stack.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What this navigation is for. Rendered as the landmark's accessible name, so two navs on one page stay distinguishable.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "Link components, or NavGroup components wrapping them.",
+          "required": true
+        }
+      },
+      "agentView": {
+        "example": "- **Nav** \"Workbench\""
+      },
+      "a11y": {
+        "role": "navigation",
+        "notes": "The label is the landmark's accessible name via aria-label. Active links inside it carry aria-current=page, so the current location is announced without any styling cue."
+      },
+      "relatedComponents": [
+        "NavGroup",
+        "Link",
+        "Shell"
+      ],
+      "examples": [
+        {
+          "title": "A grouped sidebar nav",
+          "description": "Each NavGroup names a cluster of destinations. The active link carries the current-page mark in every view.",
+          "code": "<Nav label=\"Docs\">\n  <NavGroup label=\"Guides\">\n    <Link href=\"#/guide/webmcp\">WebMCP</Link>\n  </NavGroup>\n  <NavGroup label=\"Components\">\n    <Link href=\"#/Button\" active>Button</Link>\n    <Link href=\"#/Table\">Table</Link>\n  </NavGroup>\n</Nav>"
+        },
+        {
+          "title": "A flat nav",
+          "description": "A short list of destinations needs no grouping.",
+          "code": "<Nav label=\"Site\">\n  <Link href=\"#/\">Home</Link>\n  <Link href=\"#/pricing\">Pricing</Link>\n</Nav>"
+        }
+      ]
+    },
+    {
+      "name": "NavGroup",
+      "category": "navigation",
+      "summary": "A labelled cluster of links inside a Nav. The label names the group for screen readers and agents alike.",
+      "whenToUse": "Use it when a Nav holds more than one kind of destination: guides versus components, product versus account. The label tells every reader, including an agent scanning for the right link, what the links below it have in common.",
+      "whenNotToUse": "Do not use it outside a Nav; on its own it is just a heading over links, which Panel does better. Do not nest groups; one level of grouping is all a sidebar can carry.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the links in this group have in common. Rendered as the rubric and as the group's accessible name.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "The Link components this group collects.",
+          "required": true
+        }
+      },
+      "agentView": {
+        "example": "- **NavGroup** \"Components\""
+      },
+      "a11y": {
+        "role": "group",
+        "notes": "The group carries its label as an accessible name, so screen readers announce the rubric when entering the cluster rather than reading an unlabelled run of links."
+      },
+      "relatedComponents": [
+        "Nav",
+        "Link"
+      ],
+      "examples": [
+        {
+          "title": "A labelled group of links",
+          "code": "<NavGroup label=\"Reference\">\n  <Link href=\"https://developer.chrome.com/docs/ai/webmcp\" external>\n    Chrome docs\n  </Link>\n  <Link href=\"https://github.com/webmachinelearning/webmcp\" external>\n    Specification\n  </Link>\n</NavGroup>"
+        }
+      ]
+    },
+    {
+      "name": "PageHeader",
+      "category": "layout",
+      "summary": "The top of a page: its h1 title, the Tag chips that classify it, an optional page-level control, and a lede underneath.",
+      "whenToUse": "Use it once per page, as the first thing inside the content region. The label becomes the page's only h1, so the document outline starts here. Put status or category Tags in tags, a control that affects the whole page in actions, and the introductory sentence or two in children as Text.",
+      "whenNotToUse": "Do not use it for a section within a page; that is a Panel with a headingLevel. Do not put navigation in actions; the page's links belong in a Nav.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The page title. Rendered as the page's h1.",
+          "required": true
+        },
+        "tags": {
+          "kind": "node",
+          "description": "Tag components that classify the page, rendered on the title line. Keep it to two or three."
+        },
+        "actions": {
+          "kind": "node",
+          "description": "A control that acts on the whole page, rendered at the end of the title line."
+        },
+        "children": {
+          "kind": "node",
+          "description": "The lede: a Text or two introducing the page."
+        }
+      },
+      "agentView": {
+        "example": "- **PageHeader** \"Button\""
+      },
+      "a11y": {
+        "notes": "The label renders as the page's h1, so keep to one PageHeader per page. Tags and the lede are ordinary content after it; the header element itself takes no landmark role because it sits inside main."
+      },
+      "relatedComponents": [
+        "Panel",
+        "Heading",
+        "Tag"
+      ],
+      "examples": [
+        {
+          "title": "A titled page with a lede",
+          "code": "<PageHeader label=\"Reports\">\n  <Text>Everything the quarter produced, in one place.</Text>\n</PageHeader>"
+        },
+        {
+          "title": "Status tags and a page-level control",
+          "description": "Tags classify the page on the title line; the action slot holds the one control that affects the whole page.",
+          "code": "<PageHeader\n  label=\"Button\"\n  tags={<Tag tone=\"warning\" filled>experimental</Tag>}\n  actions={<Button agentTool={false}>Refresh</Button>}\n>\n  <Text>A single action a person or an agent can trigger.</Text>\n</PageHeader>"
+        }
+      ]
+    },
+    {
+      "name": "Panel",
+      "category": "layout",
+      "summary": "A labelled region with a header band and an optional slot for the controls that act on it. Everything on a Sprint page lives inside one.",
+      "whenToUse": "Use it for every distinct region of a page: a section of documentation, a form, a readout, a preview. The label is the region's accessible name, so a person, a screen reader, and an agent all address the region by the same words.",
+      "whenNotToUse": "Do not use it as a spacer or a plain box; that is Stack. Nesting reads clearly to about three deep, because each level alternates its ground and demotes its frame; past that, the depth cues repeat and the region wants a page of its own.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What this region is. Rendered in the header band and used as the region's accessible name.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "The region's content. An empty panel says it is empty rather than collapsing."
+        },
+        "headingLevel": {
+          "kind": "enum",
+          "description": "Render the label as a real heading at this outline depth, so the section is reachable when a screen reader navigates by headings. Set it on every panelled section of a page; leave it unset only for chrome such as a preview frame.",
+          "values": [
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        "actions": {
+          "kind": "node",
+          "description": "Controls that act on this region, rendered at the end of the header band. Keep it to one or two."
+        },
+        "flush": {
+          "kind": "boolean",
+          "description": "Drop the body padding, for content that draws its own edges such as a Table or a CodeBlock.",
+          "default": false
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the panel says when it has no content.",
+          "default": "Empty"
+        }
+      },
+      "state": {
+        "flush": {
+          "description": "Present when the body carries no padding of its own.",
+          "attribute": "data-sprint-flush"
+        },
+        "empty": {
+          "description": "Present when the panel has no content. The panel still renders its keyline and says it is empty.",
+          "attribute": "data-sprint-empty"
+        }
+      },
+      "agentView": {
+        "example": "- **Panel** \"WebMCP tools\""
+      },
+      "a11y": {
+        "role": "region",
+        "notes": "The section is a named landmark either way: the label is its accessible name. With headingLevel the label is also a heading element, so the page outline includes the region; without it the region is reachable only by landmark navigation."
+      },
+      "examples": [
+        {
+          "title": "A section of a page",
+          "description": "headingLevel puts the label in the page outline, so a screen reader finds the section by heading as well as by landmark.",
+          "code": "<Panel label=\"When to use\" headingLevel={2}>\n  <Text>Use it for any discrete action.</Text>\n</Panel>"
+        },
+        {
+          "title": "A panel with a control in its header",
+          "description": "The header slot is for controls that act on the region, not for navigation.",
+          "code": "<Panel\n  label=\"Preview\"\n  actions={<Button agentName=\"Reset preview\">Reset</Button>}\n>\n  <Button tone=\"action\">Prepare launch</Button>\n</Panel>"
+        },
+        {
+          "title": "A flush panel around a table",
+          "description": "Content that draws its own keylines sits flush, so borders do not double up.",
+          "code": "<Panel label=\"Conventions\" flush>\n  <Table label=\"Conventions\" columns={columns} rows={rows} />\n</Panel>"
+        },
+        {
+          "title": "Nested panels",
+          "description": "Depth styles itself: the outermost panel carries a doubled keyline, each nested level alternates its ground, and nested headers demote to a dashed rule, so a reader ranks the levels without counting borders.",
+          "code": "<Panel label=\"The shape\" headingLevel={2}>\n  <Panel label=\"Human view\" headingLevel={3}>\n    <Panel label=\"Crew\" headingLevel={4}>\n      <Text>Registration fields live here.</Text>\n    </Panel>\n  </Panel>\n</Panel>"
+        },
+        {
+          "title": "An empty region",
+          "description": "An empty panel keeps its border and states that it is empty, rather than vanishing and leaving a person or an agent unsure whether it failed to load.",
+          "code": "<Panel label=\"Registered tools\" emptyLabel=\"No tools registered\" />"
+        }
+      ]
+    },
+    {
+      "name": "SecretField",
+      "category": "display",
+      "summary": "A sensitive value shown once or on demand: an API key, a recovery code, a signing secret. Masked by default with reveal and copy controls, and the value never reaches any agent surface.",
+      "whenToUse": "Use to hand a person a secret the page holds. The mask is fixed-length so nothing leaks, and copy places the value on the clipboard without revealing it.",
+      "whenNotToUse": "Do not use for entering a secret; that is a TextInput with type password. Do not use for values that are safe to read; a DescriptionList or CodeBlock keeps those on the agent surface where they belong.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the secret is, shown as the field's uppercase title.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The secret. Never appears in agent attributes, the agent view, or the copyable text stream; only reveal and copy touch it.",
+          "required": true
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance below the value, e.g. \"Store it now. It is not shown again.\""
+        },
+        "defaultRevealed": {
+          "kind": "boolean",
+          "description": "Start revealed instead of masked.",
+          "default": false
+        }
+      },
+      "state": {
+        "filled": {
+          "description": "Present when the field holds a secret.",
+          "attribute": "data-sprint-filled"
+        },
+        "revealed": {
+          "description": "Present while the value is shown in clear text.",
+          "attribute": "data-sprint-revealed"
+        }
+      },
+      "agentView": {
+        "example": "- **SecretField** \"API key\" [filled]"
+      },
+      "examples": [
+        {
+          "title": "A key shown once",
+          "code": "<SecretField\n  label=\"API key\"\n  value={key}\n  hint=\"Store it now. It is not shown again.\"\n/>"
+        },
+        {
+          "title": "Starting revealed",
+          "description": "For a value the person is expected to transcribe immediately.",
+          "code": "<SecretField label=\"Recovery code\" value={code} defaultRevealed />"
+        }
+      ],
+      "a11y": {
+        "notes": "The reveal control is a toggle button with aria-pressed; the masked value is announced as a hidden secret rather than as bullet characters. Copy announces its success by swapping its label to Copied."
+      }
+    },
+    {
+      "name": "SegmentedControl",
+      "category": "input",
+      "summary": "A short row of mutually exclusive options, all visible at once: a radio group that registers a single select tool whose schema enumerates the options currently on screen.",
+      "whenToUse": "Use it for two to four exclusive choices a person should be able to compare without opening anything: a view switch, a density setting, a filter. One tool with an enum beats one tool per option, and it keeps a page's tool count flat as options are added.",
+      "whenNotToUse": "Do not use it for more than about four options or for long labels; that is a select. Do not use it for an on/off setting, which is a switch, and never for navigation.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is being chosen. Names the group for a screen reader and derives the tool name, so prefer a noun phrase such as \"Page view\".",
+          "required": true
+        },
+        "options": {
+          "kind": "array",
+          "description": "The choices in display order: { value, label }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The value of the selected option. The control is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the newly selected value. The select tool drives a real click, so this runs for agent selections too.",
+          "required": true
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable every option and unregister the select tool.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two controls on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the control without registering a select tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The value of the option currently selected.",
+          "attribute": "data-sprint-value"
+        },
+        "disabled": {
+          "description": "Present when no option can be chosen.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "select": {
+          "verb": "select",
+          "description": "Select one of this control's options by its visible label, exactly as a person clicking it would. Only one option is selected at a time, so this replaces the current one. Returns the control's state after the change, so a follow-up read is unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "description": "The visible label of the option to select, as shown on the control."
+              }
+            },
+            "required": [
+              "option"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The control is mounted, enabled, has a resolvable label, and no other component claims the same tool name. The registered schema enumerates the current option labels.",
+          "unregisteredWhen": "The control unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **SegmentedControl** \"Page view\" [value=human] → tool `select-page-view`\n  - part `option` \"human\" [checked]\n  - part `option` \"agent\""
+      },
+      "examples": [
+        {
+          "title": "A view switch",
+          "description": "In agent view each option renders as its own control, so an agent driving the DOM can click one without WebMCP.",
+          "code": "<SegmentedControl\n  label=\"Page view\"\n  value={view}\n  onChange={setView}\n  options={[\n    { value: \"human\", label: \"human\" },\n    { value: \"agent\", label: \"agent\" },\n  ]}\n/>"
+        },
+        {
+          "title": "A disabled control",
+          "description": "Disabled unregisters the tool, so an agent cannot select an option a person could not.",
+          "code": "<SegmentedControl\n  label=\"Density\"\n  disabled\n  value=\"dense\"\n  onChange={setDensity}\n  options={[\n    { value: \"dense\", label: \"dense\" },\n    { value: \"roomy\", label: \"roomy\" },\n  ]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "radiogroup",
+        "keyboard": [
+          "Arrow keys move to the next or previous option and select it",
+          "Home selects the first option",
+          "End selects the last option",
+          "Tab enters and leaves the group once"
+        ],
+        "notes": "Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group."
+      }
+    },
+    {
+      "name": "Select",
+      "category": "input",
+      "summary": "A dropdown of mutually exclusive options behind a native select, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
+      "whenToUse": "Use it when one value is chosen from a list too long to lay out flat: a region, a squad, a category. Options are data ({ value, label }), the tool accepts the visible label, and in agent view every option renders as its own control, so an agent picks one without opening anything.",
+      "whenNotToUse": "Do not use it for two to four short options a person should compare at a glance; that is a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch, and never for navigation.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is being chosen. Names the control for a screen reader and derives the tool name, so prefer a noun phrase such as \"Region\".",
+          "required": true
+        },
+        "options": {
+          "kind": "array",
+          "description": "The choices in display order: { value, label }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The value of the chosen option, or \"\" while nothing is chosen yet. The control is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the newly chosen value. The select tool drives a real change event, so this runs for agent selections too.",
+          "required": true
+        },
+        "placeholder": {
+          "kind": "string",
+          "description": "Shown while value is \"\". Rendered as a disabled option, so a person cannot choose it back."
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance shown under the control and carried into the agent view. Replaced by error while one is set."
+        },
+        "error": {
+          "kind": "string",
+          "description": "A validation message. Marks the control invalid for people, screen readers, and agents alike."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name submitted with the surrounding form."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the control and unregister its select tool.",
+          "default": false
+        },
+        "required": {
+          "kind": "boolean",
+          "description": "Mark the control required, visually and in the agent view.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two controls on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the control without registering a select tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The value of the option currently chosen.",
+          "attribute": "data-sprint-value"
+        },
+        "empty": {
+          "description": "Present while no option is chosen.",
+          "attribute": "data-sprint-empty"
+        },
+        "disabled": {
+          "description": "Present when nothing can be chosen.",
+          "attribute": "data-sprint-disabled"
+        },
+        "required": {
+          "description": "Present when a choice must be made.",
+          "attribute": "data-sprint-required"
+        },
+        "invalid": {
+          "description": "Present while an error is set.",
+          "attribute": "data-sprint-invalid"
+        }
+      },
+      "tools": {
+        "select": {
+          "verb": "select",
+          "description": "Choose one of this dropdown's options by its visible label, exactly as a person opening it and clicking one would. Only one option is chosen at a time, so this replaces the current choice. Returns the dropdown's state after the change, so a follow-up read is unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "description": "The visible label of the option to choose, as a person reads it in the list."
+              }
+            },
+            "required": [
+              "option"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The dropdown is mounted, enabled, has a resolvable label, and no other component claims the same tool name. The registered schema enumerates the current option labels.",
+          "unregisteredWhen": "The dropdown unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **Select** \"Region\" [value=eu-1] → tool `select-region`\n  - part `option` \"North Atlantic\"\n  - part `option` \"Northern Europe\" [checked]\n  - part `option` \"East Asia\""
+      },
+      "examples": [
+        {
+          "title": "A dropdown",
+          "description": "In agent view each option renders as its own control, so a DOM-driving agent chooses one directly.",
+          "code": "<Select\n  label=\"Region\"\n  value={region}\n  onChange={setRegion}\n  placeholder=\"Choose a region\"\n  options={[\n    { value: \"na-1\", label: \"North Atlantic\" },\n    { value: \"eu-1\", label: \"Northern Europe\" },\n    { value: \"ap-1\", label: \"East Asia\" },\n  ]}\n/>"
+        },
+        {
+          "title": "A required choice with an error",
+          "description": "Empty plus required plus an error is how an unmade mandatory choice reads on every surface.",
+          "code": "<Select\n  label=\"Launch site\"\n  value={site}\n  onChange={setSite}\n  required\n  error=\"Choose a site before continuing.\"\n  options={[\n    { value: \"ksc\", label: \"Cape Canaveral\" },\n    { value: \"vsfb\", label: \"Vandenberg\" },\n  ]}\n/>"
+        },
+        {
+          "title": "A disabled dropdown",
+          "description": "Disabled unregisters the tool, so an agent cannot choose what a person could not.",
+          "code": "<Select\n  label=\"Relay\"\n  disabled\n  value=\"r-2\"\n  onChange={setRelay}\n  options={[\n    { value: \"r-1\", label: \"Relay one\" },\n    { value: \"r-2\", label: \"Relay two\" },\n  ]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "combobox",
+        "keyboard": [
+          "Arrow keys move through the options",
+          "Enter or Space opens the list",
+          "Escape closes it"
+        ],
+        "notes": "A native select element, so the platform owns the listbox interaction. The label is associated via htmlFor; errors set aria-invalid and link with aria-describedby."
+      }
+    },
+    {
+      "name": "Shell",
+      "category": "layout",
+      "summary": "The page-level frame: a sidebar and a main content region, with the landmark wiring done once. On a phone the sidebar becomes a drawer behind a menu button.",
+      "whenToUse": "Use it once, at the root of an app view. Put the brand in bar, a Nav in side, and the page in children. It renders the main and complementary landmarks, a skip-to-content control for keyboard users, and the mobile drawer behaviour, so none of that is rebuilt per app. Like Stack it is silent in agent view: its regions speak for themselves.",
+      "whenNotToUse": "Do not use it inside another Shell, or anywhere below the top of the page; a region within a page is a Panel. Do not use it just to put two columns next to each other; that is Stack.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The page content. Rendered inside the main landmark.",
+          "required": true
+        },
+        "side": {
+          "kind": "node",
+          "description": "The sidebar content, usually a Nav. On narrow viewports it becomes the drawer behind the menu button, and the drawer closes itself when a link inside it is followed."
+        },
+        "bar": {
+          "kind": "node",
+          "description": "What stays visible when the sidebar collapses to a top bar: typically the brand link. The menu button renders next to it automatically."
+        },
+        "sideLabel": {
+          "kind": "string",
+          "description": "Accessible name for the sidebar landmark.",
+          "default": "Sidebar"
+        },
+        "skipLabel": {
+          "kind": "string",
+          "description": "Text of the skip control that moves focus to the main region. Visually hidden until focused.",
+          "default": "Skip to content"
+        },
+        "menuLabel": {
+          "kind": "string",
+          "description": "Label of the drawer button while the drawer is closed.",
+          "default": "Menu"
+        },
+        "closeLabel": {
+          "kind": "string",
+          "description": "Label of the drawer button while the drawer is open.",
+          "default": "Close"
+        }
+      },
+      "state": {
+        "open": {
+          "description": "Present while the mobile drawer is open. On wide viewports the sidebar is always visible and this state is inert.",
+          "attribute": "data-sprint-open"
+        }
+      },
+      "a11y": {
+        "notes": "Renders the only main element and an aside named by sideLabel, so the page has its landmarks without any consumer wiring. The first focusable element is a skip control that moves focus to main without touching the URL, which keeps it safe in hash-routed apps. The drawer button carries aria-expanded and aria-controls."
+      },
+      "relatedComponents": [
+        "Nav",
+        "Panel",
+        "Stack"
+      ],
+      "examples": [
+        {
+          "title": "A sidebar app shell",
+          "description": "One Shell per view. The sidebar collapses to a top bar with a drawer on narrow screens, and an agent reading the page sees the nav and the content with no frame in between.",
+          "code": "<Shell\n  bar={<Link href=\"#/\">ACME</Link>}\n  side={\n    <Nav label=\"Main\">\n      <Link href=\"#/reports\" active>Reports</Link>\n      <Link href=\"#/settings\">Settings</Link>\n    </Nav>\n  }\n>\n  <Panel label=\"Reports\" headingLevel={2}>\n    <Text>Quarterly numbers land here.</Text>\n  </Panel>\n</Shell>"
+        }
+      ]
+    },
+    {
+      "name": "Stack",
+      "category": "layout",
+      "summary": "The one-dimensional layout primitive: a row, a column, or an auto-filling grid, with spacing drawn from the space scale. It renders a plain box and nothing else.",
+      "whenToUse": "Use it wherever two or more things sit next to each other. Prefer it over a bare div with inline styles so spacing stays on the scale. Stack is invisible in agent view: it emits no line, because an agent does not care how a region is arranged, only what is in it.",
+      "whenNotToUse": "Do not use it to draw a bordered region with a header; that is Panel. Do not nest three deep to fake a grid; use direction=\"grid\".",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The items to lay out.",
+          "required": true
+        },
+        "direction": {
+          "kind": "enum",
+          "description": "Axis. \"grid\" fills as many equal columns as fit, each at least min wide.",
+          "values": [
+            "row",
+            "column",
+            "grid"
+          ],
+          "default": "column"
+        },
+        "gap": {
+          "kind": "enum",
+          "description": "Space between items, from the space scale.",
+          "values": [
+            "none",
+            "tight",
+            "normal",
+            "loose"
+          ],
+          "default": "normal"
+        },
+        "align": {
+          "kind": "enum",
+          "description": "Cross-axis alignment.",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "stretch",
+            "baseline"
+          ]
+        },
+        "justify": {
+          "kind": "enum",
+          "description": "Main-axis distribution.",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "between"
+          ]
+        },
+        "wrap": {
+          "kind": "boolean",
+          "description": "Let a row wrap onto more lines instead of overflowing.",
+          "default": false
+        },
+        "collapse": {
+          "kind": "boolean",
+          "description": "Stack a row into a column on narrow viewports. This is how a toolbar survives a phone.",
+          "default": false
+        },
+        "min": {
+          "kind": "string",
+          "description": "Minimum track width for direction=\"grid\", as a CSS length. Tracks never exceed the container.",
+          "default": "18rem"
+        }
+      },
+      "state": {
+        "direction": {
+          "description": "The axis in use.",
+          "attribute": "data-sprint-direction",
+          "values": [
+            "row",
+            "column",
+            "grid"
+          ]
+        },
+        "gap": {
+          "description": "The spacing step in use.",
+          "attribute": "data-sprint-gap",
+          "values": [
+            "none",
+            "tight",
+            "normal",
+            "loose"
+          ]
+        },
+        "align": {
+          "description": "Cross-axis alignment, when one was asked for.",
+          "attribute": "data-sprint-align",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "stretch",
+            "baseline"
+          ]
+        },
+        "justify": {
+          "description": "Main-axis distribution, when one was asked for.",
+          "attribute": "data-sprint-justify",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "between"
+          ]
+        },
+        "wrap": {
+          "description": "Present when a row is allowed to wrap.",
+          "attribute": "data-sprint-wrap"
+        },
+        "collapse": {
+          "description": "Present when the row stacks into a column on narrow viewports.",
+          "attribute": "data-sprint-collapse"
+        }
+      },
+      "examples": [
+        {
+          "title": "A row of actions",
+          "description": "Wrapping keeps a toolbar from overflowing on a narrow screen.",
+          "code": "<Stack direction=\"row\" gap=\"tight\" wrap>\n  <Button>Cancel</Button>\n  <Button tone=\"action\">Confirm</Button>\n</Stack>"
+        },
+        {
+          "title": "A responsive card grid",
+          "description": "Tracks fill the container and never go below min, so this is one column on a phone and three on a desktop with no media query of your own.",
+          "code": "<Stack direction=\"grid\" min=\"16rem\">\n  <Card label=\"Button\" href=\"#/Button\">One action.</Card>\n  <Card label=\"Table\" href=\"#/Table\">Rows and columns.</Card>\n</Stack>"
+        },
+        {
+          "title": "A header bar that stacks on a phone",
+          "code": "<Stack direction=\"row\" justify=\"between\" align=\"center\" collapse>\n  <Heading level={1}>Button</Heading>\n  <Tag tone=\"warning\">experimental</Tag>\n</Stack>"
+        }
+      ]
+    },
+    {
+      "name": "Switch",
+      "category": "input",
+      "summary": "An on/off setting that takes effect the moment it changes. It registers one set tool that takes the end state rather than toggling.",
+      "whenToUse": "Use it for a live setting: enabling telemetry, muting alerts, switching a feed. The set tool takes on as true or false, so an agent states the end state and never has to read before writing.",
+      "whenNotToUse": "Do not use it for a boolean a form will submit later; that is a Checkbox, and the distinction is when the change takes effect. Do not use it to choose between two named modes a person should see side by side, which is a SegmentedControl.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the setting controls. Names the switch for a screen reader and derives the tool name, so prefer a noun phrase such as \"Live telemetry\".",
+          "required": true
+        },
+        "on": {
+          "kind": "boolean",
+          "description": "Whether the setting is on. The switch is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the new state. The set tool drives a real click, so this runs for agent changes too.",
+          "required": true
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the switch and unregister its set tool.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two switches on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the switch without registering a set tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "on": {
+          "description": "Present while the setting is on.",
+          "attribute": "data-sprint-on"
+        },
+        "disabled": {
+          "description": "Present when the switch cannot be changed.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "set": {
+          "verb": "set",
+          "description": "Switch this setting on or off by stating the end state, exactly as a person clicking it would. The change takes effect immediately. Setting the state it already has succeeds and changes nothing, so the call is safe to retry. Returns the switch's state after the call.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "on": {
+                "type": "boolean",
+                "description": "The end state: true leaves the switch on, false leaves it off."
+              }
+            },
+            "required": [
+              "on"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The switch is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The switch unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **Switch** \"Live telemetry\" [on] → tool `set-live-telemetry`"
+      },
+      "examples": [
+        {
+          "title": "A live setting",
+          "description": "In agent view the switch renders as one control; pressing it toggles, while the set tool states the end state.",
+          "code": "<Switch label=\"Live telemetry\" on={telemetry} onChange={setTelemetry} />"
+        },
+        {
+          "title": "A disabled switch",
+          "description": "Disabled unregisters the tool, so an agent cannot change what a person could not.",
+          "code": "<Switch label=\"Ground link\" on disabled onChange={setLink} />"
+        }
+      ],
+      "a11y": {
+        "role": "switch",
+        "keyboard": [
+          "Space toggles",
+          "Enter toggles"
+        ],
+        "notes": "A button with role switch and aria-checked, so the label and state read together. The thumb moves by a single-axis stepped translation and respects prefers-reduced-motion."
+      }
+    },
+    {
+      "name": "Table",
+      "category": "display",
+      "summary": "A data grid built from columns and rows rather than from markup. In the agent stream it reads as a compact Markdown table; in the DOM each cell is addressable as a part carrying its column and row. On a narrow screen every row restacks into a labelled block instead of scrolling sideways.",
+      "whenToUse": "Use it for any set of records with the same shape: props, attributes, conventions, results. Passing data instead of children is what lets the agent view carry the cells and the human view restack them on a phone.",
+      "whenNotToUse": "Do not use it for page layout; that is Stack. Do not put components in cells: cells are flattened to text for the agent view, so a Button inside one would lose its tool.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What this table is a table of. Used as its accessible name and read back by the agent view.",
+          "required": true
+        },
+        "columns": {
+          "kind": "array",
+          "description": "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column.",
+          "required": true
+        },
+        "rows": {
+          "kind": "array",
+          "description": "Rows in display order: { id?, cells }, where cells maps a column key to inline content. id names the row for an agent and defaults to its 1-based position.",
+          "required": true
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the table says when it has no rows.",
+          "default": "No rows"
+        }
+      },
+      "state": {
+        "columns": {
+          "description": "How many columns the table has.",
+          "attribute": "data-sprint-columns"
+        },
+        "rows": {
+          "description": "How many rows the table currently has.",
+          "attribute": "data-sprint-rows"
+        },
+        "empty": {
+          "description": "Present when the table has no rows.",
+          "attribute": "data-sprint-empty"
+        },
+        "column": {
+          "description": "On a cell: which column it belongs to.",
+          "attribute": "data-sprint-column"
+        },
+        "row": {
+          "description": "On a cell: which row it belongs to.",
+          "attribute": "data-sprint-row"
+        },
+        "align": {
+          "description": "On a cell: the alignment its column asked for, if any.",
+          "attribute": "data-sprint-align",
+          "values": [
+            "start",
+            "end"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Table** \"Props\" [columns=2, rows=1]\n  | row | prop | kind |\n  | --- | --- | --- |\n  | tone | tone | enum |"
+      },
+      "examples": [
+        {
+          "title": "A reference table",
+          "description": "Cells are addressable: [data-sprint-part=\"cell\"][data-sprint-column=\"kind\"] selects a column without knowing anything about the markup.",
+          "code": "<Table\n  label=\"Props\"\n  columns={[\n    { key: \"prop\", header: \"Prop\" },\n    { key: \"kind\", header: \"Kind\" },\n  ]}\n  rows={[{ id: \"tone\", cells: { prop: <code>tone</code>, kind: \"enum\" } }]}\n/>"
+        },
+        {
+          "title": "A table with no rows",
+          "description": "An empty table keeps its header and says so, rather than rendering a bare keyline.",
+          "code": "<Table\n  label=\"Registered tools\"\n  emptyLabel=\"No tools registered\"\n  columns={[{ key: \"name\", header: \"Name\" }]}\n  rows={[]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "table",
+        "notes": "Column headers keep scope=col in every layout. On narrow screens each cell repeats its column header visually, marked aria-hidden so the real header association is not announced twice."
+      }
+    },
+    {
+      "name": "Tag",
+      "category": "display",
+      "summary": "A small chip that classifies the thing next to it: a status, a category, a count, a build string.",
+      "whenToUse": "Use it for a short classification a person scans and an agent reads off the tone attribute, such as a release status, a read-only or write marker on a tool, or a version chip.",
+      "whenNotToUse": "Do not use it for anything clickable; a Tag is inert, and a chip that acts is a Button. Do not put a sentence in one.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The chip text. One or two words.",
+          "required": true
+        },
+        "tone": {
+          "kind": "enum",
+          "description": "What class of thing this is. Acid is rationed, so reach for info or inert before action.",
+          "values": [
+            "neutral",
+            "action",
+            "danger",
+            "info",
+            "warning",
+            "inert"
+          ],
+          "default": "neutral"
+        },
+        "filled": {
+          "kind": "boolean",
+          "description": "Render as a solid field of the tone with inverted ink, instead of a keyline. Use for the one chip that must be read first.",
+          "default": false
+        }
+      },
+      "state": {
+        "tone": {
+          "description": "The class of thing the chip marks.",
+          "attribute": "data-sprint-tone",
+          "values": [
+            "neutral",
+            "action",
+            "danger",
+            "info",
+            "warning",
+            "inert"
+          ]
+        },
+        "filled": {
+          "description": "Present when the chip is a solid field rather than a keyline.",
+          "attribute": "data-sprint-filled"
+        }
+      },
+      "agentView": {
+        "example": "- **Tag** \"experimental\" [filled, tone=warning]"
+      },
+      "examples": [
+        {
+          "title": "A release status",
+          "code": "<Tag tone=\"warning\" filled>experimental</Tag>"
+        },
+        {
+          "title": "A category chip",
+          "code": "<Tag>action</Tag>"
+        },
+        {
+          "title": "Read-only against changes-state",
+          "description": "Two tones doing the work a legend would otherwise have to do in prose.",
+          "code": "<Tag tone={tool.readOnly ? \"info\" : \"danger\"}>\n  {tool.readOnly ? \"read only\" : \"changes state\"}\n</Tag>"
+        }
+      ]
+    },
+    {
+      "name": "Text",
+      "category": "typography",
+      "summary": "A run of prose, sized and toned from the semantic scale. In agent view it renders as its own text content, so an agent reads the words rather than inferring them from styling.",
+      "whenToUse": "Use it for every paragraph, caption, note, and inline status line, so tone carries meaning instead of an ad-hoc colour. tone=\"muted\" is the small print under a heading, tone=\"warning\" and tone=\"danger\" state that something is wrong, and tone=\"action\" confirms something is live.",
+      "whenNotToUse": "Do not use it for a section title; that is Heading. Do not put components inside it: it flattens its children to a single string for the agent view, so a nested Button would lose its tool.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The prose. Inline markup such as code or strong is fine; components are not.",
+          "required": true
+        },
+        "tone": {
+          "kind": "enum",
+          "description": "What the text means, not just how it looks. Agents read this off the attribute.",
+          "values": [
+            "default",
+            "muted",
+            "action",
+            "info",
+            "warning",
+            "danger"
+          ],
+          "default": "default"
+        },
+        "size": {
+          "kind": "enum",
+          "description": "Type size. \"small\" is the annotation size used for notes and captions.",
+          "values": [
+            "small",
+            "normal"
+          ],
+          "default": "normal"
+        },
+        "as": {
+          "kind": "enum",
+          "description": "The element to render. Use span when the text sits inside another line of text.",
+          "values": [
+            "p",
+            "span",
+            "div"
+          ],
+          "default": "p"
+        }
+      },
+      "state": {
+        "tone": {
+          "description": "What the text is saying about the thing it describes.",
+          "attribute": "data-sprint-tone",
+          "values": [
+            "default",
+            "muted",
+            "action",
+            "info",
+            "warning",
+            "danger"
+          ]
+        },
+        "size": {
+          "description": "The type size in use.",
+          "attribute": "data-sprint-size",
+          "values": [
+            "small",
+            "normal"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Text** \"Tools stay registered across a view switch.\" [tone=muted]"
+      },
+      "examples": [
+        {
+          "title": "A lede",
+          "code": "<Text>Every component renders normally for people and as text for agents.</Text>"
+        },
+        {
+          "title": "A note under a heading",
+          "description": "The small print that would otherwise be an untyped grey span.",
+          "code": "<Text tone=\"muted\" size=\"small\">Registered while the button is enabled.</Text>"
+        },
+        {
+          "title": "A live status line",
+          "description": "Tone is the whole message here, so an agent reading the attribute learns the same thing a person learns from the colour.",
+          "code": "<Text tone={ready ? \"action\" : \"warning\"} size=\"small\">\n  {ready ? \"WebMCP is available in this browser.\" : \"WebMCP is unavailable here.\"}\n</Text>"
+        }
+      ]
+    },
+    {
+      "name": "Textarea",
+      "category": "input",
+      "summary": "A multi-line text area carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the whole content with an explicit value, line breaks included.",
+      "whenToUse": "Use it for free-form text that runs longer than a line: a description, a message body, a set of notes. In the agent view the current content is part of the component's state line, so an agent reads what is written without a separate query.",
+      "whenNotToUse": "Do not use it for a single-line value, which is a TextInput. Do not use it for code a person should read rather than write; that is a CodeBlock. Long values make long state lines, so keep it off surfaces where the agent view must stay terse.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the area holds. Names it for a screen reader and derives the tool name, so prefer a noun phrase such as \"Mission notes\".",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The area's current text. The area is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the new text on every change. The fill tool drives a real input event, so this runs for agent fills too.",
+          "required": true
+        },
+        "rows": {
+          "kind": "number",
+          "description": "The visible line count before scrolling.",
+          "default": 4
+        },
+        "placeholder": {
+          "kind": "string",
+          "description": "Ghost text shown while the area is empty."
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance shown under the area and carried into the agent view. Replaced by error while one is set."
+        },
+        "error": {
+          "kind": "string",
+          "description": "A validation message. Marks the area invalid for people, screen readers, and agents alike."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name submitted with the surrounding form."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the area and unregister its fill tool.",
+          "default": false
+        },
+        "required": {
+          "kind": "boolean",
+          "description": "Mark the area required, visually and in the agent view.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two areas on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the area without registering a fill tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The area's current text.",
+          "attribute": "data-sprint-value"
+        },
+        "empty": {
+          "description": "Present while the area holds no text.",
+          "attribute": "data-sprint-empty"
+        },
+        "disabled": {
+          "description": "Present when the area cannot be edited.",
+          "attribute": "data-sprint-disabled"
+        },
+        "required": {
+          "description": "Present when the area must be filled.",
+          "attribute": "data-sprint-required"
+        },
+        "invalid": {
+          "description": "Present while an error is set.",
+          "attribute": "data-sprint-invalid"
+        }
+      },
+      "tools": {
+        "fill": {
+          "verb": "fill",
+          "description": "Replace this text area's content with the value provided, exactly as a person typing it would. The value is the full text it ends up containing, line breaks included; pass an empty string to clear it. Returns the area's state after the change, so a follow-up read is unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "The full text the area should contain afterwards, with real line breaks where line breaks belong. Replaces the current text."
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The area is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The area unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **Textarea** \"Mission notes\" [empty] → tool `fill-mission-notes`\n  - part `hint` \"What the relief crew needs to know\""
+      },
+      "examples": [
+        {
+          "title": "A notes area",
+          "description": "Label, hint, and control are one component. In agent view it renders a live textarea an agent can type into.",
+          "code": "<Textarea\n  label=\"Mission notes\"\n  value={notes}\n  onChange={setNotes}\n  hint=\"What the relief crew needs to know\"\n/>"
+        },
+        {
+          "title": "A required area with an error",
+          "description": "The error replaces the hint and marks the area invalid on every surface.",
+          "code": "<Textarea\n  label=\"Abort reason\"\n  value={reason}\n  onChange={setReason}\n  required\n  rows={3}\n  error=\"State the reason before aborting.\"\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "textbox",
+        "keyboard": [
+          "Standard text editing",
+          "Enter inserts a line break"
+        ],
+        "notes": "The label element is associated via htmlFor. An error sets aria-invalid and is linked with aria-describedby, as is the hint."
+      }
+    },
+    {
+      "name": "TextInput",
+      "category": "input",
+      "summary": "A single-line text field carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the field's text with an explicit value.",
+      "whenToUse": "Use it for any free-form single-line value: a name, an email address, a search term. The label is part of the component, so a form never needs a separate label element, and the error prop is how validation reaches both a person and an agent.",
+      "whenNotToUse": "Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the field holds. Names the field for a screen reader and derives the tool name, so prefer a noun phrase such as \"Callsign\".",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The field's current text. The field is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the new text on every change. The fill tool drives a real input event, so this runs for agent fills too.",
+          "required": true
+        },
+        "type": {
+          "kind": "enum",
+          "description": "The input type. \"password\" masks the field everywhere: the value never appears in agent attributes, the agent view, or tool results.",
+          "values": [
+            "text",
+            "email",
+            "url",
+            "search",
+            "password"
+          ],
+          "default": "text"
+        },
+        "placeholder": {
+          "kind": "string",
+          "description": "Ghost text shown while the field is empty."
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance shown under the field and carried into the agent view. Replaced by error while one is set."
+        },
+        "error": {
+          "kind": "string",
+          "description": "A validation message. Marks the field invalid for people, screen readers, and agents alike."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name submitted with the surrounding form."
+        },
+        "autoComplete": {
+          "kind": "string",
+          "description": "The native autocomplete hint, forwarded to the input."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the field and unregister its fill tool.",
+          "default": false
+        },
+        "required": {
+          "kind": "boolean",
+          "description": "Mark the field required, visually and in the agent view.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two fields on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the field without registering a fill tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The field's current text. Never present on a password field, which reflects filled instead.",
+          "attribute": "data-sprint-value"
+        },
+        "filled": {
+          "description": "Present when a password field holds text.",
+          "attribute": "data-sprint-filled"
+        },
+        "empty": {
+          "description": "Present while the field holds no text.",
+          "attribute": "data-sprint-empty"
+        },
+        "disabled": {
+          "description": "Present when the field cannot be edited.",
+          "attribute": "data-sprint-disabled"
+        },
+        "required": {
+          "description": "Present when the field must be filled.",
+          "attribute": "data-sprint-required"
+        },
+        "invalid": {
+          "description": "Present while an error is set.",
+          "attribute": "data-sprint-invalid"
+        }
+      },
+      "tools": {
+        "fill": {
+          "verb": "fill",
+          "description": "Replace this field's text with the value provided, exactly as a person typing it would. The value is the full text the field ends up containing; pass an empty string to clear it. Returns the field's state after the change, so a follow-up read is unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "The full text the field should contain afterwards. Replaces the current text rather than appending to it."
+              }
+            },
+            "required": [
+              "value"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The field is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The field unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **TextInput** \"Callsign\" [empty, required] → tool `fill-callsign`\n  - part `hint` \"Uppercase, three to eight letters\""
+      },
+      "examples": [
+        {
+          "title": "A labelled field",
+          "description": "Label, hint, and control are one component. In agent view the hint becomes a part line and the field renders a live input an agent can type into.",
+          "code": "<TextInput\n  label=\"Callsign\"\n  value={callsign}\n  onChange={setCallsign}\n  hint=\"Uppercase, three to eight letters\"\n  placeholder=\"NOMAD\"\n/>"
+        },
+        {
+          "title": "A validation error",
+          "description": "The error replaces the hint, marks the field invalid on every surface, and reads back through the fill tool's result.",
+          "code": "<TextInput\n  label=\"Frequency\"\n  value={frequency}\n  onChange={setFrequency}\n  required\n  error=\"Out of band. Use 118.000 to 136.975.\"\n/>"
+        },
+        {
+          "title": "A password",
+          "description": "The value stays off every agent surface: state reflects filled or empty, and tool results never echo the text.",
+          "code": "<TextInput\n  label=\"Access code\"\n  type=\"password\"\n  value={code}\n  onChange={setCode}\n  autoComplete=\"current-password\"\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "textbox",
+        "keyboard": [
+          "Standard text editing",
+          "Tab moves through the field"
+        ],
+        "notes": "The label element is associated via htmlFor. An error sets aria-invalid and is linked with aria-describedby, as is the hint. Focus is an offset keyline, never a rounded ring."
+      }
+    }
+  ]
+}
