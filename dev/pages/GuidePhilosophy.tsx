@@ -10,20 +10,6 @@ const SCOPED = `<AgentRegion label="Billing">
   <Button>Save</Button>   {/* shipping-press-save */}
 </AgentRegion>`;
 
-const SPEC = `// Button/tool.ts — declared once
-export const PRESS_TOOL: AgentToolSpec = {
-  verb: "press",
-  description: "Press this button, exactly as a person clicking it would...",
-  inputSchema: { type: "object", properties: {} },
-  readOnly: false,
-  untrustedContent: true,
-  registeredWhen: "The button is mounted, enabled, not loading...",
-  unregisteredWhen: "The button unmounts, becomes disabled, or starts loading.",
-};
-
-// meta.ts embeds it   -> agent-manifest.json, and these docs
-// useAgentTool reads it -> the live descriptor`;
-
 const CLICK = `execute: async () => {
   element.click();          // a real event: bubbles, submits forms, respects disabled
   await afterCommit();      // wait for React to paint
@@ -47,19 +33,6 @@ const NO_TOOL = `<Link href="#/Button">Button</Link>
 <Link href="#/checkout" agentTool>Go to checkout</Link>
 // registers: open-go-to-checkout`;
 
-const TRANSPARENT = `<Stack direction="row" gap="tight">
-  <Button>Cancel</Button>
-  <Button tone="action">Confirm</Button>
-</Stack>
-
-// agent view:
-// - **Button** "Cancel" [tone=neutral] → tool \`press-cancel\`
-// - **Button** "Confirm" [tone=action] → tool \`press-confirm\``;
-
-const PARTS = `- **SegmentedControl** "Page view" [value=human] → tool \`select-page-view\`
-  - part \`option\` "human" [checked]     <- a real <button>
-  - part \`option\` "agent"                <- a real <button>`;
-
 export function GuidePhilosophy() {
   return (
     <article className="doc">
@@ -74,29 +47,23 @@ export function GuidePhilosophy() {
         <Panel headingLevel={2} label="1. Agent-operability is not a feature you add">
           <Stack gap="tight">
             <Text>
-              The stated goal is that adopting Sprint requires no agent-specific work.
-              Using the component is what makes the app agent-operable.
+              Adopting Sprint requires no agent-specific work. Using the component is
+              what makes the app agent-operable.
             </Text>
             <CodeBlock code={FREE} />
             <Text tone="muted" size="small">
               No tool prop, no registration call, no schema. The name is derived from
               the button's own accessible label, so it means something to a model.
             </Text>
-            <Text>
-              <strong>The cost:</strong> a dense page could flood the tool list, and
-              more tools means slower, less accurate selection. The tripwire: if a
-              realistic page passes roughly 15 registered tools, Button's default flips
-              to opt-in.
-            </Text>
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="2. Instances are addressed by composition">
+        <Panel headingLevel={2} label="2. Names compose from what is on screen">
           <Stack gap="tight">
             <Text>
-              Two identical buttons need distinguishable tools. The usual answers are a
-              manual id per instance, or a generated one. Sprint takes neither: the
-              surrounding region already has a label, and it is already on screen.
+              Two identical buttons need distinguishable tools. Instead of manual or
+              generated ids, the surrounding region's label — already on screen —
+              becomes the scope.
             </Text>
             <CodeBlock code={SCOPED} />
             <Text tone="muted" size="small">
@@ -105,27 +72,16 @@ export function GuidePhilosophy() {
               cut, so a name stays meaningful rather than becoming{" "}
               <code>billing-pres</code>.
             </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="3. An ambiguous name registers nothing">
-          <Stack gap="tight">
             <Text>
-              When two components resolve to the same tool name,{" "}
+              When two components still resolve to the same name,{" "}
               <strong>neither registers</strong> and both are named in a console
-              warning.
-            </Text>
-            <Text>
-              Numeric suffixing would reintroduce <code>button-3</code>. First-wins
-              depends on mount order and hands the agent a tool that presses an
-              arbitrary one of two identical controls. If a name is ambiguous to a
-              machine it is ambiguous to a human, so it fails loudly. Set{" "}
-              <code>agentName</code> to fix it.
+              warning. If a name is ambiguous to a machine it is ambiguous to a human,
+              so it fails loudly. Set <code>agentName</code> to fix it.
             </Text>
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="4. A tool that cannot work does not exist">
+        <Panel headingLevel={2} label="3. A tool that cannot work does not exist">
           <Text>
             A disabled or loading Button unregisters its tool and re-registers when it
             recovers. An agent cannot double-submit a form whose button has entered a
@@ -135,16 +91,14 @@ export function GuidePhilosophy() {
 
         <Panel
           headingLevel={2}
-          label="5. A tool exists only where an agent gains something"
+          label="4. A tool exists only where an agent gains something"
         >
           <Stack gap="tight">
             <Text>
               Registration is not free, so it is not automatic. A Button acts and
               registers by default. A Link navigates and registers nothing, because an
               agent can already reach a URL, and the destination is published as state
-              so it does not have to click to discover it. A CodeBlock's copy control
-              never registers at all: putting text on a person's clipboard does nothing
-              for a model that can already read the snippet.
+              so it does not have to click to discover it.
             </Text>
             <CodeBlock code={NO_TOOL} />
             <Text tone="muted" size="small">
@@ -154,7 +108,7 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="6. Tools drive the real thing">
+        <Panel headingLevel={2} label="5. Tools drive the real thing and report back">
           <Stack gap="tight">
             <Text>
               <code>execute</code> does not call your <code>onClick</code> prop. It
@@ -163,166 +117,67 @@ export function GuidePhilosophy() {
             <CodeBlock code={CLICK} />
             <Text tone="muted" size="small">
               So a tool press bubbles to parent listeners, submits an enclosing form,
-              and respects <code>disabled</code>, not because we maintained parity, but
-              because it is the same event. Sprint cannot drift from itself here.
-            </Text>
-            <Text tone="muted" size="small">
-              It is also why a client-side router needs no adapter. Sprint ships no
-              router: intercept the click on a Link or a navigating Card with{" "}
+              and respects <code>disabled</code>, because it is the same event. It is
+              also why a client-side router needs no adapter: intercept the click with{" "}
               <code>onClick</code> and <code>preventDefault</code>, keep the real{" "}
-              <code>href</code> on the anchor, and human clicks, agent-view clicks, and
-              tool calls all take the same path through your router.
+              <code>href</code>, and human clicks, agent-view clicks, and tool calls all
+              take the same path.
             </Text>
             <Text>
-              The <code>afterCommit()</code> barrier is not optional. State updates are
-              batched, so without it a tool reads pre-action DOM and reports it as the
-              result: silently, plausibly, wrongly.
+              The result is the component's own state after the action, read after the{" "}
+              <code>afterCommit()</code> barrier, so the loop closes in one call instead
+              of forcing another round trip. Work the press <em>starts</em> is not
+              awaited: if the button entered a loading state, the result says so.
             </Text>
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="7. A result describes the new state">
+        <Panel headingLevel={2} label="6. One spec, one adapter">
           <Stack gap="tight">
             <Text>
-              Returning <code>"ok"</code> forces the agent into another round trip to
-              find out what happened. Sprint returns the component's own state after the
-              action, so the loop closes in one call.
+              Each tool's prose is declared once, in <code>tool.ts</code>, and read by
+              both the runtime descriptor and the manifest. The descriptor on every
+              component page and the entry in <code>agent-manifest.json</code> are
+              generated from the same object, so they cannot drift.
             </Text>
-            <Text tone="muted" size="small">
-              Work the press <em>starts</em> is not awaited. If the button entered a
-              loading state, the result says so. That is honest and more useful than
-              hanging.
-            </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="8. One spec, two consumers">
-          <Stack gap="tight">
-            <Text>
-              A hand-written tool block in metadata would be a design-time description
-              of runtime behaviour, and it would drift. Instead the spec is declared
-              once and read by both the runtime descriptor and the manifest.
-            </Text>
-            <CodeBlock code={SPEC} />
-            <Text tone="muted" size="small">
-              The descriptor shown on every component page is generated from this. So is
-              the entry in <code>agent-manifest.json</code>. Drift is not discouraged,
-              it is impossible.
-            </Text>
-            <Text tone="muted" size="small">
-              A component whose options are only known at runtime, such as
-              SegmentedControl, registers the shared spec with a per-instance{" "}
-              <code>inputSchema</code> carrying the current labels as an{" "}
-              <code>enum</code>. The prose stays declared once; only the value set is
-              live.
-            </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="9. Exactly one call site">
-          <Stack gap="tight">
             <Text>
               Every <code>document.modelContext</code> call lives in one adapter module.
-              It is the single place that enforces the 500 and 150 character description
-              limits (throwing at registration, where the mistake is, not at call time),
-              clamps output to 1,500, validates inputs against the schema, and converts
-              a thrown error into a descriptive string the model can recover from.
-            </Text>
-            <Text tone="muted" size="small">
-              Every tool inherits all of that without opting in. And when the origin
-              trial changes shape, it is one file.
+              It enforces the description limits at registration time, clamps output,
+              validates inputs against the schema, and converts a thrown error into a
+              descriptive string the model can recover from. Every tool inherits all of
+              that, and when the platform API changes shape, it is one file.
             </Text>
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="10. Imperative only, for now">
+        <Panel headingLevel={2} label="7. The agent view serves agents without WebMCP">
           <Stack gap="tight">
             <Text>
-              Sprint uses the imperative API exclusively. Nothing uses{" "}
-              <code>toolname</code> or the declarative form attributes.
-            </Text>
-            <Text>
-              The declarative form is tempting: the browser derives the whole schema
-              from the markup, <code>enum</code> values included, with nothing to
-              hand-maintain. But a declaratively registered tool bypasses the adapter
-              above and is invisible to the naming and collision machinery, so point 9
-              would stop being true. It also cannot express registration that depends on
-              runtime state: a loading button, a disabled field.
-            </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="11. There are two kinds of agent">
-          <Stack gap="tight">
-            <Text>
-              WebMCP needs no elements at all, since <code>execute</code> is just a
-              function. But WebMCP exists only in Chrome 149 with a flag. Every other
-              agent, whether Playwright, vision-based, or anything in Firefox or Safari,
-              has to read and click a page.
-            </Text>
-            <Text>
-              So agent view serves both. Components render as Markdown text, and an
-              actionable component additionally renders exactly one bare control whose
-              text <em>is</em> its Markdown line.
+              WebMCP needs no elements at all, but most agents — Playwright,
+              vision-based, anything without the API — have to read and click a page. In
+              agent view components render as Markdown text, and an actionable component
+              additionally renders one bare control per addressable part whose text{" "}
+              <em>is</em> its Markdown line.
             </Text>
             <CodeBlock code={NODE} />
             <Text tone="muted" size="small">
               Both branches read one node built in the same render, so the DOM
-              attributes and the agent text cannot disagree.
+              attributes and the agent text cannot disagree. Control count and tool
+              count are independent: a SegmentedControl renders one button per option
+              but registers one <code>select</code> tool with an enum. Text entry
+              renders a live field, because a button cannot receive typed text.
             </Text>
             <Text>
-              We deliberately do not feature-detect <code>document.modelContext</code>{" "}
-              to decide whether to render controls. The API being present does not mean
-              the agent is using it, and a Playwright agent in Chrome 149 would find its
-              affordances deleted. Sprint cannot tell how it is being driven, so it
-              keeps the minimum affordance. Pass <code>agentControls="never"</code> if
-              you know better.
+              Layout renders nothing: Stack emits no line and no element, because an
+              agent does not care that two buttons are in a row. Panel does render a
+              line, because a labelled region tells an agent what the things inside it
+              have to do with each other. The test is whether removing the component
+              would lose an agent anything.
             </Text>
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="12. One control per actionable part">
-          <Stack gap="tight">
-            <Text>
-              A component renders one control per addressable part that can be acted on
-              right now, and the group itself stays text. A SegmentedControl cannot
-              express choosing an option through one button, so each option is its own.
-            </Text>
-            <CodeBlock language="text" code={PARTS} />
-            <Text tone="muted" size="small">
-              The tool count does not follow the control count. Two option buttons,
-              still one <code>select</code> tool with an enum. Elements are for agents
-              without WebMCP; tools are for agents with it, and they are sized by
-              different pressures.
-            </Text>
-            <Text>
-              Text entry bends the rule a second time: a button cannot receive typed
-              text, so a TextInput renders its Markdown lines as text followed by one
-              live field an agent can type into. A form element's value is not part of{" "}
-              <code>textContent</code>, so the copyable stream stays exactly the node's
-              own lines; the field is pure affordance, like every other control.
-            </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="13. Layout is not meaning">
-          <Stack gap="tight">
-            <Text>
-              Stack renders nothing in agent view: no line, no element, no indentation.
-              An agent does not care that two buttons are in a row rather than a column,
-              and every layout wrapper that announced itself would push the content it
-              contains a level deeper for no information.
-            </Text>
-            <CodeBlock code={TRANSPARENT} />
-            <Text tone="muted" size="small">
-              Panel does render a line, because a labelled region is meaning: it tells
-              an agent what the things inside it have to do with each other. The test is
-              whether removing the component would lose an agent anything.
-            </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="14. It has to work with none of this">
+        <Panel headingLevel={2} label="8. It has to work with none of this">
           <Stack gap="tight">
             <Text>
               If <code>document.modelContext</code> is absent, registration is a no-op
@@ -332,16 +187,6 @@ export function GuidePhilosophy() {
             <Text tone="muted" size="small">
               Which makes the agent view, not the tools, the browser-independent half of
               the product.
-            </Text>
-          </Stack>
-        </Panel>
-
-        <Panel headingLevel={2} label="What is still unproven">
-          <Stack gap="tight">
-            <Text tone="warning">
-              Everything above is verified in jsdom and in a normal browser. No
-              descriptor has been accepted by a real WebMCP implementation yet. The test
-              double is our reading of the documentation, not the platform.
             </Text>
           </Stack>
         </Panel>
