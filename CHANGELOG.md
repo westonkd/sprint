@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.1.3 - 2026-08-31
+
 - The agent view paints its own ink and surface from the tokens, instead of inheriting the
   browser-default black text that was near-invisible on a dark ground.
 
