@@ -4,7 +4,7 @@ export const pageHeaderMeta = defineAgentMeta({
   name: "PageHeader",
   category: "layout",
   summary:
-    "The top of a page: its h1 title, the Tag chips that classify it, an optional page-level control, and a lede underneath, closed off by a keyline.",
+    "The top of a page: its h1 title, the Tag chips that classify it, an optional page-level control, and a lede underneath.",
   whenToUse:
     "Use it once per page, as the first thing inside the content region. The label becomes the page's only h1, so the document outline starts here. Put status or category Tags in tags, a control that affects the whole page in actions, and the introductory sentence or two in children as Text.",
   whenNotToUse:

@@ -4,9 +4,9 @@ export const navGroupMeta = defineAgentMeta({
   name: "NavGroup",
   category: "navigation",
   summary:
-    "A labelled cluster of links inside a Nav. The label renders as a small uppercase rubric above its links and names the group for screen readers and agents alike.",
+    "A labelled cluster of links inside a Nav. The label names the group for screen readers and agents alike.",
   whenToUse:
-    "Use it when a Nav holds more than one kind of destination: guides versus components, product versus account. The label tells every reader what the links below it have in common, which is exactly what an agent scanning for the right link needs.",
+    "Use it when a Nav holds more than one kind of destination: guides versus components, product versus account. The label tells every reader, including an agent scanning for the right link, what the links below it have in common.",
   whenNotToUse:
     "Do not use it outside a Nav; on its own it is just a heading over links, which Panel does better. Do not nest groups; one level of grouping is all a sidebar can carry.",
   status: "experimental",

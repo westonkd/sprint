@@ -5,7 +5,7 @@ export const cardMeta = defineAgentMeta({
   name: "Card",
   category: "navigation",
   summary:
-    "One entry in a catalogue: a keylined block with a title, a line or two of body, and the whole block clickable. Give it an href and it is a link; give it onClick and it is an action that registers an open tool.",
+    "One entry in a catalogue: a title, a line or two of body, and the whole block clickable. Give it an href and it is a link; give it onClick and it is an action that registers an open tool.",
   whenToUse:
     "Use it in a grid of comparable things a person picks between: components in a catalogue, results in a list, templates to start from. The title is the accessible name, so it is also what an agent selects on.",
   whenNotToUse:

@@ -6,7 +6,7 @@ export const secretFieldMeta = defineAgentMeta({
   summary:
     "A sensitive value shown once or on demand: an API key, a recovery code, a signing secret. Masked by default with reveal and copy controls, and the value never reaches any agent surface.",
   whenToUse:
-    "Use to hand a person a secret the page holds: a freshly created API key, recovery codes, a webhook signing secret. The mask is fixed-length so nothing leaks, reveal shows the value on demand, and copy places it on the clipboard without revealing it.",
+    "Use to hand a person a secret the page holds. The mask is fixed-length so nothing leaks, and copy places the value on the clipboard without revealing it.",
   whenNotToUse:
     "Do not use for entering a secret; that is a TextInput with type password. Do not use for values that are safe to read; a DescriptionList or CodeBlock keeps those on the agent surface where they belong.",
   status: "experimental",

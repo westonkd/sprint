@@ -5,7 +5,7 @@ export const segmentedControlMeta = defineAgentMeta({
   name: "SegmentedControl",
   category: "input",
   summary:
-    "A short row of mutually exclusive options, all visible at once, one of them selected. It is a radio group wearing a row of flat keylined cells, and it registers a single select tool whose schema enumerates the options currently on screen.",
+    "A short row of mutually exclusive options, all visible at once: a radio group that registers a single select tool whose schema enumerates the options currently on screen.",
   whenToUse:
     "Use it for two to four exclusive choices a person should be able to compare without opening anything: a view switch, a density setting, a filter. One tool with an enum beats one tool per option, and it keeps a page's tool count flat as options are added.",
   whenNotToUse:

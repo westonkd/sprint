@@ -4,7 +4,7 @@ export const textMeta = defineAgentMeta({
   name: "Text",
   category: "typography",
   summary:
-    "A run of prose. Sentence case, monospace, sized and toned from the semantic scale. In agent view it renders as its own text content, so an agent reads the words rather than inferring them from styling.",
+    "A run of prose, sized and toned from the semantic scale. In agent view it renders as its own text content, so an agent reads the words rather than inferring them from styling.",
   whenToUse:
     'Use it for every paragraph, caption, note, and inline status line, so tone carries meaning instead of an ad-hoc colour. tone="muted" is the small print under a heading, tone="warning" and tone="danger" state that something is wrong, and tone="action" confirms something is live.',
   whenNotToUse:

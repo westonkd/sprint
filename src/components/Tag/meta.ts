@@ -4,7 +4,7 @@ export const tagMeta = defineAgentMeta({
   name: "Tag",
   category: "display",
   summary:
-    "A small uppercase chip that classifies the thing next to it: a status, a category, a count, a build string. Keylined by default, or a solid field of its tone when it needs to be read first.",
+    "A small chip that classifies the thing next to it: a status, a category, a count, a build string.",
   whenToUse:
     "Use it for a short classification a person scans and an agent reads off the tone attribute, such as a release status, a read-only or write marker on a tool, or a version chip.",
   whenNotToUse:

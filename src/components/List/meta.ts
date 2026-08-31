@@ -4,7 +4,7 @@ export const listMeta = defineAgentMeta({
   name: "List",
   category: "display",
   summary:
-    "A bulleted or numbered list built from an array of items, marked with the system's own glyphs. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.",
+    "A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.",
   whenToUse:
     "Use it for a short sequence of related points: rules, steps, links, caveats. Passing items as data rather than as children is what lets the agent view carry each one as its own part.",
   whenNotToUse:

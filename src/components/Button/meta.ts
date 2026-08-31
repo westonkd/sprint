@@ -5,9 +5,9 @@ export const buttonMeta = defineAgentMeta({
   name: "Button",
   category: "action",
   summary:
-    "A single action a person or an agent can trigger. Renders as a flat rectangular control with an uppercase monospace label.",
+    "A single action a person or an agent can trigger. Registers one press tool named from its own label.",
   whenToUse:
-    'Use for any discrete action: submitting, confirming, dismissing, advancing a step. Use tone="action" with block for the one primary action in a view, tone="danger" for destructive actions, and the default neutral tone for everything else.',
+    'Use for any discrete action: submitting, confirming, dismissing, advancing a step. tone="action" with block marks the one primary action in a view; tone="danger" marks destructive actions.',
   whenNotToUse:
     "Do not use for navigation between pages; use a link. Do not use for toggling a persistent on/off state; that needs a switch or a checkbox.",
   status: "experimental",

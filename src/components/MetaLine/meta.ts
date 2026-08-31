@@ -4,7 +4,7 @@ export const metaLineMeta = defineAgentMeta({
   name: "MetaLine",
   category: "display",
   summary:
-    "A slash-separated manifest line of term–detail pairs in small uppercase monospace: serials, build strings, issue dates, unit fields. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.",
+    "A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.",
   whenToUse:
     "Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short and the line truncates rather than wraps.",
   whenNotToUse:

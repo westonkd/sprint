@@ -4,7 +4,7 @@ export const shellMeta = defineAgentMeta({
   name: "Shell",
   category: "layout",
   summary:
-    "The page-level frame: a sidebar and a main content region, with the landmark wiring done once. On a phone the sidebar becomes a top bar whose drawer opens from a menu button; on a desktop it is a full-height rail.",
+    "The page-level frame: a sidebar and a main content region, with the landmark wiring done once. On a phone the sidebar becomes a drawer behind a menu button.",
   whenToUse:
     "Use it once, at the root of an app view. Put the brand in bar, a Nav in side, and the page in children. It renders the main and complementary landmarks, a skip-to-content control for keyboard users, and the mobile drawer behaviour, so none of that is rebuilt per app. Like Stack it is silent in agent view: its regions speak for themselves.",
   whenNotToUse:
