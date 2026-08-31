@@ -69,35 +69,36 @@ export function Landing() {
             </Card>
           </Stack>
 
-          <Panel headingLevel={2} label="How it works">
-            <Stack gap="tight">
-              <List
-                label="What a Sprint component does"
-                items={[
-                  <>
-                    <strong>Two views, one component.</strong> A person sees the
-                    rendered interface. An agent asks the same component to describe
-                    itself and gets plain text back. There is no second implementation
-                    behind the second view, so the two cannot disagree, and switching
-                    between them re-renders the component rather than replacing it.
-                  </>,
-                  <>
-                    <strong>Names you can rely on.</strong> Every component names
-                    itself, its parts, and its current state in the markup, and those
-                    names are part of the public API rather than a styling detail that
-                    moves.
-                  </>,
-                  <>
-                    <strong>Actions, not clicks.</strong> In Chrome 149 a component
-                    registers what it can do with the browser, so an agent calls the
-                    action instead of aiming a click at it.
-                  </>,
-                ]}
-              />
-            </Stack>
-          </Panel>
-
-          <Demo />
+          <Stack direction="grid" min="22rem" gap="tight">
+            <Panel headingLevel={2} label="How it works">
+              <Stack gap="tight">
+                <List
+                  label="What a Sprint component does"
+                  items={[
+                    <>
+                      <strong>Two views, one component.</strong> A person sees the
+                      rendered interface. An agent asks the same component to describe
+                      itself and gets plain text back. There is no second implementation
+                      behind the second view, so the two cannot disagree, and switching
+                      between them re-renders the component rather than replacing it.
+                    </>,
+                    <>
+                      <strong>Names you can rely on.</strong> Every component names
+                      itself, its parts, and its current state in the markup, and those
+                      names are part of the public API rather than a styling detail that
+                      moves.
+                    </>,
+                    <>
+                      <strong>Actions, not clicks.</strong> In Chrome 149 a component
+                      registers what it can do with the browser, so an agent calls the
+                      action instead of aiming a click at it.
+                    </>,
+                  ]}
+                />
+              </Stack>
+            </Panel>
+            <Demo />
+          </Stack>
 
           <Panel headingLevel={2} label="If you are an agent">
             <Stack gap="tight">
