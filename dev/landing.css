@@ -9,7 +9,7 @@
 
 .landing-rule {
   min-height: 2rem;
-  border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+  border-block: var(--sprint-keyline-width) solid var(--sprint-keyline);
 }
 
 .landing-footer {
