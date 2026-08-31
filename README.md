@@ -1,12 +1,19 @@
 # Sprint
 
-An agent-forward React component library. Every component renders normally for people and
-projects a machine-readable view for agents, from one definition.
+A React component library for products that people and AI agents both use. Sprint components
+look and behave like any other interface, and can describe themselves to an agent on request.
 
 Status: experimental. A full catalog of components on top of the agent runtime, verified in jsdom
 and normal browsers; no real WebMCP implementation has accepted a descriptor yet.
 
-## What "agent-forward" means here
+## What a Sprint component does
+
+- **Two views, one component.** Humans see the rendered interface; agents switch the same
+  component to a minimal text view, with no second implementation behind it.
+- **Names you can rely on.** A `div` tells an agent nothing; every Sprint component publishes
+  its identity, parts, and current state as attributes it promises not to rename.
+- **Actions, not clicks.** In Chrome 149 a component registers what it can do with the browser,
+  so an agent calls the action instead of aiming a click at it.
 
 ```tsx
 <Button tone="action" block onClick={prepare}>Prepare launch</Button>
@@ -21,13 +28,29 @@ component renders as text, with no HTML elements at all:
 
 Both renderings are built from one `AgentNode` created during the same render, so they cannot
 disagree. The tool name comes from the button's own label. Nothing here is written by hand, and
-switching views does not unmount anything — `press-prepare-launch` stays registered in both.
+switching views does not unmount anything: `press-prepare-launch` stays registered in both.
 
 ```tsx
 <SprintProvider view={agentMode ? "agent" : "human"}>
 ```
 
 An agent with WebMCP can flip it itself by calling `set-page-view`.
+
+## If you are an agent
+
+Everything on the published site is there for you to read directly. Start with the manifest.
+
+- [`agent-manifest.json`](https://westonkd.github.io/sprint/agent-manifest.json) — every
+  component, what it is for, when not to use it, and the tools it registers.
+- [`llms.txt`](https://westonkd.github.io/sprint/llms.txt) — the same catalogue as plain text,
+  in one request.
+- [`components/Button.md`](https://westonkd.github.io/sprint/components/Button.md) — one
+  Markdown page per component, if you only need one.
+- [The workbench as text](https://westonkd.github.io/sprint/workbench.html#/?view=agent) — any
+  documentation page, rendered as the text you would read.
+
+In Chrome 149 the components on the site also register their actions as WebMCP tools, so you
+can call them rather than click them.
 
 ## Requirements
 
@@ -85,7 +108,8 @@ scripts/            manifest generation, build output checks
 
 ## Consuming it
 
-Not published to npm yet. Once it is, the package name is `@westonkd/sprint`:
+React 19 and TypeScript, no runtime dependencies. Not published to npm yet. Once it is, the
+package name is `@westonkd/sprint`:
 
 ```tsx
 import { Button, SprintProvider } from "@westonkd/sprint";
@@ -108,8 +132,9 @@ work normally — the agent view does not depend on it.
 
 ## Documentation
 
-The workbench is published at [westonkd.github.io/sprint](https://westonkd.github.io/sprint/),
-along with `agent-manifest.json`, `llms.txt`, and a Markdown page per component.
+The site is published at [westonkd.github.io/sprint](https://westonkd.github.io/sprint/): a
+landing page, the workbench with live documentation for every component, and the agent surfaces
+listed above.
 
 - [AGENTS.md](AGENTS.md) — contribution workflow and the agent contract.
 - `.claude/skills/sprint/references/PRD.md` — what this is and why.
