@@ -136,6 +136,28 @@ background on the platform API, and the reasoning behind Sprint's use of it. Add
 appending to `GUIDES` in `dev/Workbench.tsx`. When a decision recorded in an ADR changes, the
 philosophy guide is the user-facing half of it and needs updating too.
 
+### The published site
+
+The site has two HTML entries. `index.html` mounts `dev/pages/Landing.tsx`, the landing page, and
+`workbench.html` mounts the workbench. Both are served by `docker compose watch dev` and both are
+built by:
+
+```bash
+docker compose run --rm docs
+```
+
+That writes `dist-docs/`: the two pages, plus `agent-manifest.json`, `llms.txt`, and one
+`components/<Name>.md` per component, the same surfaces the dev server serves as middleware and
+generated from the same `scripts/manifest-markdown.ts`.
+
+`base` is `"./"` and routing is hash-based, so the site works at any path. Every cross-page link
+must stay relative (`workbench.html#/`, not `/workbench.html`), or it breaks under the
+`/sprint/` prefix GitHub Pages serves it from.
+
+Pushing to `main` runs `.github/workflows/pages.yml`, which builds the `docs-site` Docker stage and
+publishes `dist-docs/` to the `gh-pages` branch. The landing page is the one page whose prose is
+hand-written rather than derived from the registry, so it is the page most able to drift.
+
 ## The agent contract
 
 Attribute conventions, defined in `src/agent/attributes.ts`:

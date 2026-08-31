@@ -11,7 +11,6 @@ import {
   SprintProvider,
   type SprintTheme,
   type SprintView,
-  THEME_ATTRIBUTE,
   version,
 } from "../src/index.ts";
 import { ComponentDoc, docSections } from "./pages/ComponentDoc.tsx";
@@ -21,6 +20,7 @@ import { GuideLayout } from "./pages/GuideLayout.tsx";
 import { GuidePhilosophy } from "./pages/GuidePhilosophy.tsx";
 import { GuideWebMCP } from "./pages/GuideWebMCP.tsx";
 import { Overview } from "./pages/Overview.tsx";
+import { THEME_OPTIONS, useTheme } from "./theme.ts";
 
 interface Guide {
   id: string;
@@ -51,8 +51,6 @@ const CATEGORY_ORDER = [
   "overlay",
 ];
 
-const THEME_KEY = "sprint-theme";
-
 interface Route {
   page: string;
   section?: string;
@@ -74,12 +72,6 @@ function formatHash(route: Route): string {
   return `#/${route.page}${section}${query}`;
 }
 
-function initialTheme(): SprintTheme {
-  const stored = window.localStorage.getItem(THEME_KEY);
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-}
-
 function byCategory(
   components: readonly AgentComponentMeta[],
 ): [string, AgentComponentMeta[]][] {
@@ -98,19 +90,9 @@ function byCategory(
   });
 }
 
-const THEMES = [
-  { value: "dark", label: "dark" },
-  { value: "light", label: "light" },
-];
-
 export function Workbench() {
-  const [theme, setTheme] = useState<SprintTheme>(initialTheme);
+  const [theme, setTheme] = useTheme();
   const [route, setRoute] = useState<Route>(parseHash);
-
-  useEffect(() => {
-    document.documentElement.setAttribute(THEME_ATTRIBUTE, theme);
-    window.localStorage.setItem(THEME_KEY, theme);
-  }, [theme]);
 
   useEffect(() => {
     const sync = () => setRoute(parseHash());
@@ -172,7 +154,7 @@ function WorkbenchShell(props: WorkbenchShellProps) {
             </Link>
             <SegmentedControl
               label="Theme"
-              options={THEMES}
+              options={THEME_OPTIONS}
               value={theme}
               agentTool={false}
               onChange={(next) => onThemeChange(next === "light" ? "light" : "dark")}
@@ -222,10 +204,11 @@ function WorkbenchShell(props: WorkbenchShellProps) {
             )}
 
             <NavGroup label="Reference">
-              <Link href="/agent-manifest.json" external>
+              <Link href="index.html">Landing page</Link>
+              <Link href="agent-manifest.json" external>
                 agent-manifest.json
               </Link>
-              <Link href="/llms.txt" external>
+              <Link href="llms.txt" external>
                 llms.txt
               </Link>
               <Link href="https://developer.chrome.com/docs/ai/webmcp" external>
