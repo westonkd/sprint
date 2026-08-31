@@ -49,8 +49,17 @@
   }
 }
 
+.landing-how {
+  container-type: inline-size;
+}
+
+@container (min-width: 47rem) {
+  .landing-split > * + * {
+    border-left: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    padding-left: var(--sprint-space-5);
+  }
+}
+
 .landing-demo {
-  border: var(--sprint-keyline-width) solid var(--sprint-keyline);
-  background: var(--sprint-surface-inset);
-  padding: var(--sprint-space-5);
+  min-width: 0;
 }

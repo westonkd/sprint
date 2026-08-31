@@ -69,36 +69,7 @@ export function Landing() {
             </Card>
           </Stack>
 
-          <Stack direction="grid" min="22rem" gap="tight">
-            <Panel headingLevel={2} label="How it works">
-              <Stack gap="tight">
-                <List
-                  label="What a Sprint component does"
-                  items={[
-                    <>
-                      <strong>Two views, one component.</strong> A person sees the
-                      rendered interface. An agent asks the same component to describe
-                      itself and gets plain text back. There is no second implementation
-                      behind the second view, so the two cannot disagree, and switching
-                      between them re-renders the component rather than replacing it.
-                    </>,
-                    <>
-                      <strong>Names you can rely on.</strong> Every component names
-                      itself, its parts, and its current state in the markup, and those
-                      names are part of the public API rather than a styling detail that
-                      moves.
-                    </>,
-                    <>
-                      <strong>Actions, not clicks.</strong> In Chrome 149 a component
-                      registers what it can do with the browser, so an agent calls the
-                      action instead of aiming a click at it.
-                    </>,
-                  ]}
-                />
-              </Stack>
-            </Panel>
-            <Demo />
-          </Stack>
+          <HowItWorks />
 
           <Panel headingLevel={2} label="If you are an agent">
             <Stack gap="tight">
@@ -154,7 +125,7 @@ export function Landing() {
   );
 }
 
-function Demo() {
+function HowItWorks() {
   const [view, setView] = useState<SprintView>("human");
   const [callsign, setCallsign] = useState("");
   const [slot, setSlot] = useState("");
@@ -164,7 +135,8 @@ function Demo() {
   return (
     <Panel
       headingLevel={2}
-      label="The same components, either way"
+      label="How it works"
+      className="landing-how"
       actions={
         <SegmentedControl
           label="This example"
@@ -175,12 +147,29 @@ function Demo() {
         />
       }
     >
-      <Stack gap="tight">
-        <Text>
-          A small form, and the same form as an agent reads it. The switch above changes
-          this example only. Nothing is re-implemented between the two, and nothing
-          unmounts.
-        </Text>
+      <Stack direction="grid" min="22rem" gap="normal" className="landing-split">
+        <List
+          label="What a Sprint component does"
+          items={[
+            <>
+              <strong>Two views, one component.</strong> A person sees the rendered
+              interface. An agent asks the same component to describe itself and gets
+              plain text back. There is no second implementation behind the second view,
+              so the two cannot disagree, and switching between them re-renders the
+              component rather than replacing it.
+            </>,
+            <>
+              <strong>Names you can rely on.</strong> Every component names itself, its
+              parts, and its current state in the markup, and those names are part of
+              the public API rather than a styling detail that moves.
+            </>,
+            <>
+              <strong>Actions, not clicks.</strong> In Chrome 149 a component registers
+              what it can do with the browser, so an agent calls the action instead of
+              aiming a click at it.
+            </>,
+          ]}
+        />
         <div className="landing-demo">
           <SprintProvider
             label="launch"
