@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- README aligned with the landing page: the three-pillar framing and the agent-facing surfaces.
+
 - Initial public catalog: 26 components with human and agent render modes, WebMCP tool
   registration, the `data-sprint*` attribute contract, and `agent-manifest.json`.
 - Workbench documentation site generated from the component registry, published to GitHub Pages.
