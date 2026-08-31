@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.1.2 - 2026-08-31
+
 - Landing page loads the design token stylesheets, fixing the unstyled docs site deploy.
 - Shell pins its grid rows to `auto minmax(0, 1fr)` below the desktop breakpoint, so the
   collapsed sidebar no longer inflates to absorb leftover viewport height on short pages.
