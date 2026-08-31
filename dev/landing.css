@@ -7,6 +7,10 @@
   gap: var(--sprint-space-6);
 }
 
+.landing [data-sprint="PageHeader"] {
+  border-bottom: 0;
+}
+
 .landing-rule {
   min-height: 2rem;
   border-block: var(--sprint-keyline-width) solid var(--sprint-keyline);
@@ -26,29 +30,6 @@
   min-height: 16px;
 }
 
-.landing[data-view="agent"] .landing-rule {
-  display: none;
-}
-
-.landing[data-view="agent"] .landing-footer {
-  display: block;
-  border-top: 0;
-}
-
-.landing[data-view="agent"] .landing-footer > [data-sprint-ornament] {
-  display: none;
-}
-
-@media (min-width: 48rem) {
-  .landing {
-    padding-inline: var(--sprint-space-6);
-  }
-
-  .landing-rule {
-    min-height: 3rem;
-  }
-}
-
 .landing-how {
   container-type: inline-size;
 }
@@ -62,4 +43,14 @@
 
 .landing-demo {
   min-width: 0;
+}
+
+@media (min-width: 48rem) {
+  .landing {
+    padding-inline: var(--sprint-space-6);
+  }
+
+  .landing-rule {
+    min-height: 3rem;
+  }
 }
