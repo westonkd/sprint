@@ -21,15 +21,21 @@
       }
     },
     {
-      "name": "assets/index-Ct4npBoP.js",
+      "name": "assets/index-BFN8DmSG.js",
       "digest": {
-        "sha256": "64879582bc366e8095d9242767a86fd6eb13477c56bdfe37d9e6cc151178c3e7"
+        "sha256": "6996a2d03a28de346bc8d7052a31b79899a3425abb2ce372a085d8de0dd67b6e"
       }
     },
     {
-      "name": "assets/workbench-CBx5mfju.js",
+      "name": "assets/workbench-6K604143.js",
       "digest": {
-        "sha256": "be362ff268ccbecb73861c03a4b454cfc4d516a904ba5ebeefd97a0144a00f6f"
+        "sha256": "196edff599d9a7bdebce045587d2a4092d1ee6e3af58ce40110b95e44279aeba"
+      }
+    },
+    {
+      "name": "assets/workbench-BjvzaYP2.css",
+      "digest": {
+        "sha256": "652f5fae7c6633028b25b7a6c90d6df673935721fbc6845704c6b12aec5707aa"
       }
     },
     {
@@ -39,15 +45,9 @@
       }
     },
     {
-      "name": "assets/workbench-DkUDSTo_.js",
+      "name": "assets/workbench-DkqzTlen.js",
       "digest": {
-        "sha256": "fb956bc23eac7d115bfb3dde510ef3a836472fde3ed33d74f95e4854c9a3af67"
-      }
-    },
-    {
-      "name": "assets/workbench-Dl_U1yit.css",
-      "digest": {
-        "sha256": "39a19a7463be28b8d5b19c6685c0a8cba615d6f3dc6d44a955fb39c5548277b2"
+        "sha256": "be362ff268ccbecb73861c03a4b454cfc4d516a904ba5ebeefd97a0144a00f6f"
       }
     },
     {
@@ -209,7 +209,7 @@
     {
       "name": "index.html",
       "digest": {
-        "sha256": "a41f8d4e6cabbcbdcf8e48646c3bb267a608254ae10e3552366b8458de8f7468"
+        "sha256": "7c0205ede2bd5e13b0839f9b41f7175c7ae51681ec0c8ad4f522d230c27070b7"
       }
     },
     {
@@ -221,7 +221,7 @@
     {
       "name": "workbench.html",
       "digest": {
-        "sha256": "e7556d52f75c14c3a1645f0bf20a060c636a999c6683efab1bfe2977b77c7935"
+        "sha256": "a68cfff8e7ae9066c42513ffc2dd3b879a526c0b675e68d8c9697b0ff531abd8"
       }
     }
   ],
@@ -268,7 +268,7 @@
                 "target": "docs-site",
                 "vcs:localdir:context": ".",
                 "vcs:localdir:dockerfile": ".",
-                "vcs:revision": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
+                "vcs:revision": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
                 "vcs:source": "https://github.com/westonkd/sprint"
               }
             }
@@ -279,18 +279,18 @@
       "internalParameters": {
         "buildConfig": {
           "digestMapping": {
-            "sha256:0905f5738f3dc37c69bb2a01207fda116519230eaf0cebd38f643326f05da3bb": "step7",
+            "sha256:1ae8ffd83933c71c3f5744b9b164575c6040acc6c3e4d03700405b8b9a5cc2da": "step6",
             "sha256:4edb64ec37a73292d6592c84386feae9ede45b57ff12c099a557ea2a234df5c0": "step4",
-            "sha256:7975f27bf96ab1278cf2c62b0eb212ebba612c1e40978860e08e423e7370135d": "step9",
-            "sha256:8155ca16cfe6173c42fd196b7961d548256512a8a6c2c5b2eaafd186bc6fa781": "step10",
-            "sha256:820d9d70eef8f7fd5c0933c1466ed944b96af0cea1d9e4d89ab3ba08ec24b425": "step12",
+            "sha256:4f3e7b91dc971e0b901a731e3f4d019b2000d73fccdff0c8905fce1417a71ab2": "step10",
+            "sha256:564386f8a443810c570b59b1cba2b3603bed33a745859911f44d4e900e7ea8ad": "step7",
+            "sha256:5d2845a181bda7665fa70c25bee6ba805edd3bc829b8340eb7e121977e636db6": "step11",
+            "sha256:81eac746cf8a73f39f5f421600721d03be40e3c745703383c530a51a7f84717c": "step12",
+            "sha256:94eefa1192fead9ea0dafc7f1c374c985877b9c8e3e85f7f0a7ea327d5e97cfe": "step8",
             "sha256:94f3d3d326d4ab5d0634a234e9a958bc784ebb915fbbce894a252360ef6d2ec0": "step1",
             "sha256:a879bb9aa12df798a0df56bc2178a0ce2148a8494dd89b74e2ba60610afdfcc7": "step3",
-            "sha256:b7d804ab3036579c56cb21dfe4316e815ca6eb9fff6b1c3e963d246eef9689a5": "step8",
             "sha256:b7da745ffc1f16c34b4ffa8af6263f5cc917f33357d31f2f08765d60fe6f5cd5": "step0",
-            "sha256:c83d7576e782085be94a035dd65e3fe2d438932735a181d74ae5d716a947e360": "step6",
+            "sha256:be72e854081ecee30a6ef0c6798d5ae41923c9bda4cc12200c0ee303593348ea": "step9",
             "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2",
-            "sha256:d1d64a2957b103e1fa96630694c26b45c38709a67f0ab5e3fab88a9e31195b61": "step11",
             "sha256:fddd05f042ca96e8f34c763de1e2c2a0de24317e6c39f4d6d6c9f67634c7aa24": "step5"
           },
           "llbDefinition": [
@@ -737,9 +737,9 @@
         "github_actor_id": "6128215",
         "github_event_name": "push",
         "github_event_payload": {
-          "after": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
+          "after": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
           "base_ref": null,
-          "before": "f18d72aaec066d18a924fcae863f65fcd41b9bf2",
+          "before": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
           "commits": [
             {
               "author": {
@@ -753,14 +753,14 @@
                 "username": "westonkd"
               },
               "distinct": true,
-              "id": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
-              "message": "Release v0.1.2",
-              "timestamp": "2026-08-31T17:26:17-06:00",
-              "tree_id": "9907dc6d03215931ef4218eebec632a28f9b9c1e",
-              "url": "https://github.com/westonkd/sprint/commit/3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57"
+              "id": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
+              "message": "Fix agent view text color",
+              "timestamp": "2026-08-31T17:40:05-06:00",
+              "tree_id": "a23f31dd507dacee0da3b0bf1c639a474eef9d1c",
+              "url": "https://github.com/westonkd/sprint/commit/d456754bd8b07d47a35b9e99b848ef9b0fa3c69c"
             }
           ],
-          "compare": "https://github.com/westonkd/sprint/compare/f18d72aaec06...3b13ed5619f7",
+          "compare": "https://github.com/westonkd/sprint/compare/3b13ed5619f7...d456754bd8b0",
           "created": false,
           "deleted": false,
           "forced": false,
@@ -776,11 +776,11 @@
               "username": "westonkd"
             },
             "distinct": true,
-            "id": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
-            "message": "Release v0.1.2",
-            "timestamp": "2026-08-31T17:26:17-06:00",
-            "tree_id": "9907dc6d03215931ef4218eebec632a28f9b9c1e",
-            "url": "https://github.com/westonkd/sprint/commit/3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57"
+            "id": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
+            "message": "Fix agent view text color",
+            "timestamp": "2026-08-31T17:40:05-06:00",
+            "tree_id": "a23f31dd507dacee0da3b0bf1c639a474eef9d1c",
+            "url": "https://github.com/westonkd/sprint/commit/d456754bd8b07d47a35b9e99b848ef9b0fa3c69c"
           },
           "pusher": {
             "email": "wdrans@gmail.com",
@@ -878,7 +878,7 @@
             "private": false,
             "pull_request_creation_policy": "all",
             "pulls_url": "https://api.github.com/repos/westonkd/sprint/pulls{/number}",
-            "pushed_at": 1788218781,
+            "pushed_at": 1788219612,
             "releases_url": "https://api.github.com/repos/westonkd/sprint/releases{/id}",
             "size": 621,
             "ssh_url": "git@github.com:westonkd/sprint.git",
@@ -893,7 +893,7 @@
             "teams_url": "https://api.github.com/repos/westonkd/sprint/teams",
             "topics": [],
             "trees_url": "https://api.github.com/repos/westonkd/sprint/git/trees{/sha}",
-            "updated_at": "2026-08-31T23:25:48Z",
+            "updated_at": "2026-08-31T23:26:25Z",
             "url": "https://api.github.com/repos/westonkd/sprint",
             "visibility": "public",
             "watchers": 0,
@@ -932,35 +932,35 @@
         "github_repository_owner": "westonkd",
         "github_repository_owner_id": "6128215",
         "github_run_attempt": "1",
-        "github_run_id": "33450684398",
-        "github_run_number": "7",
+        "github_run_id": "33451654495",
+        "github_run_number": "8",
         "github_runner_arch": "X64",
         "github_runner_environment": "github-hosted",
         "github_runner_image_os": "ubuntu24",
         "github_runner_image_version": "20260823.283.1",
-        "github_runner_name": "GitHub Actions 1000000420",
+        "github_runner_name": "GitHub Actions 1000000428",
         "github_runner_os": "Linux",
-        "github_runner_tracking_id": "github_7c5438d6-b657-4896-b114-2542733474ff",
+        "github_runner_tracking_id": "github_459eb555-11e2-4e41-b813-7fc99266f672",
         "github_server_url": "https://github.com",
         "github_triggering_actor": "westonkd",
         "github_workflow": "Pages",
         "github_workflow_ref": "westonkd/sprint/.github/workflows/pages.yml@refs/heads/main",
-        "github_workflow_sha": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57"
+        "github_workflow_sha": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c"
       }
     },
     "runDetails": {
       "builder": {
-        "id": "https://github.com/westonkd/sprint/actions/runs/33450684398/attempts/1"
+        "id": "https://github.com/westonkd/sprint/actions/runs/33451654495/attempts/1"
       },
       "metadata": {
-        "invocationId": "4h5sru6kyu0v7evzde8i7fla7",
-        "startedOn": "2026-08-31T23:26:43.096482851Z",
-        "finishedOn": "2026-08-31T23:26:50.119079548Z",
+        "invocationId": "y7jdrn5pwwasxv051j6mw0vha",
+        "startedOn": "2026-08-31T23:40:29.081301653Z",
+        "finishedOn": "2026-08-31T23:40:40.218517393Z",
         "buildkit_metadata": {
           "vcs": {
             "localdir:context": ".",
             "localdir:dockerfile": ".",
-            "revision": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
+            "revision": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
             "source": "https://github.com/westonkd/sprint"
           },
           "source": {
@@ -1176,8 +1176,8 @@
                   }
                 ],
                 "digestMapping": {
-                  "sha256:0919a0b530c717056ead617e7bf04cfe5aef7c5bd385fd92cef3fecfe664957b": "step0",
-                  "sha256:d0229f93518c534a819e9f41adcf7c0d7e4d83f902a594bb8c81e9279f022e50": "step1"
+                  "sha256:0f3561337ecfed54de31504750ef8ff2e66f6ff759e30f37186f733dfd168caf": "step1",
+                  "sha256:5fa721061700573684a47f3f51e3624e6c8709e3bf5a230c864cbfb391bcbc1e": "step0"
                 }
               }
             ]
@@ -1326,6 +1326,109 @@
                   "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
                   "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
                   "size": 32
+                }
+              ]
+            ],
+            "step7:0": [
+              [
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4",
+                  "size": 3846391
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:a0f82f71477fc2e453be843cff60ca54b0f44a67df7a3f01fddf121b807826be",
+                  "size": 53377296
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:b38a07ecd3ea0a536a5bb94db11493f70753da22ae004e3fff49cb5d6add507f",
+                  "size": 1262109
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:502142e2f20261fd2b9cce9a5883e63c4f830a1f4f3dbf643d6f6dd4e56c16a9",
+                  "size": 448
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:e0b8572fcb1cb0dda95db4bf7651dd9613635193383971b8c5a986eade055e24",
+                  "size": 10358
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:3898814277812ba8b22983004f70bb3febc3dbdd0feed77ceb78410136b3eea7",
+                  "size": 38049835
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:9cdbbc33b8b2a8362f500d2fbac304e2a204d953247386c0eb8e6322b9272973",
+                  "size": 159
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+                  "size": 32
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:bab606b6e78a4a98a1c5307090a9a4d4e591be3303ac81aa86c7d50f85e01d80",
+                  "size": 34522
+                }
+              ]
+            ],
+            "step8:0": [
+              [
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4",
+                  "size": 3846391
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:a0f82f71477fc2e453be843cff60ca54b0f44a67df7a3f01fddf121b807826be",
+                  "size": 53377296
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:b38a07ecd3ea0a536a5bb94db11493f70753da22ae004e3fff49cb5d6add507f",
+                  "size": 1262109
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:502142e2f20261fd2b9cce9a5883e63c4f830a1f4f3dbf643d6f6dd4e56c16a9",
+                  "size": 448
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:e0b8572fcb1cb0dda95db4bf7651dd9613635193383971b8c5a986eade055e24",
+                  "size": 10358
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:3898814277812ba8b22983004f70bb3febc3dbdd0feed77ceb78410136b3eea7",
+                  "size": 38049835
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:9cdbbc33b8b2a8362f500d2fbac304e2a204d953247386c0eb8e6322b9272973",
+                  "size": 159
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+                  "size": 32
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:bab606b6e78a4a98a1c5307090a9a4d4e591be3303ac81aa86c7d50f85e01d80",
+                  "size": 34522
+                },
+                {
+                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                  "digest": "sha256:f06ceb31587bd4cbf3e55da886a8587a2f8d70a8cdcc35b6183b55646c86dcee",
+                  "size": 78959303
                 }
               ]
             ]
