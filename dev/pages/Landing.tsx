@@ -29,11 +29,14 @@ export function Landing() {
   return (
     <SprintProvider label="sprint" theme={theme}>
       <div className="landing">
+        <div className="landing-margin" aria-hidden="true">
+          agent-forward / v{version}
+        </div>
         <PageHeader
           label="Sprint"
           tags={
             <>
-              <Tag tone="action" filled>
+              <Tag tone="danger" filled>
                 v{version}
               </Tag>
               <Tag>{listAgentMeta().length} components</Tag>
@@ -57,7 +60,11 @@ export function Landing() {
           </Text>
         </PageHeader>
 
-        <div className="landing-rule" data-sprint-ornament="hatch" aria-hidden="true" />
+        <div
+          className="landing-rule"
+          data-sprint-ornament="hatch-dense"
+          aria-hidden="true"
+        />
 
         <Stack gap="loose">
           <Stack direction="grid" min="15rem" gap="tight">
