@@ -75,25 +75,22 @@ export function Landing() {
                 label="What a Sprint component does"
                 items={[
                   <>
-                    <strong>It describes itself.</strong> The interface a person sees
-                    and the plain-text description an agent reads come from one
-                    definition, so there is no second copy to keep in sync.
+                    <strong>Two views, one component.</strong> A person sees the
+                    rendered interface. An agent asks the same component to describe
+                    itself and gets plain text back. There is no second implementation
+                    behind the second view, so the two cannot disagree, and switching
+                    between them re-renders the component rather than replacing it.
                   </>,
                   <>
-                    <strong>It publishes stable hooks.</strong> Every component names
+                    <strong>Names you can rely on.</strong> Every component names
                     itself, its parts, and its current state in the markup, and those
                     names are part of the public API rather than a styling detail that
                     moves.
                   </>,
                   <>
-                    <strong>It offers its actions.</strong> In Chrome 149 a component
+                    <strong>Actions, not clicks.</strong> In Chrome 149 a component
                     registers what it can do with the browser, so an agent calls the
                     action instead of aiming a click at it.
-                  </>,
-                  <>
-                    <strong>It stays an ordinary component.</strong> Accessible React,
-                    no runtime dependencies, and nothing that needs an agent to be
-                    present.
                   </>,
                 ]}
               />
