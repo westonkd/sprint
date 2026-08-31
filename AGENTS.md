@@ -301,3 +301,6 @@ runs the full containerized `verify`, because the bundle and `agent-manifest.jso
 in at build time. It then commits, tags `v<version>`, publishes to npm, and pushes the commit and
 tag. `npm version` and `npm publish` run on the host, so it needs Node and an `npm login` session;
 everything else stays in Docker.
+
+Release notes live in `CHANGELOG.md`. PRs add a line under `## Unreleased`; the release script
+stamps that section with the new version and date, and refuses to cut a release while it is empty.

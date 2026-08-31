@@ -6,3 +6,4 @@
 - [ ] Changes to the agent contract (attributes, tool names, view output) are called out above,
       since they are breaking for agents
 - [ ] New or changed decisions are recorded as an ADR, not edited into old ones
+- [ ] User-visible changes get a line under `## Unreleased` in `CHANGELOG.md`

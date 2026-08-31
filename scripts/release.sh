@@ -29,11 +29,20 @@ if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
   exit 1
 fi
 
+notes="$(awk '/^## Unreleased$/ { in_section = 1; next } /^## / { in_section = 0 } in_section' CHANGELOG.md | grep -v '^[[:space:]]*$' || true)"
+if [ -z "$notes" ]; then
+  echo "CHANGELOG.md has nothing under Unreleased" >&2
+  exit 1
+fi
+
 version="$(npm version "$bump" --no-git-tag-version)"
+today="$(date +%Y-%m-%d)"
+sed -i "0,/^## Unreleased$/s//## Unreleased\n\n## $version - $today/" CHANGELOG.md
+
 docker compose run --rm install
 docker compose run --rm verify
 
-git add package.json bun.lock
+git add package.json bun.lock CHANGELOG.md
 git commit -m "Release $version"
 git tag "$version"
 
