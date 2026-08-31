@@ -23,3 +23,10 @@ RUN bun run verify
 FROM scratch AS artifacts
 COPY --from=ci /app/dist ./dist
 COPY --from=ci /app/agent-manifest.json ./agent-manifest.json
+
+FROM deps AS docs
+COPY --chown=node:node . .
+RUN bun run docs
+
+FROM scratch AS docs-site
+COPY --from=docs /app/dist-docs ./

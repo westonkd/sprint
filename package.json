@@ -28,6 +28,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && bun run manifest && bun run check:dist",
     "manifest": "bun run scripts/generate-manifest.ts",
+    "docs": "bun run manifest && vite build --config vite.docs.config.ts",
     "check:dist": "bun run scripts/check-dist.ts",
     "test": "vitest run",
     "test:watch": "vitest",

@@ -9,3 +9,4 @@ agent-manifest.json
 .env.*
 !.env.example
 *.tsbuildinfo
+dist-docs/

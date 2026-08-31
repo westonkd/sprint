@@ -66,6 +66,11 @@ services:
     command: bun run build
     profiles: ["tools"]
 
+  docs:
+    <<: *workspace
+    command: bun run docs
+    profiles: ["tools"]
+
   verify:
     <<: *workspace
     command: bun run verify
