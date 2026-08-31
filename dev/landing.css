@@ -25,7 +25,7 @@
     transparent 2px 6px
   );
   min-height: 2rem;
-  border-block: var(--sprint-keyline-width) solid var(--sprint-keyline);
+  border-block: var(--sprint-keyline-width) solid var(--sprint-ornament-ink);
 }
 
 .landing-footer {
