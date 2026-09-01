@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+  <title>Chamber pressure holding flat, then dropping</title>
+  <rect width="320" height="180" fill="#0a0a0a"/>
+  <rect x="32" y="20" width="256" height="128" fill="none" stroke="#3a3a3a"/>
+  <path d="M32 60 H210 L212 132 H288" fill="none" stroke="#00d4ff" stroke-width="4"/>
+  <rect x="206" y="20" width="4" height="128" fill="#ff0f5a"/>
+</svg>

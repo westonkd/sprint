@@ -14,6 +14,7 @@ Component roots carry `data-sprint="<ComponentName>"`, addressable parts carry `
 - [DescriptionList](/components/DescriptionList.md): Labelled term–description pairs for the details of one thing: metadata, settings, profile fields.
 - [Dialog](/components/Dialog.md): A modal that interrupts the page for one decision: confirm a destructive action, complete a short step, acknowledge something before continuing.
 - [Heading](/components/Heading.md): A section title, rendered as a real h element at the level you pick so it joins the document outline.
+- [Image](/components/Image.md): A framed picture in a slot that holds its shape. It is the one component whose content an agent cannot read, so alt is not decoration: it is the whole of what the agent gets, and the source URL is published beside it for an agent that can fetch pixels of its own.
 - [Link](/components/Link.md): A navigation link. It publishes its destination as state, so an agent reading the page in text learns the URL rather than having to click to find out, and it renders a real anchor in both views.
 - [List](/components/List.md): A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.
 - [MetaLine](/components/MetaLine.md): A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.

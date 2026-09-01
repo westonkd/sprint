@@ -11,7 +11,13 @@
     {
       "name": "agent-manifest.json",
       "digest": {
-        "sha256": "1c431321c17ebdb83d2fd0355d56532a4d04e1883f0aa3e1bee61741aef33ff7"
+        "sha256": "0d9edb7e99698ae9b60025b7f8f663ec8c1aae855d30bae08a5fed4ceb55ca86"
+      }
+    },
+    {
+      "name": "assets/index-1c4PrbYO.js",
+      "digest": {
+        "sha256": "85b32c90816f95549ffc723351c09e0b1c855b9eeb62f23d028c0dbfa37c5091"
       }
     },
     {
@@ -21,33 +27,27 @@
       }
     },
     {
-      "name": "assets/index-BFN8DmSG.js",
-      "digest": {
-        "sha256": "6996a2d03a28de346bc8d7052a31b79899a3425abb2ce372a085d8de0dd67b6e"
-      }
-    },
-    {
-      "name": "assets/workbench-6K604143.js",
-      "digest": {
-        "sha256": "196edff599d9a7bdebce045587d2a4092d1ee6e3af58ce40110b95e44279aeba"
-      }
-    },
-    {
       "name": "assets/workbench-BjvzaYP2.css",
       "digest": {
         "sha256": "652f5fae7c6633028b25b7a6c90d6df673935721fbc6845704c6b12aec5707aa"
       }
     },
     {
-      "name": "assets/workbench-CMdftCz4.css",
+      "name": "assets/workbench-C-gJo5Pd.js",
       "digest": {
-        "sha256": "f0657a25ad3c1370d40fac2537a0af6a3d8a1d5081a508de524d723396c38013"
+        "sha256": "3b17fdfbbf001bf2cdd552c8ecb43524cca149cd510a3d8741417decfa226493"
       }
     },
     {
-      "name": "assets/workbench-DkqzTlen.js",
+      "name": "assets/workbench-D0uRGYtw.js",
       "digest": {
-        "sha256": "be362ff268ccbecb73861c03a4b454cfc4d516a904ba5ebeefd97a0144a00f6f"
+        "sha256": "d5b6314e7e316174457cbecceb5cdd342b346017905d5391fb162bd902736aaf"
+      }
+    },
+    {
+      "name": "assets/workbench-bvzkWpe5.css",
+      "digest": {
+        "sha256": "4d5d6483e090bef09e1bee43ee31c4c27461c9a40481d61f0a1b66ec4c031686"
       }
     },
     {
@@ -96,6 +96,12 @@
       "name": "components/Heading.md",
       "digest": {
         "sha256": "697e33bcf052f186b8d7b9ab78fb0bbf7d09070b78149e53da764f464ca04379"
+      }
+    },
+    {
+      "name": "components/Image.md",
+      "digest": {
+        "sha256": "365b5fb3aa966f89d2657ca26d78abba90358efa63a5b6f9457004180eeb69d8"
       }
     },
     {
@@ -209,19 +215,37 @@
     {
       "name": "index.html",
       "digest": {
-        "sha256": "7c0205ede2bd5e13b0839f9b41f7175c7ae51681ec0c8ad4f522d230c27070b7"
+        "sha256": "2867e09444c5793edea224c80eb98504d3f7e76362bd6b96047bc733dd824589"
       }
     },
     {
       "name": "llms.txt",
       "digest": {
-        "sha256": "6ae87b04e0af373f5d9cb57ee817ed473b3d024ad9116901d5a503991bf0535d"
+        "sha256": "65e065c3d231f985765e4d6455407728c627b9cbfd59cc0a0b263c2a035c714d"
+      }
+    },
+    {
+      "name": "media/grain.svg",
+      "digest": {
+        "sha256": "c9c12284410a413acf44fcf02e9d320052db4a7c0892a02fc62b36536a1e717c"
+      }
+    },
+    {
+      "name": "media/pad-39b.svg",
+      "digest": {
+        "sha256": "601c8f324d160538015a36cdb8bd25aba044c315371f384759b4720ed337273d"
+      }
+    },
+    {
+      "name": "media/telemetry.svg",
+      "digest": {
+        "sha256": "11c3ee95a43e921521ef0a78be948444256ecbcf06c3860411ab794880474705"
       }
     },
     {
       "name": "workbench.html",
       "digest": {
-        "sha256": "a68cfff8e7ae9066c42513ffc2dd3b879a526c0b675e68d8c9697b0ff531abd8"
+        "sha256": "4b929a933d68ac6d7138bb7342cb0945ca3d7b98833fe86208fa5a0a01950f4f"
       }
     }
   ],
@@ -268,7 +292,7 @@
                 "target": "docs-site",
                 "vcs:localdir:context": ".",
                 "vcs:localdir:dockerfile": ".",
-                "vcs:revision": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
+                "vcs:revision": "e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5",
                 "vcs:source": "https://github.com/westonkd/sprint"
               }
             }
@@ -279,18 +303,18 @@
       "internalParameters": {
         "buildConfig": {
           "digestMapping": {
-            "sha256:1ae8ffd83933c71c3f5744b9b164575c6040acc6c3e4d03700405b8b9a5cc2da": "step6",
+            "sha256:06f3d829173b3bc62f1c77843c9260e22a57d2ea1c0b974d1e7d51c0014d08da": "step7",
+            "sha256:414f3c23f60e47055b525f6d56ace64aa3925dbe7dee3d38be42b0886147572f": "step11",
+            "sha256:44c5e706d91cdf7bb71ac28006e9aef7c46b6aa64d9ab6c2e2c0ebf48d362304": "step10",
             "sha256:4edb64ec37a73292d6592c84386feae9ede45b57ff12c099a557ea2a234df5c0": "step4",
-            "sha256:4f3e7b91dc971e0b901a731e3f4d019b2000d73fccdff0c8905fce1417a71ab2": "step10",
-            "sha256:564386f8a443810c570b59b1cba2b3603bed33a745859911f44d4e900e7ea8ad": "step7",
-            "sha256:5d2845a181bda7665fa70c25bee6ba805edd3bc829b8340eb7e121977e636db6": "step11",
-            "sha256:81eac746cf8a73f39f5f421600721d03be40e3c745703383c530a51a7f84717c": "step12",
-            "sha256:94eefa1192fead9ea0dafc7f1c374c985877b9c8e3e85f7f0a7ea327d5e97cfe": "step8",
             "sha256:94f3d3d326d4ab5d0634a234e9a958bc784ebb915fbbce894a252360ef6d2ec0": "step1",
             "sha256:a879bb9aa12df798a0df56bc2178a0ce2148a8494dd89b74e2ba60610afdfcc7": "step3",
             "sha256:b7da745ffc1f16c34b4ffa8af6263f5cc917f33357d31f2f08765d60fe6f5cd5": "step0",
-            "sha256:be72e854081ecee30a6ef0c6798d5ae41923c9bda4cc12200c0ee303593348ea": "step9",
+            "sha256:bca461b48502f2ddbfd59161750ba707da427e5eb683003d4ce62266ac2dca5f": "step12",
+            "sha256:ccdbd1485d74040a21b87bcd64af3cef16a077c31d90137f5c0658e7763e7fb9": "step9",
             "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2",
+            "sha256:d5baf649e079cfa510c28941d72a0334aecc4f90491c8261ee8718457882095a": "step8",
+            "sha256:ed92b5188e7f7d745e2fc8758812f2329a9d7846076cfa5f009412aaab83f52a": "step6",
             "sha256:fddd05f042ca96e8f34c763de1e2c2a0de24317e6c39f4d6d6c9f67634c7aa24": "step5"
           },
           "llbDefinition": [
@@ -737,9 +761,9 @@
         "github_actor_id": "6128215",
         "github_event_name": "push",
         "github_event_payload": {
-          "after": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
+          "after": "e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5",
           "base_ref": null,
-          "before": "3b13ed5619f71b7c48cdb8aa6350bc7e94c90c57",
+          "before": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
           "commits": [
             {
               "author": {
@@ -748,19 +772,19 @@
                 "username": "westonkd"
               },
               "committer": {
-                "email": "wdrans@gmail.com",
-                "name": "Weston Dransfield",
-                "username": "westonkd"
+                "email": "noreply@github.com",
+                "name": "GitHub",
+                "username": "web-flow"
               },
               "distinct": true,
-              "id": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
-              "message": "Fix agent view text color",
-              "timestamp": "2026-08-31T17:40:05-06:00",
-              "tree_id": "a23f31dd507dacee0da3b0bf1c639a474eef9d1c",
-              "url": "https://github.com/westonkd/sprint/commit/d456754bd8b07d47a35b9e99b848ef9b0fa3c69c"
+              "id": "e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5",
+              "message": "Add Image (#17)\n\n* Release v0.1.3\n\n* Add Image\n\nCo-Authored-By: Claude Opus 5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5 \u003cnoreply@anthropic.com\u003e",
+              "timestamp": "2026-09-01T11:10:34-06:00",
+              "tree_id": "01714c134732496de1c3ecb1c25fbe866ee3039d",
+              "url": "https://github.com/westonkd/sprint/commit/e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5"
             }
           ],
-          "compare": "https://github.com/westonkd/sprint/compare/3b13ed5619f7...d456754bd8b0",
+          "compare": "https://github.com/westonkd/sprint/compare/d456754bd8b0...e7ba030c734b",
           "created": false,
           "deleted": false,
           "forced": false,
@@ -771,16 +795,16 @@
               "username": "westonkd"
             },
             "committer": {
-              "email": "wdrans@gmail.com",
-              "name": "Weston Dransfield",
-              "username": "westonkd"
+              "email": "noreply@github.com",
+              "name": "GitHub",
+              "username": "web-flow"
             },
             "distinct": true,
-            "id": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
-            "message": "Fix agent view text color",
-            "timestamp": "2026-08-31T17:40:05-06:00",
-            "tree_id": "a23f31dd507dacee0da3b0bf1c639a474eef9d1c",
-            "url": "https://github.com/westonkd/sprint/commit/d456754bd8b07d47a35b9e99b848ef9b0fa3c69c"
+            "id": "e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5",
+            "message": "Add Image (#17)\n\n* Release v0.1.3\n\n* Add Image\n\nCo-Authored-By: Claude Opus 5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5 \u003cnoreply@anthropic.com\u003e",
+            "timestamp": "2026-09-01T11:10:34-06:00",
+            "tree_id": "01714c134732496de1c3ecb1c25fbe866ee3039d",
+            "url": "https://github.com/westonkd/sprint/commit/e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5"
           },
           "pusher": {
             "email": "wdrans@gmail.com",
@@ -878,9 +902,9 @@
             "private": false,
             "pull_request_creation_policy": "all",
             "pulls_url": "https://api.github.com/repos/westonkd/sprint/pulls{/number}",
-            "pushed_at": 1788219612,
+            "pushed_at": 1788282634,
             "releases_url": "https://api.github.com/repos/westonkd/sprint/releases{/id}",
-            "size": 621,
+            "size": 790,
             "ssh_url": "git@github.com:westonkd/sprint.git",
             "stargazers": 0,
             "stargazers_count": 0,
@@ -893,7 +917,7 @@
             "teams_url": "https://api.github.com/repos/westonkd/sprint/teams",
             "topics": [],
             "trees_url": "https://api.github.com/repos/westonkd/sprint/git/trees{/sha}",
-            "updated_at": "2026-08-31T23:26:25Z",
+            "updated_at": "2026-08-31T23:40:16Z",
             "url": "https://api.github.com/repos/westonkd/sprint",
             "visibility": "public",
             "watchers": 0,
@@ -932,35 +956,35 @@
         "github_repository_owner": "westonkd",
         "github_repository_owner_id": "6128215",
         "github_run_attempt": "1",
-        "github_run_id": "33451654495",
-        "github_run_number": "8",
+        "github_run_id": "33536221520",
+        "github_run_number": "9",
         "github_runner_arch": "X64",
         "github_runner_environment": "github-hosted",
         "github_runner_image_os": "ubuntu24",
         "github_runner_image_version": "20260823.283.1",
-        "github_runner_name": "GitHub Actions 1000000428",
+        "github_runner_name": "GitHub Actions 1000000441",
         "github_runner_os": "Linux",
-        "github_runner_tracking_id": "github_459eb555-11e2-4e41-b813-7fc99266f672",
+        "github_runner_tracking_id": "github_38d1e19b-ee88-49fc-bb21-7b799ed736b4",
         "github_server_url": "https://github.com",
         "github_triggering_actor": "westonkd",
         "github_workflow": "Pages",
         "github_workflow_ref": "westonkd/sprint/.github/workflows/pages.yml@refs/heads/main",
-        "github_workflow_sha": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c"
+        "github_workflow_sha": "e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5"
       }
     },
     "runDetails": {
       "builder": {
-        "id": "https://github.com/westonkd/sprint/actions/runs/33451654495/attempts/1"
+        "id": "https://github.com/westonkd/sprint/actions/runs/33536221520/attempts/1"
       },
       "metadata": {
-        "invocationId": "y7jdrn5pwwasxv051j6mw0vha",
-        "startedOn": "2026-08-31T23:40:29.081301653Z",
-        "finishedOn": "2026-08-31T23:40:40.218517393Z",
+        "invocationId": "b2y2r2gwnfxo35tlyk9bs7a6f",
+        "startedOn": "2026-09-01T17:10:51.769739177Z",
+        "finishedOn": "2026-09-01T17:11:01.981773783Z",
         "buildkit_metadata": {
           "vcs": {
             "localdir:context": ".",
             "localdir:dockerfile": ".",
-            "revision": "d456754bd8b07d47a35b9e99b848ef9b0fa3c69c",
+            "revision": "e7ba030c734bede3a8acfcb1be5ba4dbbd46d2e5",
             "source": "https://github.com/westonkd/sprint"
           },
           "source": {
@@ -1176,8 +1200,8 @@
                   }
                 ],
                 "digestMapping": {
-                  "sha256:0f3561337ecfed54de31504750ef8ff2e66f6ff759e30f37186f733dfd168caf": "step1",
-                  "sha256:5fa721061700573684a47f3f51e3624e6c8709e3bf5a230c864cbfb391bcbc1e": "step0"
+                  "sha256:13c380992452619f834133dba010eb70d194593a1c7a29c8ccd5096f72c3e043": "step0",
+                  "sha256:3c5fe26298316488eaa9a2717b6387ee04c783a2aef74fa782ed8c0c6000c67c": "step1"
                 }
               }
             ]
@@ -1326,109 +1350,6 @@
                   "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
                   "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
                   "size": 32
-                }
-              ]
-            ],
-            "step7:0": [
-              [
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4",
-                  "size": 3846391
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:a0f82f71477fc2e453be843cff60ca54b0f44a67df7a3f01fddf121b807826be",
-                  "size": 53377296
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:b38a07ecd3ea0a536a5bb94db11493f70753da22ae004e3fff49cb5d6add507f",
-                  "size": 1262109
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:502142e2f20261fd2b9cce9a5883e63c4f830a1f4f3dbf643d6f6dd4e56c16a9",
-                  "size": 448
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:e0b8572fcb1cb0dda95db4bf7651dd9613635193383971b8c5a986eade055e24",
-                  "size": 10358
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:3898814277812ba8b22983004f70bb3febc3dbdd0feed77ceb78410136b3eea7",
-                  "size": 38049835
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:9cdbbc33b8b2a8362f500d2fbac304e2a204d953247386c0eb8e6322b9272973",
-                  "size": 159
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
-                  "size": 32
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:bab606b6e78a4a98a1c5307090a9a4d4e591be3303ac81aa86c7d50f85e01d80",
-                  "size": 34522
-                }
-              ]
-            ],
-            "step8:0": [
-              [
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:55afa1ecc21d2bb5e5045f32dafee56272ffd89860bac26f6c32123439af26a4",
-                  "size": 3846391
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:a0f82f71477fc2e453be843cff60ca54b0f44a67df7a3f01fddf121b807826be",
-                  "size": 53377296
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:b38a07ecd3ea0a536a5bb94db11493f70753da22ae004e3fff49cb5d6add507f",
-                  "size": 1262109
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:502142e2f20261fd2b9cce9a5883e63c4f830a1f4f3dbf643d6f6dd4e56c16a9",
-                  "size": 448
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:e0b8572fcb1cb0dda95db4bf7651dd9613635193383971b8c5a986eade055e24",
-                  "size": 10358
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:3898814277812ba8b22983004f70bb3febc3dbdd0feed77ceb78410136b3eea7",
-                  "size": 38049835
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:9cdbbc33b8b2a8362f500d2fbac304e2a204d953247386c0eb8e6322b9272973",
-                  "size": 159
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
-                  "size": 32
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:bab606b6e78a4a98a1c5307090a9a4d4e591be3303ac81aa86c7d50f85e01d80",
-                  "size": 34522
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:f06ceb31587bd4cbf3e55da886a8587a2f8d70a8cdcc35b6183b55646c86dcee",
-                  "size": 78959303
                 }
               ]
             ]
