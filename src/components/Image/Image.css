@@ -1,0 +1,93 @@
+@layer sprint.components {
+  [data-sprint="Image"] {
+    display: block;
+    margin: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface);
+    min-width: 0;
+  }
+
+  [data-sprint="Image"] > div {
+    position: relative;
+    overflow: hidden;
+    background: var(--sprint-surface);
+  }
+
+  [data-sprint="Image"][data-sprint-ratio="1:1"] > div {
+    aspect-ratio: 1;
+  }
+
+  [data-sprint="Image"][data-sprint-ratio="4:3"] > div {
+    aspect-ratio: 4 / 3;
+  }
+
+  [data-sprint="Image"][data-sprint-ratio="3:2"] > div {
+    aspect-ratio: 3 / 2;
+  }
+
+  [data-sprint="Image"][data-sprint-ratio="16:9"] > div {
+    aspect-ratio: 16 / 9;
+  }
+
+  [data-sprint="Image"][data-sprint-ratio="auto"]:not([data-sprint-status="ready"])
+    > div {
+    min-height: 8rem;
+  }
+
+  [data-sprint="Image"] img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  [data-sprint="Image"][data-sprint-fit="contain"] img {
+    object-fit: contain;
+  }
+
+  [data-sprint="Image"][data-sprint-ratio="auto"] img {
+    height: auto;
+  }
+
+  [data-sprint="Image"]:not([data-sprint-status="ready"]) img {
+    visibility: hidden;
+  }
+
+  [data-sprint="Image"] > div > span {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sprint-space-4);
+    background-image: var(--sprint-ornament-hatch);
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-label);
+    line-height: 1.6;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  [data-sprint="Image"] > div > span > span {
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    background: var(--sprint-surface);
+  }
+
+  [data-sprint="Image"][data-sprint-status="error"] > div > span {
+    --sprint-ornament-ink: var(--sprint-danger);
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="Image"] > figcaption {
+    padding: var(--sprint-space-1) var(--sprint-space-3);
+    border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: var(--sprint-surface-inset);
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-3xs);
+    letter-spacing: var(--sprint-tracking-wide);
+    text-transform: uppercase;
+  }
+}
