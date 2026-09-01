@@ -80,6 +80,7 @@ export default defineConfig({
   build: {
     target: "es2022",
     sourcemap: true,
+    copyPublicDir: false,
     lib: {
       entry: resolve(import.meta.dirname, "src/index.ts"),
       name: "Sprint",

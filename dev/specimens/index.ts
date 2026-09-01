@@ -7,6 +7,7 @@ import { codeBlockSpecimens } from "./CodeBlock.tsx";
 import { descriptionListSpecimens } from "./DescriptionList.tsx";
 import { dialogSpecimens } from "./Dialog.tsx";
 import { headingGallery, headingSpecimens } from "./Heading.tsx";
+import { imageGallery, imageSpecimens } from "./Image.tsx";
 import { linkSpecimens } from "./Link.tsx";
 import { listSpecimens } from "./List.tsx";
 import { metaLineSpecimens } from "./MetaLine.tsx";
@@ -40,6 +41,7 @@ const registry: Record<string, Specimens> = {
   DescriptionList: { byExample: descriptionListSpecimens },
   Dialog: { byExample: dialogSpecimens },
   Heading: { gallery: headingGallery, byExample: headingSpecimens },
+  Image: { gallery: imageGallery, byExample: imageSpecimens },
   Link: { byExample: linkSpecimens },
   List: { byExample: listSpecimens },
   MetaLine: { byExample: metaLineSpecimens },

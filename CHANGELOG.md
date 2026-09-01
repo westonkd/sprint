@@ -5,6 +5,13 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- Image: a framed picture whose alt text is its entire agent rendering, with the source URL
+  published as `data-sprint-src`, an empty alt declaring the picture meaningless and rendering
+  nothing in agent view, and a slot that keeps its border and states its condition while loading
+  or after a failure.
+
+## v0.1.3 - 2026-08-31
+
 - The agent view paints its own ink and surface from the tokens, instead of inheriting the
   browser-default black text that was near-invisible on a dark ground.
 

@@ -152,7 +152,10 @@ generated from the same `scripts/manifest-markdown.ts`.
 
 `base` is `"./"` and routing is hash-based, so the site works at any path. Every cross-page link
 must stay relative (`workbench.html#/`, not `/workbench.html`), or it breaks under the
-`/sprint/` prefix GitHub Pages serves it from.
+`/sprint/` prefix GitHub Pages serves it from. The same applies to anything a specimen loads over
+the network: `public/` is copied into `dist-docs/` and served by the dev server, so an Image
+specimen points at `media/pad-39b.svg`, never `/media/pad-39b.svg`. The library build sets
+`copyPublicDir: false`, so none of it reaches the npm package.
 
 Pushing to `main` runs `.github/workflows/pages.yml`, which builds the `docs-site` Docker stage and
 publishes `dist-docs/` to the `gh-pages` branch. The landing page is the one page whose prose is

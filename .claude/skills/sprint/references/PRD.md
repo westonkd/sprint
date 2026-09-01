@@ -37,6 +37,13 @@
 > workbench gained URL-addressable views (`?view=agent`), per-section deep links, a
 > category-grouped sidebar, and a persisted theme. 679 tests, `verify` green.
 >
+> **Status (2026-09-01):** Image landed as the 27th component, the first whose content an agent
+> cannot read at all. Its alt text is the whole agent rendering, an empty alt is an explicit claim
+> of meaninglessness that renders nothing, the source URL is published rather than wrapped in a
+> tool, and fetch status stops at the human view because in agent view nothing is fetched
+> ([ADR](ADR/20260901105214_an_image_s_alt_text_is_its_agent_rendering_and_load_status_stops_at_the_human_view.md)).
+> 706 tests, `verify` green.
+>
 > **Still unproven:** everything is jsdom. No descriptor has been accepted by a real browser. The Chrome 149 spike has not been run, and the catalog grew ahead of it deliberately, so it now has more to invalidate than it did.
 >
 > **Decided:** The visual system is specified in [DESIGN.md](DESIGN.md#visual-language), derived from a set of local reference imagery (not tracked in this repository). R4 below was rewritten against it — an earlier draft described a near-monochrome ground with one accent, which is wrong; the real system is a wide, fully-saturated flat palette used two colors at a time.

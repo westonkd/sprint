@@ -22,6 +22,8 @@ export type { DialogHeadingLevel, DialogProps } from "./Dialog/index.ts";
 export { CLOSE_DIALOG_TOOL, Dialog, dialogMeta } from "./Dialog/index.ts";
 export type { HeadingLevel, HeadingProps } from "./Heading/index.ts";
 export { Heading, headingMeta } from "./Heading/index.ts";
+export type { ImageFit, ImageProps, ImageRatio, ImageStatus } from "./Image/index.ts";
+export { Image, imageMeta } from "./Image/index.ts";
 export type { LinkProps } from "./Link/index.ts";
 export { Link, linkMeta, OPEN_LINK_TOOL } from "./Link/index.ts";
 export type { ListProps } from "./List/index.ts";
