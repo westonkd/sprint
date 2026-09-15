@@ -3,6 +3,8 @@
     display: block;
     margin: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-surface);
+    overflow: hidden;
     background: var(--sprint-surface);
     min-width: 0;
   }
@@ -19,21 +21,22 @@
 
   [data-sprint="CodeBlock"] > header > span {
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
-    font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-wide);
-    text-transform: uppercase;
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="CodeBlock"] [data-sprint-part="copy"] {
     padding: 2px var(--sprint-space-2);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
     background: none;
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
-    font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
     cursor: pointer;
   }
 
@@ -54,7 +57,7 @@
     overflow-x: auto;
     font-family: var(--sprint-font-mono);
     font-size: var(--sprint-text-2xs);
-    line-height: 1.7;
+    line-height: var(--sprint-leading-loose);
     tab-size: 2;
   }
 

@@ -16,11 +16,11 @@
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     background: var(--sprint-action);
     color: var(--sprint-action-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size);
     font-weight: var(--sprint-weight-bold);
     letter-spacing: var(--sprint-label-tracking);
-    text-transform: uppercase;
+    text-transform: var(--sprint-label-transform);
     transform: translateY(calc(-100% - var(--sprint-space-4)));
   }
 

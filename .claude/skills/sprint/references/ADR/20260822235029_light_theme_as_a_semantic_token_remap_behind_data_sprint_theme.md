@@ -1,5 +1,10 @@
 # Light theme as a semantic token remap behind data-sprint-theme
 
+> Amended by
+> [20260914183524_the_semantic_layer_carries_shape_type_and_motion_not_only_color.md](20260914183524_the_semantic_layer_carries_shape_type_and_motion_not_only_color.md).
+> A theme is still a remap of the semantic layer, but that layer now carries shape, type, and motion
+> as well as color, and the contrast test discovers theme scopes instead of knowing two of them.
+
 - **Status**: Accepted
 - **Date**: 2026-08-22
 

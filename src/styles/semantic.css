@@ -1,5 +1,6 @@
 @layer sprint.tokens {
-  :root {
+  :root,
+  [data-sprint-theme="dark"] {
     --sprint-surface: var(--sprint-color-void);
     --sprint-surface-raised: var(--sprint-color-panel-100);
     --sprint-surface-inset: var(--sprint-color-panel-200);
@@ -40,7 +41,33 @@
     --sprint-display-size: var(--sprint-text-display);
 
     --sprint-label-size: var(--sprint-text-2xs);
+    --sprint-label-size-small: var(--sprint-text-3xs);
     --sprint-label-tracking: var(--sprint-tracking-label);
+    --sprint-label-tracking-wide: var(--sprint-tracking-wide);
+
+    --sprint-font-ui: var(--sprint-font-mono);
+    --sprint-label-transform: uppercase;
+    --sprint-display-transform: uppercase;
+
+    --sprint-radius-control: 0;
+    --sprint-radius-surface: 0;
+    --sprint-radius-pill: 0;
+
+    --sprint-scanline-opacity: 0.5;
+
+    --sprint-duration-instant: 80ms;
+    --sprint-duration-fast: 120ms;
+    --sprint-duration-slow: 160ms;
+    --sprint-easing: linear;
+    --sprint-steps: steps(4, end);
+
+    --sprint-space-0: 0;
+    --sprint-space-1: 0.25rem;
+    --sprint-space-2: 0.375rem;
+    --sprint-space-3: 0.5rem;
+    --sprint-space-4: 0.75rem;
+    --sprint-space-5: 1rem;
+    --sprint-space-6: 1.5rem;
   }
 
   [data-sprint-theme="light"] {
@@ -77,5 +104,74 @@
     --sprint-warning-ink: var(--sprint-color-paper);
 
     --sprint-focus: var(--sprint-color-ultramarine);
+  }
+
+  [data-sprint-theme="calorie"] {
+    --sprint-surface: var(--sprint-color-linen);
+    --sprint-surface-raised: var(--sprint-color-linen-50);
+    --sprint-surface-inset: var(--sprint-color-linen-200);
+
+    --sprint-ink: var(--sprint-color-linen-900);
+    --sprint-ink-muted: var(--sprint-color-linen-700);
+    --sprint-ink-inverse: var(--sprint-color-linen-50);
+
+    --sprint-keyline: var(--sprint-color-linen-400);
+    --sprint-keyline-strong: var(--sprint-color-linen-500);
+    --sprint-keyline-muted: var(--sprint-color-linen-300);
+
+    --sprint-action: var(--sprint-color-indigo);
+    --sprint-action-ink: var(--sprint-color-linen-50);
+    --sprint-action-hover: var(--sprint-color-indigo-deep);
+
+    --sprint-danger: var(--sprint-color-vermilion);
+    --sprint-danger-ink: var(--sprint-color-linen-50);
+    --sprint-danger-hover: var(--sprint-color-vermilion-deep);
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-linen-900);
+    --sprint-neutral-hover: var(--sprint-color-linen-200);
+
+    --sprint-inert: var(--sprint-color-linen-200);
+    --sprint-inert-ink: var(--sprint-color-linen-600);
+
+    --sprint-info: var(--sprint-color-cyan-deep);
+    --sprint-info-ink: var(--sprint-color-linen-50);
+    --sprint-warning: var(--sprint-color-warning-deep);
+    --sprint-warning-ink: var(--sprint-color-linen-50);
+
+    --sprint-focus: var(--sprint-color-ember);
+
+    --sprint-ornament-ink: var(--sprint-color-linen-300);
+
+    --sprint-label-size: var(--sprint-text-xs);
+    --sprint-label-size-small: var(--sprint-text-2xs);
+    --sprint-label-tracking: 0.01em;
+    --sprint-label-tracking-wide: 0.02em;
+
+    --sprint-font-ui:
+      ui-sans-serif, "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
+      Arial, sans-serif;
+    --sprint-label-transform: none;
+    --sprint-display-transform: none;
+
+    --sprint-radius-control: 8px;
+    --sprint-radius-surface: 14px;
+    --sprint-radius-pill: 999px;
+
+    --sprint-scanline-opacity: 0.22;
+
+    --sprint-duration-instant: 120ms;
+    --sprint-duration-fast: 180ms;
+    --sprint-duration-slow: 240ms;
+    --sprint-easing: cubic-bezier(0.2, 0, 0, 1);
+    --sprint-steps: cubic-bezier(0.2, 0, 0, 1);
+
+    --sprint-space-0: 0;
+    --sprint-space-1: 0.3125rem;
+    --sprint-space-2: 0.5rem;
+    --sprint-space-3: 0.625rem;
+    --sprint-space-4: 1rem;
+    --sprint-space-5: 1.375rem;
+    --sprint-space-6: 2rem;
   }
 }

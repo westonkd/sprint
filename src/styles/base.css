@@ -6,7 +6,7 @@
   }
 
   :where([data-sprint]) {
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-variant-numeric: tabular-nums;
     -webkit-font-smoothing: antialiased;
   }

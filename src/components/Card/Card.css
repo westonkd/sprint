@@ -8,9 +8,10 @@
     height: 100%;
     padding: var(--sprint-space-4);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-surface);
     background: var(--sprint-surface);
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-2xs);
     text-align: left;
     text-decoration: none;
@@ -24,13 +25,13 @@
 
   [data-sprint="Card"] [data-sprint-part="title"] {
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Card"] [data-sprint-part="body"] {
     color: var(--sprint-ink-muted);
-    line-height: 1.6;
+    line-height: var(--sprint-leading-relaxed);
   }
 
   [data-sprint="Card"]:disabled {

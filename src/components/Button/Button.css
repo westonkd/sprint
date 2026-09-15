@@ -7,14 +7,15 @@
     gap: var(--sprint-space-2);
     padding: var(--sprint-space-3) var(--sprint-space-5);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
     background: var(--sprint-neutral);
     color: var(--sprint-neutral-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size);
     font-weight: var(--sprint-weight-bold);
     letter-spacing: var(--sprint-label-tracking);
-    line-height: 1;
-    text-transform: uppercase;
+    line-height: var(--sprint-leading-flat);
+    text-transform: var(--sprint-label-transform);
     white-space: nowrap;
     cursor: pointer;
     transition:
@@ -72,7 +73,7 @@
     inset: 0;
     --sprint-ornament-ink: var(--sprint-inert-ink);
     background-image: var(--sprint-ornament-hatch-dense);
-    opacity: 0.5;
+    opacity: var(--sprint-scanline-opacity);
     animation: sprint-scanline var(--sprint-duration-fast) var(--sprint-steps) infinite;
     pointer-events: none;
   }

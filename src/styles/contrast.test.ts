@@ -3,40 +3,61 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const AA_NORMAL = 4.5;
-const LIGHT_SELECTOR = '[data-sprint-theme="light"]';
+const BASE_SCOPE = ":root";
+const THEME_SCOPE = /^\[data-sprint-theme="([\w-]+)"\]$/;
 
-function loadThemes(): { dark: Map<string, string>; light: Map<string, string> } {
-  const dark = new Map<string, string>();
-  const lightOverrides = new Map<string, string>();
+type Tokens = Map<string, string>;
+
+function loadOverrides(): { base: Tokens; overrides: Map<string, Tokens> } {
+  const base: Tokens = new Map();
+  const overrides = new Map<string, Tokens>();
 
   for (const file of ["primitives.css", "semantic.css"]) {
     const css = readFileSync(resolve(process.cwd(), "src/styles", file), "utf8");
-    for (const block of css.matchAll(/(:root|\[[^\]]+\])\s*\{([^{}]*)\}/g)) {
+    for (const block of css.matchAll(/([^{}]+?)\s*\{([^{}]*)\}/g)) {
       const selector = block[1];
       const body = block[2];
       if (selector === undefined || body === undefined) continue;
 
-      const target =
-        selector === ":root"
-          ? dark
-          : selector === LIGHT_SELECTOR
-            ? lightOverrides
-            : undefined;
-      if (target === undefined) throw new Error(`Unexpected token scope ${selector}`);
+      const declarations = [...body.matchAll(/(--sprint-[\w-]+)\s*:\s*([^;]+);/g)];
 
-      for (const match of body.matchAll(/(--sprint-[\w-]+)\s*:\s*([^;]+);/g)) {
-        const name = match[1];
-        const value = match[2];
-        if (name === undefined || value === undefined) continue;
-        target.set(name, value.trim());
+      for (const part of selector.split(",").map((one) => one.trim())) {
+        if (part === "" || part.startsWith("@")) continue;
+
+        let target: Tokens;
+        if (part === BASE_SCOPE) {
+          target = base;
+        } else {
+          const named = THEME_SCOPE.exec(part)?.[1];
+          if (named === undefined) throw new Error(`Unexpected token scope ${part}`);
+          target = overrides.get(named) ?? new Map();
+          overrides.set(named, target);
+        }
+
+        for (const match of declarations) {
+          const name = match[1];
+          const value = match[2];
+          if (name === undefined || value === undefined) continue;
+          target.set(name, value.trim());
+        }
       }
     }
   }
 
-  return { dark, light: new Map([...dark, ...lightOverrides]) };
+  return { base, overrides };
 }
 
-const themes = loadThemes();
+const { base, overrides } = loadOverrides();
+
+const THEMES: ReadonlyMap<string, Tokens> = new Map(
+  [...overrides].map(([name, own]) => [name, new Map([...base, ...own])]),
+);
+
+function themeByName(name: string): Tokens {
+  const tokens = THEMES.get(name);
+  if (tokens === undefined) throw new Error(`Unknown theme ${name}`);
+  return tokens;
+}
 
 function resolveToken(
   tokens: Map<string, string>,
@@ -93,10 +114,27 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-warning-ink", "--sprint-warning"],
 ];
 
-describe.each([
-  ["dark", themes.dark],
-  ["light", themes.light],
-])("token contrast in the %s theme", (_theme, tokens) => {
+describe("theme discovery", () => {
+  it("finds every theme the token files scope", () => {
+    expect([...THEMES.keys()].sort()).toEqual(["calorie", "dark", "light"]);
+  });
+
+  it.each([...overrides.keys()].filter((name) => name !== "dark"))(
+    "gives %s its own value for every contrast-tested role",
+    (name) => {
+      const own = overrides.get(name);
+      const missing = [...new Set(PAIRINGS.flat())].filter(
+        (role) => own?.has(role) !== true,
+      );
+      expect(
+        missing,
+        `${name} inherits ${missing.join(", ")} from the dark base`,
+      ).toEqual([]);
+    },
+  );
+});
+
+describe.each([...THEMES])("token contrast in the %s theme", (_theme, tokens) => {
   it.each(PAIRINGS)("%s on %s meets WCAG AA", (ink, ground) => {
     const ratio = contrast(resolveToken(tokens, ink), resolveToken(tokens, ground));
     expect(
@@ -117,38 +155,60 @@ describe("theme-specific findings", () => {
   it("keeps acid off light grounds, where it fails badly", () => {
     expect(
       contrast(
-        resolveToken(themes.dark, "--sprint-color-acid"),
-        resolveToken(themes.dark, "--sprint-color-paper"),
+        resolveToken(themeByName("dark"), "--sprint-color-acid"),
+        resolveToken(themeByName("dark"), "--sprint-color-paper"),
       ),
     ).toBeLessThan(AA_NORMAL);
   });
 
   it("keeps acid off the light action role, so it survives only as ink on ultramarine", () => {
-    expect(resolveToken(themes.light, "--sprint-action")).not.toBe(
-      resolveToken(themes.light, "--sprint-color-acid"),
+    expect(resolveToken(themeByName("light"), "--sprint-action")).not.toBe(
+      resolveToken(themeByName("light"), "--sprint-color-acid"),
     );
-    expect(resolveToken(themes.light, "--sprint-action-ink")).toBe(
-      resolveToken(themes.light, "--sprint-color-acid"),
+    expect(resolveToken(themeByName("light"), "--sprint-action-ink")).toBe(
+      resolveToken(themeByName("light"), "--sprint-color-acid"),
     );
   });
 
   it("uses void ink on dark danger rather than paper, which would fail", () => {
-    const danger = resolveToken(themes.dark, "--sprint-danger");
+    const danger = resolveToken(themeByName("dark"), "--sprint-danger");
     expect(
-      contrast(resolveToken(themes.dark, "--sprint-color-paper"), danger),
+      contrast(resolveToken(themeByName("dark"), "--sprint-color-paper"), danger),
     ).toBeLessThan(AA_NORMAL);
     expect(
-      contrast(resolveToken(themes.dark, "--sprint-danger-ink"), danger),
+      contrast(resolveToken(themeByName("dark"), "--sprint-danger-ink"), danger),
+    ).toBeGreaterThanOrEqual(AA_NORMAL);
+  });
+
+  it("keeps acid off the calorie ground, where it fails as badly as on paper", () => {
+    expect(
+      contrast(
+        resolveToken(themeByName("calorie"), "--sprint-color-acid"),
+        resolveToken(themeByName("calorie"), "--sprint-surface"),
+      ),
+    ).toBeLessThan(AA_NORMAL);
+    expect(resolveToken(themeByName("calorie"), "--sprint-action")).not.toBe(
+      resolveToken(themeByName("calorie"), "--sprint-color-acid"),
+    );
+  });
+
+  it("uses linen ink on calorie danger, where the ground's own ink would fail", () => {
+    const danger = resolveToken(themeByName("calorie"), "--sprint-danger");
+    expect(
+      contrast(resolveToken(themeByName("calorie"), "--sprint-ink"), danger),
+    ).toBeLessThan(AA_NORMAL);
+    expect(
+      contrast(resolveToken(themeByName("calorie"), "--sprint-danger-ink"), danger),
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 
   it("uses paper ink on light danger, where void would fail", () => {
-    const danger = resolveToken(themes.light, "--sprint-danger");
+    const danger = resolveToken(themeByName("light"), "--sprint-danger");
     expect(
-      contrast(resolveToken(themes.light, "--sprint-color-void"), danger),
+      contrast(resolveToken(themeByName("light"), "--sprint-color-void"), danger),
     ).toBeLessThan(AA_NORMAL);
     expect(
-      contrast(resolveToken(themes.light, "--sprint-danger-ink"), danger),
+      contrast(resolveToken(themeByName("light"), "--sprint-danger-ink"), danger),
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 });

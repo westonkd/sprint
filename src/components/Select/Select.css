@@ -7,11 +7,11 @@
 
   [data-sprint="Select"] label {
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
-    font-size: var(--sprint-text-3xs);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Select"][data-sprint-required] label::after {
@@ -28,14 +28,14 @@
     width: 100%;
     padding: var(--sprint-space-3);
     padding-right: calc(var(--sprint-space-3) * 2 + 10px);
-    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     background: var(--sprint-surface);
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);
-    line-height: 1.4;
+    line-height: var(--sprint-leading-snug);
     appearance: none;
-    border-radius: 0;
+    border-radius: var(--sprint-radius-control);
     cursor: pointer;
   }
 
@@ -61,11 +61,11 @@
   }
 
   [data-sprint="Select"] [data-sprint-part="input"]:hover:not(:disabled) {
-    border-color: var(--sprint-keyline-strong);
+    border-color: var(--sprint-ink);
   }
 
   [data-sprint="Select"] [data-sprint-part="input"]:focus-visible {
-    border-color: var(--sprint-keyline-strong);
+    border-color: var(--sprint-ink);
     outline: var(--sprint-focus-width) solid var(--sprint-focus);
     outline-offset: var(--sprint-focus-offset);
   }
@@ -77,8 +77,8 @@
   [data-sprint="Select"][data-sprint-empty] [data-sprint-part="input"] {
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-2xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Select"] [data-sprint-part="input"]:disabled {
@@ -90,10 +90,10 @@
   [data-sprint="Select"] [data-sprint-part="hint"],
   [data-sprint="Select"] [data-sprint-part="error"] {
     margin: 0;
-    font-family: var(--sprint-font-mono);
-    font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Select"] [data-sprint-part="hint"] {

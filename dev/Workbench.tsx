@@ -20,7 +20,7 @@ import { GuideLayout } from "./pages/GuideLayout.tsx";
 import { GuidePhilosophy } from "./pages/GuidePhilosophy.tsx";
 import { GuideWebMCP } from "./pages/GuideWebMCP.tsx";
 import { Overview } from "./pages/Overview.tsx";
-import { THEME_OPTIONS, useTheme } from "./theme.ts";
+import { asTheme, THEME_OPTIONS, useTheme } from "./theme.ts";
 
 interface Guide {
   id: string;
@@ -157,7 +157,7 @@ function WorkbenchShell(props: WorkbenchShellProps) {
               options={THEME_OPTIONS}
               value={theme}
               agentTool={false}
-              onChange={(next) => onThemeChange(next === "light" ? "light" : "dark")}
+              onChange={(next) => onThemeChange(asTheme(next))}
             />
           </>
         }
