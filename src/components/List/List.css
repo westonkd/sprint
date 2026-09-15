@@ -7,9 +7,9 @@
     list-style: none;
     counter-reset: sprint-list;
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);
-    line-height: 1.6;
+    line-height: var(--sprint-leading-relaxed);
   }
 
   [data-sprint="List"] > li {
@@ -32,15 +32,15 @@
   [data-sprint="List"][data-sprint-ordered] > li::before {
     content: counter(sprint-list) ".";
     color: var(--sprint-ink-muted);
-    letter-spacing: var(--sprint-tracking-label);
+    letter-spacing: var(--sprint-label-tracking);
   }
 
   [data-sprint="List"][data-sprint-empty] > li {
     grid-template-columns: minmax(0, 1fr);
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="List"][data-sprint-empty] > li::before {

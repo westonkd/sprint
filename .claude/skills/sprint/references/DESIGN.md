@@ -22,6 +22,11 @@ Everything looks like a printed instrument label, a terminal, or a warning placa
 soft, dimensional, or friendly. The system's confidence comes from saturation and density, not from
 polish.
 
+Everything below describes the **default register**, which the `dark` and `light` themes both render.
+It is one of two; the other is [Calorie](#calorie-the-second-register), which deliberately breaks
+most of it. When a component's styling and this section disagree in the default register, one of
+them is a bug. In calorie, check the token instead.
+
 ## The seven rules
 
 1. **Flat, always.** No gradient, no drop shadow, no blur, no bevel, no border-radius above 0. Depth
@@ -143,6 +148,33 @@ icons. An icon should look like it was drawn by the same tool that set the type.
   the one place texture may animate.
 - All of it respects `prefers-reduced-motion` and degrades to an instant state change (R4.6).
 
+## Calorie, the second register
+
+`data-sprint-theme="calorie"` is a warm, rounded, quiet register for products that want the agent
+contract without the house style. It is not a fourth ground in the register above; it breaks rules 1,
+3, and 7 outright, and softens 5.
+
+| | Default register | Calorie |
+| --- | --- | --- |
+| Ground | Void, or paper in `light` | Linen `#faf7f2` |
+| Action | Acid, or ultramarine in `light` | Indigo `#3a3fb8` |
+| Danger | Magenta | Vermilion `#b3261e` |
+| Corners | Square | 8px controls, 14px surfaces, pill for Tag and Switch |
+| UI voice | Monospace, uppercase, 0.12em | Humanist sans, sentence case, 0.01em |
+| Motion | `linear`, `steps(4, end)`, 80–160ms | `cubic-bezier(0.2, 0, 0, 1)`, 120–240ms |
+
+Two things carry across, and they are the test of whether a future theme is a Sprint theme at all:
+
+- **The ornament vocabulary.** It draws in `--sprint-ornament-ink`, so hatch, dots and crosses land
+  as soft texture on linen rather than hazard hatching on black. Empty states still say they are
+  empty, and still say it with a mark.
+- **The serif display voice.** `--sprint-font-display` is not overridden. The page title stays a
+  high-contrast serif over small UI type, one per screen. Only its casing relaxes.
+
+Acid appears nowhere in calorie. It is 1.24:1 on linen, and unlike `light` there is no ultramarine
+field to rescue it as ink. Rule 4 (everything is labeled) and rule 6 (ornament is systematic) hold in
+both registers, because they are structural rather than visual.
+
 ## Implementation notes
 
 - Everything above is expressed as CSS custom properties per CLAUDE.md. No CSS-in-JS runtime.
@@ -151,7 +183,10 @@ icons. An icon should look like it was drawn by the same tool that set the type.
   a breaking change in practice even if not in type.
 - Split the token layer: primitives (`--sprint-color-acid`) map to semantic roles
   (`--sprint-color-action`), and components only ever reference the semantic layer. Otherwise
-  re-theming means rewriting every component.
+  re-theming means rewriting every component. The semantic layer covers shape, type, and motion as
+  well as color, so a component writes `border-radius: var(--sprint-radius-control)` and
+  `text-transform: var(--sprint-label-transform)`, never a literal `0` or `uppercase`. The mono
+  primitive is reserved for code and secret values; everything else takes `--sprint-font-ui`.
 - The display face is a system serif stack (Didot / Bodoni MT / Bodoni 72 / Georgia); the library
   cannot depend on a font CDN. Choosing a licensed, self-hosted serif and monospace pair is still
   open and needs its own ADR.

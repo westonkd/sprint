@@ -28,6 +28,22 @@
     --sprint-color-cyan-deep: #00687f;
     --sprint-color-warning-deep: #7a5d00;
 
+    --sprint-color-linen: #faf7f2;
+    --sprint-color-linen-50: #fffdf9;
+    --sprint-color-linen-100: #f5f1e9;
+    --sprint-color-linen-200: #f0ece4;
+    --sprint-color-linen-300: #e6e0d4;
+    --sprint-color-linen-400: #d8d1c3;
+    --sprint-color-linen-500: #968b7c;
+    --sprint-color-linen-600: #665f55;
+    --sprint-color-linen-700: #5c564d;
+    --sprint-color-linen-900: #211e1a;
+
+    --sprint-color-indigo: #3a3fb8;
+    --sprint-color-indigo-deep: #2c3094;
+    --sprint-color-vermilion: #b3261e;
+    --sprint-color-vermilion-deep: #8f1c16;
+
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
     --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
 
@@ -45,6 +61,14 @@
     --sprint-tracking-label: 0.12em;
     --sprint-tracking-wide: 0.16em;
 
+    --sprint-leading-flat: 1;
+    --sprint-leading-display: 1.05;
+    --sprint-leading-tight: 1.3;
+    --sprint-leading-snug: 1.4;
+    --sprint-leading-normal: 1.5;
+    --sprint-leading-relaxed: 1.6;
+    --sprint-leading-loose: 1.7;
+
     --sprint-weight-regular: 400;
     --sprint-weight-bold: 700;
 
@@ -58,11 +82,5 @@
 
     --sprint-keyline-width: 1px;
     --sprint-keyline-width-thick: 2px;
-
-    --sprint-duration-instant: 80ms;
-    --sprint-duration-fast: 120ms;
-    --sprint-duration-slow: 160ms;
-    --sprint-easing: linear;
-    --sprint-steps: steps(4, end);
   }
 }

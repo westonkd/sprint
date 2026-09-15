@@ -5,6 +5,8 @@
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     outline: var(--sprint-keyline-width) solid var(--sprint-keyline);
     outline-offset: 2px;
+    border-radius: var(--sprint-radius-surface);
+    overflow: hidden;
     background: var(--sprint-surface-raised);
     color: var(--sprint-ink);
     width: min(26rem, calc(100vw - var(--sprint-space-6) * 2));
@@ -29,11 +31,11 @@
   [data-sprint="Dialog"] > header > :first-child {
     margin: 0;
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-wide);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: var(--sprint-label-transform);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -45,11 +47,12 @@
     height: 1.5rem;
     padding: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
     background: transparent;
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);
-    line-height: 1;
+    line-height: var(--sprint-leading-flat);
     cursor: pointer;
   }
 

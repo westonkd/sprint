@@ -25,7 +25,7 @@ import "./SprintProvider.css";
 
 const COPIED_FOR = 1200;
 
-export type SprintTheme = "dark" | "light";
+export type SprintTheme = "dark" | "light" | "calorie";
 
 export interface SprintProviderProps {
   children: ReactNode;

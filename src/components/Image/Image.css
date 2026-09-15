@@ -3,6 +3,8 @@
     display: block;
     margin: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-surface);
+    overflow: hidden;
     background: var(--sprint-surface);
     min-width: 0;
   }
@@ -62,12 +64,12 @@
     padding: var(--sprint-space-4);
     background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
-    line-height: 1.6;
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-relaxed);
     text-align: center;
-    text-transform: uppercase;
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Image"] > div > span > span {
@@ -85,9 +87,9 @@
     border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
     background: var(--sprint-surface-inset);
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-wide);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: var(--sprint-label-transform);
   }
 }

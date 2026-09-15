@@ -3,9 +3,10 @@ import { type SprintTheme, THEME_ATTRIBUTE } from "../src/index.ts";
 
 const THEME_KEY = "sprint-theme";
 
-export const THEME_OPTIONS = [
+export const THEME_OPTIONS: readonly { value: SprintTheme; label: string }[] = [
   { value: "dark", label: "dark" },
   { value: "light", label: "light" },
+  { value: "calorie", label: "calorie" },
 ];
 
 export const VIEW_OPTIONS = [
@@ -13,9 +14,14 @@ export const VIEW_OPTIONS = [
   { value: "agent", label: "agent" },
 ];
 
+export function asTheme(value: string): SprintTheme {
+  const known = THEME_OPTIONS.find((option) => option.value === value);
+  return known?.value ?? "dark";
+}
+
 function initialTheme(): SprintTheme {
   const stored = window.localStorage.getItem(THEME_KEY);
-  if (stored === "light" || stored === "dark") return stored;
+  if (stored !== null) return asTheme(stored);
   return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 }
 

@@ -4,6 +4,8 @@
     flex-direction: column;
     margin: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-surface);
+    overflow: hidden;
     background: var(--sprint-surface-raised);
   }
 
@@ -20,19 +22,19 @@
 
   [data-sprint="DescriptionList"] dt {
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="DescriptionList"] dd {
     margin: 0;
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);
-    line-height: 1.5;
+    line-height: var(--sprint-leading-normal);
     overflow-wrap: anywhere;
   }
 
@@ -40,11 +42,11 @@
     padding: var(--sprint-space-4);
     background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
+    letter-spacing: var(--sprint-label-tracking);
     text-align: center;
-    text-transform: uppercase;
+    text-transform: var(--sprint-label-transform);
   }
 
   @media (min-width: 40rem) {

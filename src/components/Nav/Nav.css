@@ -13,8 +13,8 @@
     border-left: var(--sprint-keyline-width-thick) solid transparent;
     color: var(--sprint-ink);
     font-size: var(--sprint-text-2xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Nav"] [data-sprint="Link"]:hover {

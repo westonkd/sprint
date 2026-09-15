@@ -5,6 +5,18 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- `calorie`: an optional third theme, and the first that is a different register rather than a
+  different ground. Warm linen surfaces, indigo actions, rounded corners, a humanist sans, sentence
+  case, and eased motion, keeping the ornament vocabulary and the serif display voice so it still
+  reads as Sprint. Set it with `data-sprint-theme="calorie"` or `<SprintProvider theme="calorie">`.
+- The semantic token layer now carries shape, type, and motion as well as color:
+  `--sprint-radius-control|-surface|-pill`, `--sprint-font-ui`, `--sprint-label-transform`,
+  `--sprint-display-transform`, `--sprint-label-tracking-wide`, `--sprint-scanline-opacity`, and the
+  `--sprint-leading-*` scale. Defaults reproduce the existing rendering, so `dark` and `light` are
+  unchanged.
+- `data-sprint-theme="dark"` now resets the dark mapping explicitly, so a dark subtree nested inside
+  a lighter one works. Previously only `:root` carried it.
+
 - Image: a framed picture whose alt text is its entire agent rendering, with the source URL
   published as `data-sprint-src`, an empty alt declaring the picture meaningless and rendering
   nothing in agent view, and a slot that keeps its border and states its condition while loading

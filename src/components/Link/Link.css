@@ -1,7 +1,7 @@
 @layer sprint.components {
   [data-sprint="Link"] {
     color: var(--sprint-info);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     text-decoration: none;
     border-bottom: var(--sprint-keyline-width) solid transparent;
     overflow-wrap: anywhere;

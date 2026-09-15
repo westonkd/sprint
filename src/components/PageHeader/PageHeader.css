@@ -29,8 +29,8 @@
     font-size: var(--sprint-display-size);
     font-weight: var(--sprint-weight-regular);
     letter-spacing: var(--sprint-tracking-tight);
-    line-height: 1.05;
-    text-transform: uppercase;
+    line-height: var(--sprint-leading-display);
+    text-transform: var(--sprint-display-transform);
     overflow-wrap: anywhere;
   }
 

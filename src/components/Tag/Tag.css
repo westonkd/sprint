@@ -3,13 +3,14 @@
     display: inline-block;
     padding: 2px var(--sprint-space-2);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-pill);
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    line-height: 1.4;
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-snug);
+    text-transform: var(--sprint-label-transform);
     white-space: nowrap;
   }
 

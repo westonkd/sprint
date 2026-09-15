@@ -19,7 +19,7 @@ import {
   TextInput,
   version,
 } from "../../src/index.ts";
-import { THEME_OPTIONS, useTheme, VIEW_OPTIONS } from "../theme.ts";
+import { asTheme, THEME_OPTIONS, useTheme, VIEW_OPTIONS } from "../theme.ts";
 
 const REPOSITORY = "https://github.com/westonkd/sprint";
 
@@ -49,7 +49,7 @@ export function Landing() {
               options={THEME_OPTIONS}
               value={theme}
               agentTool={false}
-              onChange={(next) => setTheme(next === "light" ? "light" : "dark")}
+              onChange={(next) => setTheme(asTheme(next))}
             />
           }
         >

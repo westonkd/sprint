@@ -7,11 +7,11 @@
     border: 0;
     background: none;
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-2xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
     cursor: pointer;
   }
 
@@ -22,6 +22,7 @@
     height: 0.875rem;
     padding: 2px;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-pill);
     background: var(--sprint-surface);
   }
 
@@ -29,6 +30,7 @@
     display: block;
     width: 0.5rem;
     height: 100%;
+    border-radius: var(--sprint-radius-pill);
     background: var(--sprint-ink-muted);
     transition: transform var(--sprint-duration-fast) var(--sprint-steps);
   }

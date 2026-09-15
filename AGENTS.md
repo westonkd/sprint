@@ -190,10 +190,21 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   `--sprint-ornament-ink` (keyline by default — set it locally for another ink). Pure CSS texture
   for dead space and state bands; it never carries meaning, never sits over content, and the agent
   view ignores it entirely. Components reference the `--sprint-ornament-*` tokens directly.
-- `data-sprint-theme="dark|light"` selects the semantic token mapping for everything beneath it.
-  Pure CSS: put it on any element, or pass `theme` to `SprintProvider` to stamp it on the view
-  container. Dark is the `:root` default. The light mapping keeps acid off light grounds by making
-  ultramarine the action color with acid as its ink. The agent view ignores theme entirely.
+- `data-sprint-theme="dark|light|calorie"` selects the semantic token mapping for everything
+  beneath it. Pure CSS: put it on any element, or pass `theme` to `SprintProvider` to stamp it on the
+  view container. Dark is the `:root` default and also has an explicit `[data-sprint-theme="dark"]`
+  twin, so a dark island inside a lighter subtree resets. `light` is the print register: it keeps
+  acid off light grounds by making ultramarine the action color with acid as its ink. `calorie` is a
+  second *register*, not a second ground — warm linen, indigo, rounded, sans, sentence case, eased
+  motion — carrying over only the ornament vocabulary and the serif display voice. The agent view
+  ignores theme entirely.
+
+  A theme remaps the semantic layer, and that layer covers shape, type, and motion as well as color:
+  `--sprint-radius-control|-surface|-pill`, `--sprint-font-ui`, `--sprint-label-transform` and
+  `--sprint-display-transform`, `--sprint-label-tracking` and `--sprint-label-tracking-wide`, the
+  `--sprint-leading-*` scale, `--sprint-scanline-opacity`, and the duration/easing tokens. Component
+  CSS reaches for those roles, never for `text-transform: uppercase`, a raw `line-height`, or
+  `--sprint-font-mono` — the mono primitive is reserved for code and secret values.
 
 `part`, `tool`, `owner`, `region`, `view`, `view-copy`, and `theme` are reserved and never read as state. These attributes are part of the
 public API. Changing or removing one is a breaking change, because agents write selectors against

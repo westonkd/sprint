@@ -4,9 +4,9 @@
     width: 100%;
     border-collapse: collapse;
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-2xs);
-    line-height: 1.6;
+    line-height: var(--sprint-leading-relaxed);
     text-align: left;
   }
 
@@ -45,8 +45,8 @@
   [data-sprint="Table"] td > span {
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Table"] td > div {
@@ -73,9 +73,9 @@
     background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
+    letter-spacing: var(--sprint-label-tracking);
     text-align: center;
-    text-transform: uppercase;
+    text-transform: var(--sprint-label-transform);
   }
 
   @media (min-width: 48rem) {
@@ -115,8 +115,8 @@
       color: var(--sprint-ink-muted);
       font-size: var(--sprint-text-3xs);
       font-weight: var(--sprint-weight-regular);
-      letter-spacing: var(--sprint-tracking-wide);
-      text-transform: uppercase;
+      letter-spacing: var(--sprint-label-tracking-wide);
+      text-transform: var(--sprint-label-transform);
     }
 
     [data-sprint="Table"] td > span {

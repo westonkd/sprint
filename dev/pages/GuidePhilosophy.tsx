@@ -26,6 +26,16 @@ const NODE = `const node = buildAgentNode({
 if (view === "agent") return <AgentControl node={node} onClick={onClick} />;
 return <button {...agentAttributesFor(node)}>{children}</button>;`;
 
+const THEME = `<SprintProvider theme="calorie">   {/* or data-sprint-theme on any element */}
+
+/* the whole of the calorie register, in semantic.css */
+--sprint-surface: var(--sprint-color-linen);
+--sprint-action: var(--sprint-color-indigo);
+--sprint-radius-surface: 14px;
+--sprint-font-ui: ui-sans-serif, "Inter", system-ui, sans-serif;
+--sprint-label-transform: none;
+--sprint-easing: cubic-bezier(0.2, 0, 0, 1);`;
+
 const NO_TOOL = `<Link href="#/Button">Button</Link>
 // registers: nothing. The href is already public, and a nav
 // list of twenty links would cost twenty tools for no new power.
@@ -177,7 +187,40 @@ export function GuidePhilosophy() {
           </Stack>
         </Panel>
 
-        <Panel headingLevel={2} label="8. It has to work with none of this">
+        <Panel headingLevel={2} label="8. The look is a theme, not the library">
+          <Stack gap="tight">
+            <Text>
+              Sprint's default register is loud on purpose: square corners, uppercase
+              monospace chrome, acid on near-black, stepped motion. That is a house
+              style, and it is not what the library is for. Everything that makes it
+              polarizing is a token.
+            </Text>
+            <CodeBlock code={THEME} />
+            <Text tone="muted" size="small">
+              A theme remaps the semantic layer, and that layer carries shape, type, and
+              motion as well as color — <code>--sprint-radius-surface</code>,{" "}
+              <code>--sprint-font-ui</code>, <code>--sprint-label-transform</code>,{" "}
+              <code>--sprint-easing</code>. Component CSS never writes a literal{" "}
+              <code>0</code> radius or <code>uppercase</code>, which is why{" "}
+              <code>calorie</code> is a stylesheet block rather than a fork.
+            </Text>
+            <Text>
+              <code>calorie</code> ships as the friendly register: warm linen, indigo,
+              rounded, sans, sentence case, eased motion. It keeps exactly two things —
+              the ornament vocabulary that marks empty states, and the serif display
+              voice on the page title — because a theme that keeps neither is not a
+              Sprint theme. Acid appears nowhere in it; it is 1.24:1 on linen and there
+              is no field to rescue it.
+            </Text>
+            <Text tone="muted" size="small">
+              None of this reaches an agent. Flip the view switch in any theme and the
+              text stream is byte-identical, because the agent surface is projected from
+              the node, not the pixels.
+            </Text>
+          </Stack>
+        </Panel>
+
+        <Panel headingLevel={2} label="9. It has to work with none of this">
           <Stack gap="tight">
             <Text>
               If <code>document.modelContext</code> is absent, registration is a no-op

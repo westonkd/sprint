@@ -6,6 +6,8 @@
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
     outline: var(--sprint-keyline-width) solid var(--sprint-keyline);
     outline-offset: 2px;
+    border-radius: var(--sprint-radius-surface);
+    overflow: hidden;
     background: var(--sprint-panel-ground);
     min-width: 0;
   }
@@ -45,11 +47,11 @@
   [data-sprint="Panel"] > header > :first-child {
     margin: 0;
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-wide);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: var(--sprint-label-transform);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -85,9 +87,9 @@
     background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
+    letter-spacing: var(--sprint-label-tracking);
     text-align: center;
-    text-transform: uppercase;
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Panel"][data-sprint-empty] > div > span {

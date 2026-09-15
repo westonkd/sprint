@@ -10,11 +10,11 @@
     align-items: center;
     gap: var(--sprint-space-3);
     color: var(--sprint-ink);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-2xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
     cursor: pointer;
   }
 
@@ -40,6 +40,7 @@
     width: 0.875rem;
     height: 0.875rem;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: calc(var(--sprint-radius-control) / 2);
     background: var(--sprint-surface);
   }
 
@@ -91,10 +92,10 @@
   [data-sprint="Checkbox"] [data-sprint-part="error"] {
     margin: 0;
     padding-left: calc(0.875rem + var(--sprint-space-3));
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
-    letter-spacing: var(--sprint-tracking-label);
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
   }
 
   [data-sprint="Checkbox"] [data-sprint-part="hint"] {

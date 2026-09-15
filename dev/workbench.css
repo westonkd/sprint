@@ -2,7 +2,8 @@
   color-scheme: dark;
 }
 
-:root[data-sprint-theme="light"] {
+:root[data-sprint-theme="light"],
+:root[data-sprint-theme="calorie"] {
   color-scheme: light;
 }
 

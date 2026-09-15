@@ -2,6 +2,7 @@
   [data-sprint="SegmentedControl"] {
     display: inline-flex;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
     background: var(--sprint-surface);
   }
 
@@ -11,12 +12,12 @@
     border-right: var(--sprint-keyline-width) solid var(--sprint-keyline);
     background: none;
     color: var(--sprint-ink-muted);
-    font-family: var(--sprint-font-mono);
+    font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-3xs);
     font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-tracking-label);
-    line-height: 1.6;
-    text-transform: uppercase;
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-relaxed);
+    text-transform: var(--sprint-label-transform);
     white-space: nowrap;
     cursor: pointer;
     transition: background-color var(--sprint-duration-instant) var(--sprint-easing);
@@ -24,6 +25,16 @@
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:last-child {
     border-right: 0;
+  }
+
+  [data-sprint="SegmentedControl"] [data-sprint-part="option"]:first-child {
+    border-start-start-radius: var(--sprint-radius-control);
+    border-end-start-radius: var(--sprint-radius-control);
+  }
+
+  [data-sprint="SegmentedControl"] [data-sprint-part="option"]:last-child {
+    border-start-end-radius: var(--sprint-radius-control);
+    border-end-end-radius: var(--sprint-radius-control);
   }
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:focus-visible {
