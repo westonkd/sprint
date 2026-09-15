@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.2.0 - 2026-09-14
+
 - `calorie`: an optional third theme, and the first that is a different register rather than a
   different ground. Warm linen surfaces, indigo actions, rounded corners, a humanist sans, sentence
   case, and eased motion, keeping the ornament vocabulary and the serif display voice so it still
