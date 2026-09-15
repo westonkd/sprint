@@ -1,6 +1,6 @@
 {
   "library": "sprint",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "conventions": {
     "componentAttribute": "data-sprint",
     "partAttribute": "data-sprint-part",
