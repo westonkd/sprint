@@ -9,18 +9,34 @@
     padding: var(--sprint-space-4);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
     border-radius: var(--sprint-radius-surface);
-    background: var(--sprint-surface);
+    background-color: var(--sprint-surface);
+    background-image: var(--sprint-sheen), var(--sprint-shade);
+    background-blend-mode: var(--sprint-blend-lit);
+    box-shadow: var(--sprint-mold), var(--sprint-cast);
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size);
     text-align: left;
     text-decoration: none;
     cursor: pointer;
-    transition: border-color var(--sprint-duration-instant) var(--sprint-easing);
+    transition:
+      --sprint-gloss-x var(--sprint-duration-instant) linear,
+      --sprint-gloss-fade var(--sprint-duration-instant) linear,
+      --sprint-cast-shift var(--sprint-duration-instant) linear,
+      border-color var(--sprint-duration-instant) var(--sprint-easing),
+      box-shadow var(--sprint-duration-instant) var(--sprint-easing),
+      transform var(--sprint-duration-instant) var(--sprint-easing);
+  }
+
+  [data-sprint="Card"]:active:not(:disabled) {
+    transform: translateY(var(--sprint-press-shift)) scaleY(var(--sprint-press-scale));
+    box-shadow: var(--sprint-mold-pressed), var(--sprint-cast-pressed);
   }
 
   [data-sprint="Card"]:hover:not(:disabled) {
-    border-color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
+    box-shadow: var(--sprint-mold), var(--sprint-cast-raised);
+    transform: translateY(calc(-1 * var(--sprint-press-shift)));
   }
 
   [data-sprint="Card"] [data-sprint-part="title"] {

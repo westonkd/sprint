@@ -1,6 +1,9 @@
 # The display voice is a high-contrast serif system stack
 
-- **Status**: Accepted
+- **Status**: Accepted, and scoped to the default register by
+  20260914211336_calorie_is_the_nucaloric_register_and_the_sprint_test_moves_off_the_serif.md. It
+  predates the register split, so it reads as a claim about the library where it is now a claim about
+  `dark` and `light`.
 - **Date**: 2026-08-22
 
 ## Context

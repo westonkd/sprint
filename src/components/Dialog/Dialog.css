@@ -3,11 +3,12 @@
     margin: auto;
     padding: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
-    outline: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    outline: var(--sprint-keyline-width) solid var(--sprint-keyline-halo);
     outline-offset: 2px;
     border-radius: var(--sprint-radius-surface);
     overflow: hidden;
     background: var(--sprint-surface-raised);
+    box-shadow: var(--sprint-cast-high);
     color: var(--sprint-ink);
     width: min(26rem, calc(100vw - var(--sprint-space-6) * 2));
     max-height: calc(100vh - var(--sprint-space-6) * 2);
@@ -15,6 +16,7 @@
 
   [data-sprint="Dialog"]::backdrop {
     --sprint-ornament-ink: var(--sprint-surface);
+    background-color: var(--sprint-scrim);
     background-image: var(--sprint-ornament-shade);
   }
 
@@ -26,6 +28,8 @@
     padding: var(--sprint-space-2) var(--sprint-space-4);
     border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
     background: var(--sprint-surface-inset);
+    border-start-start-radius: var(--sprint-radius-surface-inner);
+    border-start-end-radius: var(--sprint-radius-surface-inner);
   }
 
   [data-sprint="Dialog"] > header > :first-child {

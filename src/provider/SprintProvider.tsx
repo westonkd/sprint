@@ -22,6 +22,7 @@ import type { AgentFormatter } from "@/agent/view/node.ts";
 import { AgentScopeProvider, useAgentScope } from "@/agent/webmcp/scope.ts";
 import { usePageTools } from "./pageTools.ts";
 import "./SprintProvider.css";
+import { releaseGloss, trackGloss } from "./gloss.ts";
 
 const COPIED_FOR = 1200;
 
@@ -129,6 +130,8 @@ export function SprintProvider(props: SprintProviderProps) {
         ) : null}
         <div
           ref={surface}
+          onPointerMove={effective === "agent" ? undefined : trackGloss}
+          onPointerOut={effective === "agent" ? undefined : releaseGloss}
           {...{ [VIEW_ATTRIBUTE]: effective }}
           {...(theme === undefined ? {} : { [THEME_ATTRIBUTE]: theme })}
         >

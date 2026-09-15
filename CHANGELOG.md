@@ -5,6 +5,78 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- Fixed: the gloss tracker preferred the nearest `data-sprint-part` unconditionally, so on a Card it
+  wrote to the `title` and `body` spans — which have no background — and the effect never ran. It now
+  targets a part only when the part is the lit face (`option`, `thumb`).
+- Fixed: releasing a tracked element left an empty `style=""` attribute behind in the DOM.
+- `Card` takes the specular it was already being tracked for. It had the mould and the cast but no
+  sheen, which made it the one large surface in the register with nothing to reflect.
+- Empty states stop painting their ornament through their own label. DescriptionList and Table adopt
+  the knockout plate Panel already used, so the mark stays in the dead space. This also affects
+  `dark` and `light`, where the hatch previously ran under the label.
+- `--sprint-empty-field` reserves a minimum height for an empty region so a discrete ornament has
+  room for whole marks. `0` in `dark` and `light`, `6rem` in calorie, where a 50px field could show
+  nothing but clipped pin rings.
+- The shade falloff is an absolute depth derived from the control radius rather than a percentage of
+  the box, so a Card no longer wears a Button's shading scaled up into a dark band across its base.
+- `Alert` gains the register's depth model. It was the one block-level component with no mould, no
+  cast, and no shade.
+- `--sprint-well` becomes the mould inverted: a cut edge, a falloff, inner cap darkening, and the
+  bounce lip. Every recessed control deepens at once — fields, the SegmentedControl track, the
+  CodeBlock body, the Switch track. Inert in `dark` and `light`.
+- `--sprint-radius-control-tight` gives Checkbox its own corner. At calorie's 18px control radius a
+  14px box clamped to a circle, so a checkbox rendered as a radio button. `0` in `dark` and `light`.
+- `--sprint-ground-sweep` paints a lighting falloff behind the page from `Shell`. `none` in `dark`
+  and `light`, and `Shell` still sets no background colour of its own.
+- `calorie-dark` raises its lip and fresnel inks above the bone ground's, because a black shadow on a
+  near-black ground separates nothing and the edge light has to do that work instead.
+- Fixed: hovering the selected option in a SegmentedControl turned it neutral grey, so the selection
+  appeared to follow the pointer. It now brightens to `--sprint-action-hover`.
+
+- Fixed: the pointer-tracked specular never moved. `--sprint-sheen` was declared on `:root`, so
+  `--sprint-gloss-x` was substituted there against its initial value and the resulting literal
+  inherited down. The gloss composites now live on `[data-sprint], [data-sprint-part]` and resolve
+  per element.
+- Shading composites by blend mode instead of alpha over black. The rim insets leave `--sprint-mold`
+  and become `--sprint-shade` / `--sprint-shade-compact`, background layers multiplied under a
+  screened specular, so a saturated face darkens toward its own hue rather than toward grey.
+  `--sprint-blend-lit` and `--sprint-blend-shade` are the matching blend lists.
+- `--sprint-cast-shift` swings the cast shadow opposite the tracked specular, and
+  `--sprint-gloss-fade` drops the specular to a quarter strength as it reaches a cap. Both are
+  registered properties, both rest at a neutral value, and both are inert without a hovering pointer.
+- `--sprint-cast-contact-ink` separates the tight contact shadow from the long ambient one. It is
+  `transparent` in `dark` and `light`.
+
+- `calorie` and `calorie-dark` are rebuilt as a bold, dimensional register rather than a quiet beige
+  one: neutral bone and carbon grounds, a hot magenta action, a heavy grotesk display voice, larger
+  radii, and molded-plastic depth with a real pressed state. Breaking for anyone who had adopted the
+  linen palette.
+- Depth is a new semantic category. `--sprint-mold`, `--sprint-well`, `--sprint-cast` and their inks
+  are inert in `dark` and `light`, which are unchanged.
+- `--sprint-action-mark` splits the action family into a filled field and a mark drawn on the page
+  ground, and `--sprint-link` / `--sprint-link-rule` stop links from borrowing `--sprint-info`. All
+  three alias their old values in `dark` and `light`.
+- `--sprint-display-weight` and `--sprint-display-tracking` join the type roles.
+- `--sprint-radius-surface-inner` and `--sprint-radius-control-inner` give inset children their own
+  concentric corners instead of relying on the parent's clip, fixing a notched corner where a header
+  band met a rounded panel. Both resolve to `0` in `dark` and `light`.
+- Calorie's molded faces are curved rather than bevelled: one soft specular in the upper body, caps
+  that shade away from that single light, and a bounce-light along the bottom. Shading is
+  confined above and below the label band, because a filled control has under 8% of contrast headroom
+  where its text sits. Short controls now pill themselves via radius clamping.
+- Gloss: a tight specular over the broad sheen, a fresnel hairline around the rim, a press that
+  squashes as well as drops, and a hover lift. The tight specular tracks the pointer, clamped so it
+  can never cross a label and change its contrast at runtime; off for touch and reduced motion.
+- `pin` and `parting` join the ornament vocabulary: the ejector-pin ring and the mould seam. The new
+  `--sprint-ornament-empty` role lets a theme choose the empty-state mark, and calorie takes `pin`.
+- Fixed: a theme's `--sprint-ornament-ink` override never applied, because `ornament.css` declared
+  the default on `:root` and is imported after `semantic.css` at equal specificity. Calorie's tinted
+  ornament has never rendered until now.
+- `Button`'s loading hatch is clipped to the button's corners. It was a square overlay, which only
+  showed once a register gave controls a radius.
+- `Dialog`'s registration outline now routes through `--sprint-keyline-halo` like `Panel`'s, and its
+  backdrop paints a scrim.
+
 ## v0.2.0 - 2026-09-14
 
 - `calorie`: an optional third theme, and the first that is a different register rather than a

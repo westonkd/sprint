@@ -31,12 +31,12 @@
   }
 
   [data-sprint-view-copy]:hover {
-    border-color: var(--sprint-action);
-    color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
+    color: var(--sprint-action-mark);
   }
 
   [data-sprint-view-copy][data-sprint-copied] {
-    border-color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
     background: var(--sprint-action);
     color: var(--sprint-action-ink);
   }

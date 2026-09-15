@@ -4,6 +4,7 @@
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
     border-radius: var(--sprint-radius-control);
     background: var(--sprint-surface);
+    box-shadow: var(--sprint-well);
   }
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"] {
@@ -20,7 +21,13 @@
     text-transform: var(--sprint-label-transform);
     white-space: nowrap;
     cursor: pointer;
-    transition: background-color var(--sprint-duration-instant) var(--sprint-easing);
+    transition:
+      --sprint-gloss-x var(--sprint-duration-instant) linear,
+      --sprint-gloss-fade var(--sprint-duration-instant) linear,
+      --sprint-cast-shift var(--sprint-duration-instant) linear,
+      background-color var(--sprint-duration-instant) var(--sprint-easing),
+      box-shadow var(--sprint-duration-instant) var(--sprint-easing),
+      transform var(--sprint-duration-instant) var(--sprint-easing);
   }
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:last-child {
@@ -28,13 +35,13 @@
   }
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:first-child {
-    border-start-start-radius: var(--sprint-radius-control);
-    border-end-start-radius: var(--sprint-radius-control);
+    border-start-start-radius: var(--sprint-radius-control-inner);
+    border-end-start-radius: var(--sprint-radius-control-inner);
   }
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:last-child {
-    border-start-end-radius: var(--sprint-radius-control);
-    border-end-end-radius: var(--sprint-radius-control);
+    border-start-end-radius: var(--sprint-radius-control-inner);
+    border-end-end-radius: var(--sprint-radius-control-inner);
   }
 
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:focus-visible {
@@ -42,13 +49,26 @@
     z-index: 1;
   }
 
+  [data-sprint="SegmentedControl"] [data-sprint-part="option"]:active:not(:disabled) {
+    transform: translateY(var(--sprint-press-shift)) scaleY(var(--sprint-press-scale));
+  }
+
   [data-sprint="SegmentedControl"] [data-sprint-part="option"]:hover:not(:disabled) {
-    background: var(--sprint-neutral-hover);
+    background-color: var(--sprint-neutral-hover);
     color: var(--sprint-ink);
   }
 
+  [data-sprint="SegmentedControl"]
+    [data-sprint-part="option"][aria-checked="true"]:hover:not(:disabled) {
+    background-color: var(--sprint-action-hover);
+    color: var(--sprint-action-ink);
+  }
+
   [data-sprint="SegmentedControl"] [data-sprint-part="option"][aria-checked="true"] {
-    background: var(--sprint-action);
+    background-color: var(--sprint-action);
+    background-image: var(--sprint-sheen-compact), var(--sprint-shade-compact);
+    background-blend-mode: var(--sprint-blend-lit);
+    box-shadow: var(--sprint-mold-compact), var(--sprint-cast);
     color: var(--sprint-action-ink);
   }
 

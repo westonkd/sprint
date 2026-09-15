@@ -86,6 +86,8 @@
     padding: var(--sprint-space-1) var(--sprint-space-3);
     border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
     background: var(--sprint-surface-inset);
+    border-end-start-radius: var(--sprint-radius-surface-inner);
+    border-end-end-radius: var(--sprint-radius-surface-inner);
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size-small);

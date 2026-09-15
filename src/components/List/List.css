@@ -25,7 +25,7 @@
 
   [data-sprint="List"] > li::before {
     content: "+";
-    color: var(--sprint-action);
+    color: var(--sprint-action-mark);
     font-size: var(--sprint-label-size);
   }
 
@@ -48,7 +48,7 @@
   }
 
   [data-sprint="List"] code {
-    color: var(--sprint-action);
+    color: var(--sprint-action-mark);
     overflow-wrap: anywhere;
   }
 

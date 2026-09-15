@@ -6,6 +6,7 @@ const AA_NORMAL = 4.5;
 const BOUNDARY = 3;
 const BASE_SCOPE = ":root";
 const THEME_SCOPE = /^\[data-sprint-theme="([\w-]+)"\]$/;
+const GLOSS_SCOPE = /^\[data-sprint(-part)?\]$/;
 
 type Tokens = Map<string, string>;
 
@@ -24,6 +25,7 @@ function loadOverrides(): { base: Tokens; overrides: Map<string, Tokens> } {
 
       for (const part of selector.split(",").map((one) => one.trim())) {
         if (part === "" || part.startsWith("@")) continue;
+        if (GLOSS_SCOPE.test(part)) continue;
 
         let target: Tokens;
         if (part === BASE_SCOPE) {
@@ -107,7 +109,10 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-inert-ink", "--sprint-inert"],
   ["--sprint-focus", "--sprint-surface"],
   ["--sprint-focus", "--sprint-surface-raised"],
-  ["--sprint-action", "--sprint-surface"],
+  ["--sprint-action-mark", "--sprint-surface"],
+  ["--sprint-action-mark", "--sprint-surface-raised"],
+  ["--sprint-link", "--sprint-surface"],
+  ["--sprint-link", "--sprint-surface-raised"],
   ["--sprint-danger", "--sprint-surface"],
   ["--sprint-info", "--sprint-surface"],
   ["--sprint-info-ink", "--sprint-info"],
@@ -193,12 +198,45 @@ describe("theme-specific findings", () => {
         resolveToken(themeByName("calorie"), "--sprint-surface"),
       ),
     ).toBeLessThan(AA_NORMAL);
-    expect(resolveToken(themeByName("calorie"), "--sprint-action")).not.toBe(
-      resolveToken(themeByName("calorie"), "--sprint-color-acid"),
-    );
+    for (const role of ["--sprint-action", "--sprint-action-mark"]) {
+      expect(resolveToken(themeByName("calorie"), role)).not.toBe(
+        resolveToken(themeByName("calorie"), "--sprint-color-acid"),
+      );
+    }
   });
 
-  it("uses linen ink on calorie danger, where the ground's own ink would fail", () => {
+  it.each([...THEMES.keys()])(
+    "keeps the %s filled action distinguishable from its ground at 3:1",
+    (name) => {
+      const tokens = themeByName(name);
+      const ratio = contrast(
+        resolveToken(tokens, "--sprint-action"),
+        resolveToken(tokens, "--sprint-surface"),
+      );
+      expect(
+        ratio,
+        `${name} action on surface is ${ratio.toFixed(2)}:1`,
+      ).toBeGreaterThanOrEqual(BOUNDARY);
+    },
+  );
+
+  it.each(
+    [...THEMES.keys()].filter(
+      (name) =>
+        resolveToken(themeByName(name), "--sprint-action-ink") !==
+        resolveToken(themeByName(name), "--sprint-color-acid"),
+    ),
+  )(
+    "never spends the %s focus hue on the action, so attention stays distinct",
+    (name) => {
+      const tokens = themeByName(name);
+      expect(resolveToken(tokens, "--sprint-focus")).not.toBe(
+        resolveToken(tokens, "--sprint-action"),
+      );
+    },
+  );
+
+  it("uses a light ink on calorie danger, where the ground's own ink would fail", () => {
     const danger = resolveToken(themeByName("calorie"), "--sprint-danger");
     expect(
       contrast(resolveToken(themeByName("calorie"), "--sprint-ink"), danger),

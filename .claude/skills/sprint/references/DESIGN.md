@@ -150,9 +150,15 @@ icons. An icon should look like it was drawn by the same tool that set the type.
 
 ## Calorie, the second register
 
-`data-sprint-theme="calorie"` and `data-sprint-theme="calorie-dark"` are a warm, rounded, quiet
-register for products that want the agent contract without the house style. It is not a third ground
-in the register above; it breaks rules 1, 3, and 7 outright, and softens 5.
+`data-sprint-theme="calorie"` and `data-sprint-theme="calorie-dark"` are a bold, dimensional register
+taking the NuCaloric brand design from Bungie's Marathon as its reference: neutral bone and carbon
+grounds, one hot magenta hero, heavy grotesk display type, spec-sheet micro-labels, and molded
+plastic physicality. It is not a third ground in the register above, and it is not a quieter Sprint —
+it breaks all seven rules, rule 1 in every clause.
+
+**The second register's depth model is lighting. The default register's is stacking and keyline
+weight.** Rule 1 has not softened; it governs the default register, and calorie is the exception it
+now names.
 
 The attribute names a cell in a two-by-two grid of register and ground, never one axis of it:
 
@@ -167,58 +173,69 @@ declared once in a block selecting both values; only color roles and `color-sche
 
 | | Default register | Calorie |
 | --- | --- | --- |
-| Ground | Void, or paper in `light` | Linen `#f3efe6`, or bark `#171410` in `calorie-dark` |
-| Action | Acid, or ultramarine in `light` | Indigo `#3a3fb8` |
-| Danger | Magenta | Vermilion `#b3261e` |
-| Warning | Yellow, or olive in `light` | Amber `#8c6100` |
-| Headings | h2-h4 are one label grade | A ramp: serif h2, then 1rem and 0.875rem |
+| Ground | Void, or paper in `light` | Bone `#eceae5`, or carbon `#0d0d0c` in `calorie-dark` |
+| Action field | Acid, or ultramarine in `light` | Flare `#ff1466`, with near-black ink |
+| Action mark | Aliases the field | Flare-deep `#c2004b`, or flare-pale on carbon |
+| Link | Aliases `info` | Ink, underlined with a keyline rule |
+| Danger | Magenta | Crimson `#9b0018`, or its pale sibling |
+| Depth | None; planes and keylines | Mold, well and cast — see below |
+| Headings | h2-h4 are one label grade | A ramp: grotesk h2, then 1rem and 0.875rem |
 | Panel edge | Keyline plus an offset halo keyline | One keyline; the halo is off |
-| Corners | Square | 8px controls, 14px surfaces, pill for Tag and Switch |
-| UI voice | Monospace, uppercase, 0.12em | Humanist sans, sentence case, 0.01em |
+| Corners | Square | 14px controls, 20px surfaces, pill for Tag and Switch |
+| Display voice | High-contrast serif, uppercase | Heavy grotesk, sentence case, −0.03em |
+| UI voice | Monospace, uppercase, 0.12em | Grotesk, uppercase labels, 0.12em |
 | Motion | `linear`, `steps(4, end)`, 80–160ms | `cubic-bezier(0.2, 0, 0, 1)`, 120–240ms |
-| Focus | Cyan, against acid actions | Ember `#b4460a`, against indigo actions |
+| Focus | Cyan, against acid actions | Indigo `#3a3fb8`, against flare actions |
+| Press | None | The lip collapses and the object drops 1px |
 | Density | Tight; whitespace reads as off-brand | ~30% roomier at every space step |
 
-Two things carry across, and they are the test of whether a future theme is a Sprint theme at all:
+Rule 10, which calorie is the first register to need: **depth is a lighting model, not a scale.** A
+molded object under a light shows a bright specular lip along its top edge, a dark self-shadowed rim
+along its bottom, and a soft contact shadow on the ground; anything recessed shows the inverse. So
+the vocabulary is three ideas and not a number — `--sprint-mold` for a thing standing out of the
+surface, `--sprint-well` for a thing pressed into it, `--sprint-cast` for what it throws. A component
+picks a role, not a level. Buttons, Cards, filled Tags and the selected segment are molded; fields,
+the Switch track, the SegmentedControl wrapper and the Panel header band are wells; Panel and Dialog
+only cast. Geometry is declared once and only the inks are themed, so the whole model is inert in the
+default register because every ink there is `transparent`.
+
+Two things carry across, and with the rationed hero hue they are the test of whether a future theme
+is a Sprint theme at all:
 
 - **The ornament vocabulary.** It draws in `--sprint-ornament-ink`, so hatch, dots and crosses land
-  as soft texture on linen rather than hazard hatching on black. Empty states still say they are
-  empty, and still say it with a mark.
-- **The serif display voice.** `--sprint-font-display` is not overridden. The page title stays a
-  high-contrast serif over small UI type. Only its casing relaxes. In calorie it appears twice, at
-  the page title and again at `Heading level={2}`, so the voice reads as a spine rather than one
-  hero moment.
+  as texture rather than hazard hatching. Calorie adds `pin` and `parting` — the ejector-pin ring and
+  the mould seam — which are marks of manufacture rather than illustration, and so belong to it. Empty states still say they are empty, and still say it
+  with a mark. NuCaloric's own checkerboard and technical marks were already in the closed set, so
+  this register leans on the vocabulary rather than merely preserving it.
+- **The micro-label voice.** Chrome is a real grade below body and tracked, which is what makes a
+  Sprint surface read as a spec sheet. This is the generalisation of "uppercase mono labels", and it
+  is why calorie takes uppercase and 0.12em tracking back after the first draft gave both up.
 
-Both carryovers earn their keep only if they are visible. `--sprint-ornament-ink` is the keyline in
-the default register; in calorie it is the keyline warmed 16% toward ember, so hatch and crosses land
-as dusty terracotta texture instead of another shade of tan. A busy Button, a failed Image slot and
-an empty Panel are where a reader first notices the register is not a default.
+The serif display voice used to be the second carryover. It is not any more. `--sprint-font-display`
+is overridable, calorie spends it on a heavy grotesk, and the register clash of serif over mono is
+replaced by a scale clash of heavy display over tiny tracked labels. That is a weaker signature and
+the trade is deliberate: the thing calorie needed was a point of view, and a borrowed serif was not
+one.
 
-Focus is the one place calorie is *louder* than the default register. Ember is the only warm thing
-on the page, so a focus ring can never be mistaken for the indigo action state, and the rule that
-focus and action are different colors now holds in all three themes.
+Rule 9: **a quiet register has to pay for its hierarchy in type.** The default register makes h2, h3
+and h4 a single label grade because uppercase mono at 11px reads as a label whatever its level. Sans
+at 11px does not, so calorie takes a real ramp through `--sprint-heading-2-font|-size|-weight|-ink`
+and `--sprint-heading-3-size|-4-size`. Panel labels are styled by `Panel`, not by `Heading`, so they
+stay a label grade in both registers.
 
-Rule 9, also unwritten until calorie: **a quiet register has to pay for its hierarchy in type.**
-The default register makes h2, h3 and h4 a single label grade because uppercase mono at 11px reads
-as a label whatever its level. Sentence-case sans at 11px reads as bold body text, so calorie takes a
-real ramp through `--sprint-heading-2-font|-size|-weight|-ink` and `--sprint-heading-3-size|-4-size`.
-Panel labels are styled by `Panel`, not by `Heading`, so they stay a label grade in both registers.
-
-Rule 8, unwritten until calorie needed it: **a quiet register has to pay for its hierarchy in
-keylines.** The loud register carries hierarchy in chroma, so a 1.7:1 keyline is enough. Take the
-chroma away and the keyline *is* the structure, which is why calorie's ground/raised/inset ramp is
-wider than light's and why `--sprint-keyline-strong` clears 3:1 on all three of ground, raised and
-inset — the inset case is the Panel header band, and the contrast test walks it for both grounds. The corollary is that the
-default register's *second* edge is surplus here: `Panel`'s offset halo keyline is a registration
-mark that reads as misregistration once corners are rounded, so `--sprint-keyline-halo` is
-transparent in calorie and the surface ramp carries the depth on its own.
+Rule 8: **a register that softens its keylines has to pay for hierarchy elsewhere.** The loud
+register carries hierarchy in chroma, so a 1.7:1 keyline is enough. Calorie's ground/raised/inset
+ramp is wider and `--sprint-keyline-strong` clears 3:1 on all three, the inset case being the Panel
+header band. The corollary is that the default register's *second* edge is surplus here: `Panel`'s
+offset halo keyline reads as misregistration once corners are rounded, so `--sprint-keyline-halo` is
+transparent in calorie and the surface ramp plus the cast shadow carry the depth.
 
 `calorie-dark` is the same family inverted rather than the loud register's palette: ink is the light
-ground's linen, the ground is a warm bark one step off the light register's ink, and every accent is
-the pale sibling of calorie's own hue. Importing the loud register's electric cyan for `info` was the
-first draft and it was the only cold thing on the page.
+ground's bone, the ground is a neutral carbon, and the marks are the pale siblings of calorie's own
+hues while the flare field itself is unchanged across both grounds. Importing the loud register's
+electric cyan for `info` was the first draft and it was the only cold thing on the page.
 
-Acid appears nowhere in calorie. It is 1.24:1 on linen, and unlike `light` there is no ultramarine
+Acid appears nowhere in calorie. It is 1.24:1 on bone, and unlike `light` there is no ultramarine
 field to rescue it as ink. Rule 4 (everything is labeled) and rule 6 (ornament is systematic) hold in
 both registers, because they are structural rather than visual.
 

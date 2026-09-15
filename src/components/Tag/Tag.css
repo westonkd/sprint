@@ -15,8 +15,8 @@
   }
 
   [data-sprint="Tag"][data-sprint-tone="action"] {
-    border-color: var(--sprint-action);
-    color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
+    color: var(--sprint-action-mark);
   }
 
   [data-sprint="Tag"][data-sprint-tone="danger"] {
@@ -40,33 +40,36 @@
   }
 
   [data-sprint="Tag"][data-sprint-filled] {
-    background: var(--sprint-neutral-hover);
+    background-color: var(--sprint-neutral-hover);
+    background-image: var(--sprint-sheen-compact), var(--sprint-shade-compact);
+    background-blend-mode: var(--sprint-blend-lit);
+    box-shadow: var(--sprint-mold-compact);
     border-color: var(--sprint-neutral-hover);
     color: var(--sprint-ink);
   }
 
   [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="action"] {
-    background: var(--sprint-action);
+    background-color: var(--sprint-action);
     color: var(--sprint-action-ink);
   }
 
   [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="danger"] {
-    background: var(--sprint-danger);
+    background-color: var(--sprint-danger);
     color: var(--sprint-danger-ink);
   }
 
   [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="info"] {
-    background: var(--sprint-info);
+    background-color: var(--sprint-info);
     color: var(--sprint-info-ink);
   }
 
   [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="warning"] {
-    background: var(--sprint-warning);
+    background-color: var(--sprint-warning);
     color: var(--sprint-warning-ink);
   }
 
   [data-sprint="Tag"][data-sprint-filled][data-sprint-tone="inert"] {
-    background: var(--sprint-inert);
+    background-color: var(--sprint-inert);
     border-color: var(--sprint-keyline);
     color: var(--sprint-inert-ink);
   }

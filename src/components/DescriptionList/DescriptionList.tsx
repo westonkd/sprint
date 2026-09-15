@@ -56,7 +56,9 @@ export function DescriptionList(props: DescriptionListProps) {
   return (
     <dl {...rest} {...agentAttributesFor(node)} aria-label={label}>
       {empty ? (
-        <div>{emptyLabel}</div>
+        <div>
+          <span>{emptyLabel}</span>
+        </div>
       ) : (
         items.map((item, index) => (
           <div

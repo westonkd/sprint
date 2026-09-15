@@ -30,6 +30,7 @@
     padding-right: calc(var(--sprint-space-3) * 2 + 10px);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     background: var(--sprint-surface);
+    box-shadow: var(--sprint-well);
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);

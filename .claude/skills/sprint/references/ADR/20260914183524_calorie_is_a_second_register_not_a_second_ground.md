@@ -1,6 +1,11 @@
 # Calorie is a second register, not a second ground
 
-- **Status**: Accepted
+- **Status**: Superseded in part by
+  20260914211336_calorie_is_the_nucaloric_register_and_the_sprint_test_moves_off_the_serif.md and
+  20260914211336_the_action_family_splits_into_a_field_and_a_mark_and_link_stops_borrowing_info.md.
+  The register split, the ornament carryover and the keyline-hierarchy finding stand. Three claims do
+  not: the serif display voice as a non-overridable carryover and as the test of whether a theme is a
+  Sprint theme, the indigo action on a linen ground, and ember as the focus hue.
 - **Date**: 2026-09-14
 - **Depends on**: 20260914183524_the_semantic_layer_carries_shape_type_and_motion_not_only_color.md
 

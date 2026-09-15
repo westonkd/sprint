@@ -17,6 +17,8 @@
     padding: var(--sprint-space-1) var(--sprint-space-3);
     border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
     background: var(--sprint-surface-inset);
+    border-start-start-radius: var(--sprint-radius-surface-inner);
+    border-start-end-radius: var(--sprint-radius-surface-inner);
   }
 
   [data-sprint="CodeBlock"] > header > span {
@@ -41,12 +43,12 @@
   }
 
   [data-sprint="CodeBlock"] [data-sprint-part="copy"]:hover {
-    border-color: var(--sprint-action);
-    color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
+    color: var(--sprint-action-mark);
   }
 
   [data-sprint="CodeBlock"][data-sprint-copied] [data-sprint-part="copy"] {
-    border-color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
     background: var(--sprint-action);
     color: var(--sprint-action-ink);
   }
@@ -62,7 +64,7 @@
   }
 
   [data-sprint="CodeBlock"] [data-sprint-token="tag"] {
-    color: var(--sprint-action);
+    color: var(--sprint-action-mark);
   }
 
   [data-sprint="CodeBlock"] [data-sprint-token="attr"] {

@@ -73,7 +73,10 @@ body {
 }
 
 .stage {
-  --stage-bleed: calc(var(--sprint-focus-offset) + var(--sprint-focus-width));
+  --stage-bleed: max(
+    calc(var(--sprint-focus-offset) + var(--sprint-focus-width)),
+    var(--sprint-space-4)
+  );
   display: flex;
   flex-wrap: wrap;
   align-items: center;

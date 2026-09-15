@@ -27,8 +27,8 @@
     color: var(--sprint-ink);
     font-family: var(--sprint-font-display);
     font-size: var(--sprint-display-size);
-    font-weight: var(--sprint-weight-regular);
-    letter-spacing: var(--sprint-tracking-tight);
+    font-weight: var(--sprint-display-weight);
+    letter-spacing: var(--sprint-display-tracking);
     line-height: var(--sprint-leading-display);
     text-transform: var(--sprint-display-transform);
     overflow-wrap: anywhere;
