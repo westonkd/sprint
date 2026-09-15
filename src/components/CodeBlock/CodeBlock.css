@@ -22,7 +22,7 @@
   [data-sprint="CodeBlock"] > header > span {
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking-wide);
     text-transform: var(--sprint-label-transform);
   }
@@ -34,7 +34,7 @@
     background: none;
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);
     cursor: pointer;

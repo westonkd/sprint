@@ -14,6 +14,9 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
   `--sprint-display-transform`, `--sprint-label-tracking-wide`, `--sprint-scanline-opacity`, and the
   `--sprint-leading-*` scale. Defaults reproduce the existing rendering, so `dark` and `light` are
   unchanged.
+- Text fields, textareas, selects and secret values take a stronger rest boundary, matching the
+  ranking Checkbox and Switch already used. Their old border fell short of the 3:1 WCAG asks of a
+  control boundary in every theme.
 - `data-sprint-theme="dark"` now resets the dark mapping explicitly, so a dark subtree nested inside
   a lighter one works. Previously only `:root` carried it.
 

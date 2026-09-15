@@ -8,7 +8,7 @@
   [data-sprint="Textarea"] label {
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     font-weight: var(--sprint-weight-bold);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);
@@ -21,7 +21,7 @@
 
   [data-sprint="Textarea"] [data-sprint-part="input"] {
     padding: var(--sprint-space-3);
-    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     border-radius: var(--sprint-radius-control);
     background: var(--sprint-surface);
     color: var(--sprint-ink);
@@ -39,11 +39,11 @@
   }
 
   [data-sprint="Textarea"] [data-sprint-part="input"]:hover:not(:disabled) {
-    border-color: var(--sprint-keyline-strong);
+    border-color: var(--sprint-ink);
   }
 
   [data-sprint="Textarea"] [data-sprint-part="input"]:focus-visible {
-    border-color: var(--sprint-keyline-strong);
+    border-color: var(--sprint-ink);
     outline: var(--sprint-focus-width) solid var(--sprint-focus);
     outline-offset: var(--sprint-focus-offset);
   }
@@ -63,7 +63,7 @@
   [data-sprint="Textarea"] [data-sprint-part="error"] {
     margin: 0;
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);
   }

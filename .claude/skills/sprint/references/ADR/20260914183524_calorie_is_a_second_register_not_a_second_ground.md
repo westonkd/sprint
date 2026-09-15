@@ -41,7 +41,27 @@ theme, which kept acid alive as ink on ultramarine, calorie has no field to put 
 invent one. Two findings are pinned in the contrast test: acid must not be the calorie action role,
 and calorie danger takes light ink because the ground's own ink fails on vermilion at 3.03:1.
 
-All 19 contrast pairings pass AA, the tightest at 5.35:1.
+All 19 contrast pairings pass AA, the tightest at 5.11:1.
+
+**Focus is ember, not the action color.** The first draft made `--sprint-focus` indigo, the same
+token as `--sprint-action`, which the other two themes deliberately avoid: dark pairs cyan focus with
+acid actions, light pairs ultramarine focus with an ultramarine action only because acid takes the
+ink. `--sprint-color-ember` `#b4460a` is 4.79:1 on the linen ground and maximally separated in hue
+from indigo, so it is both the correction and the register's one loud moment. It is also the answer
+to what carries over from acid: not the color, but the idea that one rationed, unmistakable hue means
+"the system is paying attention to this".
+
+**A quiet register pays for hierarchy in keylines.** The loud register carries hierarchy in chroma,
+so its 1.74:1 keyline and 1.09:1 ground/raised separation are enough. On linen they vanished: panels
+had no edge and the surface ramp was imperceptible at 1.05:1. The linen ramp was rewritten to widen
+both — ground `#f3efe6`, raised `#fffdf8`, inset `#e8e2d4`, keyline `#c9c0ad`, keyline-strong
+`#8e8374` at 3.24:1.
+
+**Calorie is roomier, because density is part of a register.** DESIGN.md's "dense over airy" belongs
+to the default register, not to the library, so the space scale moved into the theme blocks alongside
+motion and calorie takes a scale about 30% larger at every step. Chrome labels also move up a size:
+10px sentence-case sans is unreadable where 10px uppercase mono is not, so `--sprint-label-size` and
+the new `--sprint-label-size-small` both step up one.
 
 **`SprintTheme` becomes `"dark" | "light" | "calorie"`.** The workbench and landing page get the
 third option; the theme control still registers no WebMCP tool, because the agent view is theme-blind

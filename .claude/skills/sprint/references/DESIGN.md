@@ -162,6 +162,8 @@ contract without the house style. It is not a fourth ground in the register abov
 | Corners | Square | 8px controls, 14px surfaces, pill for Tag and Switch |
 | UI voice | Monospace, uppercase, 0.12em | Humanist sans, sentence case, 0.01em |
 | Motion | `linear`, `steps(4, end)`, 80–160ms | `cubic-bezier(0.2, 0, 0, 1)`, 120–240ms |
+| Focus | Cyan, against acid actions | Ember `#b4460a`, against indigo actions |
+| Density | Tight; whitespace reads as off-brand | ~30% roomier at every space step |
 
 Two things carry across, and they are the test of whether a future theme is a Sprint theme at all:
 
@@ -170,6 +172,15 @@ Two things carry across, and they are the test of whether a future theme is a Sp
   empty, and still say it with a mark.
 - **The serif display voice.** `--sprint-font-display` is not overridden. The page title stays a
   high-contrast serif over small UI type, one per screen. Only its casing relaxes.
+
+Focus is the one place calorie is *louder* than the default register. Ember is the only warm thing
+on the page, so a focus ring can never be mistaken for the indigo action state, and the rule that
+focus and action are different colors now holds in all three themes.
+
+Rule 8, unwritten until calorie needed it: **a quiet register has to pay for its hierarchy in
+keylines.** The loud register carries hierarchy in chroma, so a 1.7:1 keyline is enough. Take the
+chroma away and the keyline *is* the structure, which is why calorie's ground/raised/inset ramp is
+wider than light's and why every interactive boundary clears 3:1.
 
 Acid appears nowhere in calorie. It is 1.24:1 on linen, and unlike `light` there is no ultramarine
 field to rescue it as ink. Rule 4 (everything is labeled) and rule 6 (ornament is systematic) hold in

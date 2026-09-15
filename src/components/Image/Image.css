@@ -65,7 +65,7 @@
     background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     line-height: var(--sprint-leading-relaxed);
     text-align: center;
@@ -88,7 +88,7 @@
     background: var(--sprint-surface-inset);
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking-wide);
     text-transform: var(--sprint-label-transform);
   }

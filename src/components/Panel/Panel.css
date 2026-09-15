@@ -48,7 +48,7 @@
     margin: 0;
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     font-weight: var(--sprint-weight-bold);
     letter-spacing: var(--sprint-label-tracking-wide);
     text-transform: var(--sprint-label-transform);
@@ -86,7 +86,7 @@
     padding: var(--sprint-space-6) var(--sprint-space-4);
     background-image: var(--sprint-ornament-hatch);
     color: var(--sprint-ink-muted);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     text-align: center;
     text-transform: var(--sprint-label-transform);

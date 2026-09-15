@@ -32,12 +32,15 @@ the way they already reference color roles.** New in `semantic.css`:
 - `--sprint-label-tracking-wide`, the companion the existing `--sprint-label-tracking` lacked
 - `--sprint-scanline-opacity`, so the loading texture can soften instead of needing a kill switch
 
-`--sprint-leading-*` joins the primitives as a seven-step scale, chosen to be exactly the seven raw
+`--sprint-label-size-small` joins the existing `--sprint-label-size` role, replacing 28 direct
+references to `--sprint-text-3xs` in component chrome. `--sprint-leading-*` joins the primitives as a
+seven-step scale, chosen to be exactly the seven raw
 values already in the tree so the sweep rounds nothing.
 
-**Motion moves out of the primitives into the theme block.** `--sprint-duration-*`, `--sprint-easing`
-and `--sprint-steps` were on `:root` in `primitives.css`, where a theme could only override them by
-cascade and a nested theme could not reset them at all. They now live beside the color roles.
+**Motion and the space scale move out of the primitives into the theme block.** `--sprint-duration-*`, `--sprint-easing`,
+`--sprint-steps` and `--sprint-space-*` were on `:root` in `primitives.css`, where a theme could only
+override them by cascade and a nested theme could not reset them at all. They now live beside the
+color roles, because motion and density are things a register chooses rather than raw values.
 Component CSS is unchanged: the names did not move, only the block they are declared in.
 
 **Every default reproduces the existing rendering exactly**, so dark and light are byte-for-byte
@@ -79,5 +82,9 @@ overlay onto a light ground.
   SegmentedControl deliberately does *not* clip, because
   `20260823212721_only_mutually_exclusive_controls_sit_flush...` gives its options a focus ring that
   escapes the wrapper; its first and last options carry the radius instead.
+- TextInput, Textarea, Select and SecretField now take `--sprint-keyline-strong` at rest and
+  `--sprint-ink` on hover, which is exactly the ranking Checkbox and Switch already used. Their old
+  rest boundary was 1.74:1 in dark and 1.30:1 in light, short of the 3:1 WCAG wants for a control
+  boundary, and the fix lands in every theme rather than only in calorie.
 - Table takes no radius. It is `border-collapse: collapse` with per-cell borders and no outer frame,
   so there is nothing to round.

@@ -28,6 +28,14 @@
   border-block: var(--sprint-keyline-width) solid var(--sprint-ornament-ink);
 }
 
+[data-sprint-theme="calorie"] .landing-rule {
+  --sprint-ornament-hatch-dense: repeating-linear-gradient(
+    135deg,
+    var(--sprint-ornament-ink) 0 1px,
+    transparent 1px 7px
+  );
+}
+
 .landing-footer {
   display: flex;
   align-items: center;

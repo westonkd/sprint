@@ -38,7 +38,7 @@
   [data-sprint="List"][data-sprint-empty] > li {
     grid-template-columns: minmax(0, 1fr);
     color: var(--sprint-ink-muted);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);
   }

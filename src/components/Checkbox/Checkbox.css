@@ -93,7 +93,7 @@
     margin: 0;
     padding-left: calc(0.875rem + var(--sprint-space-3));
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-3xs);
+    font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);
   }
