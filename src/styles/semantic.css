@@ -1,6 +1,8 @@
 @layer sprint.tokens {
   :root,
   [data-sprint-theme="dark"] {
+    color-scheme: dark;
+
     --sprint-surface: var(--sprint-color-void);
     --sprint-surface-raised: var(--sprint-color-panel-100);
     --sprint-surface-inset: var(--sprint-color-panel-200);
@@ -12,6 +14,7 @@
     --sprint-keyline: var(--sprint-color-panel-400);
     --sprint-keyline-strong: var(--sprint-color-panel-500);
     --sprint-keyline-muted: var(--sprint-color-panel-300);
+    --sprint-keyline-halo: var(--sprint-keyline);
 
     --sprint-action: var(--sprint-color-acid);
     --sprint-action-ink: var(--sprint-color-void);
@@ -39,6 +42,13 @@
 
     --sprint-font-display: var(--sprint-font-serif);
     --sprint-display-size: var(--sprint-text-display);
+
+    --sprint-heading-2-font: var(--sprint-font-ui);
+    --sprint-heading-2-size: var(--sprint-label-size);
+    --sprint-heading-2-weight: var(--sprint-weight-bold);
+    --sprint-heading-2-ink: var(--sprint-ink-muted);
+    --sprint-heading-3-size: var(--sprint-label-size);
+    --sprint-heading-4-size: var(--sprint-label-size);
 
     --sprint-label-size: var(--sprint-text-2xs);
     --sprint-label-size-small: var(--sprint-text-3xs);
@@ -71,6 +81,8 @@
   }
 
   [data-sprint-theme="light"] {
+    color-scheme: light;
+
     --sprint-surface: var(--sprint-color-paper);
     --sprint-surface-raised: var(--sprint-color-paper-100);
     --sprint-surface-inset: var(--sprint-color-paper-200);
@@ -106,47 +118,19 @@
     --sprint-focus: var(--sprint-color-ultramarine);
   }
 
-  [data-sprint-theme="calorie"] {
-    --sprint-surface: var(--sprint-color-linen);
-    --sprint-surface-raised: var(--sprint-color-linen-50);
-    --sprint-surface-inset: var(--sprint-color-linen-200);
-
-    --sprint-ink: var(--sprint-color-linen-900);
-    --sprint-ink-muted: var(--sprint-color-linen-700);
-    --sprint-ink-inverse: var(--sprint-color-linen-50);
-
-    --sprint-keyline: var(--sprint-color-linen-400);
-    --sprint-keyline-strong: var(--sprint-color-linen-500);
-    --sprint-keyline-muted: var(--sprint-color-linen-300);
-
-    --sprint-action: var(--sprint-color-indigo);
-    --sprint-action-ink: var(--sprint-color-linen-50);
-    --sprint-action-hover: var(--sprint-color-indigo-deep);
-
-    --sprint-danger: var(--sprint-color-vermilion);
-    --sprint-danger-ink: var(--sprint-color-linen-50);
-    --sprint-danger-hover: var(--sprint-color-vermilion-deep);
-
-    --sprint-neutral: transparent;
-    --sprint-neutral-ink: var(--sprint-color-linen-900);
-    --sprint-neutral-hover: var(--sprint-color-linen-200);
-
-    --sprint-inert: var(--sprint-color-linen-200);
-    --sprint-inert-ink: var(--sprint-color-linen-600);
-
-    --sprint-info: var(--sprint-color-cyan-deep);
-    --sprint-info-ink: var(--sprint-color-linen-50);
-    --sprint-warning: var(--sprint-color-warning-deep);
-    --sprint-warning-ink: var(--sprint-color-linen-50);
-
-    --sprint-focus: var(--sprint-color-ember);
-
-    --sprint-ornament-ink: var(--sprint-color-linen-300);
-
+  [data-sprint-theme="calorie"],
+  [data-sprint-theme="calorie-dark"] {
     --sprint-label-size: var(--sprint-text-xs);
     --sprint-label-size-small: var(--sprint-text-2xs);
     --sprint-label-tracking: 0.01em;
     --sprint-label-tracking-wide: 0.02em;
+
+    --sprint-heading-2-font: var(--sprint-font-display);
+    --sprint-heading-2-size: var(--sprint-text-xl);
+    --sprint-heading-2-weight: var(--sprint-weight-regular);
+    --sprint-heading-2-ink: var(--sprint-ink);
+    --sprint-heading-3-size: var(--sprint-text-lg);
+    --sprint-heading-4-size: var(--sprint-text-md);
 
     --sprint-font-ui:
       ui-sans-serif, "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
@@ -173,5 +157,95 @@
     --sprint-space-4: 1rem;
     --sprint-space-5: 1.375rem;
     --sprint-space-6: 2rem;
+  }
+
+  [data-sprint-theme="calorie"] {
+    color-scheme: light;
+
+    --sprint-surface: var(--sprint-color-linen);
+    --sprint-surface-raised: var(--sprint-color-linen-50);
+    --sprint-surface-inset: var(--sprint-color-linen-200);
+
+    --sprint-ink: var(--sprint-color-linen-900);
+    --sprint-ink-muted: var(--sprint-color-linen-700);
+    --sprint-ink-inverse: var(--sprint-color-linen-50);
+
+    --sprint-keyline: var(--sprint-color-linen-400);
+    --sprint-keyline-strong: var(--sprint-color-linen-500);
+    --sprint-keyline-muted: var(--sprint-color-linen-300);
+    --sprint-keyline-halo: transparent;
+
+    --sprint-action: var(--sprint-color-indigo);
+    --sprint-action-ink: var(--sprint-color-linen-50);
+    --sprint-action-hover: var(--sprint-color-indigo-deep);
+
+    --sprint-danger: var(--sprint-color-vermilion);
+    --sprint-danger-ink: var(--sprint-color-linen-50);
+    --sprint-danger-hover: var(--sprint-color-vermilion-deep);
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-linen-900);
+    --sprint-neutral-hover: var(--sprint-color-linen-200);
+
+    --sprint-inert: var(--sprint-color-linen-200);
+    --sprint-inert-ink: var(--sprint-color-linen-600);
+
+    --sprint-info: var(--sprint-color-cyan-deep);
+    --sprint-info-ink: var(--sprint-color-linen-50);
+    --sprint-warning: var(--sprint-color-amber);
+    --sprint-warning-ink: var(--sprint-color-linen-50);
+
+    --sprint-focus: var(--sprint-color-ember);
+
+    --sprint-ornament-ink: color-mix(
+      in oklab,
+      var(--sprint-color-ember) 16%,
+      var(--sprint-color-linen-300)
+    );
+  }
+
+  [data-sprint-theme="calorie-dark"] {
+    color-scheme: dark;
+
+    --sprint-surface: var(--sprint-color-bark);
+    --sprint-surface-raised: var(--sprint-color-bark-100);
+    --sprint-surface-inset: var(--sprint-color-bark-200);
+
+    --sprint-ink: var(--sprint-color-linen);
+    --sprint-ink-muted: var(--sprint-color-bark-600);
+    --sprint-ink-inverse: var(--sprint-color-bark);
+
+    --sprint-keyline: var(--sprint-color-bark-400);
+    --sprint-keyline-strong: var(--sprint-color-bark-500);
+    --sprint-keyline-muted: var(--sprint-color-bark-300);
+    --sprint-keyline-halo: transparent;
+
+    --sprint-action: var(--sprint-color-indigo-pale);
+    --sprint-action-ink: var(--sprint-color-bark);
+    --sprint-action-hover: #bcc0ff;
+
+    --sprint-danger: var(--sprint-color-vermilion-pale);
+    --sprint-danger-ink: var(--sprint-color-bark);
+    --sprint-danger-hover: #ffb5a6;
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-linen);
+    --sprint-neutral-hover: var(--sprint-color-bark-200);
+
+    --sprint-inert: var(--sprint-color-bark-200);
+    --sprint-inert-ink: var(--sprint-color-bark-600);
+
+    --sprint-info: var(--sprint-color-cyan-pale);
+    --sprint-info-ink: var(--sprint-color-bark);
+    --sprint-warning: var(--sprint-color-amber-pale);
+    --sprint-warning-ink: var(--sprint-color-bark);
+
+    --sprint-focus: var(--sprint-color-ember-pale);
+
+    --sprint-ornament-ink: color-mix(
+      in oklab,
+      var(--sprint-color-ember-pale) 18%,
+      var(--sprint-color-bark-300)
+    );
   }
 }

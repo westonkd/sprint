@@ -26,7 +26,7 @@
   [data-sprint="List"] > li::before {
     content: "+";
     color: var(--sprint-action);
-    font-size: var(--sprint-text-2xs);
+    font-size: var(--sprint-label-size);
   }
 
   [data-sprint="List"][data-sprint-ordered] > li::before {

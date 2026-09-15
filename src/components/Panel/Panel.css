@@ -4,7 +4,7 @@
     --sprint-panel-ground-role: raised;
     display: block;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
-    outline: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    outline: var(--sprint-keyline-width) solid var(--sprint-keyline-halo);
     outline-offset: 2px;
     border-radius: var(--sprint-radius-surface);
     overflow: hidden;

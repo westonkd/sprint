@@ -21,7 +21,7 @@ polarizes.
 than the library.** The seven rules are unchanged and still govern `dark` and `light`. They are no
 longer a claim about every Sprint surface.
 
-**The register is warm, rounded, and quiet.** A linen ground (`#faf7f2`) rather than paper white,
+**The register is warm, rounded, and quiet.** A linen ground (`#f3efe6`) rather than paper white,
 indigo as the action color, vermilion for danger, a humanist sans as `--sprint-font-ui`,
 sentence-case labels at near-zero tracking, 8px and 14px radii, a pill for Tag and Switch, and eased
 motion at 120–240ms in place of `linear` and `steps(4, end)`.
@@ -67,6 +67,30 @@ the new `--sprint-label-size-small` both step up one.
 third option; the theme control still registers no WebMCP tool, because the agent view is theme-blind
 and an agent gains nothing from flipping it.
 
+**The register's own devices had to be finished, not only its tokens.** A first pass that only
+remapped color, shape, type and motion left calorie reading as a competent but anonymous beige admin
+theme, because the things that make Sprint recognisable were all declared and none of them were
+visible:
+
+- *The ornament was invisible.* `--sprint-ornament-ink` resolved to linen-300 on a near-white raised
+  surface. It now warms the keyline 16% toward ember, so a busy Button, an empty Panel and a broken
+  Image slot all show a dusty terracotta texture that no other library ships.
+- *The serif appeared once.* `--sprint-heading-2-*` gives calorie a serif `h2`, so the display voice
+  recurs at a working scale instead of only in the page title.
+- *There was no type ramp at all.* `Heading` levels 2 through 4 were one label grade, which works
+  when the label grade is 11px uppercase mono and collapses when it is 11px sentence-case sans.
+  Levels 2, 3 and 4 are now semantic tokens; the default register maps all three to the label size,
+  so it is unchanged.
+- *Chrome labels disagreed with each other.* Checkbox, Switch, Nav, Card, Table and List read the
+  `--sprint-text-2xs` primitive directly rather than `--sprint-label-size`, so they stayed at 11px
+  while every label that had been converted moved to 12px. They now take the role.
+- *Warning was mud.* The light theme's `#7a5d00` is an olive at 46 degrees hue; on linen it reads as
+  a stain rather than a caution. `--sprint-color-amber` `#8c6100` is 4.78:1 on the linen ground and
+  sits in the warm family with vermilion and ember without colliding with either.
+- *Panels had two edges.* `Panel`'s offset outline is a registration mark from the default register
+  and reads as misregistration on a 14px radius. `--sprint-keyline-halo` makes it a role, and calorie
+  sets it transparent.
+
 ## Consequences
 
 **Easier:**
@@ -84,5 +108,7 @@ and an agent gains nothing from flipping it.
 - `calorie` is a permanent public value, and the linen ramp, indigo and vermilion are permanent
   primitives.
 - Every new component now has three themes to walk, and the third is the one where a missing
-  `--sprint-radius-*` declaration shows.
-- There is no dark counterpart. A `calorie`-register dark theme is a separate decision.
+  `--sprint-radius-*` declaration shows, or a raw `--sprint-text-2xs` where `--sprint-label-size`
+  belongs.
+- There is no dark counterpart. A `calorie`-register dark theme is a separate decision, taken in
+  20260914191641_the_theme_attribute_names_a_register_and_ground_cell_not_an_axis.md.

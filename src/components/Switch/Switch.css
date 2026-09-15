@@ -8,7 +8,7 @@
     background: none;
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-2xs);
+    font-size: var(--sprint-label-size);
     font-weight: var(--sprint-weight-bold);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);

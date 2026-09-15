@@ -1,6 +1,7 @@
 @layer sprint.components {
   [data-sprint="NavGroup"] {
-    display: block;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
   }
 

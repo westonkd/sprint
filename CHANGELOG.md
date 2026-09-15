@@ -9,6 +9,27 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
   different ground. Warm linen surfaces, indigo actions, rounded corners, a humanist sans, sentence
   case, and eased motion, keeping the ornament vocabulary and the serif display voice so it still
   reads as Sprint. Set it with `data-sprint-theme="calorie"` or `<SprintProvider theme="calorie">`.
+- `Heading` levels 2, 3, and 4 take their size from the semantic layer
+  (`--sprint-heading-2-font|-size|-weight|-ink`, `--sprint-heading-3-size`, `--sprint-heading-4-size`)
+  instead of sharing one label grade. `dark` and `light` map all three back to the label size and are
+  unchanged; `calorie` takes a real ramp, with the serif display voice at level 2.
+- `--sprint-keyline-halo` names the offset second keyline `Panel` draws. It is the keyline by default
+  and transparent in `calorie`, where a doubled edge on a rounded corner reads as misregistration.
+- Checkbox, Switch, Nav, Card, Table, and List read `--sprint-label-size` rather than the
+  `--sprint-text-2xs` primitive, so every chrome label in a theme moves together. No change in `dark`
+  or `light`.
+- `calorie` warning moves off the light theme's olive to amber `#8c6100`, and its ornament ink warms
+  toward ember, so hatch and crosses are visible texture rather than another shade of tan.
+- `NavGroup` stacks its own links instead of relying on `Nav` to do it, so a group used on its own no
+  longer runs its links together on one line.
+- `calorie-dark`: the calorie register on a warm dark ground, so the register is usable in a product
+  that ships a dark mode. `data-sprint-theme` now takes `dark|light|calorie|calorie-dark`, naming a
+  cell in a register-by-ground grid; no value reads `prefers-color-scheme`, so the app still chooses.
+- Every theme sets `color-scheme`, so scrollbars, native `<select>` popups, and autofill match the
+  ground instead of rendering light chrome over a dark one. This also fixes `dark`.
+- `calorie` raises `--sprint-keyline-strong` so a control boundary clears 3:1 on the inset surface as
+  well as the ground and raised ones. The Panel header band is inset, so this was every control
+  sitting in one.
 - The semantic token layer now carries shape, type, and motion as well as color:
   `--sprint-radius-control|-surface|-pill`, `--sprint-font-ui`, `--sprint-label-transform`,
   `--sprint-display-transform`, `--sprint-label-tracking-wide`, `--sprint-scanline-opacity`, and the
