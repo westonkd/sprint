@@ -7,6 +7,7 @@ export const THEME_OPTIONS: readonly { value: SprintTheme; label: string }[] = [
   { value: "dark", label: "dark" },
   { value: "light", label: "light" },
   { value: "calorie", label: "calorie" },
+  { value: "calorie-dark", label: "calorie dark" },
 ];
 
 export const VIEW_OPTIONS = [

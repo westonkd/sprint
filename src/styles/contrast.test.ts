@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const AA_NORMAL = 4.5;
+const BOUNDARY = 3;
 const BASE_SCOPE = ":root";
 const THEME_SCOPE = /^\[data-sprint-theme="([\w-]+)"\]$/;
 
@@ -116,7 +117,12 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
 
 describe("theme discovery", () => {
   it("finds every theme the token files scope", () => {
-    expect([...THEMES.keys()].sort()).toEqual(["calorie", "dark", "light"]);
+    expect([...THEMES.keys()].sort()).toEqual([
+      "calorie",
+      "calorie-dark",
+      "dark",
+      "light",
+    ]);
   });
 
   it.each([...overrides.keys()].filter((name) => name !== "dark"))(
@@ -201,6 +207,25 @@ describe("theme-specific findings", () => {
       contrast(resolveToken(themeByName("calorie"), "--sprint-danger-ink"), danger),
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
+
+  it.each(["calorie", "calorie-dark"])(
+    "clears 3:1 for every %s boundary, on every ground the quiet register offers",
+    (name) => {
+      const tokens = themeByName(name);
+      const strong = resolveToken(tokens, "--sprint-keyline-strong");
+      for (const ground of [
+        "--sprint-surface",
+        "--sprint-surface-raised",
+        "--sprint-surface-inset",
+      ]) {
+        const ratio = contrast(strong, resolveToken(tokens, ground));
+        expect(
+          ratio,
+          `${name} keyline-strong on ${ground} is ${ratio.toFixed(2)}:1`,
+        ).toBeGreaterThanOrEqual(BOUNDARY);
+      }
+    },
+  );
 
   it("uses paper ink on light danger, where void would fail", () => {
     const danger = resolveToken(themeByName("light"), "--sprint-danger");

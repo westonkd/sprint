@@ -208,9 +208,20 @@ export function GuidePhilosophy() {
               <code>calorie</code> ships as the friendly register: warm linen, indigo,
               rounded, sans, sentence case, eased motion. It keeps exactly two things —
               the ornament vocabulary that marks empty states, and the serif display
-              voice on the page title — because a theme that keeps neither is not a
-              Sprint theme. Acid appears nowhere in it; it is 1.24:1 on linen and there
-              is no field to rescue it.
+              voice — because a theme that keeps neither is not a Sprint theme. Both
+              have to stay visible to count: the ornament ink warms toward ember so
+              hatch reads as texture rather than tan on tan, and the serif recurs at
+              level 2 of <code>Heading</code> so the display voice is a spine and not
+              one hero moment. Acid appears nowhere in it; it is 1.24:1 on linen and
+              there is no field to rescue it.
+            </Text>
+            <Text tone="muted" size="small">
+              A theme value names a cell in a register-by-ground grid —{" "}
+              <code>dark</code> and <code>light</code> for the loud register,{" "}
+              <code>calorie</code> and <code>calorie-dark</code> for the quiet one — and
+              never one axis of it. No value reads <code>prefers-color-scheme</code>,
+              because a theme you can drop on any element has to resolve to one palette
+              wherever it lands. Your app picks, the way this page's switch does.
             </Text>
             <Text tone="muted" size="small">
               None of this reaches an agent. Flip the view switch in any theme and the

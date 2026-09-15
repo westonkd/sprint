@@ -12,7 +12,7 @@
     background: var(--sprint-surface);
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-text-2xs);
+    font-size: var(--sprint-label-size);
     text-align: left;
     text-decoration: none;
     cursor: pointer;

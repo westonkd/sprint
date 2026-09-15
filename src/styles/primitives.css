@@ -26,6 +26,7 @@
 
     --sprint-color-magenta-deep: #b8003e;
     --sprint-color-cyan-deep: #00687f;
+    --sprint-color-cyan-pale: #7cc7d6;
     --sprint-color-warning-deep: #7a5d00;
 
     --sprint-color-linen: #f3efe6;
@@ -34,16 +35,29 @@
     --sprint-color-linen-200: #e8e2d4;
     --sprint-color-linen-300: #ded7c8;
     --sprint-color-linen-400: #c9c0ad;
-    --sprint-color-linen-500: #8e8374;
+    --sprint-color-linen-500: #867b6a;
     --sprint-color-linen-600: #635c52;
     --sprint-color-linen-700: #5c564d;
     --sprint-color-linen-900: #211e1a;
 
+    --sprint-color-bark: #171410;
+    --sprint-color-bark-100: #272118;
+    --sprint-color-bark-200: #362e23;
+    --sprint-color-bark-300: #3e3629;
+    --sprint-color-bark-400: #574d3f;
+    --sprint-color-bark-500: #837765;
+    --sprint-color-bark-600: #ab9f8a;
+
     --sprint-color-indigo: #3a3fb8;
     --sprint-color-indigo-deep: #2c3094;
+    --sprint-color-indigo-pale: #a3a8ff;
     --sprint-color-vermilion: #b3261e;
     --sprint-color-vermilion-deep: #8f1c16;
+    --sprint-color-vermilion-pale: #ff9b8a;
     --sprint-color-ember: #b4460a;
+    --sprint-color-ember-pale: #ff9f45;
+    --sprint-color-amber: #8c6100;
+    --sprint-color-amber-pale: #e8bb5c;
 
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
     --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
