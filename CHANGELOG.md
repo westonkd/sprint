@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.3.0 - 2026-09-16
+
 - Fixed: the gloss tracker preferred the nearest `data-sprint-part` unconditionally, so on a Card it
   wrote to the `title` and `body` spans — which have no background — and the effect never ran. It now
   targets a part only when the part is the lit face (`option`, `thumb`).
