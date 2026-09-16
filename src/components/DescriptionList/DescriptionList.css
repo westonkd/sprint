@@ -40,13 +40,23 @@
 
   [data-sprint="DescriptionList"][data-sprint-empty] > div {
     padding: var(--sprint-space-4);
-    background-image: var(--sprint-ornament-hatch);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--sprint-empty-field);
+    background-image: var(--sprint-ornament-empty);
+    background-size: var(--sprint-ornament-empty-size);
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);
     text-align: center;
     text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="DescriptionList"][data-sprint-empty] > div > span {
+    padding: 2px var(--sprint-space-3);
+    background: var(--sprint-surface-raised);
   }
 
   @media (min-width: 40rem) {

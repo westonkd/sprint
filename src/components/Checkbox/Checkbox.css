@@ -40,8 +40,9 @@
     width: 0.875rem;
     height: 0.875rem;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
-    border-radius: calc(var(--sprint-radius-control) / 2);
+    border-radius: var(--sprint-radius-control-tight);
     background: var(--sprint-surface);
+    box-shadow: var(--sprint-well);
   }
 
   [data-sprint="Checkbox"] label:hover [data-sprint-part="box"] {
@@ -51,7 +52,7 @@
   [data-sprint="Checkbox"]
     [data-sprint-part="input"]:checked
     + [data-sprint-part="box"] {
-    border-color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
     background:
       linear-gradient(var(--sprint-action) 0 0) center / 0.5rem 0.5rem no-repeat,
       var(--sprint-surface);

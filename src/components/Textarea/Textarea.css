@@ -24,6 +24,7 @@
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     border-radius: var(--sprint-radius-control);
     background: var(--sprint-surface);
+    box-shadow: var(--sprint-well);
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);

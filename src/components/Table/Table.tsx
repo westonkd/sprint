@@ -99,7 +99,7 @@ export function Table(props: TableProps) {
         {empty ? (
           <tr role="row">
             <td role="cell" colSpan={columns.length}>
-              {emptyLabel}
+              <span>{emptyLabel}</span>
             </td>
           </tr>
         ) : (

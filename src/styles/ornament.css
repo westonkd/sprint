@@ -1,6 +1,5 @@
 @layer sprint.tokens {
   :root {
-    --sprint-ornament-ink: var(--sprint-keyline);
     --sprint-ornament-hatch: repeating-linear-gradient(
       135deg,
       var(--sprint-ornament-ink) 0 1px,
@@ -45,6 +44,19 @@
         transparent
       );
     --sprint-ornament-crosses-size: 28px 28px;
+    --sprint-ornament-pin: radial-gradient(
+      circle at center,
+      transparent 0 3.5px,
+      var(--sprint-ornament-ink) 3.5px 5px,
+      transparent 5px
+    );
+    --sprint-ornament-pin-size: 32px 32px;
+    --sprint-ornament-parting: linear-gradient(
+      to bottom,
+      transparent calc(50% - 0.5px),
+      var(--sprint-ornament-ink) calc(50% - 0.5px) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    );
   }
 }
 
@@ -79,5 +91,15 @@
     background-image: var(--sprint-ornament-crosses);
     background-size: var(--sprint-ornament-crosses-size);
     background-position: center;
+  }
+
+  [data-sprint-ornament="pin"] {
+    background-image: var(--sprint-ornament-pin);
+    background-size: var(--sprint-ornament-pin-size);
+    background-position: center;
+  }
+
+  [data-sprint-ornament="parting"] {
+    background-image: var(--sprint-ornament-parting);
   }
 }

@@ -8,7 +8,10 @@
     padding: var(--sprint-space-3) var(--sprint-space-5);
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
     border-radius: var(--sprint-radius-control);
-    background: var(--sprint-neutral);
+    background-color: var(--sprint-neutral);
+    background-image: var(--sprint-sheen), var(--sprint-shade);
+    background-blend-mode: var(--sprint-blend-lit);
+    box-shadow: var(--sprint-mold), var(--sprint-cast);
     color: var(--sprint-neutral-ink);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size);
@@ -19,35 +22,46 @@
     white-space: nowrap;
     cursor: pointer;
     transition:
+      --sprint-gloss-x var(--sprint-duration-instant) linear,
+      --sprint-gloss-fade var(--sprint-duration-instant) linear,
+      --sprint-cast-shift var(--sprint-duration-instant) linear,
       background-color var(--sprint-duration-instant) var(--sprint-easing),
       color var(--sprint-duration-instant) var(--sprint-easing),
-      border-color var(--sprint-duration-instant) var(--sprint-easing);
+      border-color var(--sprint-duration-instant) var(--sprint-easing),
+      box-shadow var(--sprint-duration-instant) var(--sprint-easing),
+      transform var(--sprint-duration-instant) var(--sprint-easing);
+  }
+
+  [data-sprint="Button"]:active:not(:disabled) {
+    transform: translateY(var(--sprint-press-shift)) scaleY(var(--sprint-press-scale));
+    box-shadow: var(--sprint-mold-pressed), var(--sprint-cast-pressed);
   }
 
   [data-sprint="Button"]:hover:not(:disabled) {
-    background: var(--sprint-neutral-hover);
+    background-color: var(--sprint-neutral-hover);
     border-color: var(--sprint-keyline-strong);
+    box-shadow: var(--sprint-mold), var(--sprint-cast-raised);
+    transform: translateY(calc(-1 * var(--sprint-press-shift)));
   }
 
   [data-sprint="Button"][data-sprint-tone="action"] {
-    background: var(--sprint-action);
-    border-color: var(--sprint-action);
+    background-color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
     color: var(--sprint-action-ink);
   }
 
   [data-sprint="Button"][data-sprint-tone="action"]:hover:not(:disabled) {
-    background: var(--sprint-action-hover);
-    border-color: var(--sprint-action-hover);
+    background-color: var(--sprint-action-hover);
   }
 
   [data-sprint="Button"][data-sprint-tone="danger"] {
-    background: var(--sprint-danger);
+    background-color: var(--sprint-danger);
     border-color: var(--sprint-danger);
     color: var(--sprint-danger-ink);
   }
 
   [data-sprint="Button"][data-sprint-tone="danger"]:hover:not(:disabled) {
-    background: var(--sprint-danger-hover);
+    background-color: var(--sprint-danger-hover);
     border-color: var(--sprint-danger-hover);
   }
 
@@ -57,7 +71,9 @@
   }
 
   [data-sprint="Button"]:disabled {
-    background: var(--sprint-inert);
+    background-color: var(--sprint-inert);
+    background-image: none;
+    box-shadow: none;
     border-color: var(--sprint-keyline);
     color: var(--sprint-inert-ink);
     cursor: not-allowed;
@@ -71,6 +87,7 @@
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: var(--sprint-radius-control-inner);
     --sprint-ornament-ink: var(--sprint-inert-ink);
     background-image: var(--sprint-ornament-hatch-dense);
     opacity: var(--sprint-scanline-opacity);

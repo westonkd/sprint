@@ -29,11 +29,12 @@ return <button {...agentAttributesFor(node)}>{children}</button>;`;
 const THEME = `<SprintProvider theme="calorie">   {/* or data-sprint-theme on any element */}
 
 /* the whole of the calorie register, in semantic.css */
---sprint-surface: var(--sprint-color-linen);
---sprint-action: var(--sprint-color-indigo);
---sprint-radius-surface: 14px;
---sprint-font-ui: ui-sans-serif, "Inter", system-ui, sans-serif;
---sprint-label-transform: none;
+--sprint-surface: var(--sprint-color-bone);
+--sprint-action: var(--sprint-color-flare);
+--sprint-action-mark: var(--sprint-color-flare-deep);
+--sprint-radius-surface: 20px;
+--sprint-font-display: var(--sprint-font-grotesk);
+--sprint-cast-ink: rgb(20 20 15 / 0.16);
 --sprint-easing: cubic-bezier(0.2, 0, 0, 1);`;
 
 const NO_TOOL = `<Link href="#/Button">Button</Link>
@@ -199,29 +200,38 @@ export function GuidePhilosophy() {
             <Text tone="muted" size="small">
               A theme remaps the semantic layer, and that layer carries shape, type, and
               motion as well as color — <code>--sprint-radius-surface</code>,{" "}
-              <code>--sprint-font-ui</code>, <code>--sprint-label-transform</code>,{" "}
+              <code>--sprint-font-display</code>, <code>--sprint-label-transform</code>,{" "}
               <code>--sprint-easing</code>. Component CSS never writes a literal{" "}
               <code>0</code> radius or <code>uppercase</code>, which is why{" "}
               <code>calorie</code> is a stylesheet block rather than a fork.
             </Text>
             <Text>
-              <code>calorie</code> ships as the friendly register: warm linen, indigo,
-              rounded, sans, sentence case, eased motion. It keeps exactly two things —
-              the ornament vocabulary that marks empty states, and the serif display
-              voice — because a theme that keeps neither is not a Sprint theme. Both
-              have to stay visible to count: the ornament ink warms toward ember so
-              hatch reads as texture rather than tan on tan, and the serif recurs at
-              level 2 of <code>Heading</code> so the display voice is a spine and not
-              one hero moment. Acid appears nowhere in it; it is 1.24:1 on linen and
-              there is no field to rescue it.
+              <code>calorie</code> is the second register, and it is a statement rather
+              than a concession: bone and carbon grounds, one hot magenta, heavy grotesk
+              display, and objects that are lit rather than flat. Depth there is three
+              ideas and not a scale — <code>--sprint-mold</code> for a thing standing
+              out of the surface, <code>--sprint-well</code> for a thing pressed into
+              it, <code>--sprint-cast</code> for what it throws on the ground. The
+              geometry is declared once for the whole library and only the inks are
+              themed, so the default register is flat because every ink in it is{" "}
+              <code>transparent</code>, not because its components opt out.
+            </Text>
+            <Text>
+              Three things make a theme a Sprint theme: the ornament vocabulary still
+              marks empty states, chrome still speaks a grade below body in tracked
+              micro-labels, and one hue is rationed to the action and never spent on
+              focus. The last of those is enforced in the contrast test. Acid appears
+              nowhere in calorie; it is 1.24:1 on bone and there is no field to rescue
+              it.
             </Text>
             <Text tone="muted" size="small">
               A theme value names a cell in a register-by-ground grid —{" "}
               <code>dark</code> and <code>light</code> for the loud register,{" "}
-              <code>calorie</code> and <code>calorie-dark</code> for the quiet one — and
-              never one axis of it. No value reads <code>prefers-color-scheme</code>,
-              because a theme you can drop on any element has to resolve to one palette
-              wherever it lands. Your app picks, the way this page's switch does.
+              <code>calorie</code> and <code>calorie-dark</code> for the molded one —
+              and never one axis of it. No value reads <code>prefers-color-scheme</code>
+              , because a theme you can drop on any element has to resolve to one
+              palette wherever it lands. Your app picks, the way this page's switch
+              does.
             </Text>
             <Text tone="muted" size="small">
               None of this reaches an agent. Flip the view switch in any theme and the

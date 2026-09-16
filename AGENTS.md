@@ -185,7 +185,7 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   Markdown stream — on the clipboard, a human affordance with no WebMCP tool. Its visible label is
   CSS-generated from `aria-label`, so it contributes nothing to the page text an agent reads;
   `agentControls="never"` removes it along with every other control.
-- `data-sprint-ornament="hatch|hatch-dense|shade|scanlines|dots|checker|crosses"` paints one mark
+- `data-sprint-ornament="hatch|hatch-dense|shade|scanlines|dots|checker|crosses|pin|parting"` paints one mark
   from the ornament vocabulary (`src/styles/ornament.css`) onto an element, drawn in
   `--sprint-ornament-ink` (keyline by default — set it locally for another ink). Pure CSS texture
   for dead space and state bands; it never carries meaning, never sits over content, and the agent

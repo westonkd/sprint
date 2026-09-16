@@ -9,6 +9,7 @@
     border-radius: var(--sprint-radius-surface);
     overflow: hidden;
     background: var(--sprint-panel-ground);
+    box-shadow: var(--sprint-cast);
     min-width: 0;
   }
 
@@ -28,6 +29,7 @@
 
   [data-sprint="Panel"] [data-sprint="Panel"] {
     outline: none;
+    box-shadow: none;
   }
 
   [data-sprint="Panel"] [data-sprint="Panel"] [data-sprint="Panel"] {
@@ -42,6 +44,9 @@
     padding: var(--sprint-space-2) var(--sprint-space-4);
     border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
     background: var(--sprint-surface-inset);
+    box-shadow: var(--sprint-well);
+    border-start-start-radius: var(--sprint-radius-surface-inner);
+    border-start-end-radius: var(--sprint-radius-surface-inner);
   }
 
   [data-sprint="Panel"] > header > :first-child {
@@ -84,7 +89,12 @@
 
   [data-sprint="Panel"][data-sprint-empty] > div {
     padding: var(--sprint-space-6) var(--sprint-space-4);
-    background-image: var(--sprint-ornament-hatch);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--sprint-empty-field);
+    background-image: var(--sprint-ornament-empty);
+    background-size: var(--sprint-ornament-empty-size);
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-label-size-small);
     letter-spacing: var(--sprint-label-tracking);

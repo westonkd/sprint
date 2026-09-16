@@ -22,7 +22,7 @@
   }
 
   [data-sprint="Nav"] [data-sprint="Link"][data-sprint-active] {
-    border-left-color: var(--sprint-action);
-    color: var(--sprint-action);
+    border-left-color: var(--sprint-action-mark);
+    color: var(--sprint-action-mark);
   }
 }

@@ -48,6 +48,34 @@
     --sprint-color-bark-500: #837765;
     --sprint-color-bark-600: #ab9f8a;
 
+    --sprint-color-bone: #eceae5;
+    --sprint-color-bone-50: #fbfaf8;
+    --sprint-color-bone-100: #e4e2dc;
+    --sprint-color-bone-200: #dbd8d1;
+    --sprint-color-bone-300: #cfccc4;
+    --sprint-color-bone-400: #b4b0a7;
+    --sprint-color-bone-500: #7c7970;
+    --sprint-color-bone-600: #5c5a54;
+    --sprint-color-bone-900: #14140f;
+
+    --sprint-color-carbon: #0d0d0c;
+    --sprint-color-carbon-100: #161615;
+    --sprint-color-carbon-200: #1f1f1d;
+    --sprint-color-carbon-300: #2a2a27;
+    --sprint-color-carbon-400: #3d3d39;
+    --sprint-color-carbon-500: #6e6e68;
+    --sprint-color-carbon-600: #a3a29b;
+
+    --sprint-color-flare: #ff1466;
+    --sprint-color-flare-hover: #ff3d7f;
+    --sprint-color-flare-deep: #c2004b;
+    --sprint-color-flare-pale: #ff7ea6;
+    --sprint-color-crimson: #9b0018;
+    --sprint-color-crimson-hover: #7d0013;
+    --sprint-color-crimson-pale: #ff9a8f;
+    --sprint-color-slate: #4a5566;
+    --sprint-color-slate-pale: #a9b6c6;
+
     --sprint-color-indigo: #3a3fb8;
     --sprint-color-indigo-deep: #2c3094;
     --sprint-color-indigo-pale: #a3a8ff;
@@ -61,6 +89,9 @@
 
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
     --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
+    --sprint-font-grotesk:
+      "Inter", "Helvetica Neue", "Archivo", "Segoe UI Variable Display", ui-sans-serif,
+      system-ui, Arial, sans-serif;
 
     --sprint-text-3xs: 0.625rem;
     --sprint-text-2xs: 0.6875rem;
@@ -72,6 +103,7 @@
     --sprint-text-2xl: 1.75rem;
     --sprint-text-display: clamp(2.25rem, 1.25rem + 3.5vw, 4.25rem);
 
+    --sprint-tracking-display: -0.03em;
     --sprint-tracking-tight: 0.02em;
     --sprint-tracking-label: 0.12em;
     --sprint-tracking-wide: 0.16em;
@@ -86,6 +118,7 @@
 
     --sprint-weight-regular: 400;
     --sprint-weight-bold: 700;
+    --sprint-weight-heavy: 800;
 
     --sprint-keyline-width: 1px;
     --sprint-keyline-width-thick: 2px;

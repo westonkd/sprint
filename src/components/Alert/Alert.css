@@ -8,7 +8,10 @@
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
     border-left: var(--sprint-keyline-width-thick) solid var(--sprint-info);
     border-radius: var(--sprint-radius-surface);
-    background: var(--sprint-surface-raised);
+    background-color: var(--sprint-surface-raised);
+    background-image: var(--sprint-shade);
+    background-blend-mode: var(--sprint-blend-shade);
+    box-shadow: var(--sprint-mold), var(--sprint-cast);
     color: var(--sprint-ink);
   }
 

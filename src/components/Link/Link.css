@@ -1,9 +1,9 @@
 @layer sprint.components {
   [data-sprint="Link"] {
-    color: var(--sprint-info);
+    color: var(--sprint-link);
     font-family: var(--sprint-font-ui);
     text-decoration: none;
-    border-bottom: var(--sprint-keyline-width) solid transparent;
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-link-rule);
     overflow-wrap: anywhere;
   }
 
@@ -12,7 +12,7 @@
   }
 
   [data-sprint="Link"][data-sprint-active] {
-    color: var(--sprint-action);
+    color: var(--sprint-action-mark);
   }
 
   [data-sprint="Link"][data-sprint-external]::after {
