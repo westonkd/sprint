@@ -118,6 +118,9 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-info-ink", "--sprint-info"],
   ["--sprint-warning", "--sprint-surface"],
   ["--sprint-warning-ink", "--sprint-warning"],
+  ["--sprint-plate-ink", "--sprint-plate"],
+  ["--sprint-plate-link", "--sprint-plate"],
+  ["--sprint-plate-control-ink", "--sprint-plate"],
 ];
 
 describe("theme discovery", () => {

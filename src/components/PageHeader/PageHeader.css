@@ -1,9 +1,30 @@
 @layer sprint.components {
   [data-sprint="PageHeader"] {
+    position: relative;
     display: block;
-    padding-bottom: var(--sprint-space-5);
+    padding-bottom: calc(var(--sprint-space-5) + var(--sprint-header-rule-height));
     border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
     min-width: 0;
+  }
+
+  [data-sprint="PageHeader"]::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 var(--sprint-header-rule-height) 0;
+    --sprint-ornament-ink: var(--sprint-header-field-ink);
+    background-image: var(--sprint-header-field);
+    background-size: var(--sprint-header-field-size);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  [data-sprint="PageHeader"]::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: var(--sprint-header-rule-height);
+    background-image: var(--sprint-header-rule);
+    pointer-events: none;
   }
 
   [data-sprint="PageHeader"] > div:first-child {
@@ -27,6 +48,7 @@
     color: var(--sprint-ink);
     font-family: var(--sprint-font-display);
     font-size: var(--sprint-display-size);
+    font-stretch: var(--sprint-display-stretch);
     font-weight: var(--sprint-display-weight);
     letter-spacing: var(--sprint-display-tracking);
     line-height: var(--sprint-leading-display);

@@ -259,7 +259,7 @@ registration error, and trax turns it up in the other ink for exactly that reaso
 | | Default register | Trax |
 | --- | --- | --- |
 | Ground | Void, or paper in `light` | A warm charcoal chassis `#1c1917`, or a full-bleed hazard orange `#e2510b` in `trax` |
-| Panels | Lighter than the ground | *Darker* than it: black plates stamped into a chassis |
+| Panels | Lighter than the ground | Capped by a stamped plate band; darker than the ground in `trax-dark`, where there is room |
 | Page texture | None | A contour field, drawn in the ground's own light |
 | Action field | Acid, or ultramarine in `light` | Hazard orange with hull ink, or a black field with the orange knocked out |
 | Action mark | Aliases the field | Amber `#ff923d` |
@@ -267,13 +267,15 @@ registration error, and trax turns it up in the other ink for exactly that reaso
 | Info | Cyan | The sand ink itself: a printed white label |
 | Focus | Cyan | Acid, the one borrowed element, or pure black on the orange ground |
 | Depth | None; planes and keylines | Overprint, misregistration, knockout |
-| Panel edge | Keyline plus a 2px offset halo | The same halo in the other ink, at 5px |
-| Rule weight | 1px | 2px |
+| Panel edge | Keyline plus a 2px offset halo | A solid second pass offset 5px down and right, in the other ink |
+| Rule weight | 1px | 1px internal, 3px at a plate edge |
 | Corners | Square | Square, except a true pill for Tag and Switch |
 | Display voice | High-contrast serif, uppercase | Condensed grotesk, uppercase, -0.03em |
 | UI voice | Monospace, uppercase, 0.12em | The same |
 | Motion | `linear`, `steps(4, end)`, 80-160ms | `steps(3, end)`, 60-90ms |
 | Empty mark | Hatch | Hazard chevrons, over a 3rem field |
+| Alarm mark | Dense hatch | The same hazard chevron |
+| Page header | Plain rule | A contour field, closed by a barcode strip |
 | Ornament added | — | `chevron`, `barcode`, `contour` |
 | Density | Tight | The same; there was no honest tightening left |
 
@@ -303,11 +305,32 @@ about 4.16:1, below AA, so trax's sweep is a *bleached* line that lightens the o
 sweep already obeyed this by accident, being a highlight from above on both of its grounds; trax is
 where it had to become a rule.
 
-The recorded cost is that status hue collapses on the orange ground. All 22 pairings pass AA and the
-tints are at maximum chroma, but at the 2px rule an Alert uses, danger and info are told apart by
-their labels rather than by their colour. That is survivable only because rule 4 has always said
-everything is labelled. A status-dense screen should take `trax-dark`, where the same roles are
-bright hues with room between them.
+Rule 13, which the review of this register forced: **on a chromatic ground, structure is stamped
+rather than stacked.** Rule 11 caps the ink at 0.0105 luminance, and running that cap backwards bounds
+the surfaces too: an ink that dark can only sit on a ground of at least 0.2012, and the orange is
+0.222. A full-bleed chromatic ground therefore admits exactly one surface value, its own, and there is
+no ramp to widen. Hierarchy is bought instead with `--sprint-plate` (a stamped header band, black with
+an orange label on the orange ground, burnt orange with a sand label on the charcoal one),
+`--sprint-keyline-width-plate` (1px internal rules against a 3px plate edge), `--sprint-misregister`
+(a solid second pass offset down and right, replacing the symmetric halo) and `--sprint-overprint` (a
+3px sliver of the mark ink inside a filled face). A trax page is a rack of placards, and that is the
+silhouette both grounds share; the inverted surface ramp belongs to `trax-dark` alone, because only a
+near-black ground has room above it.
+
+Status hue still collapses on the orange ground, and it collapses further than the first draft
+recorded: every status field there is within 1.07:1 of every other, and danger against info is
+1.01:1. Labels alone do not fix a scan, so **tone now carries geometry as well as ink**, in every
+register. An Alert's left bar varies in width and fill by tone, hairline through solid to the alarm
+mark, which is `--sprint-ornament-alarm`: dense hatch by default and the hazard chevron in trax. The
+chevron itself is a pair of conic wedges rather than the diagonal stripe it shipped as, because
+`hatch`, `hatch-dense` and `shade` were already that stripe at three duty cycles.
+
+The contour finally does work, because it moved off the page. `--sprint-header-field` paints it behind
+every PageHeader at roughly twice the page sweep's alpha, and `--sprint-header-rule` closes the header
+with a 7px barcode strip, which is the first thing to draw a mark the vocabulary has listed since it
+was written. Rule 12 gains a clause for this: on the page ground the direction rule holds absolutely,
+because a lede sits on it and the margin is thin, and on a bounded band the test is the measured
+floor.
 
 The two Sprint carryovers both hold. The ornament vocabulary gains `chevron` and `barcode`: the
 first is a mark of manufacture for an extraction industry, the same test that admitted calorie's
@@ -332,7 +355,10 @@ Acid appears nowhere else in trax, and the hazard orange appears nowhere in the 
   `text-transform: var(--sprint-label-transform)`, never a literal `0` or `uppercase`. The mono
   primitive is reserved for code and secret values; everything else takes `--sprint-font-ui`.
 - The display face is a system serif stack (Didot / Bodoni MT / Bodoni 72 / Georgia); the library
-  cannot depend on a font CDN. Choosing a licensed, self-hosted serif and monospace pair is still
+  cannot depend on a font CDN. A width the stack names is not a width it gets: `--sprint-font-condensed`
+  led with `Arial Narrow`, which fontconfig substitutes with a non-narrow face, and resolved 2.3%
+  narrower than plain sans until the genuinely condensed faces moved to the front and
+  `--sprint-display-stretch` asked a width-capable face to condense. It is now 11.5% narrower. Choosing a licensed, self-hosted serif and monospace pair is still
   open and needs its own ADR.
 - The agent view (PRD R1) inherits none of this. It is plain text. A component's visual identity and
   its agent identity are independent, which is the point.

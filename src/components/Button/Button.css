@@ -47,6 +47,7 @@
   [data-sprint="Button"][data-sprint-tone="action"] {
     background-color: var(--sprint-action);
     border-color: var(--sprint-action-mark);
+    box-shadow: var(--sprint-overprint), var(--sprint-mold), var(--sprint-cast);
     color: var(--sprint-action-ink);
   }
 
@@ -57,6 +58,7 @@
   [data-sprint="Button"][data-sprint-tone="danger"] {
     background-color: var(--sprint-danger);
     border-color: var(--sprint-danger);
+    box-shadow: var(--sprint-overprint), var(--sprint-mold), var(--sprint-cast);
     color: var(--sprint-danger-ink);
   }
 

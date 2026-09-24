@@ -51,12 +51,18 @@
       transparent 5px
     );
     --sprint-ornament-pin-size: 32px 32px;
-    --sprint-ornament-chevron: repeating-linear-gradient(
-      135deg,
-      var(--sprint-ornament-ink) 0 10px,
-      transparent 10px 20px
-    );
-    --sprint-ornament-chevron-size: 28px 28px;
+    --sprint-ornament-chevron:
+      conic-gradient(
+        from 135deg at 50% 0%,
+        var(--sprint-ornament-ink) 0 90deg,
+        transparent 0
+      ),
+      conic-gradient(
+        from 135deg at 50% 50%,
+        var(--sprint-ornament-ink) 0 90deg,
+        transparent 0
+      );
+    --sprint-ornament-chevron-size: 24px 24px;
     --sprint-ornament-barcode: repeating-linear-gradient(
       90deg,
       var(--sprint-ornament-ink) 0 1px,

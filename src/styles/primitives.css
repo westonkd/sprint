@@ -94,7 +94,7 @@
     --sprint-color-hazard-field-hi: #f4650f;
     --sprint-color-hazard-field-lo: #c8440a;
     --sprint-color-amber-hot: #ff923d;
-    --sprint-color-bleach: #d9a38a;
+    --sprint-color-bleach: #c68a63;
 
     --sprint-color-sand: #eae2da;
     --sprint-color-hull: #0b0a09;
@@ -121,8 +121,8 @@
       "Inter", "Helvetica Neue", "Archivo", "Segoe UI Variable Display", ui-sans-serif,
       system-ui, Arial, sans-serif;
     --sprint-font-condensed:
-      "Arial Narrow", "Helvetica Neue Condensed", "Liberation Sans Narrow",
-      "DejaVu Sans Condensed", "Roboto Condensed", "Archivo Narrow", ui-sans-serif,
+      "Helvetica Neue Condensed", "Roboto Condensed", "Archivo Narrow",
+      "DejaVu Sans Condensed", "Liberation Sans Narrow", "Arial Narrow", ui-sans-serif,
       system-ui, sans-serif;
 
     --sprint-text-3xs: 0.625rem;

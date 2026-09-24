@@ -189,7 +189,10 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   from the ornament vocabulary (`src/styles/ornament.css`) onto an element, drawn in
   `--sprint-ornament-ink` (keyline by default — set it locally for another ink). Pure CSS texture
   for dead space and state bands; it never carries meaning, never sits over content, and the agent
-  view ignores it entirely. Components reference the `--sprint-ornament-*` tokens directly.
+  view ignores it entirely. Components reference the `--sprint-ornament-*` tokens directly. Where a
+  mark carries a *role* rather than a shape, it goes through a slot the register fills from its own
+  vocabulary: `--sprint-ornament-empty` with `-size` for an empty region, `--sprint-ornament-alarm`
+  with `-size` for a danger band. Never hard-code a named mark for one of those.
 - `data-sprint-theme="dark|light|calorie|calorie-dark|trax|trax-dark"` selects the semantic token
   mapping for everything beneath it. Pure CSS: put it on any element, or pass `theme` to
   `SprintProvider` to stamp it on the view container. The six values are a grid of *register* and *ground*,
@@ -202,12 +205,15 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   print register: it keeps acid off light grounds by making ultramarine the action color with acid as
   its ink. `calorie` and `calorie-dark` are a second *register* — warm, rounded, sans, sentence case,
   eased motion. `trax` and `trax-dark` are a third: industrial and warm, flat like the loud register
-  but with doubled 2px rules, a condensed display grotesk, hazard-chevron empty states, and a depth
-  model of overprint and misregistration rather than lighting. It is also the only register whose
-  panels are darker than the ground, and the only one that paints a pattern on the page: a contour
-  field through `--sprint-ground-sweep`. `trax` is the library's one chromatic ground, a full-bleed
-  hazard orange on which every semantic role is a near-black; see DESIGN.md's rule 11 before adding a
-  color role, and rule 12 before touching a ground sweep. The agent view ignores theme entirely.
+  but with a two-grade rule weight, a condensed display grotesk, hazard-chevron empty and alarm
+  marks, and a depth model of overprint and misregistration rather than lighting. Both its grounds
+  cap every Panel and Dialog with a stamped `--sprint-plate` band, and `trax-dark` additionally
+  inverts the surface ramp so its panels are darker than the ground. It is the only register that
+  paints a pattern on the page, a contour field through `--sprint-ground-sweep`, and the only one
+  that paints a second one behind the page header through `--sprint-header-field`. `trax` is the
+  library's one chromatic ground, a full-bleed hazard orange on which every semantic role is a
+  near-black; see DESIGN.md's rule 11 before adding a color role, rule 12 before touching a sweep,
+  and rule 13 before reaching for a surface ramp there. The agent view ignores theme entirely.
 
   In `semantic.css` a register's shape, type, motion, and space tokens are declared once in a block
   selecting both of its values; only the color roles and `color-scheme` are per-ground. Add a ground
@@ -219,8 +225,13 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   `--sprint-display-transform`, `--sprint-label-tracking` and `--sprint-label-tracking-wide`, the
   `--sprint-leading-*` scale, `--sprint-heading-2-font|-size|-weight|-ink` with
   `--sprint-heading-3-size|-4-size`, `--sprint-keyline-halo` with `--sprint-keyline-halo-offset`,
-  `--sprint-keyline-width` and `-width-thick`, `--sprint-scanline-opacity`, and the duration/easing
-  tokens. Component CSS reaches for those roles, never for
+  `--sprint-keyline-width` with `-width-thick` and `-width-plate`, `--sprint-display-stretch`,
+  `--sprint-scanline-opacity`, and the duration/easing
+  tokens. Edge treatment beyond a keyline is roles too: `--sprint-plate` with `-ink`, `-rule`,
+  `-link`, `-control-ink` and `-keyline` for a stamped header band, `--sprint-misregister` for a
+  solid offset second pass, `--sprint-overprint` for a sliver inside a filled face, and
+  `--sprint-header-field` with `-size`, `-ink` and `--sprint-header-rule` with `-height` for the page
+  header's own field and closing strip. All of them are inert by default, so a register opts in. Component CSS reaches for those roles, never for
   `text-transform: uppercase`, a raw `line-height`, a raw `--sprint-text-*` where a label size
   belongs, or `--sprint-font-mono` — the mono primitive is reserved for code and secret values.
 

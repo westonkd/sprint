@@ -218,15 +218,33 @@ export function GuidePhilosophy() {
             </Text>
             <Text>
               <code>trax</code> is the third, and it is the cheap kind of register: it
-              adds no geometry at all. Depth there is a two-pass screenprint, and all
-              three of its ideas were roles the library already had.{" "}
-              <code>--sprint-keyline-halo</code> is the whole trick, inverted — calorie
-              makes Panel's offset second outline transparent because it reads as a
-              misprint, and trax turns it up in the other ink for exactly that reason.{" "}
+              adds no geometry at all. Depth there is a two-pass screenprint —
+              overprint, misregistration and knockout — and every idea in it is a role
+              rather than a shape. <code>--sprint-misregister</code> lays a solid second
+              pass down and to the right of a Panel, because a press error has a
+              direction; <code>--sprint-overprint</code> leaves a sliver of the mark ink
+              inside a filled button, where the second pass did not quite land.
+            </Text>
+            <Text>
               <code>trax</code> is also the one chromatic ground: a full-bleed hazard
               orange on which nothing bright can clear AA, so every semantic role is a
               near-black and the muted ink is darker than the body ink rather than
-              lighter.
+              lighter. That cap runs backwards as well as forwards. An ink that dark can
+              only sit on a ground at least as light as the orange itself, so a
+              chromatic ground admits exactly one surface value and there is no surface
+              ramp to be had. Structure there is stamped instead of stacked: every Panel
+              is capped by a <code>--sprint-plate</code> band, a plate edge carries its
+              own rule weight, and a page reads as a rack of placards rather than a
+              field of keylines.
+            </Text>
+            <Text>
+              The same cap is why tone carries geometry as well as ink. On that ground
+              every status field lands within 1.07:1 of every other, so an Alert that
+              signalled its tone with the colour of one rule could not be scanned, only
+              read. Its left bar now varies in width and fill — hairline, thick, wider
+              solid, and wider again filled with the alarm mark — which costs nothing on
+              the grounds that did not need it and helps a reader who cannot separate
+              two hues on any of them.
             </Text>
             <Text>
               Three things make a theme a Sprint theme: the ornament vocabulary still

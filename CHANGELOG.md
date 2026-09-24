@@ -5,25 +5,59 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **A chromatic ground admits exactly one surface value**, so structure on one is stamped rather than
+  stacked. Rule 11 caps `trax`'s ink at 0.0105 luminance; run that cap backwards and the surfaces are
+  capped too, which is why the orange ground's ramp measured 1.24:1 and could not be widened.
+  Hierarchy there is bought instead with four new roles, all inert by default so no other register
+  moves: `--sprint-plate` with `-ink`, `-rule`, `-link`, `-control-ink` and `-keyline` stamps Panel's
+  and Dialog's header band (black with a hazard label on the orange ground, burnt orange with a sand
+  label on the charcoal one); `--sprint-keyline-width-plate` gives a plate edge its own weight, so
+  trax runs 1px internal rules against a 3px edge instead of 2px everywhere; `--sprint-misregister`
+  replaces the symmetric halo with a solid second pass offset down and right, because a press error
+  has a direction; and `--sprint-overprint` puts a 3px sliver of the mark ink inside a filled face.
+- **Tone carries geometry as well as ink.** An Alert's left rule is now a bar whose width and fill
+  vary by tone — hairline, thick, wider solid, and wider again filled with the alarm mark — rather
+  than only its colour. On `trax` every status field is within 1.07:1 of every other, so hue alone
+  could not be scanned; the same change helps a reader who cannot separate two hues on any ground.
+  This is a visual change in every register, and overriding `border-left` no longer restyles the bar.
+- `--sprint-ornament-alarm` with `-size` joins `--sprint-ornament-empty` as a mark slot a register
+  fills from its own vocabulary: dense hatch by default, the hazard chevron in trax. Calorie does not
+  inherit a chevron it has no reason to draw.
+- The `chevron` mark is now an actual chevron, a pair of conic wedges. It shipped as
+  `repeating-linear-gradient(135deg, …)`, which is what `hatch`, `hatch-dense` and `shade` already
+  are at three duty cycles.
+- `--sprint-header-field` with `-size` and `-ink` paints a field behind every PageHeader, and
+  `--sprint-header-rule` with `-height` closes it with a strip. Trax spends them on the contour and
+  the barcode, which puts its signature mark somewhere it is actually visible and draws a mark the
+  vocabulary has listed since it was written. Rule 12 gains a clause: the direction rule holds
+  absolutely on the page ground, and on a bounded band the test is the measured floor.
+- `--sprint-display-stretch` is a semantic role, and `--sprint-font-condensed` is reordered so the
+  genuinely condensed faces come first. The stack led with `Arial Narrow`, which fontconfig
+  substitutes with a non-narrow face, and resolved 2.3% narrower than plain sans; it is now 11.5%.
+- `trax`'s `--sprint-inert` recedes into the chassis instead of jumping off it. At `#d9a38a` the
+  disabled control was the only pale field on an orange page and read as the loudest object in a
+  variant row; `#c68a63` keeps 6.51:1 for its ink at 1.33:1 against the ground.
+
 - `trax` and `trax-dark` are a third register: industrial, warm, flat like the loud register but with
-  doubled 2px rules, a condensed display grotesk, hazard-chevron empty states, and a pill reserved for
-  Tag and Switch alone. Its depth model is a two-pass screenprint — overprint, misregistration and
+  a two-grade rule weight, a condensed display grotesk, hazard-chevron empty and alarm marks, and a
+  pill reserved for Tag and Switch alone. Its depth model is a two-pass screenprint — overprint, misregistration and
   knockout — built entirely from roles the library already had, so it adds no geometry and no
-  component stylesheet changed for it. `--sprint-keyline-halo` is the trick, inverted: calorie makes
-  Panel's offset second outline transparent, trax turns it up in the other ink.
+  component stylesheet changed for it.
 - `trax` is the library's first chromatic ground, a full-bleed hazard orange. Nothing bright clears AA
   on it, so every semantic role there is a near-black at maximum chroma, the muted ink is darker than
   the body ink rather than lighter, and `--sprint-inert` is the one role that goes lighter than its
-  ground. Status hue collapses on that ground as a result; a status-dense screen wants `trax-dark`.
+  ground. Status hue collapses on that ground as a result, which is why tone now carries geometry as
+  well as ink.
 - `--sprint-keyline-width` and `--sprint-keyline-width-thick` move from `primitives.css` into the
-  theme blocks, so rule weight is a register decision. `1px`/`2px` everywhere except trax, which
-  doubles both. No component changed; they already read the role.
+  theme blocks, so rule weight is a register decision. No component changed; they already read the
+  role.
 - `contour` joins the ornament vocabulary: a topographic line field, and the register's signature
   mark. `--sprint-ground-sweep` in both trax grounds is a contour rather than calorie's lighting
   falloff, which makes trax the only register that paints a pattern on the page itself.
 - `trax-dark` inverts the surface ramp: panels are *darker* than the ground, so a page reads as black
   plates stamped into a lit, contoured chassis rather than lighter panels floating on black. A hue
-  swap alone left it too close to `dark` at a glance; this is what separates them.
+  swap alone left it too close to `dark` at a glance; this is what separates them. `trax` cannot do
+  the same, and the reason is now rule 13.
 - `--sprint-keyline-halo-offset` makes the offset of Panel's and Dialog's second outline a role
   instead of a literal `2px`. Trax sets it to 5px, so the misregistration its depth model is named
   for is actually visible. Unchanged in every other theme.
