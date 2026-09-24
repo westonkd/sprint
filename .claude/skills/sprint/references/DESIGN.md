@@ -23,9 +23,10 @@ soft, dimensional, or friendly. The system's confidence comes from saturation an
 polish.
 
 Everything below describes the **default register**, which the `dark` and `light` themes both render.
-It is one of two; the other is [Calorie](#calorie-the-second-register), which deliberately breaks
-most of it. When a component's styling and this section disagree in the default register, one of
-them is a bug. In calorie, check the token instead.
+It is one of three; the others are [Calorie](#calorie-the-second-register), which deliberately breaks
+most of it, and [Trax](#trax-the-freight-register), which keeps the flatness and spends its
+difference on colour, width and ornament. When a component's styling and this section disagree in
+the default register, one of them is a bug. In calorie or trax, check the token instead.
 
 ## The seven rules
 
@@ -160,12 +161,13 @@ it breaks all seven rules, rule 1 in every clause.
 weight.** Rule 1 has not softened; it governs the default register, and calorie is the exception it
 now names.
 
-The attribute names a cell in a two-by-two grid of register and ground, never one axis of it:
+The attribute names a cell in a grid of register and ground, never one axis of it:
 
 | | Dark ground | Light ground |
 | --- | --- | --- |
 | Default register | `dark` | `light` |
 | Calorie register | `calorie-dark` | `calorie` |
+| Trax register | `trax-dark` | `trax` |
 
 A value always resolves to one complete palette, so none of them may depend on `prefers-color-scheme`
 — the app chooses. In `semantic.css` the calorie register's shape, type, motion and space tokens are
@@ -238,6 +240,63 @@ electric cyan for `info` was the first draft and it was the only cold thing on t
 Acid appears nowhere in calorie. It is 1.24:1 on bone, and unlike `light` there is no ultramarine
 field to rescue it as ink. Rule 4 (everything is labeled) and rule 6 (ornament is systematic) hold in
 both registers, because they are structural rather than visual.
+
+## Trax, the freight register
+
+`data-sprint-theme="trax"` and `data-sprint-theme="trax-dark"` are the industrial register, taking
+the orange-and-black faction identity from the same game as their reference: heavy industry, mining
+and bulk freight, hazard signage, and a corporation with a two-century-old incident it has rebranded
+twice to outrun. It keeps the default register's flatness and its monospace chrome, because the
+reference's own display face is an uppercase monospace drawn from receipt printing, and spends its
+difference on colour, width, rule weight and ornament.
+
+**The third depth model is the printing press.** The default register stacks planes, calorie lights
+objects, and trax is a two-pass screenprint: overprint, misregistration and knockout. All three are
+roles the library already had, so the model costs no new geometry. `--sprint-keyline-halo` is the
+whole trick, inverted: calorie makes Panel's offset second outline transparent because it reads as a
+registration error, and trax turns it up in the other ink for exactly that reason.
+
+| | Default register | Trax |
+| --- | --- | --- |
+| Ground | Void, or paper in `light` | Hull black `#0b0a09`, or a full-bleed hazard orange `#e2510b` in `trax` |
+| Action field | Acid, or ultramarine in `light` | Hazard orange with hull ink, or a black field with the orange knocked out |
+| Action mark | Aliases the field | Amber `#ff923d` |
+| Danger | Magenta | Magenta on the black ground, a red-black `#380000` on the orange one |
+| Info | Cyan | The sand ink itself: a printed white label |
+| Focus | Cyan | Acid, the one borrowed element, or pure black on the orange ground |
+| Depth | None; planes and keylines | Overprint, misregistration, knockout |
+| Panel edge | Keyline plus an offset halo keyline | The same, with the halo in the other ink |
+| Rule weight | 1px | 2px |
+| Corners | Square | Square, except a true pill for Tag and Switch |
+| Display voice | High-contrast serif, uppercase | Condensed grotesk, uppercase, -0.03em |
+| UI voice | Monospace, uppercase, 0.12em | The same |
+| Motion | `linear`, `steps(4, end)`, 80-160ms | `steps(3, end)`, 60-90ms |
+| Empty mark | Hatch | Hazard chevrons, over a 3rem field |
+| Density | Tight | The same; there was no honest tightening left |
+
+Rule 11, which trax is the first register to need: **a chromatic ground inverts the palette.** On an
+orange field at 0.222 luminance, AA admits only inks below about 0.0105, which is darker than
+`#2a2a2a`. Nothing bright passes, so every semantic role on that ground is a near-black pushed to the
+maximum chroma its budget allows, the muted ink is *darker* than the body ink rather than lighter,
+and `--sprint-inert` is the one role that has to go lighter, because a disabled field darker than the
+ground cannot carry an ink at all. This is what a two-colour print actually does: the second colours
+are the black pass laid over the spot at varying density.
+
+The recorded cost is that status hue collapses on the orange ground. All 22 pairings pass AA and the
+tints are at maximum chroma, but at the 2px rule an Alert uses, danger and info are told apart by
+their labels rather than by their colour. That is survivable only because rule 4 has always said
+everything is labelled. A status-dense screen should take `trax-dark`, where the same roles are
+bright hues with room between them.
+
+The two Sprint carryovers both hold. The ornament vocabulary gains `chevron` and `barcode`: the
+first is a mark of manufacture for an extraction industry, the same test that admitted calorie's
+ejector-pin ring, and the second was named in the vocabulary above from the beginning and had simply
+never been implemented. The micro-label voice is unchanged, because it was already this register's
+native voice. One hue is rationed to the action and focus is never it: in `trax-dark` focus is the
+house acid, which is also the one system element the register borrows, and it is what keeps a trax
+page legible as a Sprint page.
+
+Acid appears nowhere else in trax, and the hazard orange appears nowhere in the other two registers.
 
 ## Implementation notes
 

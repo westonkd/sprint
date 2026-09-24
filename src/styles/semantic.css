@@ -29,6 +29,9 @@
     --sprint-ink-muted: var(--sprint-color-panel-600);
     --sprint-ink-inverse: var(--sprint-color-void);
 
+    --sprint-keyline-width: 1px;
+    --sprint-keyline-width-thick: 2px;
+
     --sprint-keyline: var(--sprint-color-panel-400);
     --sprint-keyline-strong: var(--sprint-color-panel-500);
     --sprint-keyline-muted: var(--sprint-color-panel-300);
@@ -405,6 +408,119 @@
       var(--sprint-color-flare) 38%,
       var(--sprint-color-carbon-300)
     );
+  }
+
+  [data-sprint-theme="trax"],
+  [data-sprint-theme="trax-dark"] {
+    --sprint-keyline-width: 2px;
+    --sprint-keyline-width-thick: 3px;
+
+    --sprint-font-display: var(--sprint-font-condensed);
+    --sprint-display-tracking: var(--sprint-tracking-display);
+    --sprint-display-weight: var(--sprint-weight-bold);
+    --sprint-display-transform: uppercase;
+
+    --sprint-radius-pill: 999px;
+
+    --sprint-ornament-empty: var(--sprint-ornament-chevron);
+    --sprint-ornament-empty-size: var(--sprint-ornament-chevron-size);
+    --sprint-empty-field: 3rem;
+    --sprint-scanline-opacity: 0.7;
+
+    --sprint-duration-instant: 60ms;
+    --sprint-duration-fast: 75ms;
+    --sprint-duration-slow: 90ms;
+    --sprint-steps: steps(3, end);
+  }
+
+  [data-sprint-theme="trax"] {
+    color-scheme: light;
+
+    --sprint-surface: var(--sprint-color-hazard-field);
+    --sprint-surface-raised: var(--sprint-color-hazard-field-hi);
+    --sprint-surface-inset: var(--sprint-color-hazard-field-lo);
+
+    --sprint-ink: var(--sprint-color-press);
+    --sprint-ink-muted: var(--sprint-color-press-muted);
+    --sprint-ink-inverse: var(--sprint-color-hazard);
+
+    --sprint-keyline: var(--sprint-color-hazard-deep);
+    --sprint-keyline-strong: var(--sprint-color-press-edge);
+    --sprint-keyline-muted: var(--sprint-color-hazard-field-lo);
+    --sprint-keyline-halo: var(--sprint-color-press);
+
+    --sprint-action: var(--sprint-color-press);
+    --sprint-action-ink: var(--sprint-color-hazard);
+    --sprint-action-hover: var(--sprint-color-press-hover);
+    --sprint-action-mark: var(--sprint-color-press);
+
+    --sprint-danger: var(--sprint-color-press-red);
+    --sprint-danger-ink: var(--sprint-color-hazard);
+    --sprint-danger-hover: var(--sprint-color-press-red-hover);
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-press);
+    --sprint-neutral-hover: var(--sprint-color-hazard-field-hi);
+
+    --sprint-inert: var(--sprint-color-bleach);
+    --sprint-inert-ink: var(--sprint-color-press);
+
+    --sprint-info: var(--sprint-color-press-blue);
+    --sprint-info-ink: var(--sprint-color-hazard);
+    --sprint-warning: var(--sprint-color-press-olive);
+    --sprint-warning-ink: var(--sprint-color-hazard);
+
+    --sprint-link: var(--sprint-color-press);
+    --sprint-link-rule: var(--sprint-color-hazard-deep);
+
+    --sprint-focus: var(--sprint-color-press-full);
+
+    --sprint-ornament-ink: var(--sprint-color-hazard-deep);
+  }
+
+  [data-sprint-theme="trax-dark"] {
+    color-scheme: dark;
+
+    --sprint-surface: var(--sprint-color-hull);
+    --sprint-surface-raised: var(--sprint-color-hull-100);
+    --sprint-surface-inset: var(--sprint-color-hull-200);
+
+    --sprint-ink: var(--sprint-color-sand);
+    --sprint-ink-muted: var(--sprint-color-hull-600);
+    --sprint-ink-inverse: var(--sprint-color-hull);
+
+    --sprint-keyline: var(--sprint-color-hull-300);
+    --sprint-keyline-strong: var(--sprint-color-hull-500);
+    --sprint-keyline-muted: var(--sprint-color-hull-200);
+    --sprint-keyline-halo: var(--sprint-color-hazard-deep);
+
+    --sprint-action: var(--sprint-color-hazard);
+    --sprint-action-ink: var(--sprint-color-hull);
+    --sprint-action-hover: var(--sprint-color-hazard-hot);
+    --sprint-action-mark: var(--sprint-color-amber-hot);
+
+    --sprint-danger: var(--sprint-color-magenta);
+    --sprint-danger-ink: var(--sprint-color-hull);
+    --sprint-danger-hover: #ff4d80;
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-sand);
+    --sprint-neutral-hover: var(--sprint-color-hull-200);
+
+    --sprint-inert: var(--sprint-color-hull-200);
+    --sprint-inert-ink: var(--sprint-color-hull-600);
+
+    --sprint-info: var(--sprint-color-sand);
+    --sprint-info-ink: var(--sprint-color-hull);
+    --sprint-warning: var(--sprint-color-warning);
+    --sprint-warning-ink: var(--sprint-color-hull);
+
+    --sprint-link: var(--sprint-color-sand);
+    --sprint-link-rule: var(--sprint-color-amber-hot);
+
+    --sprint-focus: var(--sprint-color-acid);
+
+    --sprint-ornament-ink: var(--sprint-color-hazard-deep);
   }
 
   [data-sprint],

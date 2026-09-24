@@ -3,7 +3,8 @@
 }
 
 :root[data-sprint-theme="light"],
-:root[data-sprint-theme="calorie"] {
+:root[data-sprint-theme="calorie"],
+:root[data-sprint-theme="trax"] {
   color-scheme: light;
 }
 

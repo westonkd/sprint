@@ -127,6 +127,8 @@ describe("theme discovery", () => {
       "calorie-dark",
       "dark",
       "light",
+      "trax",
+      "trax-dark",
     ]);
   });
 
@@ -246,8 +248,8 @@ describe("theme-specific findings", () => {
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 
-  it.each(["calorie", "calorie-dark"])(
-    "clears 3:1 for every %s boundary, on every ground the quiet register offers",
+  it.each(["calorie", "calorie-dark", "trax", "trax-dark"])(
+    "clears 3:1 for every %s boundary, on every ground its register offers",
     (name) => {
       const tokens = themeByName(name);
       const strong = resolveToken(tokens, "--sprint-keyline-strong");
@@ -264,6 +266,32 @@ describe("theme-specific findings", () => {
       }
     },
   );
+
+  it("carries every trax status role in a tinted black, because the ground is chromatic", () => {
+    const tokens = themeByName("trax");
+    const ground = luminance(resolveToken(tokens, "--sprint-surface"));
+    for (const role of [
+      "--sprint-action",
+      "--sprint-danger",
+      "--sprint-info",
+      "--sprint-warning",
+      "--sprint-focus",
+      "--sprint-link",
+    ]) {
+      const ink = luminance(resolveToken(tokens, role));
+      expect(ink, `trax ${role} is lighter than its ground`).toBeLessThan(ground);
+    }
+  });
+
+  it("spends the trax hero hue on the action and leaves the warm wedge for danger", () => {
+    const tokens = themeByName("trax-dark");
+    expect(resolveToken(tokens, "--sprint-action")).toBe(
+      resolveToken(tokens, "--sprint-color-hazard"),
+    );
+    expect(resolveToken(tokens, "--sprint-danger")).toBe(
+      resolveToken(tokens, "--sprint-color-magenta"),
+    );
+  });
 
   it("uses paper ink on light danger, where void would fail", () => {
     const danger = resolveToken(themeByName("light"), "--sprint-danger");

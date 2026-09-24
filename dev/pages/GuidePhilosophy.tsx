@@ -217,6 +217,18 @@ export function GuidePhilosophy() {
               <code>transparent</code>, not because its components opt out.
             </Text>
             <Text>
+              <code>trax</code> is the third, and it is the cheap kind of register: it
+              adds no geometry at all. Depth there is a two-pass screenprint, and all
+              three of its ideas were roles the library already had.{" "}
+              <code>--sprint-keyline-halo</code> is the whole trick, inverted — calorie
+              makes Panel's offset second outline transparent because it reads as a
+              misprint, and trax turns it up in the other ink for exactly that reason.{" "}
+              <code>trax</code> is also the one chromatic ground: a full-bleed hazard
+              orange on which nothing bright can clear AA, so every semantic role is a
+              near-black and the muted ink is darker than the body ink rather than
+              lighter.
+            </Text>
+            <Text>
               Three things make a theme a Sprint theme: the ornament vocabulary still
               marks empty states, chrome still speaks a grade below body in tracked
               micro-labels, and one hue is rationed to the action and never spent on
@@ -227,11 +239,11 @@ export function GuidePhilosophy() {
             <Text tone="muted" size="small">
               A theme value names a cell in a register-by-ground grid —{" "}
               <code>dark</code> and <code>light</code> for the loud register,{" "}
-              <code>calorie</code> and <code>calorie-dark</code> for the molded one —
-              and never one axis of it. No value reads <code>prefers-color-scheme</code>
-              , because a theme you can drop on any element has to resolve to one
-              palette wherever it lands. Your app picks, the way this page's switch
-              does.
+              <code>calorie</code> and <code>calorie-dark</code> for the molded one,{" "}
+              <code>trax</code> and <code>trax-dark</code> for the freight one — and
+              never one axis of it. No value reads <code>prefers-color-scheme</code>,
+              because a theme you can drop on any element has to resolve to one palette
+              wherever it lands. Your app picks, the way this page's switch does.
             </Text>
             <Text tone="muted" size="small">
               None of this reaches an agent. Flip the view switch in any theme and the

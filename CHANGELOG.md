@@ -5,6 +5,27 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- `trax` and `trax-dark` are a third register: industrial, warm, flat like the loud register but with
+  doubled 2px rules, a condensed display grotesk, hazard-chevron empty states, and a pill reserved for
+  Tag and Switch alone. Its depth model is a two-pass screenprint — overprint, misregistration and
+  knockout — built entirely from roles the library already had, so it adds no geometry and no
+  component stylesheet changed for it. `--sprint-keyline-halo` is the trick, inverted: calorie makes
+  Panel's offset second outline transparent, trax turns it up in the other ink.
+- `trax` is the library's first chromatic ground, a full-bleed hazard orange. Nothing bright clears AA
+  on it, so every semantic role there is a near-black at maximum chroma, the muted ink is darker than
+  the body ink rather than lighter, and `--sprint-inert` is the one role that goes lighter than its
+  ground. Status hue collapses on that ground as a result; a status-dense screen wants `trax-dark`.
+- `--sprint-keyline-width` and `--sprint-keyline-width-thick` move from `primitives.css` into the
+  theme blocks, so rule weight is a register decision. `1px`/`2px` everywhere except trax, which
+  doubles both. No component changed; they already read the role.
+- The ornament vocabulary gains `chevron` and `barcode`. `barcode` had been named in DESIGN.md's mark
+  list since it was written and never implemented.
+- The workbench's theme control becomes a `Select`. Six options do not fit a segmented control in the
+  sidebar; the landing page keeps its segmented control, where they do.
+- Fixed: an empty `Table` showed its ornament and no label on a wide screen, in every theme. The
+  wide-layout rule that hides the restacked per-cell labels also hid the empty state's knockout plate,
+  which is the element carrying the label.
+
 ## v0.3.0 - 2026-09-16
 
 - Fixed: the gloss tracker preferred the nearest `data-sprint-part` unconditionally, so on a Card it

@@ -87,11 +87,43 @@
     --sprint-color-amber: #8c6100;
     --sprint-color-amber-pale: #e8bb5c;
 
+    --sprint-color-hazard: #ef5412;
+    --sprint-color-hazard-hot: #ff6a2a;
+    --sprint-color-hazard-deep: #a83c08;
+    --sprint-color-hazard-field: #e2510b;
+    --sprint-color-hazard-field-hi: #f4650f;
+    --sprint-color-hazard-field-lo: #c8440a;
+    --sprint-color-amber-hot: #ff923d;
+    --sprint-color-bleach: #d9a38a;
+
+    --sprint-color-sand: #eae2da;
+    --sprint-color-hull: #0b0a09;
+    --sprint-color-hull-100: #141210;
+    --sprint-color-hull-200: #1c1917;
+    --sprint-color-hull-300: #2a2622;
+    --sprint-color-hull-400: #453f38;
+    --sprint-color-hull-500: #726a61;
+    --sprint-color-hull-600: #a99e93;
+
+    --sprint-color-press: #14100c;
+    --sprint-color-press-hover: #241d15;
+    --sprint-color-press-edge: #1a0f08;
+    --sprint-color-press-muted: #291203;
+    --sprint-color-press-red: #380000;
+    --sprint-color-press-red-hover: #4a0400;
+    --sprint-color-press-blue: #001347;
+    --sprint-color-press-olive: #1c1400;
+    --sprint-color-press-full: #000000;
+
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
     --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
     --sprint-font-grotesk:
       "Inter", "Helvetica Neue", "Archivo", "Segoe UI Variable Display", ui-sans-serif,
       system-ui, Arial, sans-serif;
+    --sprint-font-condensed:
+      "Arial Narrow", "Helvetica Neue Condensed", "Liberation Sans Narrow",
+      "DejaVu Sans Condensed", "Roboto Condensed", "Archivo Narrow", ui-sans-serif,
+      system-ui, sans-serif;
 
     --sprint-text-3xs: 0.625rem;
     --sprint-text-2xs: 0.6875rem;
@@ -119,8 +151,5 @@
     --sprint-weight-regular: 400;
     --sprint-weight-bold: 700;
     --sprint-weight-heavy: 800;
-
-    --sprint-keyline-width: 1px;
-    --sprint-keyline-width-thick: 2px;
   }
 }
