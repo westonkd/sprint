@@ -43,20 +43,24 @@
     justify-content: space-between;
     gap: var(--sprint-space-3);
     padding: var(--sprint-space-2) var(--sprint-space-4);
-    border-bottom: var(--sprint-keyline-width) solid var(--sprint-plate-rule);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-start-start-radius: var(--sprint-radius-surface-inner);
+    border-start-end-radius: var(--sprint-radius-surface-inner);
+  }
+
+  [data-sprint="Panel"]:not([data-sprint="Panel"] *) > header {
+    border-bottom-color: var(--sprint-plate-rule);
     background: var(--sprint-plate);
     box-shadow: var(--sprint-well);
     color: var(--sprint-plate-ink);
     --sprint-link: var(--sprint-plate-link);
     --sprint-neutral-ink: var(--sprint-plate-control-ink);
     --sprint-keyline: var(--sprint-plate-keyline);
-    border-start-start-radius: var(--sprint-radius-surface-inner);
-    border-start-end-radius: var(--sprint-radius-surface-inner);
   }
 
   [data-sprint="Panel"] > header > :first-child {
     margin: 0;
-    color: var(--sprint-plate-ink);
+    color: inherit;
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size-small);
     font-weight: var(--sprint-weight-bold);
@@ -68,8 +72,6 @@
   }
 
   [data-sprint="Panel"] [data-sprint="Panel"] > header {
-    background: none;
-    border-bottom-color: var(--sprint-keyline);
     border-bottom-style: dashed;
     color: var(--sprint-ink-muted);
   }

@@ -5,6 +5,15 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Fixed: a nested `Panel`'s header leaked the plate's custom properties.** The header rule set
+  `--sprint-link`, `--sprint-neutral-ink` and `--sprint-keyline` to their plate values on every
+  `Panel > header`, and the nested override reset only `background` and `color`. A control in a
+  nested header therefore drew in `--sprint-plate-control-ink` while sitting on the panel field —
+  invisible in `trax-dark`, where that ink is the ground colour, and orange-on-orange in `trax`. The
+  plate declarations now apply only to an outermost Panel, and the nested header keeps the ordinary
+  keyline for its dashed rule. The four themes whose `--sprint-plate-ink` already aliased
+  `--sprint-ink-muted` are unaffected.
+
 - **`trax-dark` moves onto a chromatic ground.** It was a warm charcoal `#1c1917`, and a neutral
   dark page with panels a step off it and one chromatic accent is the construction of the default
   `dark` theme, so the register read as `dark` wearing an orange accent and felt unrelated to
