@@ -311,26 +311,38 @@ the surfaces too: an ink that dark can only sit on a ground of at least 0.2012, 
 0.222. A full-bleed chromatic ground therefore admits exactly one surface value, its own, and there is
 no ramp to widen. Hierarchy is bought instead with `--sprint-plate` (a stamped header band, black with
 an orange label on the orange ground, burnt orange with a sand label on the charcoal one),
-`--sprint-keyline-width-plate` (1px internal rules against a 3px plate edge), `--sprint-misregister`
-(a solid second pass offset down and right, replacing the symmetric halo) and `--sprint-overprint` (a
-3px sliver of the mark ink inside a filled face). A trax page is a rack of placards, and that is the
-silhouette both grounds share; the inverted surface ramp belongs to `trax-dark` alone, because only a
+`--sprint-keyline-width-plate` (1px internal rules against a 3px plate edge) and
+`--sprint-misregister` (a solid second pass offset down and right, replacing the symmetric halo). The
+band is chromatic only on the orange ground; on the charcoal one it is charcoal with an orange
+hairline rule beneath, because a full orange band on every Panel spends the hero hue on chrome and
+the rationing rule says that hue belongs to the action. A trax page is a rack of placards, and that
+is the silhouette both grounds share; the inverted surface ramp belongs to `trax-dark` alone, because only a
 near-black ground has room above it.
 
 Status hue still collapses on the orange ground, and it collapses further than the first draft
 recorded: every status field there is within 1.07:1 of every other, and danger against info is
 1.01:1. Labels alone do not fix a scan, so **tone now carries geometry as well as ink**, in every
-register. An Alert's left bar varies in width and fill by tone, hairline through solid to the alarm
-mark, which is `--sprint-ornament-alarm`: dense hatch by default and the hazard chevron in trax. The
-chevron itself is a pair of conic wedges rather than the diagonal stripe it shipped as, because
-`hatch`, `hatch-dense` and `shade` were already that stripe at three duty cycles.
+register. An Alert's left bar runs a four-step width ladder, hairline through solid to the alarm mark,
+which is `--sprint-ornament-alarm`: dense hatch by default and the hazard chevron in trax. The chevron
+itself is a single conic wedge that tiles into a row of downward arrowheads, rather than the diagonal
+stripe it shipped as, because `hatch`, `hatch-dense` and `shade` were already that stripe at three
+duty cycles. A stroked V is not reachable: the ornament contract is a background image and a size, so
+a mark needing a `background-position` cannot be expressed, and gradient layers composite rather than
+subtract.
 
-The contour finally does work, because it moved off the page. `--sprint-header-field` paints it behind
-every PageHeader at roughly twice the page sweep's alpha, and `--sprint-header-rule` closes the header
-with a 7px barcode strip, which is the first thing to draw a mark the vocabulary has listed since it
-was written. Rule 12 gains a clause for this: on the page ground the direction rule holds absolutely,
-because a lede sits on it and the margin is thin, and on a bounded band the test is the measured
-floor.
+The contour stays on the page ground and got quieter there, roughly half its first alpha with its
+lines twice as far apart, because it was loud enough to compete with body text. A dense version behind
+the PageHeader was tried and removed: a header is exactly where a lede sits. `--sprint-header-rule`
+closes the header with a 7px barcode strip instead, which is the first thing to draw a mark the
+vocabulary has listed since it was written.
+
+The register also narrowed to four hues, because between the plate, the edge, the action, the mark and
+the focus ring it had stopped rationing anything. Focus in `trax-dark` is the sand ink rather than the
+house acid, so acid appears nowhere in trax at all; warning is a warm safety amber `#ffc400` rather
+than the loud register's green-yellow; and `trax`'s info and warning collapse into the one press ink,
+because a navy at 1.01:1 and an olive at 1.04:1 against the action were three tokens pretending to be
+three colours. Danger stays magenta on the charcoal ground, for the reasons the warm-wedge decision
+measured.
 
 The two Sprint carryovers both hold. The ornament vocabulary gains `chevron` and `barcode`: the
 first is a mark of manufacture for an extraction industry, the same test that admitted calorie's

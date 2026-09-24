@@ -14,7 +14,9 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
   label on the charcoal one); `--sprint-keyline-width-plate` gives a plate edge its own weight, so
   trax runs 1px internal rules against a 3px edge instead of 2px everywhere; `--sprint-misregister`
   replaces the symmetric halo with a solid second pass offset down and right, because a press error
-  has a direction; and `--sprint-overprint` puts a 3px sliver of the mark ink inside a filled face.
+  has a direction. On `trax-dark` the band is charcoal with an orange hairline rule rather than a
+  full orange field, because the hero hue is rationed to the action and a band on every Panel is
+  chrome.
 - **Tone carries geometry as well as ink.** An Alert's left rule is now a bar whose width and fill
   vary by tone — hairline, thick, wider solid, and wider again filled with the alarm mark — rather
   than only its colour. On `trax` every status field is within 1.07:1 of every other, so hue alone
@@ -26,11 +28,17 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 - The `chevron` mark is now an actual chevron, a pair of conic wedges. It shipped as
   `repeating-linear-gradient(135deg, …)`, which is what `hatch`, `hatch-dense` and `shade` already
   are at three duty cycles.
-- `--sprint-header-field` with `-size` and `-ink` paints a field behind every PageHeader, and
-  `--sprint-header-rule` with `-height` closes it with a strip. Trax spends them on the contour and
-  the barcode, which puts its signature mark somewhere it is actually visible and draws a mark the
-  vocabulary has listed since it was written. Rule 12 gains a clause: the direction rule holds
-  absolutely on the page ground, and on a bounded band the test is the measured floor.
+- `--sprint-header-rule` with `-height` closes a PageHeader with a strip, which trax spends on the
+  barcode: the first thing to draw a mark the ornament vocabulary has listed since it was written.
+- Trax's ground contour drops to roughly half its alpha with its lines twice as far apart. It was
+  loud enough to compete with body text, which is the line rule 12 exists to protect.
+- **Trax narrows to four hues.** `--sprint-focus` on `trax-dark` is the sand ink rather than the
+  house acid, so acid appears nowhere in trax at all; `--sprint-warning` there is a warm safety amber
+  `#ffc400` rather than the loud register's green-yellow; and `trax`'s `--sprint-info` and
+  `--sprint-warning` collapse into the one press ink, having measured 1.01:1 and 1.04:1 against the
+  action. Danger stays magenta on the charcoal ground, for the reasons already recorded.
+- The `chevron` mark is a row of downward arrowheads (one conic wedge) rather than the two stacked
+  wedges first shipped, which were half ink coverage and read as teeth rather than texture.
 - `--sprint-display-stretch` is a semantic role, and `--sprint-font-condensed` is reordered so the
   genuinely condensed faces come first. The stack led with `Arial Narrow`, which fontconfig
   substitutes with a non-narrow face, and resolved 2.3% narrower than plain sans; it is now 11.5%.
@@ -40,9 +48,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 - `trax` and `trax-dark` are a third register: industrial, warm, flat like the loud register but with
   a two-grade rule weight, a condensed display grotesk, hazard-chevron empty and alarm marks, and a
-  pill reserved for Tag and Switch alone. Its depth model is a two-pass screenprint — overprint, misregistration and
-  knockout — built entirely from roles the library already had, so it adds no geometry and no
-  component stylesheet changed for it.
+  pill reserved for Tag and Switch alone. Its depth model is a two-pass screenprint: overprint,
+  misregistration and knockout.
 - `trax` is the library's first chromatic ground, a full-bleed hazard orange. Nothing bright clears AA
   on it, so every semantic role there is a near-black at maximum chroma, the muted ink is darker than
   the body ink rather than lighter, and `--sprint-inert` is the one role that goes lighter than its

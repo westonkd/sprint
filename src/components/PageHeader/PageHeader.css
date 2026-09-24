@@ -7,17 +7,6 @@
     min-width: 0;
   }
 
-  [data-sprint="PageHeader"]::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 var(--sprint-header-rule-height) 0;
-    --sprint-ornament-ink: var(--sprint-header-field-ink);
-    background-image: var(--sprint-header-field);
-    background-size: var(--sprint-header-field-size);
-    pointer-events: none;
-    z-index: -1;
-  }
-
   [data-sprint="PageHeader"]::after {
     content: "";
     position: absolute;

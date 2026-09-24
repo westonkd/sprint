@@ -186,12 +186,8 @@
 
     --sprint-keyline-width-plate: var(--sprint-keyline-width);
     --sprint-misregister: 0 0 0 0 transparent;
-    --sprint-overprint: 0 0 0 0 transparent;
 
     --sprint-display-stretch: normal;
-    --sprint-header-field: none;
-    --sprint-header-field-size: auto;
-    --sprint-header-field-ink: var(--sprint-ornament-ink);
     --sprint-header-rule: none;
     --sprint-header-rule-height: 0;
 
@@ -460,8 +456,6 @@
     --sprint-display-transform: uppercase;
     --sprint-display-stretch: condensed;
 
-    --sprint-header-field: var(--sprint-ornament-contour);
-    --sprint-header-field-size: var(--sprint-ornament-contour-size);
     --sprint-header-rule: var(--sprint-ornament-barcode);
     --sprint-header-rule-height: 7px;
 
@@ -500,8 +494,6 @@
     --sprint-plate-rule: var(--sprint-color-press-full);
 
     --sprint-misregister: 5px 5px 0 0 var(--sprint-color-press);
-    --sprint-overprint: inset 3px 3px 0 0 var(--sprint-color-hazard-hot);
-    --sprint-header-field-ink: rgb(255 251 245 / 0.22);
 
     --sprint-action: var(--sprint-color-press);
     --sprint-action-ink: var(--sprint-color-hazard);
@@ -519,9 +511,9 @@
     --sprint-inert: var(--sprint-color-bleach);
     --sprint-inert-ink: var(--sprint-color-press);
 
-    --sprint-info: var(--sprint-color-press-blue);
+    --sprint-info: var(--sprint-color-press);
     --sprint-info-ink: var(--sprint-color-hazard);
-    --sprint-warning: var(--sprint-color-press-olive);
+    --sprint-warning: var(--sprint-color-press);
     --sprint-warning-ink: var(--sprint-color-hazard);
 
     --sprint-link: var(--sprint-color-press);
@@ -535,13 +527,13 @@
     --sprint-ground-sweep:
       repeating-radial-gradient(
         ellipse 26vw 21vh at 14% 10%,
-        rgb(255 251 245 / 0.12) 0 1px,
-        transparent 1px 13px
+        rgb(255 251 245 / 0.07) 0 1px,
+        transparent 1px 22px
       ),
       repeating-radial-gradient(
         ellipse 21vw 27vh at 86% 74%,
-        rgb(255 251 245 / 0.12) 0 1px,
-        transparent 1px 13px
+        rgb(255 251 245 / 0.07) 0 1px,
+        transparent 1px 22px
       );
 
     --sprint-ornament-ink: var(--sprint-color-hazard-deep);
@@ -562,13 +554,11 @@
     --sprint-keyline-strong: var(--sprint-color-hull-500);
     --sprint-keyline-muted: var(--sprint-color-hull-300);
 
-    --sprint-plate: var(--sprint-color-hazard-deep);
+    --sprint-plate: var(--sprint-color-hull-300);
     --sprint-plate-ink: var(--sprint-color-sand);
-    --sprint-plate-rule: var(--sprint-color-hazard);
+    --sprint-plate-rule: var(--sprint-color-hazard-deep);
 
     --sprint-misregister: 5px 5px 0 0 var(--sprint-color-hazard-deep);
-    --sprint-overprint: inset 3px 3px 0 0 var(--sprint-color-amber-hot);
-    --sprint-header-field-ink: rgb(239 84 18 / 0.18);
 
     --sprint-action: var(--sprint-color-hazard);
     --sprint-action-ink: var(--sprint-color-hull);
@@ -588,7 +578,7 @@
 
     --sprint-info: var(--sprint-color-sand);
     --sprint-info-ink: var(--sprint-color-hull);
-    --sprint-warning: var(--sprint-color-warning);
+    --sprint-warning: var(--sprint-color-hazard-caution);
     --sprint-warning-ink: var(--sprint-color-hull);
 
     --sprint-link: var(--sprint-color-sand);
@@ -597,18 +587,18 @@
     --sprint-plate-control-ink: var(--sprint-color-sand);
     --sprint-plate-keyline: var(--sprint-color-hazard);
 
-    --sprint-focus: var(--sprint-color-acid);
+    --sprint-focus: var(--sprint-color-sand);
 
     --sprint-ground-sweep:
       repeating-radial-gradient(
         ellipse 26vw 21vh at 14% 10%,
-        rgb(239 84 18 / 0.1) 0 1px,
-        transparent 1px 13px
+        rgb(239 84 18 / 0.06) 0 1px,
+        transparent 1px 22px
       ),
       repeating-radial-gradient(
         ellipse 21vw 27vh at 86% 74%,
-        rgb(239 84 18 / 0.1) 0 1px,
-        transparent 1px 13px
+        rgb(239 84 18 / 0.06) 0 1px,
+        transparent 1px 22px
       );
 
     --sprint-ornament-ink: var(--sprint-color-hazard-deep);

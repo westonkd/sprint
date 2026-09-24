@@ -1,4 +1,4 @@
-# Tone carries geometry as well as ink, and the contour moves off the page
+# Tone carries geometry as well as ink, and trax narrows to four hues
 
 - **Status**: Accepted
 - **Date**: 2026-09-23
@@ -42,33 +42,58 @@ is a library-wide change rather than a trax one, because the reason applies to e
 Calorie does not inherit a hazard chevron it has no reason to draw; its vocabulary is the ejector pin
 and the mould seam, and a register picks from its own set.
 
-**The chevron becomes a chevron.** Two conic wedges rather than a diagonal stripe:
+**The chevron becomes an arrowhead row.** One conic wedge, apex at the bottom of its tile, opening
+upward across 36 degrees:
 
 ```css
-conic-gradient(from 135deg at 50% 0%, ink 0 90deg, transparent 0),
-conic-gradient(from 135deg at 50% 50%, ink 0 90deg, transparent 0)
+conic-gradient(from 342deg at 50% 100%, ink 0 36deg, transparent 0)
 ```
 
-A conic wedge is a triangle that tiles from `background-size` alone, which matters because the two
-ornament tokens a component may read are the image and the size; a mark that needs a
-`background-position` is not expressible and the first attempt at this, the four-gradient zigzag
-recipe, silently painted nothing for exactly that reason. Solid wedges rather than an outlined V is
-the honest limit of gradients, and a solid arrow is what a placard uses anyway.
+A conic wedge is a triangle that tiles from `background-size` alone, which is the constraint that
+decides the shape: the only two ornament tokens a component reads are the image and the size, so a
+mark needing `background-position` cannot be expressed. That rules out every published CSS zigzag
+recipe, all of which offset layers by half a tile; the first attempt used one and silently painted
+nothing. A *stroked* V is not reachable either, because gradient layers composite over one another
+and cannot subtract. Two stacked 90-degree wedges were reachable and were tried: at roughly half ink
+coverage they read as a row of teeth and behaved as a field rather than as texture. A single narrow
+wedge at about a quarter coverage reads as a row of downward arrowheads, which is what a freight
+chevron panel actually is.
 
-**The contour moves off the page ground and onto the PageHeader.** Rule 12 constrains the page
-because a lede sits directly on it and the margin there is thin. A bounded band is a different
-proposition, so `--sprint-header-field` paints the contour behind the page header at roughly twice
-the page sweep's alpha, drawn in `--sprint-header-field-ink` so it is a lightening pass on both
-grounds. On the orange ground that is a strict rule 12 move, away from the near-black ink. On the
-charcoal ground an orange line does move the ground *toward* the sand ink, and the measured floor is
-about 7.1:1 against an AA bar of 4.5, so **rule 12 gains a second clause: on the page ground the
-direction rule holds absolutely, and on a bounded band the test is the measured floor.** The page
-ground keeps its own sweep, unchanged.
+**The page ground sweep drops to roughly half strength and its lines move twice as far apart.** The
+contour was the register's signature and it was tuned by argument rather than by looking at it. It
+was loud enough to compete with body text, which is the line rule 12 exists to protect.
+
+A contour field behind the PageHeader was tried at the same time and removed. The intent was to give
+the signature mark somewhere bounded to be dense, on the reasoning that rule 12 protects the page
+ground because a lede sits on it and a bounded band has no such constraint. In practice a header is
+exactly where a lede sits, the field read as a mesh behind the title, and no alpha low enough to be
+calm was high enough to be worth a role. `--sprint-header-rule` stays and `--sprint-header-field`
+does not; the contour lives on the page ground alone.
 
 **`--sprint-header-rule` puts the barcode under the page title.** DESIGN.md has listed barcode strips
 in the ornament vocabulary since it was written, the trax ADR implemented one, and nothing drew it. A
 7px barcode band along the bottom edge of every PageHeader is where the reference puts a serial, it
 costs one `::after`, and it makes an implemented mark load-bearing instead of dead public surface.
+
+**Trax narrows to four hues.** The register's own rule is that one hue is rationed to the action, and
+between the plate band, the misregistration edge, the action, the mark, the link rule and the focus
+ring the page had stopped obeying it. Four cuts, none of which touch the danger decision that
+20260923182104_the_warm_wedge_is_one_hue_wide_so_danger_leaves_it.md settled with measurements:
+
+- `--sprint-focus` in `trax-dark` moves from the house acid to the sand ink. The acid was the one
+  cold element in a warm register and the only green on the page, and the rule the contrast test
+  actually enforces is that focus is not the action, which sand satisfies. Acid now appears nowhere
+  in trax at all, which is a simpler sentence than the one the register shipped with.
+- `--sprint-warning` in `trax-dark` moves from the loud register's `#ffe800` to a warm safety amber
+  `#ffc400`, 10.95:1 on the ground. The old value was a green-yellow imported from another register;
+  the new one is a hazard colour in the register's own family and still separates from the orange by
+  value.
+- `--sprint-info` and `--sprint-warning` in `trax` collapse into the one press ink. They were a navy
+  and an olive that measured 1.01:1 and 1.04:1 against the action, which is to say they were three
+  tokens pretending to be three colours. Tone is carried there by the bar ladder above and by the
+  label, which is what was actually happening already.
+- The `trax-dark` plate band is charcoal rather than burnt orange, with the orange kept as the
+  hairline rule beneath it. See the stamped-structure ADR.
 
 **The condensed display voice is made real.** `--sprint-font-condensed` led with `Arial Narrow`, which
 fontconfig substitutes with a non-narrow face on Linux, so the resolved stack measured 2.3% narrower
@@ -87,16 +112,21 @@ now has one.
 - `--sprint-ornament-alarm` is the second mark slot after `--sprint-ornament-empty`, and the pattern
   is now clear: a semantic use of ornament gets a role, and each register fills it from its own
   vocabulary.
-- The contour is visible, which is the only test a signature has to pass.
+- The contour is quiet enough to sit under body text, which is the constraint rule 12 was written
+  for and which the first tuning did not actually meet.
+- Trax reads as orange, sand, amber and one alarm, which is close to what a two-colour print with a
+  spot alarm actually gives you.
 
 **Harder:**
 
 - Alert's left rule is a `::before` rather than a border, so a consumer overriding `border-left` no
   longer changes the tone bar. This is a visual breaking change in every register.
-- Rule 12 now has two clauses and the second one is enforced by measurement in an ADR rather than by
-  a test, which is the same gap the rule was written to close. A sweep is a composited image and
-  `contrast.test.ts` reads flat tokens.
-- The chevron is drawn with conic gradients, which cannot make an outlined V. If the register ever
-  wants a lighter chevron the mark has to be redrawn rather than retuned.
+- The ornament contract is image plus size and nothing else, which is now known to exclude a whole
+  class of marks. Anything needing a `background-position` requires a third token first, and that is
+  a decision worth taking deliberately rather than discovering again.
+- The chevron is one conic wedge, so its weight is its angle. A lighter chevron is a retune, but a
+  stroked one is not reachable at all without changing the contract above.
+- `trax` and `trax-dark` now disagree about what warning is, in addition to danger. Each is right for
+  its ground.
 - The display face is still a system stack, so the width it resolves to varies by platform. It is now
   genuinely condensed where a condensed face exists rather than nominally condensed everywhere.

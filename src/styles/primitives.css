@@ -95,6 +95,7 @@
     --sprint-color-hazard-field-lo: #c8440a;
     --sprint-color-amber-hot: #ff923d;
     --sprint-color-bleach: #c68a63;
+    --sprint-color-hazard-caution: #ffc400;
 
     --sprint-color-sand: #eae2da;
     --sprint-color-hull: #0b0a09;
@@ -111,8 +112,6 @@
     --sprint-color-press-muted: #291203;
     --sprint-color-press-red: #380000;
     --sprint-color-press-red-hover: #4a0400;
-    --sprint-color-press-blue: #001347;
-    --sprint-color-press-olive: #1c1400;
     --sprint-color-press-full: #000000;
 
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;

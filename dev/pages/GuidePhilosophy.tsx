@@ -222,8 +222,8 @@ export function GuidePhilosophy() {
               overprint, misregistration and knockout — and every idea in it is a role
               rather than a shape. <code>--sprint-misregister</code> lays a solid second
               pass down and to the right of a Panel, because a press error has a
-              direction; <code>--sprint-overprint</code> leaves a sliver of the mark ink
-              inside a filled button, where the second pass did not quite land.
+              direction, and a filled button carries its keyline in the mark ink, the
+              same colour laid heavier where the two passes meet.
             </Text>
             <Text>
               <code>trax</code> is also the one chromatic ground: a full-bleed hazard

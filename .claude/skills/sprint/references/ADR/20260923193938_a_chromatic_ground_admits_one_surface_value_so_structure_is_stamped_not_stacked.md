@@ -39,9 +39,11 @@ is spent. Three mechanisms carry it, all of them roles rather than component cod
 and Dialog's header band was the literal `--sprint-surface-inset`, which is the token that has no
 headroom left. As a role it defaults to exactly that value in every other register, so the five
 non-trax themes are unchanged, and trax spends it: a solid black band with a hazard-orange label on
-the orange ground, a burnt-orange band with a sand label on the charcoal one. A page becomes a rack of
-placards rather than a field of keylines, which is what an industrial surface actually looks like and
-what the register claimed to be.
+the orange ground, a charcoal band with a sand label and an orange hairline rule on the charcoal one.
+A page becomes a rack of placards rather than a field of keylines, which is what an industrial surface
+actually looks like and what the register claimed to be. The band is deliberately *not* chromatic on
+`trax-dark`: a full orange band on every Panel spends the hero hue on chrome, and the rationing rule
+says the hue belongs to the action. The orange survives there as the rule under the band.
 
 Controls live in that band, so `--sprint-plate-link`, `--sprint-plate-control-ink` and
 `--sprint-plate-keyline` come with it, re-declared inside the header. Each is given a **literal value
@@ -63,12 +65,13 @@ down and right in the other ink, and `--sprint-keyline-halo` goes transparent in
 `--sprint-keyline-halo` and `--sprint-keyline-halo-offset` stay, unchanged in the four registers that
 use them.
 
-**`--sprint-overprint` puts the second pass on a filled face.** The depth model named overprint and
-spent it only on a keyline colour. An `inset 3px 3px` sliver of the mark ink along the top-left of a
-filled Button is the second pass not quite landing, and it is the one lighting-free way to give a flat
-filled object an edge. `--sprint-overprint-ink` is not a separate role; the sliver is drawn in the
-hue the register already reserves for the mark, which is why it is not contrast-tested: it is 3px of
-decoration inside a face whose own ink already clears AA.
+A fourth mechanism was tried and rejected. `--sprint-overprint` put an inset sliver of the mark ink
+inside a filled face, on the reasoning that the depth model named overprint and spent it only on a
+keyline colour. On a Button it landed on top of the mark *ring* that
+20260914211336_the_action_family_splits_into_a_field_and_a_mark_and_link_stops_borrowing_info.md
+already draws, and a ring plus an offset edge in the same hue reads as a glow or a rendering fault
+rather than as a second pass. The ring is the overprint; it did not need a second one. The role is
+gone rather than kept unused.
 
 **`trax`'s `--sprint-inert` recedes rather than advances.** Rule 11 forces inert lighter than the
 ground, since a disabled field darker than the orange cannot carry an ink at all. It does not force it
@@ -87,14 +90,14 @@ instead, which is reachable on both.
 
 - The ramp question is settled with a number rather than an opinion, and the number generalises: any
   future register with a full-bleed chromatic ground gets one surface value and has to stamp.
-- `--sprint-plate`, `--sprint-keyline-width-plate`, `--sprint-misregister` and `--sprint-overprint`
-  are four more edge-treatment decisions a consumer register can make without touching a component,
-  continuing what `--sprint-keyline-width` and `--sprint-keyline-halo-offset` started.
+- `--sprint-plate`, `--sprint-keyline-width-plate` and `--sprint-misregister` are three more
+  edge-treatment decisions a consumer register can make without touching a component, continuing
+  what `--sprint-keyline-width` and `--sprint-keyline-halo-offset` started.
 - The plate band gives both trax grounds one silhouette, which the surface ramp could not.
 
 **Harder:**
 
-- Six new public roles, and three of them (`--sprint-plate-link`, `--sprint-plate-control-ink`,
+- Five new public roles, and three of them (`--sprint-plate-link`, `--sprint-plate-control-ink`,
   `--sprint-plate-keyline`) must be declared literally in every theme block rather than aliased. A
   seventh register pays that cost again, and the cycle that forces it is not obvious from reading the
   declarations.
