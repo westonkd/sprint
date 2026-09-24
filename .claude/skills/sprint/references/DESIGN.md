@@ -258,16 +258,16 @@ registration error, and trax turns it up in the other ink for exactly that reaso
 
 | | Default register | Trax |
 | --- | --- | --- |
-| Ground | Void, or paper in `light` | A warm charcoal chassis `#1c1917`, or a full-bleed hazard orange `#e2510b` in `trax` |
-| Panels | Lighter than the ground | Capped by a stamped plate band, black on the orange ground and bone on the charcoal one; darker than the ground in `trax-dark` |
-| Page texture | None | A contour field: a bleached line on the orange ground, a black one on the charcoal |
-| Action field | Acid, or ultramarine in `light` | Hazard orange with hull ink, or a black field with the orange knocked out |
+| Ground | Void, or paper in `light` | Full-bleed and chromatic on both stocks: a charred burnt orange `#2b1006`, or a hazard orange `#e2510b` in `trax` |
+| Panels | Lighter than the ground | The same field as the page, capped by a stamped plate band: black on the bright orange, bone on the charred |
+| Page texture | None | A contour field: a bleached line on the bright orange, a black one on the charred |
+| Action field | Acid, or ultramarine in `light` | Hazard orange with charred ink, or a black field with the orange knocked out |
 | Action mark | Aliases the field | Amber `#ff923d` |
 | Danger | Magenta | Magenta on the black ground, a red-black `#380000` on the orange one |
 | Info | Cyan | The sand ink itself: a printed white label |
 | Focus | Cyan | Acid, the one borrowed element, or pure black on the orange ground |
 | Depth | None; planes and keylines | Overprint, misregistration, knockout |
-| Panel edge | Keyline plus a 2px offset halo | A solid second pass offset 5px down and right, in black on the orange ground and a warm grey on the charcoal |
+| Panel edge | Keyline plus a 2px offset halo | A solid second pass offset 5px down and right, in black on the bright orange and a burnt tan on the charred |
 | Rule weight | 1px | 1px internal, 3px at a plate edge |
 | Corners | Square | Square, except a true pill for Tag and Switch |
 | Display voice | High-contrast serif, uppercase | Condensed grotesk, uppercase, -0.03em |
@@ -301,10 +301,25 @@ never toward it.** `contrast.test.ts` measures ink against a flat token, and a p
 the ground not flat, so a sweep that darkens a dark-ink ground silently eats the margin the test
 thinks it proved. On the orange ground a black contour at 0.26 drops `--sprint-ink` from 4.92:1 to
 about 4.16:1, below AA, so trax's sweep is a *bleached* line that lightens the orange, and
-`trax-dark`'s is a black line that darkens the charcoal, away from its sand ink. The first draft
-lightened it with orange, which moved the ground toward its ink and was invisible besides. Calorie's
+`trax-dark`'s is a black line that darkens the charred orange, away from its sand ink. The first
+draft lightened it with orange, which moved the ground toward its ink and was invisible besides. Calorie's
 sweep already obeyed this by accident, being a highlight from above on both of its grounds; trax is
 where it had to become a rule.
+
+Rule 14 is what three passes at `trax-dark` finally produced: **a register whose identity is a ground
+hue keeps that ground on every stock it ships.** `trax-dark` was a warm charcoal for its first three
+drafts, and a neutral dark page with panels a step off it and one chromatic accent is exactly the
+construction of the default `dark` theme — so no amount of accent tuning could separate the two, and
+nothing structural tied `trax-dark` to `trax`. The assumption that a dark ground must be neutral was
+never tested: a charred burnt orange `#2b1006` sits at 0.0090 luminance, *below* the charcoal's
+0.0100, and every gated role gains headroom against it. A chromatic dark ground was free. Rule 11's
+cap follows from the bright orange's luminance, not from chroma, so a chromatic ground may sit
+anywhere on the value scale.
+
+The register therefore has no neutrals on either stock. Keylines, muted ink, the inert field and the
+ornament ink are all tints of the one hue family, and the eight-step `hull` neutral ramp was deleted
+rather than left unused. `trax` stamps black plates on bright orange and `trax-dark` stamps bone
+plates on charred orange: one register printed on two stocks, at opposite polarity.
 
 Rule 13, which the review of this register forced: **on a chromatic ground, structure is stamped
 rather than stacked.** Rule 11 caps the ink at 0.0105 luminance, and running that cap backwards bounds
@@ -315,21 +330,16 @@ no ramp to widen. Hierarchy is bought instead with `--sprint-plate` (a stamped h
 `--sprint-misregister` (a solid second pass offset down and right, replacing the symmetric halo). A
 trax page is a rack of placards, and that is the silhouette both grounds share.
 
-Rule 14 is the corollary, and the charcoal ground took two passes to reach it: **a plate stamps in
-whichever ink its ground has room for.** The rule-13 draft gave `trax-dark` a charcoal band with an
+Rule 15 is the corollary, and the dark stock took two passes to reach it: **a plate stamps in
+whichever ink its ground has room for.** The rule-13 draft gave `trax-dark` a dark band with an
 orange hairline, reasoning that a full orange band spends the hero hue on chrome. The reasoning holds
-and the band did not: `hull-300` over a `hull` panel body is 1.16:1, so the placard silhouette was
+and the band did not: it measured 1.16:1 against the panel it capped, so the placard silhouette was
 trax's alone and the register's identity fell back on an orange misregistration, putting the hero hue
-on chrome by the other door. Neither ground has a ramp to widen — the orange is capped from above by
-rule 11, and the charcoal from below by magenta and the hazard orange, which already spend its whole
-margin — so value is the only channel a stamp has, and on a near-black ground it only runs upward.
-`trax-dark`'s plate is therefore the sand ink with a hull label, 15.44:1 against the panel it caps,
-the inverse polarity of trax's black on orange and the same construction. The misregistration drops
-to a warm grey once the plate carries the hierarchy, and orange rations back to the action.
-
-The inverted surface ramp belongs to `trax-dark` alone, because only a near-black ground has room
-above it, but it is no longer what separates the register from `dark`: at 1.13:1 against `dark`'s
-1.09:1 it was never a visible difference. The plate is.
+on chrome by the other door. Neither stock has a surface ramp to widen, by rule 13, so value is the
+only channel a stamp has, and on a dark stock it only runs upward. `trax-dark`'s plate is the sand
+ink with a charred label, 13.2:1 against the panel it caps, the inverse polarity of trax's black on
+bright orange and the same construction. The misregistration drops to a burnt tan once the plate
+carries the hierarchy, and the hero hue rations back to the action.
 
 Status hue still collapses on the orange ground, and it collapses further than the first draft
 recorded: every status field there is within 1.07:1 of every other, and danger against info is
@@ -344,8 +354,8 @@ subtract.
 
 The contour stays on the page ground and got quieter there, roughly half its first alpha with its
 lines twice as far apart, because it was loud enough to compete with body text. Alpha is per ground,
-though: the black line on charcoal needs far more of it than the bleached line on orange, because it
-is darkening a ground that is already near-black. A dense version behind
+though: the black line on the charred stock needs far more of it than the bleached line on the
+bright one, because it is darkening a ground that is already dark. A dense version behind
 the PageHeader was tried and removed: a header is exactly where a lede sits. `--sprint-header-rule`
 closes the header with a 7px barcode strip instead, which is the first thing to draw a mark the
 vocabulary has listed since it was written.
@@ -355,11 +365,13 @@ the focus ring it had stopped rationing anything. Focus in `trax-dark` is the sa
 house acid, so acid appears nowhere in trax at all; warning is a warm safety amber `#ffc400` rather
 than the loud register's green-yellow; and `trax`'s info and warning collapse into the one press ink,
 because a navy at 1.01:1 and an olive at 1.04:1 against the action were three tokens pretending to be
-three colours. `trax-dark` then went to three, because four was still one more than the orange ground
+three colours. `trax-dark` then went to three, because four was still one more than the bright stock
 carries: warning is `amber-pale`, a warm sand inside the bone vocabulary rather than a hue of its own,
-and the ornament ink is a warm grey so texture is tonal on charcoal the way `hazard-deep` already made
-it tonal on orange. What stays chromatic there is one warm ramp and one alarm. Danger stays magenta on the charcoal ground, for the reasons the warm-wedge decision
-measured.
+and the ornament ink is a tint of the ground so texture is tonal on both stocks. What stays chromatic
+there is one warm ramp and one alarm. Danger stays magenta on the dark stock, for the reasons the
+warm-wedge decision measured; it is the register's only out-of-family hue, and `--sprint-danger` has
+to clear AA as an *ink* rather than only as a field, because `Alert` paints its title with it. Every
+warm red that clears that gate lands within 1.09:1 of the action.
 
 The two Sprint carryovers both hold. The ornament vocabulary gains `chevron` and `barcode`: the
 first is a mark of manufacture for an extraction industry, the same test that admitted calorie's

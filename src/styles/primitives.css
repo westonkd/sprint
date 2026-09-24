@@ -95,16 +95,16 @@
     --sprint-color-hazard-field-lo: #c8440a;
     --sprint-color-amber-hot: #ff923d;
     --sprint-color-bleach: #c68a63;
-    --sprint-color-hazard-caution: #ffc400;
+
+    --sprint-color-char: #2b1006;
+    --sprint-color-char-hi: #331408;
+    --sprint-color-char-lo: #210c04;
+    --sprint-color-char-inert: #3d1b0c;
+    --sprint-color-char-rule: #6b3d22;
+    --sprint-color-char-edge: #966341;
+    --sprint-color-clay: #c09580;
 
     --sprint-color-sand: #eae2da;
-    --sprint-color-hull: #0b0a09;
-    --sprint-color-hull-100: #141210;
-    --sprint-color-hull-200: #1c1917;
-    --sprint-color-hull-300: #2a2622;
-    --sprint-color-hull-400: #453f38;
-    --sprint-color-hull-500: #726a61;
-    --sprint-color-hull-600: #a99e93;
 
     --sprint-color-press: #14100c;
     --sprint-color-press-hover: #241d15;

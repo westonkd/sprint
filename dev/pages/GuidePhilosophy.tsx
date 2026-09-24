@@ -238,17 +238,26 @@ export function GuidePhilosophy() {
               field of keylines.
             </Text>
             <Text>
-              A plate stamps in whichever ink its ground has room for, and that is the
-              part the charcoal ground had to teach. It has no ramp either — the orange
-              is capped from above by its near-black ink, the charcoal from below by the
-              magenta and the orange that already spend its whole margin — so value is
-              the only channel a stamp has, and on a near-black ground value only runs
-              upward. <code>trax</code> stamps black on orange and{" "}
-              <code>trax-dark</code> stamps bone on black: the same construction at
-              opposite polarity, which is what makes the two grounds one register rather
-              than one palette swapped twice. Its contour ground inverts with it, a
-              bleached line on the orange and a black one on the charcoal, because a
-              ground sweep may only move a ground away from its own ink.
+              A register whose identity is a ground hue keeps that ground on every stock
+              it ships, and <code>trax-dark</code> took three drafts to accept it. It
+              was a warm charcoal, and a neutral dark page with panels a step off it and
+              one chromatic accent is exactly how the default dark theme is built — so
+              no amount of accent tuning separated them, and nothing tied it to its
+              sibling. The untested assumption was that a dark ground has to be neutral.
+              A charred burnt orange sits <em>below</em> the charcoal in luminance and
+              every gated role gains headroom against it, so a chromatic dark ground was
+              free the whole time.
+            </Text>
+            <Text>
+              The register therefore has no neutrals on either stock: keylines, muted
+              ink, the inert field and the ornament ink are all tints of the one hue
+              family. What is left is the plate, which stamps in whichever ink its
+              ground has room for. <code>trax</code> stamps black plates on bright
+              orange and <code>trax-dark</code> stamps bone plates on charred orange —
+              one register printed on two stocks, at opposite polarity. Its contour
+              ground inverts with it, a bleached line on the bright stock and a black
+              one on the charred, because a ground sweep may only move a ground away
+              from its own ink.
             </Text>
             <Text>
               The same cap is why tone carries geometry as well as ink. On that ground

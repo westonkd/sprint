@@ -1,7 +1,14 @@
 # On a near-black ground the placard is stamped in the light ink
 
-- **Status**: Accepted
+- **Status**: Accepted, premise superseded
+- **Superseded by**: 20260923212036_a_register_with_a_chromatic_ground_is_chromatic_on_both_its_grounds.md
 - **Date**: 2026-09-23
+
+> The decision here — that `trax-dark`'s plate stamps in the light ink — stands, and is now the
+> construction both trax grounds share. What the later ADR supersedes is everything this one assumed
+> about the ground it stamps onto: `trax-dark` is no longer a warm charcoal, its surface ramp is no
+> longer inverted, and the measurements below against `#1c1917` and the `hull` ramp describe a
+> palette that no longer exists.
 - **Depends on**: 20260923193938_a_chromatic_ground_admits_one_surface_value_so_structure_is_stamped_not_stacked.md
 
 ## Context

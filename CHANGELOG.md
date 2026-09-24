@@ -5,6 +5,18 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **`trax-dark` moves onto a chromatic ground.** It was a warm charcoal `#1c1917`, and a neutral
+  dark page with panels a step off it and one chromatic accent is the construction of the default
+  `dark` theme, so the register read as `dark` wearing an orange accent and felt unrelated to
+  `trax`. The untested assumption was that a dark ground must be neutral: a charred burnt orange
+  `#2b1006` sits at 0.0090 luminance, below the charcoal's 0.0100, and every contrast-gated role
+  gains headroom against it. The surface trio is now `char`, `char-hi` and `char-lo`, the inverted
+  surface ramp is dropped since rule 13 admits one surface value on a chromatic ground, and every
+  remaining neutral goes with it — keylines, muted ink, the inert field and the ornament ink are all
+  tints of the hue family. The eight-step `hull` ramp and the caution yellow are deleted. `trax`
+  stamps black plates on bright orange and `trax-dark` stamps bone plates on charred orange: one
+  register printed on two stocks.
+
 - **A plate stamps in whichever ink its ground has room for.** `trax-dark`'s header band was a
   charcoal `hull-300` over a `hull` panel body, 1.16:1, so the rack-of-placards silhouette rule 13
   claims for the register was in practice `trax`'s alone and `trax-dark` fell back on an orange
