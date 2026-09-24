@@ -5,6 +5,19 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **A plate stamps in whichever ink its ground has room for.** `trax-dark`'s header band was a
+  charcoal `hull-300` over a `hull` panel body, 1.16:1, so the rack-of-placards silhouette rule 13
+  claims for the register was in practice `trax`'s alone and `trax-dark` fell back on an orange
+  misregistration to carry its identity. Neither trax ground has a surface ramp to widen — the orange
+  is capped from above by its near-black ink, the charcoal from below by the magenta and hazard
+  orange already spending its margin — so value is the only channel a stamp has, and on a near-black
+  ground it runs upward. `--sprint-plate` in `trax-dark` is now the sand ink with a hull label,
+  15.44:1 against the panel it caps, with `--sprint-plate-link` and `--sprint-plate-control-ink`
+  moving to `hazard-deep` and `hull` since they now sit on it. `--sprint-misregister` drops to a warm
+  grey now that the plate carries the hierarchy, rationing orange back to the action, and
+  `--sprint-ground-sweep` inverts to a black contour, which is both visible on charcoal and the right
+  direction under rule 12 — the orange line it replaces moved the ground toward its sand ink.
+
 - **A chromatic ground admits exactly one surface value**, so structure on one is stamped rather than
   stacked. Rule 11 caps `trax`'s ink at 0.0105 luminance; run that cap backwards and the surfaces are
   capped too, which is why the orange ground's ramp measured 1.24:1 and could not be widened.

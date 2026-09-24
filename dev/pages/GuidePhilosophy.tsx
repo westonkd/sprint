@@ -238,6 +238,19 @@ export function GuidePhilosophy() {
               field of keylines.
             </Text>
             <Text>
+              A plate stamps in whichever ink its ground has room for, and that is the
+              part the charcoal ground had to teach. It has no ramp either — the orange
+              is capped from above by its near-black ink, the charcoal from below by the
+              magenta and the orange that already spend its whole margin — so value is
+              the only channel a stamp has, and on a near-black ground value only runs
+              upward. <code>trax</code> stamps black on orange and{" "}
+              <code>trax-dark</code> stamps bone on black: the same construction at
+              opposite polarity, which is what makes the two grounds one register rather
+              than one palette swapped twice. Its contour ground inverts with it, a
+              bleached line on the orange and a black one on the charcoal, because a
+              ground sweep may only move a ground away from its own ink.
+            </Text>
+            <Text>
               The same cap is why tone carries geometry as well as ink. On that ground
               every status field lands within 1.07:1 of every other, so an Alert that
               signalled its tone with the colour of one rule could not be scanned, only

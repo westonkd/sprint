@@ -554,11 +554,11 @@
     --sprint-keyline-strong: var(--sprint-color-hull-500);
     --sprint-keyline-muted: var(--sprint-color-hull-300);
 
-    --sprint-plate: var(--sprint-color-hull-300);
-    --sprint-plate-ink: var(--sprint-color-sand);
+    --sprint-plate: var(--sprint-color-sand);
+    --sprint-plate-ink: var(--sprint-color-hull);
     --sprint-plate-rule: var(--sprint-color-hazard-deep);
 
-    --sprint-misregister: 5px 5px 0 0 var(--sprint-color-hazard-deep);
+    --sprint-misregister: 5px 5px 0 0 var(--sprint-color-hull-500);
 
     --sprint-action: var(--sprint-color-hazard);
     --sprint-action-ink: var(--sprint-color-hull);
@@ -583,21 +583,21 @@
 
     --sprint-link: var(--sprint-color-sand);
     --sprint-link-rule: var(--sprint-color-amber-hot);
-    --sprint-plate-link: var(--sprint-color-sand);
-    --sprint-plate-control-ink: var(--sprint-color-sand);
-    --sprint-plate-keyline: var(--sprint-color-hazard);
+    --sprint-plate-link: var(--sprint-color-hazard-deep);
+    --sprint-plate-control-ink: var(--sprint-color-hull);
+    --sprint-plate-keyline: var(--sprint-color-hull-400);
 
     --sprint-focus: var(--sprint-color-sand);
 
     --sprint-ground-sweep:
       repeating-radial-gradient(
         ellipse 26vw 21vh at 14% 10%,
-        rgb(239 84 18 / 0.06) 0 1px,
+        rgb(0 0 0 / 0.6) 0 1px,
         transparent 1px 22px
       ),
       repeating-radial-gradient(
         ellipse 21vw 27vh at 86% 74%,
-        rgb(239 84 18 / 0.06) 0 1px,
+        rgb(0 0 0 / 0.6) 0 1px,
         transparent 1px 22px
       );
 

@@ -259,15 +259,15 @@ registration error, and trax turns it up in the other ink for exactly that reaso
 | | Default register | Trax |
 | --- | --- | --- |
 | Ground | Void, or paper in `light` | A warm charcoal chassis `#1c1917`, or a full-bleed hazard orange `#e2510b` in `trax` |
-| Panels | Lighter than the ground | Capped by a stamped plate band; darker than the ground in `trax-dark`, where there is room |
-| Page texture | None | A contour field, drawn in the ground's own light |
+| Panels | Lighter than the ground | Capped by a stamped plate band, black on the orange ground and bone on the charcoal one; darker than the ground in `trax-dark` |
+| Page texture | None | A contour field: a bleached line on the orange ground, a black one on the charcoal |
 | Action field | Acid, or ultramarine in `light` | Hazard orange with hull ink, or a black field with the orange knocked out |
 | Action mark | Aliases the field | Amber `#ff923d` |
 | Danger | Magenta | Magenta on the black ground, a red-black `#380000` on the orange one |
 | Info | Cyan | The sand ink itself: a printed white label |
 | Focus | Cyan | Acid, the one borrowed element, or pure black on the orange ground |
 | Depth | None; planes and keylines | Overprint, misregistration, knockout |
-| Panel edge | Keyline plus a 2px offset halo | A solid second pass offset 5px down and right, in the other ink |
+| Panel edge | Keyline plus a 2px offset halo | A solid second pass offset 5px down and right, in black on the orange ground and a warm grey on the charcoal |
 | Rule weight | 1px | 1px internal, 3px at a plate edge |
 | Corners | Square | Square, except a true pill for Tag and Switch |
 | Display voice | High-contrast serif, uppercase | Condensed grotesk, uppercase, -0.03em |
@@ -301,7 +301,8 @@ never toward it.** `contrast.test.ts` measures ink against a flat token, and a p
 the ground not flat, so a sweep that darkens a dark-ink ground silently eats the margin the test
 thinks it proved. On the orange ground a black contour at 0.26 drops `--sprint-ink` from 4.92:1 to
 about 4.16:1, below AA, so trax's sweep is a *bleached* line that lightens the orange, and
-`trax-dark`'s is an orange line that lightens the charcoal. Both move away from their ink. Calorie's
+`trax-dark`'s is a black line that darkens the charcoal, away from its sand ink. The first draft
+lightened it with orange, which moved the ground toward its ink and was invisible besides. Calorie's
 sweep already obeyed this by accident, being a highlight from above on both of its grounds; trax is
 where it had to become a rule.
 
@@ -309,15 +310,26 @@ Rule 13, which the review of this register forced: **on a chromatic ground, stru
 rather than stacked.** Rule 11 caps the ink at 0.0105 luminance, and running that cap backwards bounds
 the surfaces too: an ink that dark can only sit on a ground of at least 0.2012, and the orange is
 0.222. A full-bleed chromatic ground therefore admits exactly one surface value, its own, and there is
-no ramp to widen. Hierarchy is bought instead with `--sprint-plate` (a stamped header band, black with
-an orange label on the orange ground, burnt orange with a sand label on the charcoal one),
+no ramp to widen. Hierarchy is bought instead with `--sprint-plate` (a stamped header band),
 `--sprint-keyline-width-plate` (1px internal rules against a 3px plate edge) and
-`--sprint-misregister` (a solid second pass offset down and right, replacing the symmetric halo). The
-band is chromatic only on the orange ground; on the charcoal one it is charcoal with an orange
-hairline rule beneath, because a full orange band on every Panel spends the hero hue on chrome and
-the rationing rule says that hue belongs to the action. A trax page is a rack of placards, and that
-is the silhouette both grounds share; the inverted surface ramp belongs to `trax-dark` alone, because only a
-near-black ground has room above it.
+`--sprint-misregister` (a solid second pass offset down and right, replacing the symmetric halo). A
+trax page is a rack of placards, and that is the silhouette both grounds share.
+
+Rule 14 is the corollary, and the charcoal ground took two passes to reach it: **a plate stamps in
+whichever ink its ground has room for.** The rule-13 draft gave `trax-dark` a charcoal band with an
+orange hairline, reasoning that a full orange band spends the hero hue on chrome. The reasoning holds
+and the band did not: `hull-300` over a `hull` panel body is 1.16:1, so the placard silhouette was
+trax's alone and the register's identity fell back on an orange misregistration, putting the hero hue
+on chrome by the other door. Neither ground has a ramp to widen — the orange is capped from above by
+rule 11, and the charcoal from below by magenta and the hazard orange, which already spend its whole
+margin — so value is the only channel a stamp has, and on a near-black ground it only runs upward.
+`trax-dark`'s plate is therefore the sand ink with a hull label, 15.44:1 against the panel it caps,
+the inverse polarity of trax's black on orange and the same construction. The misregistration drops
+to a warm grey once the plate carries the hierarchy, and orange rations back to the action.
+
+The inverted surface ramp belongs to `trax-dark` alone, because only a near-black ground has room
+above it, but it is no longer what separates the register from `dark`: at 1.13:1 against `dark`'s
+1.09:1 it was never a visible difference. The plate is.
 
 Status hue still collapses on the orange ground, and it collapses further than the first draft
 recorded: every status field there is within 1.07:1 of every other, and danger against info is
@@ -331,7 +343,9 @@ a mark needing a `background-position` cannot be expressed, and gradient layers 
 subtract.
 
 The contour stays on the page ground and got quieter there, roughly half its first alpha with its
-lines twice as far apart, because it was loud enough to compete with body text. A dense version behind
+lines twice as far apart, because it was loud enough to compete with body text. Alpha is per ground,
+though: the black line on charcoal needs far more of it than the bleached line on orange, because it
+is darkening a ground that is already near-black. A dense version behind
 the PageHeader was tried and removed: a header is exactly where a lede sits. `--sprint-header-rule`
 closes the header with a 7px barcode strip instead, which is the first thing to draw a mark the
 vocabulary has listed since it was written.
