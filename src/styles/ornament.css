@@ -66,6 +66,18 @@
       var(--sprint-ornament-ink) 7px 9px,
       transparent 9px 14px
     );
+    --sprint-ornament-contour:
+      repeating-radial-gradient(
+        ellipse 74px 54px at 32% 28%,
+        var(--sprint-ornament-ink) 0 1px,
+        transparent 1px 11px
+      ),
+      repeating-radial-gradient(
+        ellipse 54px 76px at 78% 76%,
+        var(--sprint-ornament-ink) 0 1px,
+        transparent 1px 11px
+      );
+    --sprint-ornament-contour-size: 190px 158px;
     --sprint-ornament-parting: linear-gradient(
       to bottom,
       transparent calc(50% - 0.5px),
@@ -121,6 +133,11 @@
 
   [data-sprint-ornament="barcode"] {
     background-image: var(--sprint-ornament-barcode);
+  }
+
+  [data-sprint-ornament="contour"] {
+    background-image: var(--sprint-ornament-contour);
+    background-size: var(--sprint-ornament-contour-size);
   }
 
   [data-sprint-ornament="parting"] {

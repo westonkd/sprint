@@ -4,7 +4,7 @@
     padding: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
     outline: var(--sprint-keyline-width) solid var(--sprint-keyline-halo);
-    outline-offset: 2px;
+    outline-offset: var(--sprint-keyline-halo-offset);
     border-radius: var(--sprint-radius-surface);
     overflow: hidden;
     background: var(--sprint-surface-raised);

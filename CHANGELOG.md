@@ -18,6 +18,18 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 - `--sprint-keyline-width` and `--sprint-keyline-width-thick` move from `primitives.css` into the
   theme blocks, so rule weight is a register decision. `1px`/`2px` everywhere except trax, which
   doubles both. No component changed; they already read the role.
+- `contour` joins the ornament vocabulary: a topographic line field, and the register's signature
+  mark. `--sprint-ground-sweep` in both trax grounds is a contour rather than calorie's lighting
+  falloff, which makes trax the only register that paints a pattern on the page itself.
+- `trax-dark` inverts the surface ramp: panels are *darker* than the ground, so a page reads as black
+  plates stamped into a lit, contoured chassis rather than lighter panels floating on black. A hue
+  swap alone left it too close to `dark` at a glance; this is what separates them.
+- `--sprint-keyline-halo-offset` makes the offset of Panel's and Dialog's second outline a role
+  instead of a literal `2px`. Trax sets it to 5px, so the misregistration its depth model is named
+  for is actually visible. Unchanged in every other theme.
+- A ground sweep may only move the ground away from its ink, never toward it, because the contrast
+  test measures ink against a flat token. Both trax sweeps lighten their ground for that reason; a
+  black contour on the orange ground took `--sprint-ink` from 4.92:1 to about 4.16:1.
 - The ornament vocabulary gains `chevron` and `barcode`. `barcode` had been named in DESIGN.md's mark
   list since it was written and never implemented.
 - The workbench's theme control becomes a `Select`. Six options do not fit a segmented control in the

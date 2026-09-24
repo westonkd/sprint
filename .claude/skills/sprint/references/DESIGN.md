@@ -258,20 +258,23 @@ registration error, and trax turns it up in the other ink for exactly that reaso
 
 | | Default register | Trax |
 | --- | --- | --- |
-| Ground | Void, or paper in `light` | Hull black `#0b0a09`, or a full-bleed hazard orange `#e2510b` in `trax` |
+| Ground | Void, or paper in `light` | A warm charcoal chassis `#1c1917`, or a full-bleed hazard orange `#e2510b` in `trax` |
+| Panels | Lighter than the ground | *Darker* than it: black plates stamped into a chassis |
+| Page texture | None | A contour field, drawn in the ground's own light |
 | Action field | Acid, or ultramarine in `light` | Hazard orange with hull ink, or a black field with the orange knocked out |
 | Action mark | Aliases the field | Amber `#ff923d` |
 | Danger | Magenta | Magenta on the black ground, a red-black `#380000` on the orange one |
 | Info | Cyan | The sand ink itself: a printed white label |
 | Focus | Cyan | Acid, the one borrowed element, or pure black on the orange ground |
 | Depth | None; planes and keylines | Overprint, misregistration, knockout |
-| Panel edge | Keyline plus an offset halo keyline | The same, with the halo in the other ink |
+| Panel edge | Keyline plus a 2px offset halo | The same halo in the other ink, at 5px |
 | Rule weight | 1px | 2px |
 | Corners | Square | Square, except a true pill for Tag and Switch |
 | Display voice | High-contrast serif, uppercase | Condensed grotesk, uppercase, -0.03em |
 | UI voice | Monospace, uppercase, 0.12em | The same |
 | Motion | `linear`, `steps(4, end)`, 80-160ms | `steps(3, end)`, 60-90ms |
 | Empty mark | Hatch | Hazard chevrons, over a 3rem field |
+| Ornament added | — | `chevron`, `barcode`, `contour` |
 | Density | Tight | The same; there was no honest tightening left |
 
 Rule 11, which trax is the first register to need: **a chromatic ground inverts the palette.** On an
@@ -281,6 +284,24 @@ maximum chroma its budget allows, the muted ink is *darker* than the body ink ra
 and `--sprint-inert` is the one role that has to go lighter, because a disabled field darker than the
 ground cannot carry an ink at all. This is what a two-colour print actually does: the second colours
 are the black pass laid over the spot at varying density.
+
+The register's signature mark is the **contour**: the topographic line field that runs through the
+reference's poster work, where a portrait is rendered entirely as stacked contour lines. It is the
+one place trax spends ornament on a surface as large as the page. `--sprint-ground-sweep` is a
+contour field rather than calorie's lighting falloff, and the surface ramp is inverted to give it
+somewhere to live: trax is the only register whose panels are *darker* than the ground, so a page is
+black plates stamped into a lit, contoured chassis rather than lighter panels floating on black.
+That inversion is most of what separates `trax-dark` from `dark` at a glance, because a hue swap on
+its own does not.
+
+Rule 12, which the contour forced: **a ground sweep may only move the ground away from its ink,
+never toward it.** `contrast.test.ts` measures ink against a flat token, and a patterned sweep makes
+the ground not flat, so a sweep that darkens a dark-ink ground silently eats the margin the test
+thinks it proved. On the orange ground a black contour at 0.26 drops `--sprint-ink` from 4.92:1 to
+about 4.16:1, below AA, so trax's sweep is a *bleached* line that lightens the orange, and
+`trax-dark`'s is an orange line that lightens the charcoal. Both move away from their ink. Calorie's
+sweep already obeyed this by accident, being a highlight from above on both of its grounds; trax is
+where it had to become a rule.
 
 The recorded cost is that status hue collapses on the orange ground. All 22 pairings pass AA and the
 tints are at maximum chroma, but at the 2px rule an Alert uses, danger and info are told apart by

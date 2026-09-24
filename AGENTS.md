@@ -185,7 +185,7 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   Markdown stream — on the clipboard, a human affordance with no WebMCP tool. Its visible label is
   CSS-generated from `aria-label`, so it contributes nothing to the page text an agent reads;
   `agentControls="never"` removes it along with every other control.
-- `data-sprint-ornament="hatch|hatch-dense|shade|scanlines|dots|checker|crosses|pin|parting|chevron|barcode"` paints one mark
+- `data-sprint-ornament="hatch|hatch-dense|shade|scanlines|dots|checker|crosses|pin|parting|chevron|barcode|contour"` paints one mark
   from the ornament vocabulary (`src/styles/ornament.css`) onto an element, drawn in
   `--sprint-ornament-ink` (keyline by default — set it locally for another ink). Pure CSS texture
   for dead space and state bands; it never carries meaning, never sits over content, and the agent
@@ -203,9 +203,11 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   its ink. `calorie` and `calorie-dark` are a second *register* — warm, rounded, sans, sentence case,
   eased motion. `trax` and `trax-dark` are a third: industrial and warm, flat like the loud register
   but with doubled 2px rules, a condensed display grotesk, hazard-chevron empty states, and a depth
-  model of overprint and misregistration rather than lighting. `trax` is the library's one chromatic
-  ground, a full-bleed hazard orange on which every semantic role is a near-black; see DESIGN.md's
-  rule 11 before adding a color role. The agent view ignores theme entirely.
+  model of overprint and misregistration rather than lighting. It is also the only register whose
+  panels are darker than the ground, and the only one that paints a pattern on the page: a contour
+  field through `--sprint-ground-sweep`. `trax` is the library's one chromatic ground, a full-bleed
+  hazard orange on which every semantic role is a near-black; see DESIGN.md's rule 11 before adding a
+  color role, and rule 12 before touching a ground sweep. The agent view ignores theme entirely.
 
   In `semantic.css` a register's shape, type, motion, and space tokens are declared once in a block
   selecting both of its values; only the color roles and `color-scheme` are per-ground. Add a ground
@@ -216,8 +218,9 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   `--sprint-radius-control|-surface|-pill`, `--sprint-font-ui`, `--sprint-label-transform` and
   `--sprint-display-transform`, `--sprint-label-tracking` and `--sprint-label-tracking-wide`, the
   `--sprint-leading-*` scale, `--sprint-heading-2-font|-size|-weight|-ink` with
-  `--sprint-heading-3-size|-4-size`, `--sprint-keyline-halo`, `--sprint-keyline-width` and
-  `-width-thick`, `--sprint-scanline-opacity`, and the duration/easing tokens. Component CSS reaches for those roles, never for
+  `--sprint-heading-3-size|-4-size`, `--sprint-keyline-halo` with `--sprint-keyline-halo-offset`,
+  `--sprint-keyline-width` and `-width-thick`, `--sprint-scanline-opacity`, and the duration/easing
+  tokens. Component CSS reaches for those roles, never for
   `text-transform: uppercase`, a raw `line-height`, a raw `--sprint-text-*` where a label size
   belongs, or `--sprint-font-mono` — the mono primitive is reserved for code and secret values.
 

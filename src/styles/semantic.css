@@ -36,6 +36,7 @@
     --sprint-keyline-strong: var(--sprint-color-panel-500);
     --sprint-keyline-muted: var(--sprint-color-panel-300);
     --sprint-keyline-halo: var(--sprint-keyline);
+    --sprint-keyline-halo-offset: 2px;
 
     --sprint-action: var(--sprint-color-acid);
     --sprint-action-ink: var(--sprint-color-void);
@@ -414,6 +415,7 @@
   [data-sprint-theme="trax-dark"] {
     --sprint-keyline-width: 2px;
     --sprint-keyline-width-thick: 3px;
+    --sprint-keyline-halo-offset: 5px;
 
     --sprint-font-display: var(--sprint-font-condensed);
     --sprint-display-tracking: var(--sprint-tracking-display);
@@ -475,23 +477,35 @@
 
     --sprint-focus: var(--sprint-color-press-full);
 
+    --sprint-ground-sweep:
+      repeating-radial-gradient(
+        ellipse 26vw 21vh at 14% 10%,
+        rgb(255 251 245 / 0.12) 0 1px,
+        transparent 1px 13px
+      ),
+      repeating-radial-gradient(
+        ellipse 21vw 27vh at 86% 74%,
+        rgb(255 251 245 / 0.12) 0 1px,
+        transparent 1px 13px
+      );
+
     --sprint-ornament-ink: var(--sprint-color-hazard-deep);
   }
 
   [data-sprint-theme="trax-dark"] {
     color-scheme: dark;
 
-    --sprint-surface: var(--sprint-color-hull);
-    --sprint-surface-raised: var(--sprint-color-hull-100);
-    --sprint-surface-inset: var(--sprint-color-hull-200);
+    --sprint-surface: var(--sprint-color-hull-200);
+    --sprint-surface-raised: var(--sprint-color-hull);
+    --sprint-surface-inset: var(--sprint-color-hull-100);
 
     --sprint-ink: var(--sprint-color-sand);
     --sprint-ink-muted: var(--sprint-color-hull-600);
     --sprint-ink-inverse: var(--sprint-color-hull);
 
-    --sprint-keyline: var(--sprint-color-hull-300);
+    --sprint-keyline: var(--sprint-color-hull-400);
     --sprint-keyline-strong: var(--sprint-color-hull-500);
-    --sprint-keyline-muted: var(--sprint-color-hull-200);
+    --sprint-keyline-muted: var(--sprint-color-hull-300);
     --sprint-keyline-halo: var(--sprint-color-hazard-deep);
 
     --sprint-action: var(--sprint-color-hazard);
@@ -505,9 +519,9 @@
 
     --sprint-neutral: transparent;
     --sprint-neutral-ink: var(--sprint-color-sand);
-    --sprint-neutral-hover: var(--sprint-color-hull-200);
+    --sprint-neutral-hover: var(--sprint-color-hull-300);
 
-    --sprint-inert: var(--sprint-color-hull-200);
+    --sprint-inert: var(--sprint-color-hull-300);
     --sprint-inert-ink: var(--sprint-color-hull-600);
 
     --sprint-info: var(--sprint-color-sand);
@@ -519,6 +533,18 @@
     --sprint-link-rule: var(--sprint-color-amber-hot);
 
     --sprint-focus: var(--sprint-color-acid);
+
+    --sprint-ground-sweep:
+      repeating-radial-gradient(
+        ellipse 26vw 21vh at 14% 10%,
+        rgb(239 84 18 / 0.1) 0 1px,
+        transparent 1px 13px
+      ),
+      repeating-radial-gradient(
+        ellipse 21vw 27vh at 86% 74%,
+        rgb(239 84 18 / 0.1) 0 1px,
+        transparent 1px 13px
+      );
 
     --sprint-ornament-ink: var(--sprint-color-hazard-deep);
   }

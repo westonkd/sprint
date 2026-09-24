@@ -74,11 +74,42 @@ calorie ADR, but the default register's scale is already freight-dense: 0.25rem 
 seven steps. There was no honest tightening left to make, and inventing one to prove the register has
 opinions would have cost layout and bought nothing.
 
-**The ornament vocabulary gains `chevron` and `barcode`.** DESIGN.md calls the vocabulary closed, and
+**The register's signature mark is the contour, and it is spent on the page itself.** The reference's
+poster work renders a portrait entirely as stacked topographic contour lines, and that mark had no
+equivalent in the vocabulary. `--sprint-ground-sweep` in both trax grounds is a contour field rather
+than calorie's lighting falloff, which makes trax the only register that paints a pattern on the
+page rather than only on its dead regions.
+
+**`trax-dark` inverts the surface ramp, and that is what separates it from `dark`.** The first draft
+was a hue swap: orange where `dark` has acid, on the same near-black ground with the same lighter
+panels, and at a glance it read as the default register recoloured. Panels are now *darker* than the
+ground, so a page is black plates stamped into a lit, contoured charcoal chassis rather than lighter
+panels floating on black. It is the only register with that silhouette, it is what an industrial
+chassis actually looks like, and it costs three token swaps.
+
+**`--sprint-keyline-halo-offset` makes the second outline's offset a role.** Panel and Dialog both
+wrote a literal `outline-offset: 2px`, which is a register decision sitting outside the token layer,
+the same class of thing `--sprint-keyline-width` was. Trax sets it to 5px so the misregistration the
+depth model is named for is visible rather than theoretical. Unchanged at 2px everywhere else.
+
+**Rule 12: a ground sweep may only move the ground away from its ink, never toward it.**
+`contrast.test.ts` measures ink against a flat token, and a patterned sweep makes the ground not
+flat.
+20260914222347_on_a_dark_ground_an_object_separates_by_edge_light_not_by_shadow.md
+already flagged this as "an argument, not a test" and got away with it because calorie's sweep
+lightens both of its grounds. Trax did not get away with it: a black contour at 0.26 alpha on the
+orange ground takes `--sprint-ink` from 4.92:1 to about 4.16:1, below AA, because the ink there is a
+near-black and darkening the ground closes the gap. So trax's sweep is a bleached line that lightens
+the orange and `trax-dark`'s is an orange line that lightens the charcoal. Both are still only 0.10
+to 0.12 alpha, because the other half of the constraint is that the page ground is not purely dead
+space: a lede sits directly on it, and a mark that competes with body text has stopped being texture.
+
+**The ornament vocabulary gains `chevron`, `barcode` and `contour`.** DESIGN.md calls the vocabulary closed, and
 calorie set the test for extending it: a mark of manufacture, systematic rather than illustrative.
 Hazard chevrons pass that test for an extraction industry the way an ejector-pin ring passed it for
 moulded plastic. `barcode` is not an extension at all: DESIGN.md's ornament list has named barcode
-strips since it was written and nothing ever implemented one. `--sprint-ornament-empty` is the
+strips since it was written and nothing ever implemented one. `contour` is the third, and it is the
+one the register would be poorer without. `--sprint-ornament-empty` is the
 chevron in this register, so an empty region is a striped, unloaded berth.
 
 **`data-sprint-theme` goes to six values and stays one attribute.**
@@ -101,7 +132,11 @@ and the philosophy guide both carry it.
   register.
 - `--sprint-keyline-width` is themeable, so a consumer register can set its own rule weight.
 - Reusing `--sprint-keyline-halo` by inverting calorie's choice is a pattern worth repeating: the
-  cheapest new register is one that spends the roles already there differently.
+  cheapest new register is one that spends the roles already there differently. Inverting the surface
+  ramp is the same move at a larger scale, and it did more for the register's identity than any of
+  its colour choices.
+- `--sprint-keyline-halo-offset` and `--sprint-keyline-width` between them mean a consumer register
+  can now describe its own edge treatment without touching a component.
 
 **Harder:**
 
@@ -114,3 +149,6 @@ and the philosophy guide both carry it.
   20260923182104_a_chromatic_ground_inverts_the_palette_and_status_becomes_a_tinted_black.md.
 - The display face degrades to a plain sans where no condensed system face exists, which is a weaker
   guarantee than the default register's serif stack and no better than calorie's.
+- The ground sweep is now a real constraint on a register rather than a free surface, and rule 12 is
+  still enforced by argument rather than by a test. A sweep is a composited image and the contrast
+  test reads flat tokens, so the gap the earlier ADR named is now wider and load-bearing.
