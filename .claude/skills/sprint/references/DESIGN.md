@@ -355,7 +355,10 @@ the focus ring it had stopped rationing anything. Focus in `trax-dark` is the sa
 house acid, so acid appears nowhere in trax at all; warning is a warm safety amber `#ffc400` rather
 than the loud register's green-yellow; and `trax`'s info and warning collapse into the one press ink,
 because a navy at 1.01:1 and an olive at 1.04:1 against the action were three tokens pretending to be
-three colours. Danger stays magenta on the charcoal ground, for the reasons the warm-wedge decision
+three colours. `trax-dark` then went to three, because four was still one more than the orange ground
+carries: warning is `amber-pale`, a warm sand inside the bone vocabulary rather than a hue of its own,
+and the ornament ink is a warm grey so texture is tonal on charcoal the way `hazard-deep` already made
+it tonal on orange. What stays chromatic there is one warm ramp and one alarm. Danger stays magenta on the charcoal ground, for the reasons the warm-wedge decision
 measured.
 
 The two Sprint carryovers both hold. The ornament vocabulary gains `chevron` and `barcode`: the

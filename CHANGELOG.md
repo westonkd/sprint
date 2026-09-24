@@ -17,6 +17,11 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
   grey now that the plate carries the hierarchy, rationing orange back to the action, and
   `--sprint-ground-sweep` inverts to a black contour, which is both visible on charcoal and the right
   direction under rule 12 — the orange line it replaces moved the ground toward its sand ink.
+- **`trax-dark` narrows from four hues to three.** Warning leaves the caution yellow for
+  `amber-pale`, which reads as a warm sand rather than a fourth hue and holds the same separation
+  from the action the yellow had, and `--sprint-ornament-ink` drops to `hull-500` so texture is
+  tonal on the charcoal ground the way it already was on the orange one. What is left chromatic is
+  one warm ramp for the action and its mark, plus the magenta that is the register's only alarm.
 
 - **A chromatic ground admits exactly one surface value**, so structure on one is stamped rather than
   stacked. Rule 11 caps `trax`'s ink at 0.0105 luminance; run that cap backwards and the surfaces are

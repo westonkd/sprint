@@ -578,7 +578,7 @@
 
     --sprint-info: var(--sprint-color-sand);
     --sprint-info-ink: var(--sprint-color-hull);
-    --sprint-warning: var(--sprint-color-hazard-caution);
+    --sprint-warning: var(--sprint-color-amber-pale);
     --sprint-warning-ink: var(--sprint-color-hull);
 
     --sprint-link: var(--sprint-color-sand);
@@ -601,7 +601,7 @@
         transparent 1px 22px
       );
 
-    --sprint-ornament-ink: var(--sprint-color-hazard-deep);
+    --sprint-ornament-ink: var(--sprint-color-hull-500);
   }
 
   [data-sprint],

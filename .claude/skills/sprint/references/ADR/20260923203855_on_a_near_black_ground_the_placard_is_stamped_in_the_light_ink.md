@@ -59,9 +59,23 @@ rather than a differently-coloured version of it.
 the width ladder. With sand now established as the placard colour, an info Alert is a small instance
 of the same printed label, and the alias is the point rather than a collision.
 
+**Warning leaves the caution yellow for `amber-pale`, and `--sprint-ornament-ink` drops to
+`hull-500`.** With the plate fixed, what still separated the two grounds by eye was hue count rather
+than structure: `trax` reads as one colour because its ground *is* the hue, so every mark on it is
+tonal, while on charcoal any chroma reads as an accent. The yellow was the brightest thing on the
+page at 10.95:1 and the only one outside the warm ramp apart from the alarm; `amber-pale` reads as a
+warm sand, folds into the bone vocabulary the plate just established, and keeps the separation from
+the action the yellow had (1.97:1 against 2.21:1). Ornament ink was `hazard-deep`, which on the
+orange ground is a darker orange and therefore tonal, and on charcoal was a visible orange; `hull-500`
+is the tonal equivalent. `trax-dark` is now one warm ramp plus one alarm.
+
 Danger stays the house magenta. The measurement in
 `20260923182104_the_warm_wedge_is_one_hue_wide_so_danger_leaves_it.md` has not changed, and nothing
-here gives the warm wedge a second hue to spend.
+here gives the warm wedge a second hue to spend. The reason is sharper than that ADR recorded,
+though, and worth pinning: `--sprint-danger` is not only a field. `Alert` uses it as the *title ink*
+on the panel ground, so it has to clear 4.5:1 as an ink, not merely 3:1 as a field. Every warm red
+that clears it lands within 1.09:1 of the hazard action, and every one that separates from the action
+by value reads 1.81–2.68:1 as ink. Magenta's 5.15:1 is what buys the role.
 
 ## Consequences
 
