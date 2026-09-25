@@ -12,6 +12,7 @@ import { linkSpecimens } from "./Link.tsx";
 import { listSpecimens } from "./List.tsx";
 import { metaLineSpecimens } from "./MetaLine.tsx";
 import { navSpecimens } from "./Nav.tsx";
+import { navBarSpecimens } from "./NavBar.tsx";
 import { navGroupSpecimens } from "./NavGroup.tsx";
 import { pageHeaderSpecimens } from "./PageHeader.tsx";
 import { panelSpecimens } from "./Panel.tsx";
@@ -46,6 +47,7 @@ const registry: Record<string, Specimens> = {
   List: { byExample: listSpecimens },
   MetaLine: { byExample: metaLineSpecimens },
   Nav: { byExample: navSpecimens },
+  NavBar: { byExample: navBarSpecimens },
   NavGroup: { byExample: navGroupSpecimens },
   PageHeader: { byExample: pageHeaderSpecimens },
   Panel: { byExample: panelSpecimens },

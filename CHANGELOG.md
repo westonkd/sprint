@@ -5,6 +5,18 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Added: `NavBar`, navigation as a coordinate you can edit.** The whole navigation is one line —
+  `Workbench / display / Table` — with the destinations passed as data rather than as children, for
+  the reason `Table` and `List` already take data: nothing can count, filter, order or address a set
+  it cannot see. Each segment opens its own level, typing searches every destination below the
+  coordinate rather than only the next layer, and results group into rows carrying the full path. A
+  depth count at the head opens the trail of what has been visited through the bar. `Nav` and
+  `NavGroup` are unchanged and remain the right answer for a set of links that fits in a rail.
+  `NavBar` registers no WebMCP tool, for the same reason `Link` does not: every destination is in
+  the page with its href on `data-sprint-href`. It reaches only for semantic roles that already
+  exist — the plate, the action field, the action mark, the register's empty mark — which is the
+  actual answer to navigation not belonging to its theme. See the two ADRs dated 2026-09-23.
+
 - **Fixed: a nested `Panel`'s header leaked the plate's custom properties.** The header rule set
   `--sprint-link`, `--sprint-neutral-ink` and `--sprint-keyline` to their plate values on every
   `Panel > header`, and the nested override reset only `background` and `color`. A control in a

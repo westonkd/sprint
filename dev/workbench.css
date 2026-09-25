@@ -94,3 +94,29 @@ body {
   font-size: var(--sprint-text-2xs);
   line-height: 1.7;
 }
+
+.app [data-sprint="Shell"] {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.app [data-sprint="Shell"] > aside {
+  position: sticky;
+  top: 0;
+  height: auto;
+  overflow: visible;
+  border-inline-end: 0;
+  border-block-end: var(--sprint-keyline-width) solid var(--sprint-keyline);
+}
+
+.app [data-sprint="Shell"] > aside > div:first-of-type {
+  padding: var(--sprint-space-3) var(--sprint-space-5);
+}
+
+.app [data-sprint="Shell"] > aside > div:last-of-type {
+  display: block;
+  max-height: none;
+  overflow: visible;
+  padding: var(--sprint-space-3) var(--sprint-space-5) var(--sprint-space-4);
+  border-block-start: var(--sprint-keyline-width) solid var(--sprint-keyline);
+}
