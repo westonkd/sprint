@@ -2,13 +2,13 @@
   [data-sprint="Dialog"] {
     margin: auto;
     padding: 0;
-    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border: var(--sprint-keyline-width-plate) solid var(--sprint-keyline-strong);
     outline: var(--sprint-keyline-width) solid var(--sprint-keyline-halo);
-    outline-offset: 2px;
+    outline-offset: var(--sprint-keyline-halo-offset);
     border-radius: var(--sprint-radius-surface);
     overflow: hidden;
     background: var(--sprint-surface-raised);
-    box-shadow: var(--sprint-cast-high);
+    box-shadow: var(--sprint-misregister), var(--sprint-cast-high);
     color: var(--sprint-ink);
     width: min(26rem, calc(100vw - var(--sprint-space-6) * 2));
     max-height: calc(100vh - var(--sprint-space-6) * 2);
@@ -26,15 +26,19 @@
     justify-content: space-between;
     gap: var(--sprint-space-3);
     padding: var(--sprint-space-2) var(--sprint-space-4);
-    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
-    background: var(--sprint-surface-inset);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-plate-rule);
+    background: var(--sprint-plate);
+    color: var(--sprint-plate-ink);
+    --sprint-link: var(--sprint-plate-link);
+    --sprint-neutral-ink: var(--sprint-plate-control-ink);
+    --sprint-keyline: var(--sprint-plate-keyline);
     border-start-start-radius: var(--sprint-radius-surface-inner);
     border-start-end-radius: var(--sprint-radius-surface-inner);
   }
 
   [data-sprint="Dialog"] > header > :first-child {
     margin: 0;
-    color: var(--sprint-ink-muted);
+    color: var(--sprint-plate-ink);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size-small);
     font-weight: var(--sprint-weight-bold);

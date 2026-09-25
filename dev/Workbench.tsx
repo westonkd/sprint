@@ -6,7 +6,7 @@ import {
   MetaLine,
   Nav,
   NavGroup,
-  SegmentedControl,
+  Select,
   Shell,
   SprintProvider,
   type SprintTheme,
@@ -152,7 +152,7 @@ function WorkbenchShell(props: WorkbenchShellProps) {
             <Link className="brand" href={href("")}>
               SPRINT <span className="brand-version">v{version}</span>
             </Link>
-            <SegmentedControl
+            <Select
               label="Theme"
               options={THEME_OPTIONS}
               value={theme}

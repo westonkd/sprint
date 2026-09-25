@@ -118,6 +118,9 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-info-ink", "--sprint-info"],
   ["--sprint-warning", "--sprint-surface"],
   ["--sprint-warning-ink", "--sprint-warning"],
+  ["--sprint-plate-ink", "--sprint-plate"],
+  ["--sprint-plate-link", "--sprint-plate"],
+  ["--sprint-plate-control-ink", "--sprint-plate"],
 ];
 
 describe("theme discovery", () => {
@@ -127,6 +130,8 @@ describe("theme discovery", () => {
       "calorie-dark",
       "dark",
       "light",
+      "trax",
+      "trax-dark",
     ]);
   });
 
@@ -246,8 +251,8 @@ describe("theme-specific findings", () => {
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 
-  it.each(["calorie", "calorie-dark"])(
-    "clears 3:1 for every %s boundary, on every ground the quiet register offers",
+  it.each(["calorie", "calorie-dark", "trax", "trax-dark"])(
+    "clears 3:1 for every %s boundary, on every ground its register offers",
     (name) => {
       const tokens = themeByName(name);
       const strong = resolveToken(tokens, "--sprint-keyline-strong");
@@ -264,6 +269,70 @@ describe("theme-specific findings", () => {
       }
     },
   );
+
+  it("carries every trax status role in a tinted black, because the ground is chromatic", () => {
+    const tokens = themeByName("trax");
+    const ground = luminance(resolveToken(tokens, "--sprint-surface"));
+    for (const role of [
+      "--sprint-action",
+      "--sprint-danger",
+      "--sprint-info",
+      "--sprint-warning",
+      "--sprint-focus",
+      "--sprint-link",
+    ]) {
+      const ink = luminance(resolveToken(tokens, role));
+      expect(ink, `trax ${role} is lighter than its ground`).toBeLessThan(ground);
+    }
+  });
+
+  it("spends the trax hero hue on the action and leaves the warm wedge for danger", () => {
+    const tokens = themeByName("trax-dark");
+    expect(resolveToken(tokens, "--sprint-action")).toBe(
+      resolveToken(tokens, "--sprint-color-hazard"),
+    );
+    expect(resolveToken(tokens, "--sprint-danger")).toBe(
+      resolveToken(tokens, "--sprint-color-magenta"),
+    );
+  });
+
+  it("stamps every trax plate clear of the panel it caps, in whichever ink the ground allows", () => {
+    for (const name of ["trax", "trax-dark"]) {
+      const tokens = themeByName(name);
+      const ratio = contrast(
+        resolveToken(tokens, "--sprint-plate"),
+        resolveToken(tokens, "--sprint-surface-raised"),
+      );
+      expect(
+        ratio,
+        `${name} plate on surface-raised is ${ratio.toFixed(2)}:1`,
+      ).toBeGreaterThanOrEqual(AA_NORMAL);
+    }
+  });
+
+  it("stamps the trax-dark plate upward, because a near-black panel leaves no room below", () => {
+    const tokens = themeByName("trax-dark");
+    expect(luminance(resolveToken(tokens, "--sprint-plate"))).toBeGreaterThan(
+      luminance(resolveToken(tokens, "--sprint-surface-raised")),
+    );
+    expect(luminance(resolveToken(themeByName("trax"), "--sprint-plate"))).toBeLessThan(
+      luminance(resolveToken(themeByName("trax"), "--sprint-surface-raised")),
+    );
+  });
+
+  it("keeps the trax hero hue off structural chrome, so it rations to the action", () => {
+    const tokens = themeByName("trax-dark");
+    const hazards = [
+      resolveToken(tokens, "--sprint-color-hazard"),
+      resolveToken(tokens, "--sprint-color-hazard-deep"),
+    ];
+    for (const role of ["--sprint-plate", "--sprint-misregister"]) {
+      const value = resolveToken(tokens, role);
+      for (const hazard of hazards) {
+        expect(value, `trax-dark ${role} spends the hero hue`).not.toContain(hazard);
+      }
+    }
+  });
 
   it("uses paper ink on light danger, where void would fail", () => {
     const danger = resolveToken(themeByName("light"), "--sprint-danger");

@@ -217,6 +217,58 @@ export function GuidePhilosophy() {
               <code>transparent</code>, not because its components opt out.
             </Text>
             <Text>
+              <code>trax</code> is the third, and it is the cheap kind of register: it
+              adds no geometry at all. Depth there is a two-pass screenprint —
+              overprint, misregistration and knockout — and every idea in it is a role
+              rather than a shape. <code>--sprint-misregister</code> lays a solid second
+              pass down and to the right of a Panel, because a press error has a
+              direction, and a filled button carries its keyline in the mark ink, the
+              same colour laid heavier where the two passes meet.
+            </Text>
+            <Text>
+              <code>trax</code> is also the one chromatic ground: a full-bleed hazard
+              orange on which nothing bright can clear AA, so every semantic role is a
+              near-black and the muted ink is darker than the body ink rather than
+              lighter. That cap runs backwards as well as forwards. An ink that dark can
+              only sit on a ground at least as light as the orange itself, so a
+              chromatic ground admits exactly one surface value and there is no surface
+              ramp to be had. Structure there is stamped instead of stacked: every Panel
+              is capped by a <code>--sprint-plate</code> band, a plate edge carries its
+              own rule weight, and a page reads as a rack of placards rather than a
+              field of keylines.
+            </Text>
+            <Text>
+              A register whose identity is a ground hue keeps that ground on every stock
+              it ships, and <code>trax-dark</code> took three drafts to accept it. It
+              was a warm charcoal, and a neutral dark page with panels a step off it and
+              one chromatic accent is exactly how the default dark theme is built — so
+              no amount of accent tuning separated them, and nothing tied it to its
+              sibling. The untested assumption was that a dark ground has to be neutral.
+              A charred burnt orange sits <em>below</em> the charcoal in luminance and
+              every gated role gains headroom against it, so a chromatic dark ground was
+              free the whole time.
+            </Text>
+            <Text>
+              The register therefore has no neutrals on either stock: keylines, muted
+              ink, the inert field and the ornament ink are all tints of the one hue
+              family. What is left is the plate, which stamps in whichever ink its
+              ground has room for. <code>trax</code> stamps black plates on bright
+              orange and <code>trax-dark</code> stamps bone plates on charred orange —
+              one register printed on two stocks, at opposite polarity. Its contour
+              ground inverts with it, a bleached line on the bright stock and a black
+              one on the charred, because a ground sweep may only move a ground away
+              from its own ink.
+            </Text>
+            <Text>
+              The same cap is why tone carries geometry as well as ink. On that ground
+              every status field lands within 1.07:1 of every other, so an Alert that
+              signalled its tone with the colour of one rule could not be scanned, only
+              read. Its left bar now varies in width and fill — hairline, thick, wider
+              solid, and wider again filled with the alarm mark — which costs nothing on
+              the grounds that did not need it and helps a reader who cannot separate
+              two hues on any of them.
+            </Text>
+            <Text>
               Three things make a theme a Sprint theme: the ornament vocabulary still
               marks empty states, chrome still speaks a grade below body in tracked
               micro-labels, and one hue is rationed to the action and never spent on
@@ -227,11 +279,11 @@ export function GuidePhilosophy() {
             <Text tone="muted" size="small">
               A theme value names a cell in a register-by-ground grid —{" "}
               <code>dark</code> and <code>light</code> for the loud register,{" "}
-              <code>calorie</code> and <code>calorie-dark</code> for the molded one —
-              and never one axis of it. No value reads <code>prefers-color-scheme</code>
-              , because a theme you can drop on any element has to resolve to one
-              palette wherever it lands. Your app picks, the way this page's switch
-              does.
+              <code>calorie</code> and <code>calorie-dark</code> for the molded one,{" "}
+              <code>trax</code> and <code>trax-dark</code> for the freight one — and
+              never one axis of it. No value reads <code>prefers-color-scheme</code>,
+              because a theme you can drop on any element has to resolve to one palette
+              wherever it lands. Your app picks, the way this page's switch does.
             </Text>
             <Text tone="muted" size="small">
               None of this reaches an agent. Flip the view switch in any theme and the

@@ -23,9 +23,10 @@ soft, dimensional, or friendly. The system's confidence comes from saturation an
 polish.
 
 Everything below describes the **default register**, which the `dark` and `light` themes both render.
-It is one of two; the other is [Calorie](#calorie-the-second-register), which deliberately breaks
-most of it. When a component's styling and this section disagree in the default register, one of
-them is a bug. In calorie, check the token instead.
+It is one of three; the others are [Calorie](#calorie-the-second-register), which deliberately breaks
+most of it, and [Trax](#trax-the-freight-register), which keeps the flatness and spends its
+difference on colour, width and ornament. When a component's styling and this section disagree in
+the default register, one of them is a bug. In calorie or trax, check the token instead.
 
 ## The seven rules
 
@@ -160,12 +161,13 @@ it breaks all seven rules, rule 1 in every clause.
 weight.** Rule 1 has not softened; it governs the default register, and calorie is the exception it
 now names.
 
-The attribute names a cell in a two-by-two grid of register and ground, never one axis of it:
+The attribute names a cell in a grid of register and ground, never one axis of it:
 
 | | Dark ground | Light ground |
 | --- | --- | --- |
 | Default register | `dark` | `light` |
 | Calorie register | `calorie-dark` | `calorie` |
+| Trax register | `trax-dark` | `trax` |
 
 A value always resolves to one complete palette, so none of them may depend on `prefers-color-scheme`
 — the app chooses. In `semantic.css` the calorie register's shape, type, motion and space tokens are
@@ -239,6 +241,148 @@ Acid appears nowhere in calorie. It is 1.24:1 on bone, and unlike `light` there 
 field to rescue it as ink. Rule 4 (everything is labeled) and rule 6 (ornament is systematic) hold in
 both registers, because they are structural rather than visual.
 
+## Trax, the freight register
+
+`data-sprint-theme="trax"` and `data-sprint-theme="trax-dark"` are the industrial register, taking
+the orange-and-black faction identity from the same game as their reference: heavy industry, mining
+and bulk freight, hazard signage, and a corporation with a two-century-old incident it has rebranded
+twice to outrun. It keeps the default register's flatness and its monospace chrome, because the
+reference's own display face is an uppercase monospace drawn from receipt printing, and spends its
+difference on colour, width, rule weight and ornament.
+
+**The third depth model is the printing press.** The default register stacks planes, calorie lights
+objects, and trax is a two-pass screenprint: overprint, misregistration and knockout. All three are
+roles the library already had, so the model costs no new geometry. `--sprint-keyline-halo` is the
+whole trick, inverted: calorie makes Panel's offset second outline transparent because it reads as a
+registration error, and trax turns it up in the other ink for exactly that reason.
+
+| | Default register | Trax |
+| --- | --- | --- |
+| Ground | Void, or paper in `light` | Full-bleed and chromatic on both stocks: a charred burnt orange `#2b1006`, or a hazard orange `#e2510b` in `trax` |
+| Panels | Lighter than the ground | The same field as the page, capped by a stamped plate band: black on the bright orange, bone on the charred |
+| Page texture | None | A contour field: a bleached line on the bright orange, a black one on the charred |
+| Action field | Acid, or ultramarine in `light` | Hazard orange with charred ink, or a black field with the orange knocked out |
+| Action mark | Aliases the field | Amber `#ff923d` |
+| Danger | Magenta | Magenta on the black ground, a red-black `#380000` on the orange one |
+| Info | Cyan | The sand ink itself: a printed white label |
+| Focus | Cyan | Acid, the one borrowed element, or pure black on the orange ground |
+| Depth | None; planes and keylines | Overprint, misregistration, knockout |
+| Panel edge | Keyline plus a 2px offset halo | A solid second pass offset 5px down and right, in black on the bright orange and a burnt tan on the charred |
+| Rule weight | 1px | 1px internal, 3px at a plate edge |
+| Corners | Square | Square, except a true pill for Tag and Switch |
+| Display voice | High-contrast serif, uppercase | Condensed grotesk, uppercase, -0.03em |
+| UI voice | Monospace, uppercase, 0.12em | The same |
+| Motion | `linear`, `steps(4, end)`, 80-160ms | `steps(3, end)`, 60-90ms |
+| Empty mark | Hatch | Hazard chevrons, over a 3rem field |
+| Alarm mark | Dense hatch | The same hazard chevron |
+| Page header | Plain rule | A contour field, closed by a barcode strip |
+| Ornament added | — | `chevron`, `barcode`, `contour` |
+| Density | Tight | The same; there was no honest tightening left |
+
+Rule 11, which trax is the first register to need: **a chromatic ground inverts the palette.** On an
+orange field at 0.222 luminance, AA admits only inks below about 0.0105, which is darker than
+`#2a2a2a`. Nothing bright passes, so every semantic role on that ground is a near-black pushed to the
+maximum chroma its budget allows, the muted ink is *darker* than the body ink rather than lighter,
+and `--sprint-inert` is the one role that has to go lighter, because a disabled field darker than the
+ground cannot carry an ink at all. This is what a two-colour print actually does: the second colours
+are the black pass laid over the spot at varying density.
+
+The register's signature mark is the **contour**: the topographic line field that runs through the
+reference's poster work, where a portrait is rendered entirely as stacked contour lines. It is the
+one place trax spends ornament on a surface as large as the page. `--sprint-ground-sweep` is a
+contour field rather than calorie's lighting falloff, and the surface ramp is inverted to give it
+somewhere to live: trax is the only register whose panels are *darker* than the ground, so a page is
+black plates stamped into a lit, contoured chassis rather than lighter panels floating on black.
+That inversion is most of what separates `trax-dark` from `dark` at a glance, because a hue swap on
+its own does not.
+
+Rule 12, which the contour forced: **a ground sweep may only move the ground away from its ink,
+never toward it.** `contrast.test.ts` measures ink against a flat token, and a patterned sweep makes
+the ground not flat, so a sweep that darkens a dark-ink ground silently eats the margin the test
+thinks it proved. On the orange ground a black contour at 0.26 drops `--sprint-ink` from 4.92:1 to
+about 4.16:1, below AA, so trax's sweep is a *bleached* line that lightens the orange, and
+`trax-dark`'s is a black line that darkens the charred orange, away from its sand ink. The first
+draft lightened it with orange, which moved the ground toward its ink and was invisible besides. Calorie's
+sweep already obeyed this by accident, being a highlight from above on both of its grounds; trax is
+where it had to become a rule.
+
+Rule 14 is what three passes at `trax-dark` finally produced: **a register whose identity is a ground
+hue keeps that ground on every stock it ships.** `trax-dark` was a warm charcoal for its first three
+drafts, and a neutral dark page with panels a step off it and one chromatic accent is exactly the
+construction of the default `dark` theme — so no amount of accent tuning could separate the two, and
+nothing structural tied `trax-dark` to `trax`. The assumption that a dark ground must be neutral was
+never tested: a charred burnt orange `#2b1006` sits at 0.0090 luminance, *below* the charcoal's
+0.0100, and every gated role gains headroom against it. A chromatic dark ground was free. Rule 11's
+cap follows from the bright orange's luminance, not from chroma, so a chromatic ground may sit
+anywhere on the value scale.
+
+The register therefore has no neutrals on either stock. Keylines, muted ink, the inert field and the
+ornament ink are all tints of the one hue family, and the eight-step `hull` neutral ramp was deleted
+rather than left unused. `trax` stamps black plates on bright orange and `trax-dark` stamps bone
+plates on charred orange: one register printed on two stocks, at opposite polarity.
+
+Rule 13, which the review of this register forced: **on a chromatic ground, structure is stamped
+rather than stacked.** Rule 11 caps the ink at 0.0105 luminance, and running that cap backwards bounds
+the surfaces too: an ink that dark can only sit on a ground of at least 0.2012, and the orange is
+0.222. A full-bleed chromatic ground therefore admits exactly one surface value, its own, and there is
+no ramp to widen. Hierarchy is bought instead with `--sprint-plate` (a stamped header band),
+`--sprint-keyline-width-plate` (1px internal rules against a 3px plate edge) and
+`--sprint-misregister` (a solid second pass offset down and right, replacing the symmetric halo). A
+trax page is a rack of placards, and that is the silhouette both grounds share.
+
+Rule 15 is the corollary, and the dark stock took two passes to reach it: **a plate stamps in
+whichever ink its ground has room for.** The rule-13 draft gave `trax-dark` a dark band with an
+orange hairline, reasoning that a full orange band spends the hero hue on chrome. The reasoning holds
+and the band did not: it measured 1.16:1 against the panel it capped, so the placard silhouette was
+trax's alone and the register's identity fell back on an orange misregistration, putting the hero hue
+on chrome by the other door. Neither stock has a surface ramp to widen, by rule 13, so value is the
+only channel a stamp has, and on a dark stock it only runs upward. `trax-dark`'s plate is the sand
+ink with a charred label, 13.2:1 against the panel it caps, the inverse polarity of trax's black on
+bright orange and the same construction. The misregistration drops to a burnt tan once the plate
+carries the hierarchy, and the hero hue rations back to the action.
+
+Status hue still collapses on the orange ground, and it collapses further than the first draft
+recorded: every status field there is within 1.07:1 of every other, and danger against info is
+1.01:1. Labels alone do not fix a scan, so **tone now carries geometry as well as ink**, in every
+register. An Alert's left bar runs a four-step width ladder, hairline through solid to the alarm mark,
+which is `--sprint-ornament-alarm`: dense hatch by default and the hazard chevron in trax. The chevron
+itself is a single conic wedge that tiles into a row of downward arrowheads, rather than the diagonal
+stripe it shipped as, because `hatch`, `hatch-dense` and `shade` were already that stripe at three
+duty cycles. A stroked V is not reachable: the ornament contract is a background image and a size, so
+a mark needing a `background-position` cannot be expressed, and gradient layers composite rather than
+subtract.
+
+The contour stays on the page ground and got quieter there, roughly half its first alpha with its
+lines twice as far apart, because it was loud enough to compete with body text. Alpha is per ground,
+though: the black line on the charred stock needs far more of it than the bleached line on the
+bright one, because it is darkening a ground that is already dark. A dense version behind
+the PageHeader was tried and removed: a header is exactly where a lede sits. `--sprint-header-rule`
+closes the header with a 7px barcode strip instead, which is the first thing to draw a mark the
+vocabulary has listed since it was written.
+
+The register also narrowed to four hues, because between the plate, the edge, the action, the mark and
+the focus ring it had stopped rationing anything. Focus in `trax-dark` is the sand ink rather than the
+house acid, so acid appears nowhere in trax at all; warning is a warm safety amber `#ffc400` rather
+than the loud register's green-yellow; and `trax`'s info and warning collapse into the one press ink,
+because a navy at 1.01:1 and an olive at 1.04:1 against the action were three tokens pretending to be
+three colours. `trax-dark` then went to three, because four was still one more than the bright stock
+carries: warning is `amber-pale`, a warm sand inside the bone vocabulary rather than a hue of its own,
+and the ornament ink is a tint of the ground so texture is tonal on both stocks. What stays chromatic
+there is one warm ramp and one alarm. Danger stays magenta on the dark stock, for the reasons the
+warm-wedge decision measured; it is the register's only out-of-family hue, and `--sprint-danger` has
+to clear AA as an *ink* rather than only as a field, because `Alert` paints its title with it. Every
+warm red that clears that gate lands within 1.09:1 of the action.
+
+The two Sprint carryovers both hold. The ornament vocabulary gains `chevron` and `barcode`: the
+first is a mark of manufacture for an extraction industry, the same test that admitted calorie's
+ejector-pin ring, and the second was named in the vocabulary above from the beginning and had simply
+never been implemented. The micro-label voice is unchanged, because it was already this register's
+native voice. One hue is rationed to the action and focus is never it: in `trax-dark` focus is the
+house acid, which is also the one system element the register borrows, and it is what keeps a trax
+page legible as a Sprint page.
+
+Acid appears nowhere else in trax, and the hazard orange appears nowhere in the other two registers.
+
 ## Implementation notes
 
 - Everything above is expressed as CSS custom properties per CLAUDE.md. No CSS-in-JS runtime.
@@ -252,7 +396,10 @@ both registers, because they are structural rather than visual.
   `text-transform: var(--sprint-label-transform)`, never a literal `0` or `uppercase`. The mono
   primitive is reserved for code and secret values; everything else takes `--sprint-font-ui`.
 - The display face is a system serif stack (Didot / Bodoni MT / Bodoni 72 / Georgia); the library
-  cannot depend on a font CDN. Choosing a licensed, self-hosted serif and monospace pair is still
+  cannot depend on a font CDN. A width the stack names is not a width it gets: `--sprint-font-condensed`
+  led with `Arial Narrow`, which fontconfig substitutes with a non-narrow face, and resolved 2.3%
+  narrower than plain sans until the genuinely condensed faces moved to the front and
+  `--sprint-display-stretch` asked a width-capable face to condense. It is now 11.5% narrower. Choosing a licensed, self-hosted serif and monospace pair is still
   open and needs its own ADR.
 - The agent view (PRD R1) inherits none of this. It is plain text. A component's visual identity and
   its agent identity are independent, which is the point.

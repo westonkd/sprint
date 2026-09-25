@@ -26,7 +26,13 @@ import { releaseGloss, trackGloss } from "./gloss.ts";
 
 const COPIED_FOR = 1200;
 
-export type SprintTheme = "dark" | "light" | "calorie" | "calorie-dark";
+export type SprintTheme =
+  | "dark"
+  | "light"
+  | "calorie"
+  | "calorie-dark"
+  | "trax"
+  | "trax-dark";
 
 export interface SprintProviderProps {
   children: ReactNode;

@@ -29,10 +29,14 @@
     --sprint-ink-muted: var(--sprint-color-panel-600);
     --sprint-ink-inverse: var(--sprint-color-void);
 
+    --sprint-keyline-width: 1px;
+    --sprint-keyline-width-thick: 2px;
+
     --sprint-keyline: var(--sprint-color-panel-400);
     --sprint-keyline-strong: var(--sprint-color-panel-500);
     --sprint-keyline-muted: var(--sprint-color-panel-300);
     --sprint-keyline-halo: var(--sprint-keyline);
+    --sprint-keyline-halo-offset: 2px;
 
     --sprint-action: var(--sprint-color-acid);
     --sprint-action-ink: var(--sprint-color-void);
@@ -58,6 +62,9 @@
 
     --sprint-link: var(--sprint-info);
     --sprint-link-rule: transparent;
+    --sprint-plate-link: var(--sprint-info);
+    --sprint-plate-control-ink: var(--sprint-color-paper);
+    --sprint-plate-keyline: var(--sprint-color-panel-400);
 
     --sprint-lip-ink: transparent;
     --sprint-fresnel-ink: transparent;
@@ -168,8 +175,21 @@
     --sprint-ornament-ink: var(--sprint-keyline);
     --sprint-ornament-empty: var(--sprint-ornament-hatch);
     --sprint-ornament-empty-size: auto;
+    --sprint-ornament-alarm: var(--sprint-ornament-hatch-dense);
+    --sprint-ornament-alarm-size: auto;
     --sprint-empty-field: 0;
     --sprint-scanline-opacity: 0.5;
+
+    --sprint-plate: var(--sprint-surface-inset);
+    --sprint-plate-ink: var(--sprint-ink-muted);
+    --sprint-plate-rule: var(--sprint-keyline);
+
+    --sprint-keyline-width-plate: var(--sprint-keyline-width);
+    --sprint-misregister: 0 0 0 0 transparent;
+
+    --sprint-display-stretch: normal;
+    --sprint-header-rule: none;
+    --sprint-header-rule-height: 0;
 
     --sprint-duration-instant: 80ms;
     --sprint-duration-fast: 120ms;
@@ -224,7 +244,12 @@
     --sprint-action-mark: var(--sprint-action);
 
     --sprint-link: var(--sprint-info);
+    --sprint-plate: var(--sprint-surface-inset);
+    --sprint-plate-ink: var(--sprint-ink-muted);
     --sprint-link-rule: transparent;
+    --sprint-plate-link: var(--sprint-info);
+    --sprint-plate-control-ink: var(--sprint-color-void);
+    --sprint-plate-keyline: var(--sprint-color-paper-300);
 
     --sprint-focus: var(--sprint-color-ultramarine);
   }
@@ -319,7 +344,12 @@
     --sprint-warning-ink: var(--sprint-color-bone-50);
 
     --sprint-link: var(--sprint-color-bone-900);
+    --sprint-plate: var(--sprint-surface-inset);
+    --sprint-plate-ink: var(--sprint-ink-muted);
     --sprint-link-rule: var(--sprint-color-bone-400);
+    --sprint-plate-link: var(--sprint-color-bone-900);
+    --sprint-plate-control-ink: var(--sprint-color-bone-900);
+    --sprint-plate-keyline: var(--sprint-color-bone-300);
 
     --sprint-focus: var(--sprint-color-indigo);
 
@@ -382,7 +412,12 @@
     --sprint-warning-ink: var(--sprint-color-carbon);
 
     --sprint-link: var(--sprint-color-bone);
+    --sprint-plate: var(--sprint-surface-inset);
+    --sprint-plate-ink: var(--sprint-ink-muted);
     --sprint-link-rule: var(--sprint-color-carbon-500);
+    --sprint-plate-link: var(--sprint-color-bone);
+    --sprint-plate-control-ink: var(--sprint-color-bone);
+    --sprint-plate-keyline: var(--sprint-color-carbon-300);
 
     --sprint-focus: var(--sprint-color-indigo-pale);
 
@@ -405,6 +440,168 @@
       var(--sprint-color-flare) 38%,
       var(--sprint-color-carbon-300)
     );
+  }
+
+  [data-sprint-theme="trax"],
+  [data-sprint-theme="trax-dark"] {
+    --sprint-keyline-width: 1px;
+    --sprint-keyline-width-thick: 3px;
+    --sprint-keyline-width-plate: 3px;
+    --sprint-keyline-halo: transparent;
+    --sprint-keyline-halo-offset: 5px;
+
+    --sprint-font-display: var(--sprint-font-condensed);
+    --sprint-display-tracking: var(--sprint-tracking-display);
+    --sprint-display-weight: var(--sprint-weight-bold);
+    --sprint-display-transform: uppercase;
+    --sprint-display-stretch: condensed;
+
+    --sprint-header-rule: var(--sprint-ornament-barcode);
+    --sprint-header-rule-height: 7px;
+
+    --sprint-radius-pill: 999px;
+
+    --sprint-ornament-empty: var(--sprint-ornament-chevron);
+    --sprint-ornament-empty-size: var(--sprint-ornament-chevron-size);
+    --sprint-ornament-alarm: var(--sprint-ornament-chevron);
+    --sprint-ornament-alarm-size: var(--sprint-ornament-chevron-size);
+    --sprint-empty-field: 3rem;
+    --sprint-scanline-opacity: 0.7;
+
+    --sprint-duration-instant: 60ms;
+    --sprint-duration-fast: 75ms;
+    --sprint-duration-slow: 90ms;
+    --sprint-steps: steps(3, end);
+  }
+
+  [data-sprint-theme="trax"] {
+    color-scheme: light;
+
+    --sprint-surface: var(--sprint-color-hazard-field);
+    --sprint-surface-raised: var(--sprint-color-hazard-field-hi);
+    --sprint-surface-inset: var(--sprint-color-hazard-field-lo);
+
+    --sprint-ink: var(--sprint-color-press);
+    --sprint-ink-muted: var(--sprint-color-press-muted);
+    --sprint-ink-inverse: var(--sprint-color-hazard);
+
+    --sprint-keyline: var(--sprint-color-hazard-deep);
+    --sprint-keyline-strong: var(--sprint-color-press-edge);
+    --sprint-keyline-muted: var(--sprint-color-hazard-field-lo);
+
+    --sprint-plate: var(--sprint-color-press-full);
+    --sprint-plate-ink: var(--sprint-color-hazard-hot);
+    --sprint-plate-rule: var(--sprint-color-press-full);
+
+    --sprint-misregister: 5px 5px 0 0 var(--sprint-color-press);
+
+    --sprint-action: var(--sprint-color-press);
+    --sprint-action-ink: var(--sprint-color-hazard);
+    --sprint-action-hover: var(--sprint-color-press-hover);
+    --sprint-action-mark: var(--sprint-color-press);
+
+    --sprint-danger: var(--sprint-color-press-red);
+    --sprint-danger-ink: var(--sprint-color-hazard);
+    --sprint-danger-hover: var(--sprint-color-press-red-hover);
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-press);
+    --sprint-neutral-hover: var(--sprint-color-hazard-field-hi);
+
+    --sprint-inert: var(--sprint-color-bleach);
+    --sprint-inert-ink: var(--sprint-color-press);
+
+    --sprint-info: var(--sprint-color-press);
+    --sprint-info-ink: var(--sprint-color-hazard);
+    --sprint-warning: var(--sprint-color-press);
+    --sprint-warning-ink: var(--sprint-color-hazard);
+
+    --sprint-link: var(--sprint-color-press);
+    --sprint-link-rule: var(--sprint-color-hazard-deep);
+    --sprint-plate-link: var(--sprint-color-hazard-hot);
+    --sprint-plate-control-ink: var(--sprint-color-hazard-hot);
+    --sprint-plate-keyline: var(--sprint-color-hazard-hot);
+
+    --sprint-focus: var(--sprint-color-press-full);
+
+    --sprint-ground-sweep:
+      repeating-radial-gradient(
+        ellipse 26vw 21vh at 14% 10%,
+        rgb(255 251 245 / 0.07) 0 1px,
+        transparent 1px 22px
+      ),
+      repeating-radial-gradient(
+        ellipse 21vw 27vh at 86% 74%,
+        rgb(255 251 245 / 0.07) 0 1px,
+        transparent 1px 22px
+      );
+
+    --sprint-ornament-ink: var(--sprint-color-hazard-deep);
+  }
+
+  [data-sprint-theme="trax-dark"] {
+    color-scheme: dark;
+
+    --sprint-surface: var(--sprint-color-char);
+    --sprint-surface-raised: var(--sprint-color-char-hi);
+    --sprint-surface-inset: var(--sprint-color-char-lo);
+
+    --sprint-ink: var(--sprint-color-sand);
+    --sprint-ink-muted: var(--sprint-color-clay);
+    --sprint-ink-inverse: var(--sprint-color-char);
+
+    --sprint-keyline: var(--sprint-color-char-rule);
+    --sprint-keyline-strong: var(--sprint-color-char-edge);
+    --sprint-keyline-muted: var(--sprint-color-char-lo);
+
+    --sprint-plate: var(--sprint-color-sand);
+    --sprint-plate-ink: var(--sprint-color-char);
+    --sprint-plate-rule: var(--sprint-color-hazard-deep);
+
+    --sprint-misregister: 5px 5px 0 0 var(--sprint-color-char-edge);
+
+    --sprint-action: var(--sprint-color-hazard);
+    --sprint-action-ink: var(--sprint-color-char);
+    --sprint-action-hover: var(--sprint-color-hazard-hot);
+    --sprint-action-mark: var(--sprint-color-amber-hot);
+
+    --sprint-danger: var(--sprint-color-magenta);
+    --sprint-danger-ink: var(--sprint-color-char);
+    --sprint-danger-hover: #ff4d80;
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-sand);
+    --sprint-neutral-hover: var(--sprint-color-char-inert);
+
+    --sprint-inert: var(--sprint-color-char-inert);
+    --sprint-inert-ink: var(--sprint-color-clay);
+
+    --sprint-info: var(--sprint-color-sand);
+    --sprint-info-ink: var(--sprint-color-char);
+    --sprint-warning: var(--sprint-color-amber-pale);
+    --sprint-warning-ink: var(--sprint-color-char);
+
+    --sprint-link: var(--sprint-color-sand);
+    --sprint-link-rule: var(--sprint-color-amber-hot);
+    --sprint-plate-link: var(--sprint-color-hazard-deep);
+    --sprint-plate-control-ink: var(--sprint-color-char);
+    --sprint-plate-keyline: var(--sprint-color-char-edge);
+
+    --sprint-focus: var(--sprint-color-sand);
+
+    --sprint-ground-sweep:
+      repeating-radial-gradient(
+        ellipse 26vw 21vh at 14% 10%,
+        rgb(0 0 0 / 0.5) 0 1px,
+        transparent 1px 22px
+      ),
+      repeating-radial-gradient(
+        ellipse 21vw 27vh at 86% 74%,
+        rgb(0 0 0 / 0.5) 0 1px,
+        transparent 1px 22px
+      );
+
+    --sprint-ornament-ink: var(--sprint-color-char-edge);
   }
 
   [data-sprint],

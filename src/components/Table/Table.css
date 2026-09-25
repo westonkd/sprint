@@ -128,7 +128,7 @@
       text-transform: var(--sprint-label-transform);
     }
 
-    [data-sprint="Table"] td > span {
+    [data-sprint="Table"]:not([data-sprint-empty]) td > span {
       display: none;
     }
 
