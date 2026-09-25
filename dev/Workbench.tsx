@@ -1,11 +1,10 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 import {
-  type AgentComponentMeta,
   Link,
   listAgentMeta,
   MetaLine,
-  Nav,
-  NavGroup,
+  NavBar,
+  type NavBarOpening,
   Select,
   Shell,
   SprintProvider,
@@ -13,6 +12,7 @@ import {
   type SprintView,
   version,
 } from "../src/index.ts";
+import { byCategory, type NavModel } from "./navModel.ts";
 import { ComponentDoc, docSections } from "./pages/ComponentDoc.tsx";
 import { Everything } from "./pages/Everything.tsx";
 import { GuideForms } from "./pages/GuideForms.tsx";
@@ -40,17 +40,6 @@ const GUIDES: readonly Guide[] = [
   { id: "everything", title: "Every component", render: () => <Everything /> },
 ];
 
-const CATEGORY_ORDER = [
-  "layout",
-  "navigation",
-  "typography",
-  "display",
-  "action",
-  "input",
-  "feedback",
-  "overlay",
-];
-
 interface Route {
   page: string;
   section?: string;
@@ -70,24 +59,6 @@ function formatHash(route: Route): string {
   const section = route.section === undefined ? "" : `/${route.section}`;
   const query = route.view === "agent" ? "?view=agent" : "";
   return `#/${route.page}${section}${query}`;
-}
-
-function byCategory(
-  components: readonly AgentComponentMeta[],
-): [string, AgentComponentMeta[]][] {
-  const groups = new Map<string, AgentComponentMeta[]>();
-  for (const meta of components) {
-    const list = groups.get(meta.category) ?? [];
-    list.push(meta);
-    groups.set(meta.category, list);
-  }
-  const known = CATEGORY_ORDER.filter((category) => groups.has(category));
-  const rest = [...groups.keys()].filter((c) => !CATEGORY_ORDER.includes(c)).sort();
-  return [...known, ...rest].map((category) => {
-    const list = groups.get(category) ?? [];
-    list.sort((a, b) => a.name.localeCompare(b.name));
-    return [category, list];
-  });
 }
 
 export function Workbench() {
@@ -134,6 +105,17 @@ interface WorkbenchShellProps {
 function WorkbenchShell(props: WorkbenchShellProps) {
   const { theme, onThemeChange, route } = props;
   const components = listAgentMeta();
+  const [opening, setOpening] = useState<NavBarOpening>("closed");
+
+  useEffect(() => {
+    const summon = (event: KeyboardEvent) => {
+      if (event.key !== "k" || !(event.metaKey || event.ctrlKey)) return;
+      event.preventDefault();
+      setOpening("group");
+    };
+    window.addEventListener("keydown", summon);
+    return () => window.removeEventListener("keydown", summon);
+  }, []);
 
   const guide = route.page.startsWith("guide/")
     ? GUIDES.find((entry) => `guide/${entry.id}` === route.page)
@@ -142,6 +124,55 @@ function WorkbenchShell(props: WorkbenchShellProps) {
 
   const href = (path: string) =>
     `#/${path}${route.view === "agent" ? "?view=agent" : ""}`;
+
+  const model: NavModel = [
+    {
+      label: "Guides",
+      items: GUIDES.map((entry) => ({
+        href: href(`guide/${entry.id}`),
+        label: entry.title,
+        ...(guide?.id === entry.id ? { active: true } : {}),
+      })),
+    },
+    ...byCategory(components).map(([category, members]) => ({
+      label: category,
+      items: members.map((meta) => ({
+        href: href(meta.name),
+        label: meta.name,
+        ...(meta.name === route.page ? { active: true } : {}),
+      })),
+    })),
+    ...(component === undefined
+      ? []
+      : [
+          {
+            label: "On this page",
+            items: docSections(component).map((section) => ({
+              href: href(`${component.name}/${section.id}`),
+              label: section.title,
+              ...(route.section === section.id ? { active: true } : {}),
+            })),
+          },
+        ]),
+    {
+      label: "Reference",
+      items: [
+        { href: "index.html", label: "Landing page" },
+        { href: "agent-manifest.json", label: "agent-manifest.json", external: true },
+        { href: "llms.txt", label: "llms.txt", external: true },
+        {
+          href: "https://developer.chrome.com/docs/ai/webmcp",
+          label: "Chrome docs",
+          external: true,
+        },
+        {
+          href: "https://github.com/webmachinelearning/webmcp",
+          label: "Specification",
+          external: true,
+        },
+      ],
+    },
+  ];
 
   return (
     <div className="app" data-view={route.view}>
@@ -162,63 +193,12 @@ function WorkbenchShell(props: WorkbenchShellProps) {
           </>
         }
         side={
-          <Nav label="Workbench">
-            <NavGroup label="Guides">
-              {GUIDES.map((entry) => (
-                <Link
-                  key={entry.id}
-                  href={href(`guide/${entry.id}`)}
-                  active={guide?.id === entry.id}
-                >
-                  {entry.title}
-                </Link>
-              ))}
-            </NavGroup>
-
-            {byCategory(components).map(([category, members]) => (
-              <NavGroup key={category} label={category}>
-                {members.map((meta) => (
-                  <Link
-                    key={meta.name}
-                    href={href(meta.name)}
-                    active={meta.name === route.page}
-                  >
-                    {meta.name}
-                  </Link>
-                ))}
-              </NavGroup>
-            ))}
-
-            {component === undefined ? null : (
-              <NavGroup label="On this page">
-                {docSections(component).map((section) => (
-                  <Link
-                    key={section.id}
-                    href={href(`${component.name}/${section.id}`)}
-                    active={route.section === section.id}
-                  >
-                    {section.title}
-                  </Link>
-                ))}
-              </NavGroup>
-            )}
-
-            <NavGroup label="Reference">
-              <Link href="index.html">Landing page</Link>
-              <Link href="agent-manifest.json" external>
-                agent-manifest.json
-              </Link>
-              <Link href="llms.txt" external>
-                llms.txt
-              </Link>
-              <Link href="https://developer.chrome.com/docs/ai/webmcp" external>
-                Chrome docs
-              </Link>
-              <Link href="https://github.com/webmachinelearning/webmcp" external>
-                Specification
-              </Link>
-            </NavGroup>
-          </Nav>
+          <NavBar
+            label="Workbench"
+            groups={model}
+            open={opening}
+            onOpenChange={setOpening}
+          />
         }
       >
         {guide !== undefined ? (
