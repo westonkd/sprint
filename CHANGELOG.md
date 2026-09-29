@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.4.0 - 2026-09-28
+
 - **Fixed: a nested `Panel`'s header leaked the plate's custom properties.** The header rule set
   `--sprint-link`, `--sprint-neutral-ink` and `--sprint-keyline` to their plate values on every
   `Panel > header`, and the nested override reset only `background` and `color`. A control in a
