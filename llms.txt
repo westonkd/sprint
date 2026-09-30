@@ -19,6 +19,7 @@ Component roots carry `data-sprint="<ComponentName>"`, addressable parts carry `
 - [List](/components/List.md): A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.
 - [MetaLine](/components/MetaLine.md): A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.
 - [Nav](/components/Nav.md): A labelled navigation landmark: the region that holds a page's links to elsewhere.
+- [NavBar](/components/NavBar.md): A navigation landmark that renders as one line: where you are, written as a coordinate you can edit. Every destination stays in the page as an addressable part; the coordinate decides which of them a person is shown.
 - [NavGroup](/components/NavGroup.md): A labelled cluster of links inside a Nav. The label names the group for screen readers and agents alike.
 - [PageHeader](/components/PageHeader.md): The top of a page: its h1 title, the Tag chips that classify it, an optional page-level control, and a lede underneath.
 - [Panel](/components/Panel.md): A labelled region with a header band and an optional slot for the controls that act on it. Everything on a Sprint page lives inside one.
