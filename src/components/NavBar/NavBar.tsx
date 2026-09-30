@@ -217,6 +217,9 @@ export function NavBar(props: NavBarProps) {
     return -latest;
   };
 
+  const order = (value: number): CSSProperties | undefined =>
+    value === 0 ? undefined : ({ "--sprint-navbar-order": value } as CSSProperties);
+
   const travellers = (): HTMLElement[] => {
     const within = drawer.current;
     if (within === null) return [];
@@ -359,7 +362,7 @@ export function NavBar(props: NavBarProps) {
           return (
             <div
               key={group.label}
-              style={{ "--sprint-navbar-order": recency(members) } as CSSProperties}
+              style={order(recency(members))}
               {...(any ? {} : { hidden: true })}
             >
               <span>{`${label} / ${group.label}`}</span>

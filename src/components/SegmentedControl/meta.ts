@@ -35,6 +35,22 @@ export const segmentedControlMeta = defineAgentMeta({
         "Called with the newly selected value. The select tool drives a real click, so this runs for agent selections too.",
       required: true,
     },
+    saved: {
+      kind: "string",
+      description:
+        "The value currently in effect, when value is a staged change that has not been confirmed. The saved option is marked, and the control reports changed while the two differ.",
+    },
+    hint: {
+      kind: "string",
+      description:
+        "Helper text under the options, such as what happens on confirm. It describes the group for a screen reader and is carried as a hint part.",
+    },
+    block: {
+      kind: "boolean",
+      description:
+        "Fill the container width, sharing it equally between the options. Without it the track is only as wide as its options, even inside a stretching column.",
+      default: false,
+    },
     disabled: {
       kind: "boolean",
       description: "Disable every option and unregister the select tool.",
@@ -55,6 +71,15 @@ export const segmentedControlMeta = defineAgentMeta({
     value: {
       description: "The value of the option currently selected.",
       attribute: "data-sprint-value",
+    },
+    changed: {
+      description:
+        "Present when a saved value is given and the selection differs from it.",
+      attribute: "data-sprint-changed",
+    },
+    block: {
+      description: "Present when the track fills its container.",
+      attribute: "data-sprint-block",
     },
     disabled: {
       description: "Present when no option can be chosen.",
@@ -81,6 +106,12 @@ export const segmentedControlMeta = defineAgentMeta({
         "Disabled unregisters the tool, so an agent cannot select an option a person could not.",
       code: '<SegmentedControl\n  label="Density"\n  disabled\n  value="dense"\n  onChange={setDensity}\n  options={[\n    { value: "dense", label: "dense" },\n    { value: "roomy", label: "roomy" },\n  ]}\n/>',
     },
+    {
+      title: "A staged change",
+      description:
+        "saved keeps the value in effect visible while a new one is selected, and the hint says when it applies. The control reports changed until the two agree.",
+      code: '<SegmentedControl\n  label="Access"\n  saved="write"\n  value={access}\n  onChange={setAccess}\n  hint="Nothing changes until you confirm."\n  options={[\n    { value: "read", label: "Read" },\n    { value: "write", label: "Write" },\n    { value: "maintain", label: "Maintain" },\n  ]}\n/>',
+    },
   ],
   a11y: {
     role: "radiogroup",
@@ -91,6 +122,6 @@ export const segmentedControlMeta = defineAgentMeta({
       "Tab enters and leaves the group once",
     ],
     notes:
-      "Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group.",
+      "The radio group is the track inside the root, described by the hint when there is one. Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group.",
   },
 });

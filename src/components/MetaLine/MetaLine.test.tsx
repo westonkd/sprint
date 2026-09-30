@@ -29,6 +29,13 @@ describe("MetaLine rendering", () => {
     expect(container.firstChild).toBeNull();
   });
 
+  it("truncates by default and breaks between entries when asked to wrap", () => {
+    const { rerender } = render(<MetaLine entries={ENTRIES} />);
+    expect(root()).not.toHaveAttribute("data-sprint-wrap");
+    rerender(<MetaLine entries={ENTRIES} wrap />);
+    expect(root()).toHaveAttribute("data-sprint-wrap", "");
+  });
+
   it("forwards ref and spreads the rest onto the root", () => {
     const ref = createRef<HTMLParagraphElement>();
     render(<MetaLine ref={ref} entries={ENTRIES} data-testid="spread" />);

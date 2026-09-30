@@ -46,6 +46,12 @@ function root(): HTMLElement {
   return element;
 }
 
+function track(): HTMLElement {
+  const element = root().querySelector<HTMLElement>('[role="radiogroup"]');
+  if (element === null) throw new Error("no SegmentedControl track found");
+  return element;
+}
+
 async function call(name: string, inputs: Record<string, unknown>) {
   let result: string | null = null;
   await act(async () => {
@@ -57,8 +63,51 @@ async function call(name: string, inputs: Record<string, unknown>) {
 describe("SegmentedControl rendering", () => {
   it("is a radio group named by its label", () => {
     render(<Harness />);
-    expect(screen.getByRole("radiogroup", { name: "Page view" })).toBe(root());
+    expect(screen.getByRole("radiogroup", { name: "Page view" })).toBe(track());
     expect(screen.getAllByRole("radio")).toHaveLength(2);
+  });
+
+  it("marks the saved option and reports a staged change until it matches", () => {
+    render(<Harness saved="human" hint="Nothing changes until you confirm." />);
+    expect(root()).not.toHaveAttribute("data-sprint-changed");
+    expect(screen.getByRole("radio", { name: "human" })).toHaveAttribute(
+      "data-sprint-saved",
+      "",
+    );
+    fireEvent.click(screen.getByRole("radio", { name: "agent" }));
+    expect(root()).toHaveAttribute("data-sprint-changed", "");
+    expect(screen.getByRole("radiogroup")).toHaveAccessibleDescription(
+      "Nothing changes until you confirm.",
+    );
+  });
+
+  it("carries the saved option and the hint into the agent view as text", () => {
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <SegmentedControl
+          label="Access"
+          options={OPTIONS}
+          value="agent"
+          saved="human"
+          hint="Applies on confirm."
+          onChange={() => {}}
+          agentTool={false}
+        />
+      </SprintProvider>,
+    );
+    expect(container.textContent).toContain("[changed, value=agent]");
+    expect(container.textContent).toContain('part `option` "human" [saved]');
+    expect(container.textContent).toContain('part `hint` "Applies on confirm."');
+    expect(
+      container.querySelectorAll("button:not([data-sprint-view-copy])"),
+    ).toHaveLength(2);
+  });
+
+  it("stays as wide as its options unless asked to fill", () => {
+    const { rerender } = render(<Harness />);
+    expect(root()).not.toHaveAttribute("data-sprint-block");
+    rerender(<Harness block />);
+    expect(root()).toHaveAttribute("data-sprint-block", "");
   });
 
   it("marks the selected option and reflects the value", () => {
@@ -88,11 +137,11 @@ describe("SegmentedControl rendering", () => {
 
   it("moves and selects with the arrow keys", () => {
     render(<Harness />);
-    fireEvent.keyDown(root(), { key: "ArrowRight" });
+    fireEvent.keyDown(track(), { key: "ArrowRight" });
     expect(root()).toHaveAttribute("data-sprint-value", "agent");
-    fireEvent.keyDown(root(), { key: "ArrowRight" });
+    fireEvent.keyDown(track(), { key: "ArrowRight" });
     expect(root()).toHaveAttribute("data-sprint-value", "human");
-    fireEvent.keyDown(root(), { key: "End" });
+    fireEvent.keyDown(track(), { key: "End" });
     expect(root()).toHaveAttribute("data-sprint-value", "agent");
   });
 

@@ -29,6 +29,13 @@ export const listMeta = defineAgentMeta({
         "Number the items instead of bulleting them. Use it when the order is the point.",
       default: false,
     },
+    marker: {
+      kind: "enum",
+      description:
+        'The bullet for an unordered list. "plus" for gains and plain points, "minus" for losses or removals, drawn in the danger ink, "dot" for a neutral bullet, "none" for no marker. Ignored when ordered.',
+      values: ["plus", "minus", "dot", "none"],
+      default: "plus",
+    },
     emptyLabel: {
       kind: "string",
       description: "What the list says when it has no items.",
@@ -43,6 +50,12 @@ export const listMeta = defineAgentMeta({
     ordered: {
       description: "Present when the items are numbered rather than bulleted.",
       attribute: "data-sprint-ordered",
+    },
+    marker: {
+      description:
+        "The bullet in use, when it is not the default plus. A minus marks every item as a loss.",
+      attribute: "data-sprint-marker",
+      values: ["minus", "dot", "none"],
     },
     empty: {
       description: "Present when the list has no items.",
@@ -61,6 +74,12 @@ export const listMeta = defineAgentMeta({
     {
       title: "A list of rules",
       code: '<List\n  label="Tool rules"\n  items={[\n    <>\n      <strong>One tool, one action.</strong> Overlapping tools make selection\n      harder.\n    </>,\n  ]}\n/>',
+    },
+    {
+      title: "A list of losses",
+      description:
+        "The minus marker says every item is being taken away, and the agent view carries it as marker=minus.",
+      code: '<List\n  marker="minus"\n  label="Access removed"\n  items={["Delete the repository.", "Manage webhooks."]}\n/>',
     },
     {
       title: "A numbered sequence",

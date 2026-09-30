@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { createRef } from "react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { serializeWithin } from "@/agent/view/serialize.ts";
@@ -166,5 +167,35 @@ describe("Table agent view", () => {
         "| block | block | boolean |",
       ].join("\n"),
     );
+  });
+
+  it("sizes columns through a nonced rule when the provider carries a nonce", () => {
+    const html = renderToString(
+      <SprintProvider nonce="n0nce" pageTools={false}>
+        <Table
+          label="Props"
+          columns={[{ key: "prop", header: "Prop", width: "9rem" }]}
+          rows={ROWS}
+        />
+      </SprintProvider>,
+    );
+    expect(html).not.toContain("style=");
+    expect(html).toContain('data-sprint-width="9rem"');
+    expect(html).toContain(
+      '<style nonce="n0nce">[data-sprint="Table"] th[data-sprint-width="9rem"]{width:9rem}</style>',
+    );
+  });
+
+  it("names a sized column by its header alone", () => {
+    render(
+      <SprintProvider nonce="n0nce">
+        <Table
+          label="Props"
+          columns={[{ key: "prop", header: "Prop", width: "9rem" }]}
+          rows={ROWS}
+        />
+      </SprintProvider>,
+    );
+    expect(screen.getByRole("columnheader", { name: "Prop" })).toBeInTheDocument();
   });
 });

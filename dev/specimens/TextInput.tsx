@@ -44,4 +44,12 @@ export const textInputSpecimens: Record<string, ReactNode> = {
   "A labelled field": <LabelledField />,
   "A validation error": <ValidationError />,
   "A password": <Password />,
+  "A read-only value": (
+    <TextInput
+      label="Setup link"
+      readOnly
+      value="https://auth.example.com/setup/7f3a9c"
+      onChange={() => {}}
+    />
+  ),
 };

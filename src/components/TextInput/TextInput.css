@@ -48,6 +48,17 @@
     outline-offset: var(--sprint-focus-offset);
   }
 
+  [data-sprint="TextInput"][data-sprint-readonly] [data-sprint-part="input"] {
+    border-color: var(--sprint-keyline);
+    background: var(--sprint-surface-raised);
+    box-shadow: none;
+    text-overflow: ellipsis;
+  }
+
+  [data-sprint="TextInput"][data-sprint-readonly] [data-sprint-part="input"]:hover {
+    border-color: var(--sprint-keyline);
+  }
+
   [data-sprint="TextInput"][data-sprint-invalid] [data-sprint-part="input"] {
     border-color: var(--sprint-danger);
   }

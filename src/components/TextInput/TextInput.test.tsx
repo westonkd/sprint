@@ -137,6 +137,13 @@ describe("TextInput agent tool", () => {
     expect(mock.names()).toEqual([]);
   });
 
+  it("shows a read-only value without registering a fill tool", () => {
+    render(<Harness readOnly />);
+    expect(mock.names()).toEqual([]);
+    expect(root()).toHaveAttribute("data-sprint-readonly", "");
+    expect(screen.getByLabelText("Callsign")).toHaveAttribute("readonly");
+  });
+
   it("never echoes a password through the tool result", async () => {
     render(<Harness type="password" />);
     const result = await call("fill-callsign", { value: "hunter2" });
@@ -203,6 +210,14 @@ describe("TextInput agent view", () => {
     );
     expect(screen.queryByLabelText("Callsign")).not.toBeInTheDocument();
     unmount();
+
+    const readOnly = render(
+      <SprintProvider defaultView="agent">
+        <Harness readOnly />
+      </SprintProvider>,
+    );
+    expect(screen.queryByLabelText("Callsign")).not.toBeInTheDocument();
+    readOnly.unmount();
 
     render(
       <SprintProvider defaultView="agent" agentControls="never">

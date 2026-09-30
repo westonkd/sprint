@@ -11,15 +11,25 @@ import { reactText } from "@/agent/view/text.ts";
 import { listMeta } from "./meta.ts";
 import "./List.css";
 
+export type ListMarker = "plus" | "minus" | "dot" | "none";
+
 export interface ListProps extends ComponentPropsWithRef<"ul"> {
   label: string;
   items: readonly ReactNode[];
   ordered?: boolean;
+  marker?: ListMarker;
   emptyLabel?: string;
 }
 
 export function List(props: ListProps) {
-  const { label, items, ordered = false, emptyLabel = "Empty", ...rest } = props;
+  const {
+    label,
+    items,
+    ordered = false,
+    marker = "plus",
+    emptyLabel = "Empty",
+    ...rest
+  } = props;
 
   const view = useSprintView();
   const empty = items.length === 0;
@@ -36,7 +46,12 @@ export function List(props: ListProps) {
   const node = buildAgentNode({
     component: listMeta.name,
     label,
-    state: { items: String(items.length), ordered, empty },
+    state: {
+      items: String(items.length),
+      ordered,
+      ...(ordered || marker === "plus" ? {} : { marker }),
+      empty,
+    },
     parts,
   });
 

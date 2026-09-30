@@ -13,6 +13,17 @@
     text-overflow: ellipsis;
   }
 
+  [data-sprint="MetaLine"][data-sprint-wrap] {
+    white-space: normal;
+    overflow: visible;
+  }
+
+  [data-sprint="MetaLine"][data-sprint-wrap] > span {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
   [data-sprint="MetaLine"] > span > span:last-child {
     color: var(--sprint-ink);
   }

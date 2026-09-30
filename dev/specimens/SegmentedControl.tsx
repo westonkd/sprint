@@ -23,6 +23,26 @@ function ViewExample() {
   );
 }
 
+const ACCESS = [
+  { value: "read", label: "Read" },
+  { value: "write", label: "Write" },
+  { value: "maintain", label: "Maintain" },
+];
+
+function StagedExample() {
+  const [access, setAccess] = useState("maintain");
+  return (
+    <SegmentedControl
+      label="Access"
+      saved="write"
+      value={access}
+      onChange={setAccess}
+      hint="Nothing changes until you confirm."
+      options={ACCESS}
+    />
+  );
+}
+
 export const segmentedControlSpecimens: Record<string, ReactNode> = {
   "A view switch": <ViewExample />,
   "A disabled control": (
@@ -34,4 +54,5 @@ export const segmentedControlSpecimens: Record<string, ReactNode> = {
       options={DENSITY}
     />
   ),
+  "A staged change": <StagedExample />,
 };

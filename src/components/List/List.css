@@ -29,6 +29,24 @@
     font-size: var(--sprint-label-size);
   }
 
+  [data-sprint="List"][data-sprint-marker="minus"] > li::before {
+    content: "\2212";
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="List"][data-sprint-marker="dot"] > li::before {
+    content: "\2022";
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="List"][data-sprint-marker="none"] > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-sprint="List"][data-sprint-marker="none"] > li::before {
+    content: none;
+  }
+
   [data-sprint="List"][data-sprint-ordered] > li::before {
     content: counter(sprint-list) ".";
     color: var(--sprint-ink-muted);

@@ -1,6 +1,7 @@
 import type { ComponentPropsWithRef, CSSProperties } from "react";
 import { useSprintView } from "@/agent/view/mode.ts";
 import { agentAttributesFor, buildAgentNode } from "@/agent/view/project.ts";
+import { cssValue, StyleRule, useStyleNonce } from "@/provider/styleRule.tsx";
 import { stackMeta } from "./meta.ts";
 import "./Stack.css";
 
@@ -34,22 +35,30 @@ export function Stack(props: StackProps) {
   } = props;
 
   const view = useSprintView();
+  const nonce = useStyleNonce();
+  const length = min === undefined ? undefined : cssValue(min);
 
   const node = buildAgentNode({
     component: stackMeta.name,
-    state: { direction, gap, align, justify, wrap, collapse },
+    state: { direction, gap, align, justify, wrap, collapse, min: length },
   });
 
   if (view === "agent") return <>{children}</>;
 
-  const sizing =
-    min === undefined
-      ? style
-      : ({ ...style, "--sprint-stack-min": min } as CSSProperties);
+  const inline = length !== undefined && nonce === undefined;
+  const sizing = inline
+    ? ({ ...style, "--sprint-stack-min": length } as CSSProperties)
+    : style;
 
   return (
     <div {...rest} {...agentAttributesFor(node)} style={sizing}>
       {children}
+      {length !== undefined && nonce !== undefined ? (
+        <StyleRule
+          selector={`[data-sprint="Stack"][data-sprint-min="${length}"]`}
+          declarations={{ "--sprint-stack-min": length }}
+        />
+      ) : null}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { MetaLine } from "../../src/index.ts";
+import { MetaLine, Stack } from "../../src/index.ts";
 
 export const metaLineSpecimens: Record<string, ReactNode> = {
   "A build strip": (
@@ -18,5 +18,17 @@ export const metaLineSpecimens: Record<string, ReactNode> = {
         { term: "WebMCP", detail: "chrome 149" },
       ]}
     />
+  ),
+  "A line that wraps in a sidebar": (
+    <Stack direction="grid" min="12rem">
+      <MetaLine
+        wrap
+        entries={[
+          { term: "Role", detail: "Maintain" },
+          { term: "Created", detail: "2026.09.12" },
+          { term: "Last sign-in", detail: "2026.09.28" },
+        ]}
+      />
+    </Stack>
   ),
 };

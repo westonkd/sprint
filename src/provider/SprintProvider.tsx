@@ -23,6 +23,7 @@ import { AgentScopeProvider, useAgentScope } from "@/agent/webmcp/scope.ts";
 import { usePageTools } from "./pageTools.ts";
 import "./SprintProvider.css";
 import { releaseGloss, trackGloss } from "./gloss.ts";
+import { StyleNonceProvider, useStyleNonce } from "./styleRule.tsx";
 
 const COPIED_FOR = 1200;
 
@@ -44,6 +45,7 @@ export interface SprintProviderProps {
   onViewChange?: (view: SprintView) => void;
   agentControls?: SprintAgentControls;
   theme?: SprintTheme;
+  nonce?: string;
 }
 
 export function SprintProvider(props: SprintProviderProps) {
@@ -57,10 +59,12 @@ export function SprintProvider(props: SprintProviderProps) {
     onViewChange,
     agentControls,
     theme,
+    nonce,
   } = props;
 
   const parentScope = useAgentScope();
   const inherited = useSprintViewControl();
+  const inheritedNonce = useStyleNonce();
   const root = !inherited.owned;
 
   const [ownView, setOwnView] = useState<SprintView>(defaultView ?? "human");
@@ -124,26 +128,28 @@ export function SprintProvider(props: SprintProviderProps) {
 
   return (
     <SprintViewProvider value={viewValue}>
-      <AgentScopeProvider value={scopeValue}>
-        {copyControl ? (
-          <button
-            type="button"
-            aria-label={copied ? "Copied" : "Copy agent view"}
-            {...{ [VIEW_COPY_ATTRIBUTE]: "" }}
-            {...(copied ? { "data-sprint-copied": "" } : {})}
-            onClick={copy}
-          />
-        ) : null}
-        <div
-          ref={surface}
-          onPointerMove={effective === "agent" ? undefined : trackGloss}
-          onPointerOut={effective === "agent" ? undefined : releaseGloss}
-          {...{ [VIEW_ATTRIBUTE]: effective }}
-          {...(theme === undefined ? {} : { [THEME_ATTRIBUTE]: theme })}
-        >
-          {children}
-        </div>
-      </AgentScopeProvider>
+      <StyleNonceProvider value={nonce ?? inheritedNonce}>
+        <AgentScopeProvider value={scopeValue}>
+          {copyControl ? (
+            <button
+              type="button"
+              aria-label={copied ? "Copied" : "Copy agent view"}
+              {...{ [VIEW_COPY_ATTRIBUTE]: "" }}
+              {...(copied ? { "data-sprint-copied": "" } : {})}
+              onClick={copy}
+            />
+          ) : null}
+          <div
+            ref={surface}
+            onPointerMove={effective === "agent" ? undefined : trackGloss}
+            onPointerOut={effective === "agent" ? undefined : releaseGloss}
+            {...{ [VIEW_ATTRIBUTE]: effective }}
+            {...(theme === undefined ? {} : { [THEME_ATTRIBUTE]: theme })}
+          >
+            {children}
+          </div>
+        </AgentScopeProvider>
+      </StyleNonceProvider>
     </SprintViewProvider>
   );
 }

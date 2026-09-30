@@ -43,9 +43,13 @@ export function reactText(node: ReactNode): string | undefined {
   return text === "" ? undefined : text;
 }
 
+const UNRENDERED = new Set(["STYLE", "SCRIPT", "TEMPLATE"]);
+
 function isHidden(element: Element): boolean {
   return (
-    element.getAttribute("aria-hidden") === "true" || element.hasAttribute("hidden")
+    UNRENDERED.has(element.tagName) ||
+    element.getAttribute("aria-hidden") === "true" ||
+    element.hasAttribute("hidden")
   );
 }
 

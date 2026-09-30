@@ -2,6 +2,8 @@
   [data-sprint="DescriptionList"] {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
     margin: 0;
     border: var(--sprint-keyline-width) solid var(--sprint-keyline);
     border-radius: var(--sprint-radius-surface);
@@ -11,8 +13,9 @@
 
   [data-sprint="DescriptionList"] > div {
     display: flex;
-    flex-direction: column;
-    gap: var(--sprint-space-1);
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sprint-space-1) var(--sprint-space-4);
     padding: var(--sprint-space-2) var(--sprint-space-4);
   }
 
@@ -21,6 +24,8 @@
   }
 
   [data-sprint="DescriptionList"] dt {
+    flex: 0 0 clamp(8rem, 30%, 14rem);
+    min-width: 0;
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-label-size-small);
@@ -30,6 +35,8 @@
   }
 
   [data-sprint="DescriptionList"] dd {
+    flex: 1 1 12rem;
+    min-width: 0;
     margin: 0;
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
@@ -57,18 +64,5 @@
   [data-sprint="DescriptionList"][data-sprint-empty] > div > span {
     padding: 2px var(--sprint-space-3);
     background: var(--sprint-surface-raised);
-  }
-
-  @media (min-width: 40rem) {
-    [data-sprint="DescriptionList"] > div {
-      display: grid;
-      grid-template-columns: minmax(8rem, 14rem) 1fr;
-      gap: var(--sprint-space-4);
-      align-items: baseline;
-    }
-
-    [data-sprint="DescriptionList"][data-sprint-empty] > div {
-      display: flex;
-    }
   }
 }

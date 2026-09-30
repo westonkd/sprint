@@ -123,6 +123,10 @@ import manifest from "@westonkd/sprint/agent-manifest.json" with { type: "json" 
 Wrap your app in `SprintProvider` to register the page-level `list-page-regions` and `read-region`
 tools. Components work without it.
 
+Under a Content-Security-Policy without `'unsafe-inline'` styles, pass the policy's nonce as
+`<SprintProvider nonce={nonce}>`. Components that size themselves from a prop, like `Stack`'s `min`
+and `Table`'s column `width`, then emit a nonced rule instead of an inline `style` attribute.
+
 ## WebMCP
 
 Tools use the [web platform WebMCP API](https://developer.chrome.com/docs/ai/webmcp)

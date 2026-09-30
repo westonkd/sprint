@@ -63,6 +63,12 @@ export const textInputMeta = defineAgentMeta({
       description: "Disable the field and unregister its fill tool.",
       default: false,
     },
+    readOnly: {
+      kind: "boolean",
+      description:
+        "Show a value that can be selected and copied but not edited, such as a generated link. It stays focusable and submits with its form, unlike disabled, and the fill tool is not registered.",
+      default: false,
+    },
     required: {
       kind: "boolean",
       description: "Mark the field required, visually and in the agent view.",
@@ -96,6 +102,10 @@ export const textInputMeta = defineAgentMeta({
     disabled: {
       description: "Present when the field cannot be edited.",
       attribute: "data-sprint-disabled",
+    },
+    readonly: {
+      description: "Present when the value can be read and copied but not edited.",
+      attribute: "data-sprint-readonly",
     },
     required: {
       description: "Present when the field must be filled.",
@@ -131,6 +141,12 @@ export const textInputMeta = defineAgentMeta({
       description:
         "The value stays off every agent surface: state reflects filled or empty, and tool results never echo the text.",
       code: '<TextInput\n  label="Access code"\n  type="password"\n  value={code}\n  onChange={setCode}\n  autoComplete="current-password"\n/>',
+    },
+    {
+      title: "A read-only value",
+      description:
+        "A value a person copies rather than types, like a setup link. It truncates, stays selectable, and in agent view reads as a line with its value and no field.",
+      code: '<TextInput\n  label="Setup link"\n  readOnly\n  value="https://auth.example.com/setup/7f3a9c"\n  onChange={() => {}}\n/>',
     },
   ],
   a11y: {

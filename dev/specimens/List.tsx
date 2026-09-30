@@ -17,6 +17,13 @@ export const listSpecimens: Record<string, ReactNode> = {
       ]}
     />
   ),
+  "A list of losses": (
+    <List
+      marker="minus"
+      label="Access removed"
+      items={["Delete the repository.", "Manage webhooks."]}
+    />
+  ),
   "A numbered sequence": (
     <List
       ordered

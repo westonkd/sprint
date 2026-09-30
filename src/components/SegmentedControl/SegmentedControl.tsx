@@ -3,6 +3,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
 } from "react";
@@ -33,6 +34,9 @@ export interface SegmentedControlProps
   options: readonly SegmentedOption[];
   value: string;
   onChange: (value: string) => void;
+  saved?: string;
+  hint?: string;
+  block?: boolean;
   disabled?: boolean;
   agentName?: string;
   agentTool?: boolean;
@@ -57,6 +61,9 @@ export function SegmentedControl(props: SegmentedControlProps) {
     options,
     value,
     onChange,
+    saved,
+    hint,
+    block = false,
     disabled = false,
     agentName,
     agentTool = true,
@@ -66,6 +73,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
   const view = useSprintView();
   const controls = useAgentControls();
   const formatter = useAgentFormat();
+  const id = useId();
 
   const elements = useRef(new Map<string, HTMLButtonElement>());
   const onChangeRef = useRef(onChange);
@@ -123,21 +131,30 @@ export function SegmentedControl(props: SegmentedControlProps) {
     execute,
   });
 
-  const parts: AgentPart[] = options.map((option) => ({
+  const optionParts: AgentPart[] = options.map((option) => ({
     part: "option",
     label: option.label,
     state: {
       ...(option.value === value ? { checked: true as const } : {}),
+      ...(option.value === saved ? { saved: true as const } : {}),
       ...(disabled ? { disabled: true as const } : {}),
     },
   }));
+
+  const hintParts: AgentPart[] =
+    hint === undefined ? [] : [{ part: "hint", label: hint, state: {} }];
 
   const node = buildAgentNode({
     component: segmentedControlMeta.name,
     label,
     tool: toolName,
-    state: { value, disabled },
-    parts,
+    state: {
+      value,
+      changed: saved !== undefined && saved !== value,
+      block,
+      disabled,
+    },
+    parts: [...optionParts, ...hintParts],
   });
   nodeRef.current = node;
 
@@ -167,6 +184,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
     return (
       <AgentControlGroup
         node={node}
+        isActionable={(part) => part.part === "option"}
         onActivate={(_part, index) => {
           const target = options[index];
           if (target !== undefined) select(target.value);
@@ -175,38 +193,48 @@ export function SegmentedControl(props: SegmentedControlProps) {
     );
   }
 
+  const hintId = hint === undefined ? undefined : `${id}-hint`;
+
   return (
-    <div
-      {...rest}
-      {...agentAttributesFor(node)}
-      role="radiogroup"
-      aria-label={label}
-      onKeyDown={move}
-    >
-      {options.map((option, index) => {
-        const selected = option.value === value;
-        const active = options.some((entry) => entry.value === value)
-          ? selected
-          : index === 0;
-        return (
-          <button
-            key={option.value}
-            type="button"
-            role="radio"
-            aria-checked={selected}
-            tabIndex={active ? 0 : -1}
-            disabled={disabled}
-            ref={(element) => {
-              if (element === null) elements.current.delete(option.value);
-              else elements.current.set(option.value, element);
-            }}
-            {...agentPartAttributesFor(parts[index] ?? { part: "option", state: {} })}
-            onClick={() => onChange(option.value)}
-          >
-            {option.label}
-          </button>
-        );
-      })}
+    <div {...rest} {...agentAttributesFor(node)}>
+      <div
+        role="radiogroup"
+        aria-label={label}
+        aria-describedby={hintId}
+        onKeyDown={move}
+      >
+        {options.map((option, index) => {
+          const selected = option.value === value;
+          const active = options.some((entry) => entry.value === value)
+            ? selected
+            : index === 0;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              tabIndex={active ? 0 : -1}
+              disabled={disabled}
+              ref={(element) => {
+                if (element === null) elements.current.delete(option.value);
+                else elements.current.set(option.value, element);
+              }}
+              {...agentPartAttributesFor(
+                optionParts[index] ?? { part: "option", state: {} },
+              )}
+              onClick={() => onChange(option.value)}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+      {hint === undefined ? null : (
+        <p id={hintId} {...agentPartAttributesFor({ part: "hint", state: {} })}>
+          {hint}
+        </p>
+      )}
     </div>
   );
 }

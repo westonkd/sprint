@@ -14,6 +14,15 @@ function root(): HTMLElement {
 }
 
 describe("List rendering", () => {
+  it("draws plus by default and carries any other marker as state", () => {
+    const { rerender } = render(<List label="Access" items={["Read"]} />);
+    expect(root()).not.toHaveAttribute("data-sprint-marker");
+    rerender(<List label="Access" marker="minus" items={["Read"]} />);
+    expect(root()).toHaveAttribute("data-sprint-marker", "minus");
+    rerender(<List label="Access" marker="minus" ordered items={["Read"]} />);
+    expect(root()).not.toHaveAttribute("data-sprint-marker");
+  });
+
   it("is a list named by its label", () => {
     render(<List label="Tool rules" items={ITEMS} />);
     expect(screen.getByRole("list", { name: "Tool rules" })).toBe(root());

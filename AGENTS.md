@@ -323,6 +323,9 @@ the floor.
 - Props are forwarded; every component takes `ref` and spreads the rest onto its root.
 - Style with CSS custom properties, no CSS-in-JS runtime. Components reference only the semantic
   layer in `src/styles/semantic.css`, never a raw color from `primitives.css`.
+- Never render a `style` attribute a server would emit. A strict CSP drops it. A caller-supplied
+  length goes through `StyleRule` in `src/provider/styleRule.tsx`, which renders a nonced rule when
+  `SprintProvider` has a `nonce`, keyed to the value published as state.
 - Every color pairing meets WCAG AA. `src/styles/contrast.test.ts` enforces it.
 - `react` and `react-dom` are peer dependencies and stay external in the bundle.
 - Commit messages are short. A subject line and nothing else. Reach for a body only when the

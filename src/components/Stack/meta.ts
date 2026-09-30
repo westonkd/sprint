@@ -53,7 +53,7 @@ export const stackMeta = defineAgentMeta({
     min: {
       kind: "string",
       description:
-        'Minimum track width for direction="grid", as a CSS length. Tracks never exceed the container.',
+        "Minimum track width for direction=\"grid\", as a CSS length. Tracks never exceed the container. Under a Content-Security-Policy without 'unsafe-inline' styles, pass nonce to SprintProvider so the width still applies.",
       default: "18rem",
     },
   },
@@ -85,6 +85,10 @@ export const stackMeta = defineAgentMeta({
     collapse: {
       description: "Present when the row stacks into a column on narrow viewports.",
       attribute: "data-sprint-collapse",
+    },
+    min: {
+      description: "The minimum grid track width, when one was asked for.",
+      attribute: "data-sprint-min",
     },
   },
   examples: [

@@ -5,6 +5,30 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Fixed: inline styles broke under a strict Content-Security-Policy.** `Stack`'s `min` and
+  `Table`'s column `width` were set through a `style` attribute, which a policy without
+  `'unsafe-inline'` drops from server-rendered markup, collapsing a grid to one column. Pass the
+  policy's nonce to `SprintProvider` as `nonce` and they render a nonced rule keyed to the new
+  `data-sprint-min` and `data-sprint-width` attributes instead. `NavBar` no longer emits its order
+  property until the trail is open. See the ADR dated 2026-09-29.
+- **Fixed: `DescriptionList` broke values mid-word in narrow containers.** The term column switched
+  on the viewport, so a list in a sidebar kept a 14rem term column and left the value a sliver. The
+  value now drops under its term whenever the row itself is too narrow, and the list fills its
+  container.
+- **Fixed: a stretched `SegmentedControl` left blank space.** The root is now a wrapper around the
+  radio group, so the track stays as wide as its options inside a stretching column. The new
+  `block` prop fills the container, sharing it equally between the options.
+- **Added: `SegmentedControl` `saved` and `hint`.** `saved` marks the value in effect while a staged
+  one is selected, and the control reports `changed` until they agree. `hint` sits under the options
+  and describes the group.
+- **Added: `MetaLine` `wrap`,** which breaks between entries instead of truncating.
+- **Added: `List` `marker`,** `plus` (default), `minus`, `dot` or `none`. `minus` draws in the danger
+  ink and reaches the agent view as `marker=minus`.
+- **Added: `TextInput` `readOnly`,** for a value to select and copy. It registers no fill tool and
+  renders as a line in the agent view.
+- **Changed: the display size is smaller.** `--sprint-text-display`, used by `Heading level={1}` and
+  `PageHeader`, now runs 1.75rem to 3rem instead of 2.25rem to 4.25rem.
+
 ## v0.5.0 - 2026-09-29
 
 - **Added: `NavBar`, navigation as a coordinate you can edit.** The whole navigation is one line —

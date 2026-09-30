@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { createRef } from "react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { SprintProvider } from "@/provider/SprintProvider.tsx";
@@ -44,6 +45,31 @@ describe("Stack rendering", () => {
       </Stack>,
     );
     expect(root().style.getPropertyValue("--sprint-stack-min")).toBe("16rem");
+  });
+
+  it("moves the track minimum into a nonced rule when the provider carries a nonce", () => {
+    const html = renderToString(
+      <SprintProvider nonce="n0nce" pageTools={false}>
+        <Stack direction="grid" min="16rem">
+          content
+        </Stack>
+      </SprintProvider>,
+    );
+    expect(html).not.toContain("style=");
+    expect(html).toContain('data-sprint-min="16rem"');
+    expect(html).toContain(
+      '<style nonce="n0nce">[data-sprint="Stack"][data-sprint-min="16rem"]{--sprint-stack-min:16rem}</style>',
+    );
+  });
+
+  it("drops a track minimum that could escape its declaration", () => {
+    render(
+      <Stack direction="grid" min="1rem}body{color:red">
+        content
+      </Stack>,
+    );
+    expect(root()).not.toHaveAttribute("data-sprint-min");
+    expect(root().style.getPropertyValue("--sprint-stack-min")).toBe("");
   });
 
   it("forwards ref and spreads the rest onto the root", () => {

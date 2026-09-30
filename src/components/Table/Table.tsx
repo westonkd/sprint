@@ -9,6 +9,7 @@ import {
 } from "@/agent/view/project.ts";
 import { condenseCells } from "@/agent/view/tabular.ts";
 import { reactText } from "@/agent/view/text.ts";
+import { cssValue, StyleRule, useStyleNonce } from "@/provider/styleRule.tsx";
 import { tableMeta } from "./meta.ts";
 import "./Table.css";
 
@@ -59,6 +60,30 @@ function cellParts(
   );
 }
 
+function ColumnHeader(props: { column: TableColumn }) {
+  const { column } = props;
+  const nonce = useStyleNonce();
+  const width = column.width === undefined ? undefined : cssValue(column.width);
+
+  return (
+    <th
+      role="columnheader"
+      scope="col"
+      data-sprint-column={column.key}
+      {...(width === undefined ? {} : { "data-sprint-width": width })}
+      style={width === undefined || nonce !== undefined ? undefined : { width }}
+    >
+      {column.header}
+      {width !== undefined && nonce !== undefined ? (
+        <StyleRule
+          selector={`[data-sprint="Table"] th[data-sprint-width="${width}"]`}
+          declarations={{ width }}
+        />
+      ) : null}
+    </th>
+  );
+}
+
 export function Table(props: TableProps) {
   const { label, columns, rows, emptyLabel = "No rows", ...rest } = props;
 
@@ -83,15 +108,7 @@ export function Table(props: TableProps) {
       <thead role="rowgroup">
         <tr role="row">
           {columns.map((column) => (
-            <th
-              key={column.key}
-              role="columnheader"
-              scope="col"
-              data-sprint-column={column.key}
-              style={column.width === undefined ? undefined : { width: column.width }}
-            >
-              {column.header}
-            </th>
+            <ColumnHeader key={column.key} column={column} />
           ))}
         </tr>
       </thead>
