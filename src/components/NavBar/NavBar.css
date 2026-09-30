@@ -1,0 +1,233 @@
+@layer sprint.components {
+  [data-sprint="NavBar"] {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  [data-sprint="NavBar"] > p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: var(--sprint-space-1);
+    margin: 0;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-surface-inset);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="NavBar"] > p > button {
+    display: flex;
+    align-items: center;
+    gap: var(--sprint-space-1);
+    padding: 0 var(--sprint-space-1);
+    border: 0;
+    background: none;
+    color: var(--sprint-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+  }
+
+  [data-sprint="NavBar"] > p > button::before {
+    width: 10px;
+    height: 6px;
+    background-image:
+      linear-gradient(currentcolor, currentcolor),
+      linear-gradient(currentcolor, currentcolor),
+      linear-gradient(currentcolor, currentcolor);
+    background-position:
+      50% 0,
+      50% 2px,
+      50% 4px;
+    background-repeat: no-repeat;
+    background-size:
+      10px 2px,
+      6px 2px,
+      2px 2px;
+    content: "";
+  }
+
+  [data-sprint="NavBar"] > p > button:first-child {
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border-start-start-radius: var(--sprint-radius-control-inner);
+    border-end-start-radius: var(--sprint-radius-control-inner);
+    border-inline-end: var(--sprint-keyline-width-plate) solid var(--sprint-plate-rule);
+    background: var(--sprint-plate);
+    color: var(--sprint-plate-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--sprint-label-tracking-wide);
+  }
+
+  [data-sprint="NavBar"] > p > button:nth-last-child(2) {
+    color: var(--sprint-action-mark);
+  }
+
+  [data-sprint="NavBar"] > p > span:first-of-type {
+    display: flex;
+    align-items: center;
+    gap: var(--sprint-space-1);
+    padding-inline-start: var(--sprint-space-2);
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="NavBar"] > p > span:first-of-type::after,
+  [data-sprint="NavBar"] > p > button:nth-child(3)::after {
+    color: var(--sprint-ink-muted);
+    content: " /";
+  }
+
+  [data-sprint="NavBar"] > p > input {
+    flex: 1 1 8rem;
+    min-width: 8rem;
+    max-width: 22rem;
+    padding: 0 var(--sprint-space-1);
+    border: 0;
+    border-block-end: var(--sprint-keyline-width-thick) solid var(--sprint-action-mark);
+    background: none;
+    color: var(--sprint-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  [data-sprint="NavBar"] > p > input::placeholder {
+    color: var(--sprint-ink-muted);
+    letter-spacing: inherit;
+    text-transform: inherit;
+    opacity: 1;
+  }
+
+  [data-sprint="NavBar"] > p > span:last-child {
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
+    padding: 0 var(--sprint-space-3);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size-small);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--sprint-label-tracking-wide);
+  }
+
+  [data-sprint="NavBar"] > div :focus-visible {
+    outline-offset: calc(-1 * var(--sprint-focus-offset));
+  }
+
+  [data-sprint="NavBar"] > div {
+    display: flex;
+    flex-direction: column;
+    max-height: 18rem;
+    overflow-y: auto;
+    scroll-padding-block: var(--sprint-space-2);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-block-start: 0;
+    border-end-end-radius: var(--sprint-radius-control);
+    border-end-start-radius: var(--sprint-radius-control);
+    background-color: var(--sprint-surface-raised);
+    background-image: var(--sprint-ornament-empty);
+    background-size: var(--sprint-ornament-empty-size);
+  }
+
+  [data-sprint="NavBar"] > div > div {
+    display: grid;
+    order: var(--sprint-navbar-order, 0);
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 2px;
+    padding: var(--sprint-space-1);
+    background: var(--sprint-surface-raised);
+  }
+
+  [data-sprint="NavBar"] > div[hidden],
+  [data-sprint="NavBar"] > div > div[hidden] {
+    display: none;
+  }
+
+  [data-sprint="NavBar"] > div > div > span {
+    grid-column: 1 / -1;
+    margin: calc(-1 * var(--sprint-space-1)) calc(-1 * var(--sprint-space-1)) 0;
+    padding: var(--sprint-space-1) calc(var(--sprint-space-3) + var(--sprint-space-1));
+    border-block-end: var(--sprint-keyline-width-plate) solid var(--sprint-plate-rule);
+    background: var(--sprint-plate);
+    color: var(--sprint-plate-ink);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="NavBar"] > div > div > button {
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border: 0;
+    background: none;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-align: start;
+    text-transform: var(--sprint-label-transform);
+    cursor: pointer;
+  }
+
+  [data-sprint="NavBar"] > div > p {
+    margin: 0;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    background: var(--sprint-surface-raised);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="NavBar"] [data-sprint-part="destination"] {
+    display: none;
+    text-decoration: none;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border: 0;
+    color: var(--sprint-ink);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="NavBar"] [data-sprint-part="destination"][data-sprint-shown] {
+    display: block;
+  }
+
+  [data-sprint="NavBar"] > div > div > button:hover,
+  [data-sprint="NavBar"]
+    [data-sprint-part="destination"][data-sprint-shown]:not(
+      [data-sprint-active]
+    ):hover {
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-neutral-hover);
+  }
+
+  [data-sprint="NavBar"] [data-sprint-part="destination"][data-sprint-active] {
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-action);
+    box-shadow: var(--sprint-misregister), var(--sprint-mold);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="NavBar"] [data-sprint-part="destination"][data-sprint-active]:hover {
+    background: var(--sprint-action-hover);
+  }
+
+  [data-sprint="NavBar"][data-sprint-matches="0"] > div {
+    min-height: var(--sprint-empty-field);
+  }
+
+  [data-sprint="NavBar"][data-sprint-open] > p {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  [data-sprint="NavBar"][data-sprint-open] > p > button:first-child {
+    border-end-start-radius: 0;
+  }
+}

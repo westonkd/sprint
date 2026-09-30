@@ -32,6 +32,14 @@ export type { MetaLineEntry, MetaLineProps } from "./MetaLine/index.ts";
 export { MetaLine, metaLineMeta } from "./MetaLine/index.ts";
 export type { NavProps } from "./Nav/index.ts";
 export { Nav, navMeta } from "./Nav/index.ts";
+export type {
+  NavBarDestination,
+  NavBarGroup,
+  NavBarOpening,
+  NavBarProps,
+  NavBarSegment,
+} from "./NavBar/index.ts";
+export { NavBar, navBarMeta } from "./NavBar/index.ts";
 export type { NavGroupProps } from "./NavGroup/index.ts";
 export { NavGroup, navGroupMeta } from "./NavGroup/index.ts";
 export type { PageHeaderProps } from "./PageHeader/index.ts";
