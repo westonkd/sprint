@@ -16,6 +16,7 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
   the page with its href on `data-sprint-href`. It reaches only for semantic roles that already
   exist — the plate, the action field, the action mark, the register's empty mark — which is the
   actual answer to navigation not belonging to its theme. See the two ADRs dated 2026-09-23.
+## v0.4.0 - 2026-09-28
 
 - **Fixed: a nested `Panel`'s header leaked the plate's custom properties.** The header rule set
   `--sprint-link`, `--sprint-neutral-ink` and `--sprint-keyline` to their plate values on every
