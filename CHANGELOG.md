@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.5.0 - 2026-09-29
+
 - **Added: `NavBar`, navigation as a coordinate you can edit.** The whole navigation is one line —
   `Workbench / display / Table` — with the destinations passed as data rather than as children, for
   the reason `Table` and `List` already take data: nothing can count, filter, order or address a set
