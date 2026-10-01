@@ -188,10 +188,12 @@ function WorkbenchShell(props: WorkbenchShellProps) {
         collapsed={navCollapsed}
         onCollapsedChange={setNavCollapsed}
         bar={
-          <>
-            <Link className="brand" href={href("")}>
-              SPRINT <span className="brand-version">v{version}</span>
-            </Link>
+          <Link className="brand" href={href("")}>
+            SPRINT <span className="brand-version">v{version}</span>
+          </Link>
+        }
+        side={
+          <Stack gap="loose">
             <Select
               label="Theme"
               options={THEME_OPTIONS}
@@ -199,9 +201,9 @@ function WorkbenchShell(props: WorkbenchShellProps) {
               agentTool={false}
               onChange={(next) => onThemeChange(asTheme(next))}
             />
-          </>
+            <WorkbenchNav model={model} />
+          </Stack>
         }
-        side={<WorkbenchNav model={model} />}
       >
         <Stack gap="loose">
           <Breadcrumb
