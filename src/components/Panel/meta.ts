@@ -44,6 +44,17 @@ export const panelMeta = defineAgentMeta({
       description: "What the panel says when it has no content.",
       default: "Empty",
     },
+    loading: {
+      kind: "boolean",
+      description:
+        "Set while the content are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing content stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+      default: false,
+    },
+    loadingLabel: {
+      kind: "string",
+      description: "What the empty slot says while loading.",
+      default: "Loading",
+    },
   },
   state: {
     flush: {
@@ -54,6 +65,11 @@ export const panelMeta = defineAgentMeta({
       description:
         "Present when the panel has no content. The panel still renders its keyline and says it is empty.",
       attribute: "data-sprint-empty",
+    },
+    loading: {
+      description:
+        "Present while the content are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+      attribute: "data-sprint-loading",
     },
   },
   agentView: {

@@ -5,6 +5,17 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Added: `Progress`, a loading indicator.** Indeterminate by default, a counted bar when given
+  `value` and `max`. It reads as `[loading]` or `[loading, value=40%]` in the agent view, clears
+  `loading` at max so a finished bar does not read as stalled, and registers no WebMCP tool. Built
+  on a native `<progress>`, so the fill never needs a `style` attribute.
+- **Added: `Pending`, and a `loading` prop on `Table`, `List`, `DescriptionList` and `Panel`.**
+  A region being fetched sets `aria-busy`, sweeps a bar along its top edge, and keeps stale content
+  readable while it refreshes. With nothing to show yet it reads `[empty, loading]` and its empty
+  slot says `loadingLabel` ("Loading") rather than `emptyLabel`, so neither a person nor an agent
+  mistakes a pending fetch for an empty result. `Pending` wraps regions you build yourself, and
+  while idle it adds nothing to the agent view.
+
 ## v0.5.0 - 2026-09-29
 
 - **Added: `NavBar`, navigation as a coordinate you can edit.** The whole navigation is one line —

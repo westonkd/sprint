@@ -144,3 +144,30 @@
     background-image: var(--sprint-ornament-parting);
   }
 }
+
+@layer sprint.tokens {
+  [data-sprint],
+  [data-sprint-part] {
+    --sprint-sweep: linear-gradient(var(--sprint-info), var(--sprint-info));
+    --sprint-sweep-size: 25% 100%;
+    --sprint-sweep-motion: sprint-sweep calc(8 * var(--sprint-duration-slow))
+      var(--sprint-steps) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint],
+    [data-sprint-part] {
+      --sprint-sweep-size: 100% 100%;
+      --sprint-sweep-motion: none;
+    }
+  }
+
+  @keyframes sprint-sweep {
+    from {
+      background-position-x: -50%;
+    }
+    to {
+      background-position-x: 150%;
+    }
+  }
+}

@@ -34,6 +34,17 @@ export const listMeta = defineAgentMeta({
       description: "What the list says when it has no items.",
       default: "Empty",
     },
+    loading: {
+      kind: "boolean",
+      description:
+        "Set while the items are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing items stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+      default: false,
+    },
+    loadingLabel: {
+      kind: "string",
+      description: "What the empty slot says while loading.",
+      default: "Loading",
+    },
   },
   state: {
     items: {
@@ -47,6 +58,11 @@ export const listMeta = defineAgentMeta({
     empty: {
       description: "Present when the list has no items.",
       attribute: "data-sprint-empty",
+    },
+    loading: {
+      description:
+        "Present while the items are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+      attribute: "data-sprint-loading",
     },
     index: {
       description: "On an item: its 1-based position in the list.",

@@ -16,10 +16,20 @@ export interface ListProps extends ComponentPropsWithRef<"ul"> {
   items: readonly ReactNode[];
   ordered?: boolean;
   emptyLabel?: string;
+  loading?: boolean;
+  loadingLabel?: string;
 }
 
 export function List(props: ListProps) {
-  const { label, items, ordered = false, emptyLabel = "Empty", ...rest } = props;
+  const {
+    label,
+    items,
+    ordered = false,
+    emptyLabel = "Empty",
+    loading = false,
+    loadingLabel = "Loading",
+    ...rest
+  } = props;
 
   const view = useSprintView();
   const empty = items.length === 0;
@@ -36,7 +46,7 @@ export function List(props: ListProps) {
   const node = buildAgentNode({
     component: listMeta.name,
     label,
-    state: { items: String(items.length), ordered, empty },
+    state: { items: String(items.length), ordered, empty, loading },
     parts,
   });
 
@@ -50,9 +60,10 @@ export function List(props: ListProps) {
       {...agentAttributesFor(node)}
       role="list"
       aria-label={label}
+      aria-busy={loading || undefined}
     >
       {empty ? (
-        <li>{emptyLabel}</li>
+        <li>{loading ? loadingLabel : emptyLabel}</li>
       ) : (
         items.map((item, index) => (
           <li

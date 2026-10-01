@@ -34,6 +34,17 @@ export const tableMeta = defineAgentMeta({
       description: "What the table says when it has no rows.",
       default: "No rows",
     },
+    loading: {
+      kind: "boolean",
+      description:
+        "Set while the rows are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing rows stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+      default: false,
+    },
+    loadingLabel: {
+      kind: "string",
+      description: "What the empty slot says while loading.",
+      default: "Loading",
+    },
   },
   state: {
     columns: {
@@ -47,6 +58,11 @@ export const tableMeta = defineAgentMeta({
     empty: {
       description: "Present when the table has no rows.",
       attribute: "data-sprint-empty",
+    },
+    loading: {
+      description:
+        "Present while the rows are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+      attribute: "data-sprint-loading",
     },
     column: {
       description: "On a cell: which column it belongs to.",
@@ -78,6 +94,12 @@ export const tableMeta = defineAgentMeta({
       description:
         "An empty table keeps its header and says so, rather than rendering a bare keyline.",
       code: '<Table\n  label="Registered tools"\n  emptyLabel="No tools registered"\n  columns={[{ key: "name", header: "Name" }]}\n  rows={[]}\n/>',
+    },
+    {
+      title: "A table while fetching",
+      description:
+        "Before the first rows arrive the table reads [empty, loading], so an agent waits rather than concluding there is nothing.",
+      code: '<Table\n  label="Loadouts"\n  loading={isFetching}\n  columns={[{ key: "name", header: "Name" }]}\n  rows={loadouts ?? []}\n/>',
     },
   ],
   a11y: {

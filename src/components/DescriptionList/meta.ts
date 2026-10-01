@@ -28,6 +28,17 @@ export const descriptionListMeta = defineAgentMeta({
       description: "Text shown when items is empty. The region keeps its frame.",
       default: "Empty",
     },
+    loading: {
+      kind: "boolean",
+      description:
+        "Set while the pairs are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing pairs stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+      default: false,
+    },
+    loadingLabel: {
+      kind: "string",
+      description: "What the empty slot says while loading.",
+      default: "Loading",
+    },
   },
   state: {
     items: {
@@ -37,6 +48,11 @@ export const descriptionListMeta = defineAgentMeta({
     empty: {
       description: "Present when there are no pairs.",
       attribute: "data-sprint-empty",
+    },
+    loading: {
+      description:
+        "Present while the pairs are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+      attribute: "data-sprint-loading",
     },
   },
   agentView: {

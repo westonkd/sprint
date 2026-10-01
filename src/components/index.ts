@@ -46,6 +46,10 @@ export type { PageHeaderProps } from "./PageHeader/index.ts";
 export { PageHeader, pageHeaderMeta } from "./PageHeader/index.ts";
 export type { PanelProps } from "./Panel/index.ts";
 export { Panel, panelMeta } from "./Panel/index.ts";
+export type { PendingProps } from "./Pending/index.ts";
+export { Pending, pendingMeta } from "./Pending/index.ts";
+export type { ProgressProps } from "./Progress/index.ts";
+export { Progress, progressMeta } from "./Progress/index.ts";
 export type { SecretFieldProps } from "./SecretField/index.ts";
 export { SecretField, secretFieldMeta } from "./SecretField/index.ts";
 export type {

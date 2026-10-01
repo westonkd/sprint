@@ -29,6 +29,8 @@ export interface TableProps extends ComponentPropsWithRef<"table"> {
   columns: readonly TableColumn[];
   rows: readonly TableRow[];
   emptyLabel?: string;
+  loading?: boolean;
+  loadingLabel?: string;
 }
 
 function rowId(row: TableRow, index: number): string {
@@ -60,7 +62,15 @@ function cellParts(
 }
 
 export function Table(props: TableProps) {
-  const { label, columns, rows, emptyLabel = "No rows", ...rest } = props;
+  const {
+    label,
+    columns,
+    rows,
+    emptyLabel = "No rows",
+    loading = false,
+    loadingLabel = "Loading",
+    ...rest
+  } = props;
 
   const view = useSprintView();
   const empty = rows.length === 0;
@@ -72,6 +82,7 @@ export function Table(props: TableProps) {
       columns: String(columns.length),
       rows: String(rows.length),
       empty,
+      loading,
     },
     parts: cellParts(columns, rows),
   });
@@ -79,7 +90,13 @@ export function Table(props: TableProps) {
   if (view === "agent") return <AgentLine node={condenseCells(node)} />;
 
   return (
-    <table {...rest} {...agentAttributesFor(node)} role="table" aria-label={label}>
+    <table
+      {...rest}
+      {...agentAttributesFor(node)}
+      role="table"
+      aria-label={label}
+      aria-busy={loading || undefined}
+    >
       <thead role="rowgroup">
         <tr role="row">
           {columns.map((column) => (
@@ -99,7 +116,7 @@ export function Table(props: TableProps) {
         {empty ? (
           <tr role="row">
             <td role="cell" colSpan={columns.length}>
-              <span>{emptyLabel}</span>
+              <span>{loading ? loadingLabel : emptyLabel}</span>
             </td>
           </tr>
         ) : (

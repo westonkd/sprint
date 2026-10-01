@@ -136,4 +136,27 @@
       display: table-cell;
     }
   }
+
+  [data-sprint="Table"][data-sprint-loading] {
+    position: relative;
+  }
+
+  [data-sprint="Table"][data-sprint-loading]::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    block-size: var(--sprint-keyline-width-thick);
+    background-image: var(--sprint-sweep);
+    background-repeat: no-repeat;
+    background-size: var(--sprint-sweep-size);
+    background-position: -50% 0;
+    animation: var(--sprint-sweep-motion);
+    pointer-events: none;
+  }
+
+  [data-sprint="Table"][data-sprint-empty][data-sprint-loading] td {
+    background-image: var(--sprint-ornament-scanlines);
+    background-size: auto;
+  }
 }

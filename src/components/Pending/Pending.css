@@ -1,0 +1,43 @@
+@layer sprint.components {
+  [data-sprint="Pending"] {
+    position: relative;
+  }
+
+  [data-sprint="Pending"]::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    block-size: var(--sprint-keyline-width-thick);
+    background-image: var(--sprint-sweep);
+    background-repeat: no-repeat;
+    background-size: var(--sprint-sweep-size);
+    background-position: -50% 0;
+    animation: var(--sprint-sweep-motion);
+    pointer-events: none;
+  }
+
+  [data-sprint="Pending"][data-sprint-empty] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    min-height: var(--sprint-empty-field);
+    padding: var(--sprint-space-6) var(--sprint-space-4);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-surface);
+    overflow: hidden;
+    background-image: var(--sprint-ornament-scanlines);
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking);
+    text-align: center;
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Pending"][data-sprint-empty] > span {
+    padding: 2px var(--sprint-space-3);
+    background: var(--sprint-panel-ground, var(--sprint-surface));
+  }
+}

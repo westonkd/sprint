@@ -16,18 +16,19 @@ function format(node: AgentNode, formatter: AgentFormatter): string[] {
 export interface AgentLineProps {
   node: AgentNode;
   children?: ReactNode;
+  silent?: boolean;
 }
 
 export function AgentLine(props: AgentLineProps) {
-  const { node, children } = props;
+  const { node, children, silent = false } = props;
   const depth = useAgentDepth();
   const formatter = useAgentFormat();
   const indent = "  ".repeat(depth);
   const lines = format(node, formatter).map((line) => `${indent}${line}`);
 
   return (
-    <AgentDepthProvider value={depth + 1}>
-      {`${lines.join("\n")}\n`}
+    <AgentDepthProvider value={silent ? depth : depth + 1}>
+      {silent ? null : `${lines.join("\n")}\n`}
       {children}
     </AgentDepthProvider>
   );

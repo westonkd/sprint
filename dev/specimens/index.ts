@@ -16,6 +16,8 @@ import { navBarSpecimens } from "./NavBar.tsx";
 import { navGroupSpecimens } from "./NavGroup.tsx";
 import { pageHeaderSpecimens } from "./PageHeader.tsx";
 import { panelSpecimens } from "./Panel.tsx";
+import { pendingSpecimens } from "./Pending.tsx";
+import { progressGallery, progressSpecimens } from "./Progress.tsx";
 import { secretFieldSpecimens } from "./SecretField.tsx";
 import { segmentedControlSpecimens } from "./SegmentedControl.tsx";
 import { selectSpecimens } from "./Select.tsx";
@@ -51,6 +53,8 @@ const registry: Record<string, Specimens> = {
   NavGroup: { byExample: navGroupSpecimens },
   PageHeader: { byExample: pageHeaderSpecimens },
   Panel: { byExample: panelSpecimens },
+  Pending: { byExample: pendingSpecimens },
+  Progress: { gallery: progressGallery, byExample: progressSpecimens },
   SecretField: { byExample: secretFieldSpecimens },
   SegmentedControl: { byExample: segmentedControlSpecimens },
   Select: { byExample: selectSpecimens },
