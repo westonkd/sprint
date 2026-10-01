@@ -3,8 +3,10 @@
 A React component library for products that people and AI agents both use. Sprint components
 look and behave like any other interface, and can describe themselves to an agent on request.
 
-Status: experimental. A full catalog of components on top of the agent runtime, verified in jsdom
-and normal browsers; no real WebMCP implementation has accepted a descriptor yet.
+Status: experimental and pre-1.0, published to npm as `@westonkd/sprint`. A full catalog of
+components on top of the agent runtime, verified in jsdom and normal browsers; no real WebMCP
+implementation has accepted a descriptor yet. Until 1.0, a minor version may carry breaking
+changes, and `CHANGELOG.md` marks each one.
 
 ## What a Sprint component does
 
@@ -70,7 +72,8 @@ generated entirely from `agent-manifest.json` — props, state attributes, tool 
 code snippet come from the same metadata an agent reads. Each example can be toggled between the
 human and agent view, individually or a whole page at once.
 
-Four written guides sit alongside them:
+Four written guides sit alongside them, plus an "Every component" page that renders the whole
+catalog at once:
 
 - **WebMCP** — the platform API: both forms, availability, hard limits, and security.
 - **Integration philosophy** — the decisions behind how Sprint uses it, and what each costs.
@@ -108,8 +111,12 @@ scripts/            manifest generation, build output checks
 
 ## Consuming it
 
-React 19 and TypeScript, no runtime dependencies. Not published to npm yet. Once it is, the
-package name is `@westonkd/sprint`:
+React 19 and TypeScript, with no runtime dependencies; `react` and `react-dom` 19 are peer
+dependencies.
+
+```bash
+npm install @westonkd/sprint
+```
 
 ```tsx
 import { Button, SprintProvider } from "@westonkd/sprint";
@@ -122,6 +129,10 @@ import manifest from "@westonkd/sprint/agent-manifest.json" with { type: "json" 
 
 Wrap your app in `SprintProvider` to register the page-level `list-page-regions` and `read-region`
 tools. Components work without it.
+
+Sprint works under a strict `style-src` Content Security Policy: no component writes a `style`
+attribute for a documented value. The one escape hatch is an off-scale length passed to `Stack`'s
+`min` or `Table`'s column `width`, which falls back to an inline style and says so in its docs.
 
 ## WebMCP
 
