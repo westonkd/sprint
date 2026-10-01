@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.6.0 - 2026-09-30
+
 - **Added: `Progress`, a loading indicator.** Indeterminate by default, a counted bar when given
   `value` and `max`. It reads as `[loading]` or `[loading, value=40%]` in the agent view, clears
   `loading` at max so a finished bar does not read as stalled, and registers no WebMCP tool. Built
