@@ -20,7 +20,7 @@ export const tableMeta = defineAgentMeta({
     columns: {
       kind: "array",
       description:
-        "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column.",
+        "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column. width is one of 4rem, 5rem, 6rem, 7rem, 8rem, 9rem, 10rem, 12rem, 14rem, 16rem, 20rem, or 24rem, mapped in the stylesheet through data-sprint-width on the header cell so it works under a strict Content Security Policy; any other CSS length is still accepted but is written to an inline style attribute, which a style-src policy without unsafe-inline blocks.",
       required: true,
     },
     rows: {
@@ -71,6 +71,11 @@ export const tableMeta = defineAgentMeta({
     row: {
       description: "On a cell: which row it belongs to.",
       attribute: "data-sprint-row",
+    },
+    width: {
+      description:
+        "On a column header: the width its column asked for, if any. A value off the scale is carried here too, with the length itself in an inline style.",
+      attribute: "data-sprint-width",
     },
     align: {
       description: "On a cell: the alignment its column asked for, if any.",

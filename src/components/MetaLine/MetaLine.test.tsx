@@ -24,6 +24,25 @@ describe("MetaLine rendering", () => {
     expect(root()).toHaveAttribute("data-sprint-entries", "2");
   });
 
+  it("does not wrap by default", () => {
+    render(<MetaLine entries={ENTRIES} />);
+    expect(root()).not.toHaveAttribute("data-sprint-wrap");
+  });
+
+  it("publishes wrap and keeps the same text", () => {
+    render(<MetaLine entries={ENTRIES} wrap />);
+    expect(root()).toHaveAttribute("data-sprint-wrap", "");
+    expect(root().textContent).toBe("Serial: NU-TYPE-CORE-A1 / Issued: 2744.07.22");
+  });
+
+  it("keeps each separator inside the entry it closes, so none can start a line", () => {
+    render(<MetaLine entries={ENTRIES} wrap />);
+    const entries = Array.from(root().children);
+    expect(entries).toHaveLength(2);
+    expect(entries[0]?.textContent).toBe("Serial: NU-TYPE-CORE-A1 /");
+    expect(entries[1]?.textContent).toBe("Issued: 2744.07.22");
+  });
+
   it("renders nothing at all for an empty entry list", () => {
     const { container } = render(<MetaLine entries={[]} />);
     expect(container.firstChild).toBeNull();
@@ -49,6 +68,18 @@ describe("MetaLine agent view", () => {
     expect(container.textContent).toBe(
       '- **MetaLine** "Serial: NU-TYPE-CORE-A1 / Issued: 2744.07.22" [entries=2]\n',
     );
+  });
+
+  it("carries wrap in the agent line when set", () => {
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <MetaLine entries={ENTRIES} wrap />
+      </SprintProvider>,
+    );
+    expect(container.textContent).toContain(
+      '"Serial: NU-TYPE-CORE-A1 / Issued: 2744.07.22"',
+    );
+    expect(container.textContent).toContain("wrap");
   });
 
   it("renders nothing in agent view for an empty entry list", () => {

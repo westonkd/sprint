@@ -20,4 +20,21 @@ export const shellSpecimens: Record<string, ReactNode> = {
       </Panel>
     </Shell>
   ),
+  "A sidebar that can be hidden": (
+    <Shell
+      collapsible
+      style={{ minHeight: "22rem" }}
+      bar={<Link href="#/">ACME</Link>}
+      side={
+        <Nav label="Main">
+          <Link href="#/reports" active>
+            Reports
+          </Link>
+          <Link href="#/settings">Settings</Link>
+        </Nav>
+      }
+    >
+      <Text>Quarterly numbers land here.</Text>
+    </Shell>
+  ),
 };

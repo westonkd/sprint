@@ -69,6 +69,18 @@ export function validateInputs(
     if (property.enum !== undefined && !property.enum.includes(String(value))) {
       return `Parameter "${key}" must be one of: ${property.enum.join(", ")}.`;
     }
+
+    if (typeof value === "number") {
+      if (property.type === "integer" && !Number.isInteger(value)) {
+        return `Parameter "${key}" must be a whole number, received ${value}.`;
+      }
+      if (property.minimum !== undefined && value < property.minimum) {
+        return `Parameter "${key}" must be at least ${property.minimum}, received ${value}.`;
+      }
+      if (property.maximum !== undefined && value > property.maximum) {
+        return `Parameter "${key}" must be at most ${property.maximum}, received ${value}.`;
+      }
+    }
   }
 
   return null;

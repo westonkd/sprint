@@ -1,0 +1,451 @@
+@layer sprint.components {
+  [data-sprint="Breadcrumb"] {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  [data-sprint="Breadcrumb"] > div:first-child {
+    display: flex;
+    align-items: stretch;
+    gap: var(--sprint-space-1);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-surface-inset);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Breadcrumb"] > div:first-child > button:first-child {
+    display: flex;
+    align-items: center;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border: 0;
+    border-start-start-radius: var(--sprint-radius-control-inner);
+    border-end-start-radius: var(--sprint-radius-control-inner);
+    border-inline-end: var(--sprint-keyline-width-plate) solid var(--sprint-plate-rule);
+    background: var(--sprint-plate);
+    color: var(--sprint-plate-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: inherit;
+    cursor: pointer;
+  }
+
+  [data-sprint="Breadcrumb"] ol {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: stretch;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-sprint="Breadcrumb"] ol > li {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:first-child {
+    padding-inline-start: var(--sprint-space-2);
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:nth-child(n + 2):not(:nth-child(3), :last-child),
+  [data-sprint="Breadcrumb"] ol > li[hidden] {
+    display: none;
+  }
+
+  [data-sprint="Breadcrumb"] ol:has(> li:nth-child(3) > [aria-expanded="true"]) > li {
+    display: flex;
+  }
+
+  [data-sprint="Breadcrumb"]
+    ol
+    > li:nth-child(n):not(:first-child, [hidden]):has(> input) {
+    display: flex;
+  }
+
+  [data-sprint="Breadcrumb"]
+    ol
+    > li:nth-child(n):not(:first-child, [hidden]):has(
+      + li:last-child > button:only-child
+    ) {
+    display: flex;
+  }
+
+  [data-sprint="Breadcrumb"]
+    ol
+    > li:nth-child(n):not(:first-child, [hidden]):has(+ li:last-child > input) {
+    display: flex;
+  }
+
+  [data-sprint="Breadcrumb"] ol button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    min-width: 0;
+    padding: 0 var(--sprint-space-1);
+    border: 0;
+    background: none;
+    color: var(--sprint-ink-muted);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:nth-child(3)::before {
+    padding-inline: var(--sprint-space-1);
+    color: var(--sprint-ink-muted);
+    content: "/";
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button {
+    min-width: calc(var(--sprint-space-3) * 2);
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button::before {
+    content: "/";
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button:hover,
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button:focus-visible,
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button[aria-expanded="true"] {
+    color: var(--sprint-action-mark);
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button:hover::before,
+  [data-sprint="Breadcrumb"] ol > li:not(:nth-child(3)) > button:focus-visible::before,
+  [data-sprint="Breadcrumb"]
+    ol
+    > li:not(:nth-child(3))
+    > button[aria-expanded="true"]::before {
+    width: 10px;
+    height: 6px;
+    background-image:
+      linear-gradient(currentcolor, currentcolor),
+      linear-gradient(currentcolor, currentcolor),
+      linear-gradient(currentcolor, currentcolor);
+    background-position:
+      50% 0,
+      50% 2px,
+      50% 4px;
+    background-repeat: no-repeat;
+    background-size:
+      10px 2px,
+      6px 2px,
+      2px 2px;
+    content: "";
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:nth-child(3) > button:hover {
+    color: var(--sprint-ink);
+  }
+
+  [data-sprint="Breadcrumb"] ol a,
+  [data-sprint="Breadcrumb"] ol span {
+    padding: 0 var(--sprint-space-1);
+    color: var(--sprint-ink);
+    text-decoration: none;
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:first-child > a {
+    padding: 0;
+    color: inherit;
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:first-child > span {
+    padding: 0;
+    color: inherit;
+  }
+
+  [data-sprint="Breadcrumb"] ol a:hover {
+    text-decoration: underline;
+  }
+
+  [data-sprint="Breadcrumb"] ol a[aria-current="page"] {
+    color: var(--sprint-action-mark);
+  }
+
+  [data-sprint="Breadcrumb"] ol input {
+    flex: 1 1 8rem;
+    min-width: 8rem;
+    max-width: 22rem;
+    padding: 0 var(--sprint-space-1);
+    border: 0;
+    border-block-end: var(--sprint-keyline-width-thick) solid var(--sprint-action-mark);
+    background: none;
+    color: var(--sprint-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  [data-sprint="Breadcrumb"] ol > li:has(> input) {
+    flex: 1 1 8rem;
+  }
+
+  [data-sprint="Breadcrumb"] ol input::placeholder {
+    color: var(--sprint-ink-muted);
+    letter-spacing: inherit;
+    text-transform: inherit;
+    opacity: 1;
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="action"] {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sprint-space-3);
+    border: 0;
+    border-inline-start: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    background: none;
+    color: var(--sprint-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-decoration: none;
+    text-transform: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="action"]:last-child {
+    border-start-end-radius: var(--sprint-radius-control-inner);
+    border-end-end-radius: var(--sprint-radius-control-inner);
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="action"]:hover {
+    background: var(--sprint-neutral-hover);
+  }
+
+  [data-sprint="Breadcrumb"] > div + div :focus-visible {
+    outline-offset: calc(-1 * var(--sprint-focus-offset));
+  }
+
+  [data-sprint="Breadcrumb"] > div + div {
+    display: flex;
+    flex-direction: column;
+    max-height: 18rem;
+    overflow-y: auto;
+    scroll-padding-block: var(--sprint-space-2);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-block-start: 0;
+    border-end-end-radius: var(--sprint-radius-control);
+    border-end-start-radius: var(--sprint-radius-control);
+    background-color: var(--sprint-surface-raised);
+    background-image: var(--sprint-ornament-empty);
+    background-size: var(--sprint-ornament-empty-size);
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 2px;
+    padding: var(--sprint-space-1);
+    background: var(--sprint-surface-raised);
+  }
+
+  [data-sprint="Breadcrumb"] > div + div[hidden],
+  [data-sprint="Breadcrumb"] > div + div > div[hidden],
+  [data-sprint="Breadcrumb"] > div + div > div > span > button[hidden] {
+    display: none;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div > span:first-child {
+    grid-column: 1 / -1;
+    margin: calc(-1 * var(--sprint-space-1)) calc(-1 * var(--sprint-space-1)) 0;
+    padding: var(--sprint-space-1) calc(var(--sprint-space-3) + var(--sprint-space-1));
+    border-block-end: var(--sprint-keyline-width-plate) solid var(--sprint-plate-rule);
+    background: var(--sprint-plate);
+    color: var(--sprint-plate-ink);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking-wide);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div > span + span {
+    display: flex;
+  }
+
+  [data-sprint="Breadcrumb"]
+    > div
+    + div
+    > div
+    > span
+    + span:not(:has(> [data-sprint-shown], > button:not([hidden]))) {
+    display: none;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div > span > button {
+    flex: 1 1 auto;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border: 0;
+    background: none;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-align: start;
+    text-transform: var(--sprint-label-transform);
+    cursor: pointer;
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="destination"] + button {
+    flex: 0 0 auto;
+    color: var(--sprint-action-mark);
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > p {
+    margin: 0;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    background: var(--sprint-surface-raised);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="destination"] {
+    display: none;
+    flex: 1 1 auto;
+    text-decoration: none;
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border: 0;
+    color: var(--sprint-ink);
+    font-size: var(--sprint-label-size);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="destination"][data-sprint-shown] {
+    display: block;
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="destination"][data-sprint-ancestor] {
+    box-shadow: inset var(--sprint-keyline-width-thick) 0 0 var(--sprint-action-mark);
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div > span > button:not([hidden]):hover,
+  [data-sprint="Breadcrumb"]
+    [data-sprint-part="destination"][data-sprint-shown]:not(
+      [data-sprint-active]
+    ):hover {
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-neutral-hover);
+  }
+
+  [data-sprint="Breadcrumb"] [data-sprint-part="destination"][data-sprint-active] {
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-action);
+    box-shadow: var(--sprint-misregister), var(--sprint-mold);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="Breadcrumb"]
+    [data-sprint-part="destination"][data-sprint-active]:hover {
+    background: var(--sprint-action-hover);
+  }
+
+  [data-sprint="Breadcrumb"][data-sprint-matches="0"] > div + div {
+    min-height: var(--sprint-empty-field);
+  }
+
+  [data-sprint="Breadcrumb"][data-sprint-open] > div:first-child {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  [data-sprint="Breadcrumb"][data-sprint-open] > div:first-child > button:first-child {
+    border-end-start-radius: 0;
+  }
+
+  [data-sprint="Breadcrumb"] > div:first-child > span {
+    display: none;
+    align-items: center;
+    padding: 0 var(--sprint-space-3);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size-small);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--sprint-label-tracking-wide);
+    white-space: nowrap;
+  }
+
+  [data-sprint="Breadcrumb"][data-sprint-open] > div:first-child > span {
+    display: flex;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="1"] {
+    order: -12;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="2"] {
+    order: -11;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="3"] {
+    order: -10;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="4"] {
+    order: -9;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="5"] {
+    order: -8;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="6"] {
+    order: -7;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="7"] {
+    order: -6;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="8"] {
+    order: -5;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="9"] {
+    order: -4;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="10"] {
+    order: -3;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="11"] {
+    order: -2;
+  }
+
+  [data-sprint="Breadcrumb"] > div + div > div[data-sprint-recency="12"] {
+    order: -1;
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="Breadcrumb"] ol > li:nth-child(n + 2):not(:nth-child(3), [hidden]) {
+      display: flex;
+    }
+
+    [data-sprint="Breadcrumb"] ol > li:nth-child(3):not(:has(~ li[hidden])) {
+      display: none;
+    }
+
+    [data-sprint="Breadcrumb"]
+      ol:has(> li:nth-child(3) > [aria-expanded="true"])
+      > li:nth-child(3) {
+      display: flex;
+    }
+
+    [data-sprint="Breadcrumb"] > div:first-child > span {
+      display: flex;
+    }
+  }
+}

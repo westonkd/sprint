@@ -7,6 +7,9 @@
     border-radius: var(--sprint-radius-surface);
     overflow: hidden;
     background: var(--sprint-surface-raised);
+    box-sizing: border-box;
+    width: 100%;
+    container: sprint-description-list / inline-size;
   }
 
   [data-sprint="DescriptionList"] > div {
@@ -27,6 +30,7 @@
     font-weight: var(--sprint-weight-bold);
     letter-spacing: var(--sprint-label-tracking);
     text-transform: var(--sprint-label-transform);
+    overflow-wrap: break-word;
   }
 
   [data-sprint="DescriptionList"] dd {
@@ -35,7 +39,8 @@
     font-family: var(--sprint-font-ui);
     font-size: var(--sprint-text-sm);
     line-height: var(--sprint-leading-normal);
-    overflow-wrap: anywhere;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 
   [data-sprint="DescriptionList"][data-sprint-empty] > div {
@@ -59,10 +64,10 @@
     background: var(--sprint-surface-raised);
   }
 
-  @media (min-width: 40rem) {
+  @container sprint-description-list (min-width: 32rem) {
     [data-sprint="DescriptionList"] > div {
       display: grid;
-      grid-template-columns: minmax(8rem, 14rem) 1fr;
+      grid-template-columns: minmax(8rem, min(14rem, 35%)) minmax(0, 1fr);
       gap: var(--sprint-space-4);
       align-items: baseline;
     }

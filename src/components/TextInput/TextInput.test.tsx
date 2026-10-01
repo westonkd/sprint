@@ -81,6 +81,17 @@ describe("TextInput rendering", () => {
     expect(screen.getByLabelText("Callsign")).toBeRequired();
   });
 
+  it("renders a read-only field that stays focusable and publishes its state", () => {
+    render(<Harness value="KX-2209" readOnly />);
+    const input = screen.getByLabelText("Callsign");
+    expect(input).toHaveAttribute("readonly");
+    expect(input).not.toBeDisabled();
+    input.focus();
+    expect(input).toHaveFocus();
+    expect(root()).toHaveAttribute("data-sprint-readonly", "");
+    expect(root()).toHaveAttribute("data-sprint-value", "KX-2209");
+  });
+
   it("keeps a password's value out of the agent attributes", () => {
     render(<Harness type="password" value="hunter2" onChange={() => {}} />);
     expect(root()).not.toHaveAttribute("data-sprint-value");
@@ -134,6 +145,16 @@ describe("TextInput agent tool", () => {
     expect(mock.names()).toEqual([]);
 
     render(<Harness key="b" agentTool={false} />);
+    expect(mock.names()).toEqual([]);
+  });
+
+  it("registers no fill tool while read-only and registers once editable", () => {
+    const { rerender } = render(<Harness key="a" readOnly />);
+    expect(mock.names()).toEqual([]);
+    expect(root()).not.toHaveAttribute("data-sprint-tool");
+    rerender(<Harness key="a" />);
+    expect(mock.names()).toEqual(["fill-callsign"]);
+    rerender(<Harness key="a" readOnly />);
     expect(mock.names()).toEqual([]);
   });
 
@@ -210,6 +231,21 @@ describe("TextInput agent view", () => {
       </SprintProvider>,
     );
     expect(screen.queryByLabelText("Callsign")).not.toBeInTheDocument();
+  });
+
+  it("renders a read-only field as text with no live control", () => {
+    render(
+      <SprintProvider defaultView="agent">
+        <Harness value="KX-2209" readOnly />
+      </SprintProvider>,
+    );
+    const surface = document.querySelector('[data-sprint-view="agent"]');
+    expect(surface?.textContent).toContain('**TextInput** "Callsign"');
+    expect(surface?.textContent).toContain("value=KX-2209");
+    expect(surface?.textContent).toContain("readonly");
+    expect(surface?.textContent).not.toContain("fill-callsign");
+    expect(screen.queryByLabelText("Callsign")).not.toBeInTheDocument();
+    expect(surface?.querySelector("input, textarea")).toBeNull();
   });
 
   it("still fills through the tool when no element renders", async () => {

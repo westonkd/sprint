@@ -1,6 +1,6 @@
-import type { AgentComponentMeta, NavBarGroup } from "../src/index.ts";
+import type { AgentComponentMeta, BreadcrumbItem } from "../src/index.ts";
 
-export type NavModel = readonly NavBarGroup[];
+export type NavModel = readonly BreadcrumbItem[];
 
 export const CATEGORY_ORDER = [
   "layout",

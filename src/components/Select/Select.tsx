@@ -1,10 +1,14 @@
 import {
   type ComponentPropsWithRef,
+  type FocusEvent as ReactFocusEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { AgentControlGroup, AgentLine } from "@/agent/view/AgentText.tsx";
 import { useAgentControls, useAgentFormat, useSprintView } from "@/agent/view/mode.ts";
@@ -15,7 +19,6 @@ import {
   buildAgentNode,
 } from "@/agent/view/project.ts";
 import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
-import { setSelectValue } from "@/agent/webmcp/drive.ts";
 import { commitSync } from "@/agent/webmcp/flush.ts";
 import type { JsonSchemaObject } from "@/agent/webmcp/types.ts";
 import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
@@ -26,6 +29,7 @@ import "./Select.css";
 export interface SelectOption {
   value: string;
   label: string;
+  count?: number;
 }
 
 export interface SelectProps extends Omit<ComponentPropsWithRef<"div">, "onChange"> {
@@ -42,6 +46,10 @@ export interface SelectProps extends Omit<ComponentPropsWithRef<"div">, "onChang
   agentName?: string;
   agentTool?: boolean;
 }
+
+const LISTBOX_TOP = "--sprint-select-top";
+const LISTBOX_LEFT = "--sprint-select-left";
+const LISTBOX_WIDTH = "--sprint-select-width";
 
 function optionSchema(options: readonly SelectOption[]): JsonSchemaObject {
   const option = SELECT_OPTION_TOOL.inputSchema.properties.option;
@@ -60,6 +68,27 @@ function messagePart(error: string | undefined, hint: string | undefined): Agent
   if (error !== undefined) return [{ part: "error", label: error, state: {} }];
   if (hint !== undefined) return [{ part: "hint", label: hint, state: {} }];
   return [];
+}
+
+function place(listbox: HTMLElement, anchor: HTMLElement): void {
+  const rect = anchor.getBoundingClientRect();
+  listbox.style.setProperty(LISTBOX_TOP, `${rect.bottom}px`);
+  listbox.style.setProperty(LISTBOX_LEFT, `${rect.left}px`);
+  listbox.style.setProperty(LISTBOX_WIDTH, `${rect.width}px`);
+}
+
+function canPopover(element: HTMLElement): boolean {
+  return typeof element.showPopover === "function";
+}
+
+function showLayer(listbox: HTMLElement): void {
+  if (!canPopover(listbox)) return;
+  if (!listbox.matches(":popover-open")) listbox.showPopover();
+}
+
+function hideLayer(listbox: HTMLElement): void {
+  if (!canPopover(listbox)) return;
+  if (listbox.matches(":popover-open")) listbox.hidePopover();
 }
 
 export function Select(props: SelectProps) {
@@ -84,7 +113,13 @@ export function Select(props: SelectProps) {
   const formatter = useAgentFormat();
   const id = useId();
 
-  const element = useRef<HTMLSelectElement | null>(null);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+
+  const root = useRef<HTMLDivElement | null>(null);
+  const trigger = useRef<HTMLButtonElement | null>(null);
+  const listbox = useRef<HTMLDivElement | null>(null);
+  const elements = useRef(new Map<string, HTMLDivElement>());
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
   const optionsRef = useRef(options);
@@ -101,10 +136,78 @@ export function Select(props: SelectProps) {
     };
   }, []);
 
+  const chosenIndex = options.findIndex((option) => option.value === value);
+  const chosen = options[chosenIndex];
+
+  const show = useCallback(
+    (index?: number) => {
+      if (disabled) return;
+      setActive(index ?? Math.max(chosenIndex, 0));
+      setOpen(true);
+    },
+    [disabled, chosenIndex],
+  );
+
+  const hide = useCallback(() => {
+    setOpen(false);
+    setActive(-1);
+  }, []);
+
+  useEffect(() => {
+    if (disabled) hide();
+  }, [disabled, hide]);
+
+  useLayoutEffect(() => {
+    const list = listbox.current;
+    const anchor = trigger.current;
+    if (list === null || anchor === null) return;
+    if (!open) {
+      hideLayer(list);
+      return;
+    }
+
+    place(list, anchor);
+    showLayer(list);
+
+    const reposition = () => place(list, anchor);
+    const dismiss = (event: Event) => {
+      const target = event.target;
+      if (target instanceof Node && root.current?.contains(target)) return;
+      hide();
+    };
+
+    window.addEventListener("resize", reposition);
+    window.addEventListener("scroll", reposition, true);
+    document.addEventListener("pointerdown", dismiss, true);
+    return () => {
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("scroll", reposition, true);
+      document.removeEventListener("pointerdown", dismiss, true);
+    };
+  }, [open, hide]);
+
+  useEffect(() => {
+    if (!open || active < 0) return;
+    const target = options[active];
+    const element =
+      target === undefined ? undefined : elements.current.get(target.value);
+    if (element !== undefined && typeof element.scrollIntoView === "function") {
+      element.scrollIntoView({ block: "nearest" });
+    }
+  }, [open, active, options]);
+
+  const commit = useCallback(
+    (next: string) => {
+      hide();
+      onChange(next);
+    },
+    [hide, onChange],
+  );
+
   const choose = useCallback((next: string) => {
-    const target = element.current;
-    if (target !== null) {
-      setSelectValue(target, next);
+    const element = elements.current.get(next);
+    if (element !== undefined) {
+      element.click();
       return;
     }
     commitSync(() => onChangeRef.current(next));
@@ -140,13 +243,13 @@ export function Select(props: SelectProps) {
     execute,
   });
 
-  const chosen = options.find((option) => option.value === value);
-
-  const optionParts: AgentPart[] = options.map((option) => ({
+  const optionParts: AgentPart[] = options.map((option, index) => ({
     part: "option",
     label: option.label,
     state: {
       ...(option.value === value ? { checked: true as const } : {}),
+      ...(open && index === active ? { active: true as const } : {}),
+      ...(option.count === undefined ? {} : { count: String(option.count) }),
       ...(disabled ? { disabled: true as const } : {}),
     },
   }));
@@ -180,45 +283,181 @@ export function Select(props: SelectProps) {
     );
   }
 
+  const labelId = `${id}-label`;
+  const listId = `${id}-listbox`;
+  const optionId = (index: number) => `${id}-option-${index}`;
   const messageId =
     error !== undefined ? `${id}-error` : hint !== undefined ? `${id}-hint` : undefined;
 
+  const typeahead = (key: string): number => {
+    const start = active < 0 ? chosenIndex : active;
+    const lowered = key.toLowerCase();
+    for (let step = 1; step <= options.length; step += 1) {
+      const index = (start + step + options.length) % options.length;
+      if (options[index]?.label.toLowerCase().startsWith(lowered)) return index;
+    }
+    return -1;
+  };
+
+  const onKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    const last = options.length - 1;
+    const key = event.key;
+
+    if (!open) {
+      if (key === "ArrowDown" || key === "ArrowUp" || key === "Enter" || key === " ") {
+        event.preventDefault();
+        show();
+        return;
+      }
+      if (key === "Home" || key === "End") {
+        event.preventDefault();
+        show(key === "Home" ? 0 : last);
+        return;
+      }
+      if (key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+        const match = typeahead(key);
+        if (match >= 0) show(match);
+      }
+      return;
+    }
+
+    if (key === "Escape" || key === "Tab") {
+      if (key === "Escape") event.preventDefault();
+      hide();
+      return;
+    }
+    if (key === "Enter" || key === " ") {
+      event.preventDefault();
+      const target = options[active];
+      if (target !== undefined) commit(target.value);
+      else hide();
+      return;
+    }
+    if (key === "ArrowDown" || key === "ArrowUp" || key === "Home" || key === "End") {
+      event.preventDefault();
+      const next =
+        key === "Home"
+          ? 0
+          : key === "End"
+            ? last
+            : key === "ArrowDown"
+              ? Math.min(active + 1, last)
+              : Math.max(active - 1, 0);
+      setActive(next);
+      return;
+    }
+    if (key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+      const match = typeahead(key);
+      if (match >= 0) setActive(match);
+    }
+  };
+
+  const onKeyUp = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === " ") event.preventDefault();
+  };
+
+  const onBlur = (event: ReactFocusEvent<HTMLButtonElement>) => {
+    const next = event.relatedTarget;
+    if (next instanceof Node && root.current?.contains(next)) return;
+    hide();
+  };
+
   return (
-    <div {...rest} {...agentAttributesFor(node)}>
-      <label htmlFor={id}>{label}</label>
+    <div
+      {...rest}
+      {...agentAttributesFor(node)}
+      ref={(target) => {
+        root.current = target;
+        const forwarded = rest.ref;
+        if (typeof forwarded === "function") forwarded(target);
+        else if (forwarded !== null && forwarded !== undefined)
+          forwarded.current = target;
+      }}
+    >
+      <label id={labelId} htmlFor={id}>
+        {label}
+      </label>
       <span {...agentPartAttributesFor({ part: "control", state: {} })}>
-        <select
+        <button
           id={id}
+          type="button"
+          role="combobox"
           {...agentPartAttributesFor({ part: "input", state: {} })}
           ref={(target) => {
-            element.current = target;
+            trigger.current = target;
           }}
-          value={chosen === undefined ? "" : value}
-          name={name}
           disabled={disabled}
-          required={required}
+          aria-labelledby={labelId}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-controls={listId}
+          aria-activedescendant={open && active >= 0 ? optionId(active) : undefined}
+          aria-required={required || undefined}
           aria-invalid={error !== undefined || undefined}
           aria-describedby={messageId}
-          onChange={(event) => onChange(event.currentTarget.value)}
+          onClick={() => (open ? hide() : show())}
+          onKeyDown={onKeyDown}
+          onKeyUp={onKeyUp}
+          onBlur={onBlur}
         >
-          {chosen === undefined ? (
-            <option value="" disabled>
-              {placeholder ?? "Choose"}
-            </option>
-          ) : null}
-          {options.map((option, index) => (
-            <option
-              key={option.value}
-              value={option.value}
-              {...agentPartAttributesFor(
-                optionParts[index] ?? { part: "option", state: {} },
-              )}
-            >
-              {option.label}
-            </option>
-          ))}
-        </select>
+          <span>{chosen === undefined ? (placeholder ?? "Choose") : chosen.label}</span>
+          {chosen?.count === undefined ? null : (
+            <span aria-hidden="true">{chosen.count}</span>
+          )}
+        </button>
+        <div
+          id={listId}
+          role="listbox"
+          aria-labelledby={labelId}
+          tabIndex={-1}
+          popover="manual"
+          hidden={!open}
+          ref={listbox}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          {options.map((option, index) => {
+            const textId = `${optionId(index)}-label`;
+            const countId = `${optionId(index)}-count`;
+            return (
+              // biome-ignore lint/a11y/useKeyWithClickEvents: focus stays on the combobox, whose keydown handler drives these options through aria-activedescendant
+              <div
+                key={option.value}
+                id={optionId(index)}
+                role="option"
+                tabIndex={-1}
+                aria-selected={option.value === value}
+                aria-labelledby={
+                  option.count === undefined ? undefined : `${textId} ${countId}`
+                }
+                ref={(element) => {
+                  if (element === null) elements.current.delete(option.value);
+                  else elements.current.set(option.value, element);
+                }}
+                {...agentPartAttributesFor(
+                  optionParts[index] ?? { part: "option", state: {} },
+                )}
+                onPointerMove={() => {
+                  if (index !== active) setActive(index);
+                }}
+                onClick={() => {
+                  commit(option.value);
+                  if (open) trigger.current?.focus();
+                }}
+              >
+                <span id={textId}>{option.label}</span>
+                {option.count === undefined ? null : (
+                  <span id={countId} aria-hidden="true">
+                    {option.count}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </span>
+      {name === undefined ? null : (
+        <input type="hidden" name={name} value={chosen === undefined ? "" : value} />
+      )}
       {error !== undefined ? (
         <p id={messageId} {...agentPartAttributesFor({ part: "error", state: {} })}>
           {error}

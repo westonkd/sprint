@@ -11,10 +11,13 @@ import { reactText } from "@/agent/view/text.ts";
 import { listMeta } from "./meta.ts";
 import "./List.css";
 
+export type ListMarker = "plus" | "bullet" | "number" | "none";
+
 export interface ListProps extends ComponentPropsWithRef<"ul"> {
   label: string;
   items: readonly ReactNode[];
   ordered?: boolean;
+  marker?: ListMarker;
   emptyLabel?: string;
   loading?: boolean;
   loadingLabel?: string;
@@ -24,7 +27,8 @@ export function List(props: ListProps) {
   const {
     label,
     items,
-    ordered = false,
+    ordered: orderedProp = false,
+    marker: markerProp,
     emptyLabel = "Empty",
     loading = false,
     loadingLabel = "Loading",
@@ -32,6 +36,8 @@ export function List(props: ListProps) {
   } = props;
 
   const view = useSprintView();
+  const marker = markerProp ?? (orderedProp ? "number" : "plus");
+  const ordered = orderedProp || marker === "number";
   const empty = items.length === 0;
 
   const parts: AgentPart[] = items.map((item, index) => {
@@ -46,7 +52,7 @@ export function List(props: ListProps) {
   const node = buildAgentNode({
     component: listMeta.name,
     label,
-    state: { items: String(items.length), ordered, empty, loading },
+    state: { items: String(items.length), ordered, marker, empty, loading },
     parts,
   });
 

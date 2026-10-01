@@ -1,15 +1,20 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 import {
+  Breadcrumb,
+  type BreadcrumbItem,
+  type BreadcrumbOpening,
+  Divider,
   Link,
   listAgentMeta,
   MetaLine,
-  NavBar,
-  type NavBarOpening,
+  Nav,
+  NavGroup,
   Select,
   Shell,
   SprintProvider,
   type SprintTheme,
   type SprintView,
+  Stack,
   version,
 } from "../src/index.ts";
 import { byCategory, type NavModel } from "./navModel.ts";
@@ -20,7 +25,7 @@ import { GuideLayout } from "./pages/GuideLayout.tsx";
 import { GuidePhilosophy } from "./pages/GuidePhilosophy.tsx";
 import { GuideWebMCP } from "./pages/GuideWebMCP.tsx";
 import { Overview } from "./pages/Overview.tsx";
-import { asTheme, THEME_OPTIONS, useTheme } from "./theme.ts";
+import { asTheme, THEME_OPTIONS, useNavCollapsed, useTheme } from "./theme.ts";
 
 interface Guide {
   id: string;
@@ -105,13 +110,14 @@ interface WorkbenchShellProps {
 function WorkbenchShell(props: WorkbenchShellProps) {
   const { theme, onThemeChange, route } = props;
   const components = listAgentMeta();
-  const [opening, setOpening] = useState<NavBarOpening>("closed");
+  const [opening, setOpening] = useState<BreadcrumbOpening>("closed");
+  const [navCollapsed, setNavCollapsed] = useNavCollapsed();
 
   useEffect(() => {
     const summon = (event: KeyboardEvent) => {
       if (event.key !== "k" || !(event.metaKey || event.ctrlKey)) return;
       event.preventDefault();
-      setOpening("group");
+      setOpening(0);
     };
     window.addEventListener("keydown", summon);
     return () => window.removeEventListener("keydown", summon);
@@ -128,7 +134,7 @@ function WorkbenchShell(props: WorkbenchShellProps) {
   const model: NavModel = [
     {
       label: "Guides",
-      items: GUIDES.map((entry) => ({
+      children: GUIDES.map((entry) => ({
         href: href(`guide/${entry.id}`),
         label: entry.title,
         ...(guide?.id === entry.id ? { active: true } : {}),
@@ -136,27 +142,27 @@ function WorkbenchShell(props: WorkbenchShellProps) {
     },
     ...byCategory(components).map(([category, members]) => ({
       label: category,
-      items: members.map((meta) => ({
-        href: href(meta.name),
-        label: meta.name,
-        ...(meta.name === route.page ? { active: true } : {}),
-      })),
+      children: members.map((meta) => {
+        const here = meta.name === route.page;
+        return {
+          href: href(meta.name),
+          label: meta.name,
+          ...(here && route.section === undefined ? { active: true } : {}),
+          ...(here
+            ? {
+                children: docSections(meta).map((section) => ({
+                  href: href(`${meta.name}/${section.id}`),
+                  label: section.title,
+                  ...(route.section === section.id ? { active: true } : {}),
+                })),
+              }
+            : {}),
+        };
+      }),
     })),
-    ...(component === undefined
-      ? []
-      : [
-          {
-            label: "On this page",
-            items: docSections(component).map((section) => ({
-              href: href(`${component.name}/${section.id}`),
-              label: section.title,
-              ...(route.section === section.id ? { active: true } : {}),
-            })),
-          },
-        ]),
     {
       label: "Reference",
-      items: [
+      children: [
         { href: "index.html", label: "Landing page" },
         { href: "agent-manifest.json", label: "agent-manifest.json", external: true },
         { href: "llms.txt", label: "llms.txt", external: true },
@@ -178,6 +184,9 @@ function WorkbenchShell(props: WorkbenchShellProps) {
     <div className="app" data-view={route.view}>
       <Shell
         sideLabel="Workbench sidebar"
+        collapsible
+        collapsed={navCollapsed}
+        onCollapsedChange={setNavCollapsed}
         bar={
           <>
             <Link className="brand" href={href("")}>
@@ -192,15 +201,18 @@ function WorkbenchShell(props: WorkbenchShellProps) {
             />
           </>
         }
-        side={
-          <NavBar
+        side={<WorkbenchNav model={model} />}
+      >
+        <Stack gap="loose">
+          <Breadcrumb
             label="Workbench"
-            groups={model}
+            href={href("")}
+            items={model}
             open={opening}
             onOpenChange={setOpening}
           />
-        }
-      >
+          <Divider />
+        </Stack>
         {guide !== undefined ? (
           guide.render()
         ) : component !== undefined ? (
@@ -221,5 +233,48 @@ function WorkbenchShell(props: WorkbenchShellProps) {
         </footer>
       </Shell>
     </div>
+  );
+}
+
+function WorkbenchNav(props: { model: NavModel }) {
+  const { model } = props;
+  const inner = model
+    .flatMap((group) => group.children ?? [])
+    .find((item) => (item.children?.length ?? 0) > 0);
+
+  return (
+    <Nav label="Workbench">
+      {model.map((group) => (
+        <NavGroup key={group.label} label={group.label}>
+          {(group.children ?? []).map((item) => (
+            <NavLink key={item.label} item={item} />
+          ))}
+        </NavGroup>
+      ))}
+      {inner === undefined ? null : (
+        <NavGroup label="On this page">
+          {(inner.children ?? []).map((item) => (
+            <NavLink key={item.label} item={item} />
+          ))}
+        </NavGroup>
+      )}
+    </Nav>
+  );
+}
+
+function NavLink(props: { item: BreadcrumbItem }) {
+  const { item } = props;
+  if (item.href === undefined) return null;
+  return (
+    <Link
+      href={item.href}
+      active={
+        item.active === true ||
+        (item.children ?? []).some((child) => child.active === true)
+      }
+      external={item.external === true}
+    >
+      {item.label}
+    </Link>
   );
 }

@@ -38,7 +38,8 @@
     text-transform: var(--sprint-label-transform);
   }
 
-  [data-sprint="TextInput"] [data-sprint-part="input"]:hover:not(:disabled) {
+  [data-sprint="TextInput"]:not([data-sprint-readonly])
+    [data-sprint-part="input"]:hover:not(:disabled) {
     border-color: var(--sprint-ink);
   }
 
@@ -50,6 +51,14 @@
 
   [data-sprint="TextInput"][data-sprint-invalid] [data-sprint-part="input"] {
     border-color: var(--sprint-danger);
+  }
+
+  [data-sprint="TextInput"][data-sprint-readonly] [data-sprint-part="input"] {
+    border-style: dashed;
+    border-color: var(--sprint-keyline);
+    background: var(--sprint-surface-inset);
+    box-shadow: none;
+    cursor: text;
   }
 
   [data-sprint="TextInput"] [data-sprint-part="input"]:disabled {

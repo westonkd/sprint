@@ -1,0 +1,127 @@
+@layer sprint.components {
+  [data-sprint="Pagination"] {
+    display: grid;
+    gap: var(--sprint-space-2);
+    inline-size: 100%;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-snug);
+    text-transform: var(--sprint-label-transform);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-sprint="Pagination"] > p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Pagination"] > div {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sprint-space-2);
+  }
+
+  [data-sprint="Pagination"] > div > span {
+    color: var(--sprint-ink);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Pagination"] [data-sprint-part="previous"],
+  [data-sprint="Pagination"] [data-sprint-part="next"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2.25rem;
+    padding: var(--sprint-space-2) var(--sprint-space-4);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
+    background-color: var(--sprint-neutral);
+    background-image: var(--sprint-sheen-compact), var(--sprint-shade-compact);
+    background-blend-mode: var(--sprint-blend-lit);
+    box-shadow: var(--sprint-mold-compact), var(--sprint-cast);
+    color: var(--sprint-neutral-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-decoration: none;
+    text-transform: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      --sprint-gloss-x var(--sprint-duration-instant) linear,
+      --sprint-gloss-fade var(--sprint-duration-instant) linear,
+      --sprint-cast-shift var(--sprint-duration-instant) linear,
+      background-color var(--sprint-duration-instant) var(--sprint-easing),
+      border-color var(--sprint-duration-instant) var(--sprint-easing),
+      box-shadow var(--sprint-duration-instant) var(--sprint-easing),
+      transform var(--sprint-duration-instant) var(--sprint-easing);
+  }
+
+  [data-sprint="Pagination"]
+    :is([data-sprint-part="previous"], [data-sprint-part="next"]):hover:not(
+      [data-sprint-disabled]
+    ) {
+    background-color: var(--sprint-neutral-hover);
+    border-color: var(--sprint-keyline-strong);
+  }
+
+  [data-sprint="Pagination"]
+    :is([data-sprint-part="previous"], [data-sprint-part="next"]):active:not(
+      [data-sprint-disabled]
+    ) {
+    transform: translateY(var(--sprint-press-shift)) scaleY(var(--sprint-press-scale));
+    box-shadow: var(--sprint-mold-pressed), var(--sprint-cast-pressed);
+  }
+
+  [data-sprint="Pagination"]
+    :is(
+      [data-sprint-part="previous"],
+      [data-sprint-part="next"]
+    )[data-sprint-disabled] {
+    background-color: var(--sprint-inert);
+    background-image: none;
+    box-shadow: none;
+    border-color: var(--sprint-keyline);
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="Pagination"] {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--sprint-space-4);
+    }
+
+    [data-sprint="Pagination"] > div {
+      gap: var(--sprint-space-3);
+    }
+
+    [data-sprint="Pagination"] [data-sprint-part="previous"],
+    [data-sprint="Pagination"] [data-sprint-part="next"] {
+      min-block-size: 0;
+      padding: var(--sprint-space-1) var(--sprint-space-3);
+    }
+  }
+
+  @media (pointer: coarse) {
+    [data-sprint="Pagination"] [data-sprint-part="previous"],
+    [data-sprint="Pagination"] [data-sprint-part="next"] {
+      min-block-size: 2.25rem;
+      padding: var(--sprint-space-2) var(--sprint-space-4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="Pagination"] [data-sprint-part="previous"],
+    [data-sprint="Pagination"] [data-sprint-part="next"] {
+      transition: none;
+    }
+  }
+}

@@ -9,7 +9,7 @@ export const textInputMeta = defineAgentMeta({
   whenToUse:
     "Use it for any free-form single-line value: a name, an email address, a search term. The label is part of the component, so a form never needs a separate label element, and the error prop is how validation reaches both a person and an agent.",
   whenNotToUse:
-    "Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch.",
+    "Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch. Do not use a read-only TextInput to hand someone a value to paste elsewhere; that is a CopyField.",
   status: "experimental",
   props: {
     label: {
@@ -63,6 +63,12 @@ export const textInputMeta = defineAgentMeta({
       description: "Disable the field and unregister its fill tool.",
       default: false,
     },
+    readOnly: {
+      kind: "boolean",
+      description:
+        "Show the value without letting anyone change it. The field stays focusable and selectable, renders as plain text in the agent view, and registers no fill tool, because nothing can change it.",
+      default: false,
+    },
     required: {
       kind: "boolean",
       description: "Mark the field required, visually and in the agent view.",
@@ -96,6 +102,11 @@ export const textInputMeta = defineAgentMeta({
     disabled: {
       description: "Present when the field cannot be edited.",
       attribute: "data-sprint-disabled",
+    },
+    readonly: {
+      description:
+        "Present when the field shows a value that cannot be changed. No fill tool is registered while it is set.",
+      attribute: "data-sprint-readonly",
     },
     required: {
       description: "Present when the field must be filled.",
@@ -131,6 +142,12 @@ export const textInputMeta = defineAgentMeta({
       description:
         "The value stays off every agent surface: state reflects filled or empty, and tool results never echo the text.",
       code: '<TextInput\n  label="Access code"\n  type="password"\n  value={code}\n  onChange={setCode}\n  autoComplete="current-password"\n/>',
+    },
+    {
+      title: "A read-only value",
+      description:
+        "A value shown in the shape of a form field that nobody may edit. It stays focusable and selectable, reads as text in the agent view, and registers no fill tool. To hand someone a value to paste elsewhere, a CopyField adds the copy control.",
+      code: '<TextInput\n  label="Station ID"\n  value="KX-2209-ALPHA"\n  onChange={() => {}}\n  readOnly\n  hint="Assigned at registration"\n/>',
     },
   ],
   a11y: {

@@ -38,3 +38,25 @@ export function useTheme(): [SprintTheme, (theme: SprintTheme) => void] {
 
   return [theme, setTheme];
 }
+
+const NAV_KEY = "sprint-nav-collapsed";
+
+function initialNavCollapsed(): boolean {
+  try {
+    return window.localStorage.getItem(NAV_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+export function useNavCollapsed(): [boolean, (collapsed: boolean) => void] {
+  const [collapsed, setCollapsed] = useState(initialNavCollapsed);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(NAV_KEY, String(collapsed));
+    } catch {}
+  }, [collapsed]);
+
+  return [collapsed, setCollapsed];
+}

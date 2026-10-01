@@ -8,7 +8,7 @@ export const listMeta = defineAgentMeta({
   whenToUse:
     "Use it for a short sequence of related points: rules, steps, links, caveats. Passing items as data rather than as children is what lets the agent view carry each one as its own part.",
   whenNotToUse:
-    "Do not use it for records with fields; that is Table. Do not use it as a layout for cards or controls; that is Stack.",
+    "Do not use it for a diff or a review of what will change, where each mark means added or removed; that is ChangeList. Do not use it for records with fields; that is Table. Do not use it as a layout for cards or controls; that is Stack.",
   status: "experimental",
   props: {
     label: {
@@ -28,6 +28,13 @@ export const listMeta = defineAgentMeta({
       description:
         "Number the items instead of bulleting them. Use it when the order is the point.",
       default: false,
+    },
+    marker: {
+      kind: "enum",
+      description:
+        'The mark before each item. "plus" is the house bullet, "bullet" a plain dot for quieter prose, "number" counts the items and makes the list ordered, "none" drops the marker column for a list whose items already lead with their own mark. Defaults to "number" when ordered is set and "plus" otherwise. The marker is drawn, not read: an item whose mark means something, such as added or removed, belongs in a ChangeList.',
+      values: ["plus", "bullet", "number", "none"],
+      default: "plus",
     },
     emptyLabel: {
       kind: "string",
@@ -52,8 +59,14 @@ export const listMeta = defineAgentMeta({
       attribute: "data-sprint-items",
     },
     ordered: {
-      description: "Present when the items are numbered rather than bulleted.",
+      description:
+        "Present when the list is a real ol: ordered is set, or the marker is number.",
       attribute: "data-sprint-ordered",
+    },
+    marker: {
+      description: "The mark drawn before each item.",
+      attribute: "data-sprint-marker",
+      values: ["plus", "bullet", "number", "none"],
     },
     empty: {
       description: "Present when the list has no items.",
@@ -71,7 +84,7 @@ export const listMeta = defineAgentMeta({
   },
   agentView: {
     example:
-      '- **List** "Tool rules" [items=1]\n  - part `item` "One tool, one action." [index=1]',
+      '- **List** "Tool rules" [items=1, marker=plus]\n  - part `item` "One tool, one action." [index=1]',
   },
   examples: [
     {
@@ -82,10 +95,21 @@ export const listMeta = defineAgentMeta({
       title: "A numbered sequence",
       code: '<List\n  ordered\n  label="Steps"\n  items={["Register the tool.", "Drive the DOM.", "Return the new state."]}\n/>',
     },
+    {
+      title: "Plain bullets",
+      description: "A quieter dot for running prose, where the house plus would shout.",
+      code: '<List\n  marker="bullet"\n  label="Caveats"\n  items={["Chrome 149 only.", "Tools are a no-op without WebMCP."]}\n/>',
+    },
+    {
+      title: "No marker",
+      description:
+        "For items that already lead with their own mark, such as a link or a chip.",
+      code: '<List\n  marker="none"\n  label="Related"\n  items={["Table for records.", "Stack for layout."]}\n/>',
+    },
   ],
   a11y: {
     role: "list",
     notes:
-      "A real ul or ol named by its label, with an explicit list role because the custom markers require list-style none and Safari would otherwise drop the list semantics. The item count is announced, and the markers are drawn as pseudo-elements.",
+      "A real ul or ol named by its label, with an explicit list role because the custom markers require list-style none and Safari would otherwise drop the list semantics. The item count is announced, and the markers are drawn as pseudo-elements, so a marker never carries meaning a screen reader would miss.",
   },
 });

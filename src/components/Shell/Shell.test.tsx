@@ -75,6 +75,61 @@ describe("Shell rendering", () => {
     );
   });
 
+  it("offers no desktop toggle unless it is collapsible", () => {
+    renderShell();
+    expect(screen.queryByRole("button", { name: "Hide menu" })).toBeNull();
+    expect(root()).not.toHaveAttribute("data-sprint-collapsed");
+  });
+
+  it("collapses and restores the sidebar from its own toggle", () => {
+    render(
+      <Shell collapsible side={<Text>Side</Text>}>
+        <Text>Body</Text>
+      </Shell>,
+    );
+    const hide = screen.getByRole("button", { name: "Hide menu" });
+    expect(hide).toHaveAttribute("aria-expanded", "true");
+
+    fireEvent.click(hide);
+    expect(root()).toHaveAttribute("data-sprint-collapsed", "");
+    const show = screen.getByRole("button", { name: "Show menu" });
+    expect(show).toHaveAttribute("aria-expanded", "false");
+
+    fireEvent.click(show);
+    expect(root()).not.toHaveAttribute("data-sprint-collapsed");
+  });
+
+  it("starts collapsed when asked and reports each change", () => {
+    const changes: boolean[] = [];
+    render(
+      <Shell
+        collapsible
+        defaultCollapsed
+        onCollapsedChange={(next) => changes.push(next)}
+      >
+        <Text>Body</Text>
+      </Shell>,
+    );
+    expect(root()).toHaveAttribute("data-sprint-collapsed", "");
+    fireEvent.click(screen.getByRole("button", { name: "Show menu" }));
+    expect(changes).toEqual([false]);
+  });
+
+  it("follows a collapsed state its owner keeps", () => {
+    const { rerender } = render(
+      <Shell collapsible collapsed>
+        <Text>Body</Text>
+      </Shell>,
+    );
+    expect(root()).toHaveAttribute("data-sprint-collapsed", "");
+    rerender(
+      <Shell collapsible collapsed={false}>
+        <Text>Body</Text>
+      </Shell>,
+    );
+    expect(root()).not.toHaveAttribute("data-sprint-collapsed");
+  });
+
   it("closes the drawer when a link inside it is followed", () => {
     renderShell();
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));

@@ -6,7 +6,7 @@ export const descriptionListMeta = defineAgentMeta({
   summary:
     "Labelled term–description pairs for the details of one thing: metadata, settings, profile fields.",
   whenToUse:
-    "Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description.",
+    "Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description. It lays itself out from its own width, not the viewport's: the term sits above its value until the list is at least 32rem wide, then moves into a column of its own, so it reads the same in a sidebar as in a full-width panel.",
   whenNotToUse:
     "Do not use for many entities with the same fields; that is a Table. Do not put components inside term or description; both are flattened to text for the agent view, so only inline content survives. Do not use for prose sequences; that is a List.",
   status: "experimental",

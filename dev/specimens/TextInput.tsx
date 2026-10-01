@@ -40,8 +40,21 @@ function Password() {
   );
 }
 
+function ReadOnly() {
+  return (
+    <TextInput
+      label="Station ID"
+      value="KX-2209-ALPHA"
+      onChange={() => {}}
+      readOnly
+      hint="Assigned at registration"
+    />
+  );
+}
+
 export const textInputSpecimens: Record<string, ReactNode> = {
   "A labelled field": <LabelledField />,
   "A validation error": <ValidationError />,
   "A password": <Password />,
+  "A read-only value": <ReadOnly />,
 };

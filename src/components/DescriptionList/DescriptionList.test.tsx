@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
@@ -36,6 +38,34 @@ describe("DescriptionList rendering", () => {
     expect(root()).toHaveAttribute("data-sprint-empty", "");
     expect(root()).toHaveTextContent("None generated");
     expect(document.querySelector(agentSelector("DescriptionList", "item"))).toBeNull();
+  });
+});
+
+describe("DescriptionList layout", () => {
+  const css = readFileSync(
+    resolve(process.cwd(), "src/components/DescriptionList/DescriptionList.css"),
+    "utf8",
+  );
+
+  it("sizes itself as an inline-size container", () => {
+    expect(css).toMatch(/container:\s*sprint-description-list\s*\/\s*inline-size/);
+  });
+
+  it("switches to two columns from its container width, not the viewport", () => {
+    expect(css).toMatch(/@container sprint-description-list \(min-width: 32rem\)/);
+    expect(css).not.toMatch(/@media/);
+  });
+
+  it("never breaks values mid-word unless a token cannot fit", () => {
+    expect(css).not.toMatch(/overflow-wrap:\s*anywhere/);
+  });
+
+  it("keeps each term directly above or beside its own value", () => {
+    render(<DescriptionList label="Key sk-prod" items={ITEMS} />);
+    const pairs = document.querySelectorAll(agentSelector("DescriptionList", "item"));
+    for (const pair of pairs) {
+      expect(Array.from(pair.children, (child) => child.tagName)).toEqual(["DT", "DD"]);
+    }
   });
 });
 

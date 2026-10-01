@@ -195,3 +195,150 @@ describe("SegmentedControl agent view", () => {
     ]);
   });
 });
+
+describe("SegmentedControl counts", () => {
+  const COUNTED = [
+    { value: "read", label: "Read", count: 17 },
+    { value: "never", label: "Never signed in", count: 30 },
+  ];
+
+  function Counted() {
+    const [value, setValue] = useState("read");
+    return (
+      <SegmentedControl
+        label="Members"
+        options={COUNTED}
+        value={value}
+        onChange={setValue}
+      />
+    );
+  }
+
+  it("names each option by its label and count, and shows the count apart", () => {
+    render(<Counted />);
+    const option = screen.getByRole("radio", { name: "Never signed in 30" });
+    expect(option).toHaveAttribute("data-sprint-count", "30");
+    expect(option.querySelector('[aria-hidden="true"]')).toHaveTextContent("30");
+  });
+
+  it("keeps the count out of the tool enum and selects by plain label", async () => {
+    render(<Counted />);
+    const descriptor = mock.find("select-members")?.descriptor;
+    expect(descriptor?.inputSchema.properties.option?.enum).toEqual([
+      "Read",
+      "Never signed in",
+    ]);
+    const result = await call("select-members", { option: "Never signed in" });
+    expect(root()).toHaveAttribute("data-sprint-value", "never");
+    expect(result).toContain('part `option` "Never signed in" [checked, count=30]');
+  });
+
+  it("agrees with its projection, plain label and count as state", () => {
+    const { container } = render(<Counted />);
+    const [node] = serializeWithin(container);
+    expect(node?.parts).toEqual([
+      { part: "option", label: "Read", state: { checked: true, count: "17" } },
+      { part: "option", label: "Never signed in", state: { count: "30" } },
+    ]);
+  });
+});
+
+describe("SegmentedControl width", () => {
+  it("keeps its own width by default", () => {
+    render(<Harness />);
+    expect(root()).not.toHaveAttribute("data-sprint-block");
+  });
+
+  it("publishes block when asked to fill its container", () => {
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Harness block />
+      </SprintProvider>,
+    );
+    expect(container.textContent).toContain("[block, value=human]");
+  });
+
+  it("marks the root for a full-width layout", () => {
+    render(<Harness block />);
+    expect(root()).toHaveAttribute("data-sprint-block", "");
+  });
+});
+
+describe("SegmentedControl staged change", () => {
+  const ACCESS = [
+    { value: "read", label: "Read" },
+    { value: "write", label: "Write" },
+  ];
+
+  function Staged(props: Partial<SegmentedControlProps>) {
+    const [value, setValue] = useState("read");
+    return (
+      <SegmentedControl
+        label="Access"
+        options={ACCESS}
+        value={value}
+        savedValue="read"
+        onChange={setValue}
+        hint="Currently Read. Nothing changes until you confirm."
+        {...props}
+      />
+    );
+  }
+
+  it("is clean while the selection matches the saved value", () => {
+    render(<Staged />);
+    expect(root()).not.toHaveAttribute("data-sprint-dirty");
+    expect(screen.getByRole("radio", { name: "Read" })).toHaveAttribute(
+      "data-sprint-saved",
+      "",
+    );
+  });
+
+  it("marks itself dirty and keeps the saved option marked after a change", () => {
+    render(<Staged />);
+    fireEvent.click(screen.getByRole("radio", { name: "Write" }));
+    expect(root()).toHaveAttribute("data-sprint-dirty", "");
+    expect(screen.getByRole("radio", { name: "Write" })).toBeChecked();
+    const saved = screen.getByRole("radio", { name: "Read" });
+    expect(saved).not.toBeChecked();
+    expect(saved).toHaveAttribute("data-sprint-saved", "");
+  });
+
+  it("links the hint to the group", () => {
+    render(<Staged />);
+    expect(
+      screen.getByRole("radiogroup", { name: "Access" }),
+    ).toHaveAccessibleDescription("Currently Read. Nothing changes until you confirm.");
+  });
+
+  it("carries the saved option, dirty state, and hint into the agent view", () => {
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Staged value="write" />
+      </SprintProvider>,
+    );
+    expect(container.textContent).toContain(
+      '- **SegmentedControl** "Access" [dirty, value=write] → tool `select-access`',
+    );
+    expect(container.textContent).toContain('- part `option` "Read" [saved]');
+    expect(container.textContent).toContain(
+      '- part `hint` "Currently Read. Nothing changes until you confirm."',
+    );
+    expect(container.querySelectorAll("[data-sprint-view] button")).toHaveLength(2);
+  });
+
+  it("agrees with the projection of its own human rendering", () => {
+    const { container } = render(<Staged value="write" />);
+    const [node] = serializeWithin(container);
+    expect(node?.state).toMatchObject({ dirty: true, value: "write" });
+    expect(node?.parts).toEqual([
+      { part: "option", label: "Read", state: { saved: true } },
+      { part: "option", label: "Write", state: { checked: true } },
+      {
+        part: "hint",
+        label: "Currently Read. Nothing changes until you confirm.",
+        state: {},
+      },
+    ]);
+  });
+});

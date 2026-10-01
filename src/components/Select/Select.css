@@ -38,6 +38,80 @@
     appearance: none;
     border-radius: var(--sprint-radius-control);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--sprint-space-2);
+    min-width: 0;
+    text-align: left;
+  }
+
+  [data-sprint="Select"] [data-sprint-part="input"] > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Select"] [data-sprint-part="input"] > span[aria-hidden],
+  [data-sprint="Select"] [data-sprint-part="option"] > span[aria-hidden] {
+    flex: none;
+    padding: 0 var(--sprint-space-1);
+    border: var(--sprint-keyline-width) solid currentColor;
+    border-radius: var(--sprint-radius-pill);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size-small);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--sprint-leading-snug);
+  }
+
+  [data-sprint="Select"] [role="listbox"] {
+    position: fixed;
+    inset: auto;
+    top: var(--sprint-select-top, 0);
+    left: var(--sprint-select-left, 0);
+    z-index: 10;
+    box-sizing: border-box;
+    width: var(--sprint-select-width, auto);
+    max-height: 16rem;
+    margin: 0;
+    margin-top: var(--sprint-space-1);
+    padding: var(--sprint-space-1) 0;
+    overflow-y: auto;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-surface-raised);
+    box-shadow: var(--sprint-cast-raised);
+    color: var(--sprint-ink);
+  }
+
+  [data-sprint="Select"] [role="listbox"][hidden] {
+    display: none;
+  }
+
+  [data-sprint="Select"] [data-sprint-part="option"] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sprint-space-2);
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-text-sm);
+    line-height: var(--sprint-leading-snug);
+    cursor: pointer;
+  }
+
+  [data-sprint="Select"] [data-sprint-part="option"][data-sprint-checked] {
+    font-weight: var(--sprint-weight-bold);
+  }
+
+  [data-sprint="Select"] [data-sprint-part="option"][data-sprint-active] {
+    background-color: var(--sprint-action);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="Select"]
+    [data-sprint-part="option"][data-sprint-active]
+    > span[aria-hidden] {
+    color: inherit;
   }
 
   [data-sprint="Select"] [data-sprint-part="control"]::after {
@@ -110,7 +184,8 @@
   }
 
   @media (pointer: coarse) {
-    [data-sprint="Select"] [data-sprint-part="input"] {
+    [data-sprint="Select"] [data-sprint-part="input"],
+    [data-sprint="Select"] [data-sprint-part="option"] {
       min-height: 2.25rem;
     }
   }

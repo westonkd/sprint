@@ -18,6 +18,6 @@ export const FILL_TOOL: AgentToolSpec = {
   readOnly: false,
   untrustedContent: true,
   registeredWhen:
-    "The field is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
-  unregisteredWhen: "The field unmounts or becomes disabled.",
+    "The field is mounted, enabled, editable rather than read-only, has a resolvable label, and no other component claims the same tool name.",
+  unregisteredWhen: "The field unmounts, becomes disabled, or becomes read-only.",
 };

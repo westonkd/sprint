@@ -29,10 +29,23 @@
     font-size: var(--sprint-label-size);
   }
 
-  [data-sprint="List"][data-sprint-ordered] > li::before {
+  [data-sprint="List"][data-sprint-marker="bullet"] > li::before {
+    content: "\2022";
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="List"][data-sprint-marker="number"] > li::before {
     content: counter(sprint-list) ".";
     color: var(--sprint-ink-muted);
     letter-spacing: var(--sprint-label-tracking);
+  }
+
+  [data-sprint="List"][data-sprint-marker="none"] > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-sprint="List"][data-sprint-marker="none"] > li::before {
+    content: none;
   }
 
   [data-sprint="List"][data-sprint-empty] > li {

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithRef, ReactNode } from "react";
+import type { ComponentPropsWithRef, CSSProperties, ReactNode } from "react";
 import { AgentLine } from "@/agent/view/AgentText.tsx";
 import { useSprintView } from "@/agent/view/mode.ts";
 import type { AgentPart } from "@/agent/view/node.ts";
@@ -12,11 +12,28 @@ import { reactText } from "@/agent/view/text.ts";
 import { tableMeta } from "./meta.ts";
 import "./Table.css";
 
+export const TABLE_WIDTHS = [
+  "4rem",
+  "5rem",
+  "6rem",
+  "7rem",
+  "8rem",
+  "9rem",
+  "10rem",
+  "12rem",
+  "14rem",
+  "16rem",
+  "20rem",
+  "24rem",
+] as const;
+
+export type TableWidth = (typeof TABLE_WIDTHS)[number];
+
 export interface TableColumn {
   key: string;
   header: string;
   align?: "start" | "end";
-  width?: string;
+  width?: TableWidth | (string & Record<never, never>);
 }
 
 export interface TableRow {
@@ -31,6 +48,15 @@ export interface TableProps extends ComponentPropsWithRef<"table"> {
   emptyLabel?: string;
   loading?: boolean;
   loadingLabel?: string;
+}
+
+function onScale(width: string): width is TableWidth {
+  return (TABLE_WIDTHS as readonly string[]).includes(width);
+}
+
+function offScaleWidth(width: string | undefined): CSSProperties | undefined {
+  if (width === undefined || onScale(width)) return undefined;
+  return { width };
 }
 
 function rowId(row: TableRow, index: number): string {
@@ -105,7 +131,8 @@ export function Table(props: TableProps) {
               role="columnheader"
               scope="col"
               data-sprint-column={column.key}
-              style={column.width === undefined ? undefined : { width: column.width }}
+              data-sprint-width={column.width}
+              style={offScaleWidth(column.width)}
             >
               {column.header}
             </th>

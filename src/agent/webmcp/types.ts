@@ -5,6 +5,7 @@ export interface JsonSchemaProperty {
   description?: string;
   enum?: readonly string[];
   minimum?: number;
+  maximum?: number;
   default?: string | number | boolean;
 }
 

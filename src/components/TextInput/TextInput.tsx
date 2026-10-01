@@ -34,6 +34,7 @@ export interface TextInputProps extends Omit<ComponentPropsWithRef<"div">, "onCh
   name?: string;
   autoComplete?: string;
   disabled?: boolean;
+  readOnly?: boolean;
   required?: boolean;
   agentName?: string;
   agentTool?: boolean;
@@ -57,6 +58,7 @@ export function TextInput(props: TextInputProps) {
     name,
     autoComplete,
     disabled = false,
+    readOnly = false,
     required = false,
     agentName,
     agentTool = true,
@@ -103,7 +105,7 @@ export function TextInput(props: TextInputProps) {
   const toolName = useAgentTool({
     spec: FILL_TOOL,
     label: agentName ?? label,
-    enabled: agentTool && !disabled,
+    enabled: agentTool && !disabled && !readOnly,
     execute,
   });
 
@@ -115,6 +117,7 @@ export function TextInput(props: TextInputProps) {
       ...(masked ? { filled: value !== "" } : value === "" ? {} : { value }),
       empty: value === "",
       disabled,
+      readonly: readOnly,
       required,
       invalid: error !== undefined,
     },
@@ -123,7 +126,7 @@ export function TextInput(props: TextInputProps) {
   nodeRef.current = node;
 
   if (view === "agent") {
-    if (disabled || controls === "never") return <AgentLine node={node} />;
+    if (disabled || readOnly || controls === "never") return <AgentLine node={node} />;
     return (
       <AgentFieldControl
         node={node}
@@ -155,6 +158,7 @@ export function TextInput(props: TextInputProps) {
         name={name}
         autoComplete={autoComplete}
         disabled={disabled}
+        readOnly={readOnly}
         required={required}
         aria-invalid={error !== undefined || undefined}
         aria-describedby={messageId}

@@ -55,6 +55,10 @@
     flex-shrink: 0;
   }
 
+  [data-sprint="Shell"] > aside > div:first-of-type > span:last-child > :nth-child(2) {
+    display: none;
+  }
+
   [data-sprint="Shell"] > aside > div:last-of-type {
     display: none;
     max-height: 70vh;
@@ -83,12 +87,12 @@
   }
 
   @media (min-width: 64rem) {
-    [data-sprint="Shell"] {
+    [data-sprint="Shell"]:not([data-sprint-collapsed]) {
       grid-template-columns: 15rem minmax(0, 1fr);
       grid-template-rows: minmax(0, 1fr);
     }
 
-    [data-sprint="Shell"] > aside {
+    [data-sprint="Shell"]:not([data-sprint-collapsed]) > aside {
       height: 100vh;
       overflow-y: auto;
       align-self: start;
@@ -96,20 +100,52 @@
       border-bottom: 0;
     }
 
-    [data-sprint="Shell"] > aside > div:first-of-type {
+    [data-sprint="Shell"]:not([data-sprint-collapsed]) > aside > div:first-of-type {
       padding: var(--sprint-space-5) var(--sprint-space-5) var(--sprint-space-3);
     }
 
-    [data-sprint="Shell"] > aside > div:first-of-type > span:last-child {
+    [data-sprint="Shell"] > aside > div:first-of-type > span:last-child > :first-child {
       display: none;
     }
 
-    [data-sprint="Shell"] > aside > div:last-of-type {
+    [data-sprint="Shell"]
+      > aside
+      > div:first-of-type
+      > span:last-child
+      > :nth-child(2) {
+      display: inline-flex;
+    }
+
+    [data-sprint="Shell"]
+      > aside
+      > div:first-of-type
+      > span:last-child:not(:has(> :nth-child(2))) {
+      display: none;
+    }
+
+    [data-sprint="Shell"]
+      > aside
+      > div:first-of-type:has(> span:last-child > :nth-child(2)) {
+      justify-content: flex-start;
+    }
+
+    [data-sprint="Shell"]
+      > aside
+      > div:first-of-type
+      > span:last-child:has(> :nth-child(2)) {
+      order: -1;
+    }
+
+    [data-sprint="Shell"]:not([data-sprint-collapsed]) > aside > div:last-of-type {
       display: block;
       max-height: none;
       overflow: visible;
       padding: 0 var(--sprint-space-5) var(--sprint-space-5);
       border-top: 0;
+    }
+
+    [data-sprint="Shell"][data-sprint-collapsed] > aside > div:last-of-type {
+      display: none;
     }
   }
 }

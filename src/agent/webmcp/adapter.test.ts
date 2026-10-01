@@ -188,7 +188,7 @@ describe("validateInputs", () => {
     type: "object",
     properties: {
       region: { type: "string" },
-      page: { type: "integer" },
+      page: { type: "integer", minimum: 1, maximum: 3 },
       mode: { type: "string", enum: ["short", "full"] },
     },
     required: ["region"],
@@ -219,6 +219,21 @@ describe("validateInputs", () => {
   it("rejects a value outside an enum", () => {
     expect(validateInputs(schema, { region: "main", mode: "loud" })).toContain(
       "short, full",
+    );
+  });
+
+  it("rejects an integer that is not whole", () => {
+    expect(validateInputs(schema, { region: "main", page: 1.5 })).toBe(
+      'Parameter "page" must be a whole number, received 1.5.',
+    );
+  });
+
+  it("rejects a number outside its minimum and maximum", () => {
+    expect(validateInputs(schema, { region: "main", page: 0 })).toBe(
+      'Parameter "page" must be at least 1, received 0.',
+    );
+    expect(validateInputs(schema, { region: "main", page: 4 })).toBe(
+      'Parameter "page" must be at most 3, received 4.',
     );
   });
 });
