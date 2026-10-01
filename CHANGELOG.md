@@ -5,6 +5,9 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Docs: the README reflects the published package.** It gives the install command and peer
+  dependencies, notes that minor versions may break before 1.0, and states the strict-CSP guarantee.
+
 ## v0.6.0 - 2026-09-30
 
 - **Added: `Progress`, a loading indicator.** Indeterminate by default, a counted bar when given
