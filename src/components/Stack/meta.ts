@@ -51,9 +51,21 @@ export const stackMeta = defineAgentMeta({
       default: false,
     },
     min: {
-      kind: "string",
+      kind: "enum",
       description:
-        'Minimum track width for direction="grid", as a CSS length. Tracks never exceed the container.',
+        'Minimum track width for direction="grid", from a fixed scale of rem lengths. Tracks never exceed the container. Scale values are mapped in the stylesheet through data-sprint-min, so they work under a strict Content Security Policy. Any other CSS length is still accepted as an escape hatch, but it is written to an inline style attribute, which a style-src policy without unsafe-inline blocks: under such a policy an off-scale grid falls back to one column.',
+      values: [
+        "10rem",
+        "12rem",
+        "14rem",
+        "16rem",
+        "18rem",
+        "20rem",
+        "22rem",
+        "24rem",
+        "28rem",
+        "32rem",
+      ],
       default: "18rem",
     },
   },
@@ -85,6 +97,11 @@ export const stackMeta = defineAgentMeta({
     collapse: {
       description: "Present when the row stacks into a column on narrow viewports.",
       attribute: "data-sprint-collapse",
+    },
+    min: {
+      description:
+        'The minimum track width in use, present only when direction="grid". A value off the scale is carried here too, with the length itself in an inline style.',
+      attribute: "data-sprint-min",
     },
   },
   examples: [

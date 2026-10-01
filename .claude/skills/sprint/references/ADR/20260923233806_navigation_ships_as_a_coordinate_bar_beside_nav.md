@@ -1,5 +1,7 @@
 # Navigation ships as a coordinate bar beside Nav
 
+> Superseded by 20260930221406_navigation_is_a_breadcrumb_whose_separators_open_the_level_beyond_them.md
+
 - **Status**: Accepted
 - **Date**: 2026-09-23
 

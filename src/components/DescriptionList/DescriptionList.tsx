@@ -20,6 +20,8 @@ export interface DescriptionListProps extends ComponentPropsWithRef<"dl"> {
   label: string;
   items: readonly DescriptionItem[];
   emptyLabel?: string;
+  loading?: boolean;
+  loadingLabel?: string;
 }
 
 function pairText(item: DescriptionItem): string | undefined {
@@ -30,7 +32,14 @@ function pairText(item: DescriptionItem): string | undefined {
 }
 
 export function DescriptionList(props: DescriptionListProps) {
-  const { label, items, emptyLabel = "Empty", ...rest } = props;
+  const {
+    label,
+    items,
+    emptyLabel = "Empty",
+    loading = false,
+    loadingLabel = "Loading",
+    ...rest
+  } = props;
 
   const view = useSprintView();
   const empty = items.length === 0;
@@ -47,17 +56,22 @@ export function DescriptionList(props: DescriptionListProps) {
   const node = buildAgentNode({
     component: descriptionListMeta.name,
     label,
-    state: { items: String(items.length), empty },
+    state: { items: String(items.length), empty, loading },
     parts,
   });
 
   if (view === "agent") return <AgentLine node={node} />;
 
   return (
-    <dl {...rest} {...agentAttributesFor(node)} aria-label={label}>
+    <dl
+      {...rest}
+      {...agentAttributesFor(node)}
+      aria-label={label}
+      aria-busy={loading || undefined}
+    >
       {empty ? (
         <div>
-          <span>{emptyLabel}</span>
+          <span>{loading ? loadingLabel : emptyLabel}</span>
         </div>
       ) : (
         items.map((item, index) => (

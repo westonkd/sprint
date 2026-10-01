@@ -4,6 +4,7 @@ export type {
   StackDirection,
   StackGap,
   StackJustify,
+  StackMin,
   StackProps,
 } from "./Stack.tsx";
-export { Stack } from "./Stack.tsx";
+export { STACK_MINS, Stack } from "./Stack.tsx";

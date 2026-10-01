@@ -37,13 +37,46 @@ describe("Stack rendering", () => {
     expect(root()).not.toHaveAttribute("data-sprint-justify");
   });
 
-  it("passes the grid track minimum through as a custom property", () => {
+  it("publishes a scale track minimum as an attribute and writes no style", () => {
     render(
       <Stack direction="grid" min="16rem">
         content
       </Stack>,
     );
-    expect(root().style.getPropertyValue("--sprint-stack-min")).toBe("16rem");
+    expect(root()).toHaveAttribute("data-sprint-min", "16rem");
+    expect(root()).not.toHaveAttribute("style");
+  });
+
+  it("publishes the default track minimum on a grid", () => {
+    render(<Stack direction="grid">content</Stack>);
+    expect(root()).toHaveAttribute("data-sprint-min", "18rem");
+    expect(root()).not.toHaveAttribute("style");
+  });
+
+  it("omits the track minimum when the stack is not a grid", () => {
+    render(<Stack min="16rem">content</Stack>);
+    expect(root()).not.toHaveAttribute("data-sprint-min");
+    expect(root()).not.toHaveAttribute("style");
+  });
+
+  it("writes an off-scale track minimum through an inline custom property", () => {
+    render(
+      <Stack direction="grid" min="15rem">
+        content
+      </Stack>,
+    );
+    expect(root()).toHaveAttribute("data-sprint-min", "15rem");
+    expect(root().style.getPropertyValue("--sprint-stack-min")).toBe("15rem");
+  });
+
+  it("keeps a consumer style alongside an off-scale minimum", () => {
+    render(
+      <Stack direction="grid" min="15rem" style={{ color: "red" }}>
+        content
+      </Stack>,
+    );
+    expect(root().style.color).toBe("red");
+    expect(root().style.getPropertyValue("--sprint-stack-min")).toBe("15rem");
   });
 
   it("forwards ref and spreads the rest onto the root", () => {

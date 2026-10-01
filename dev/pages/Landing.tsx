@@ -67,7 +67,7 @@ export function Landing() {
         />
 
         <Stack gap="loose">
-          <Stack direction="grid" min="15rem" gap="tight">
+          <Stack direction="grid" min="16rem" gap="tight">
             <Card label="Open the workbench" href="workbench.html#/">
               Live documentation for every component.
             </Card>
@@ -84,7 +84,7 @@ export function Landing() {
                 Everything on this site is published for you to read directly. Start
                 with the manifest.
               </Text>
-              <Stack direction="grid" min="15rem" gap="tight">
+              <Stack direction="grid" min="16rem" gap="tight">
                 <Card label="agent-manifest.json" href="agent-manifest.json">
                   Every component, what it is for, when not to use it, and the tools it
                   registers.

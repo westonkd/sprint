@@ -5,7 +5,7 @@ export const selectMeta = defineAgentMeta({
   name: "Select",
   category: "input",
   summary:
-    "A dropdown of mutually exclusive options behind a native select, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
+    "A dropdown of mutually exclusive options: a select-only combobox that opens a listbox on click or keyboard, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
   whenToUse:
     "Use it when one value is chosen from a list too long to lay out flat: a region, a squad, a category. Options are data ({ value, label }), the tool accepts the visible label, and in agent view every option renders as its own control, so an agent picks one without opening anything.",
   whenNotToUse:
@@ -21,7 +21,7 @@ export const selectMeta = defineAgentMeta({
     options: {
       kind: "array",
       description:
-        "The choices in display order: { value, label }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value.",
+        "The choices in display order: { value, label, count? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label.",
       required: true,
     },
     value: {
@@ -33,13 +33,13 @@ export const selectMeta = defineAgentMeta({
     onChange: {
       kind: "handler",
       description:
-        "Called with the newly chosen value. The select tool drives a real change event, so this runs for agent selections too.",
+        "Called with the newly chosen value. The select tool clicks the real option, so this runs for agent selections too.",
       required: true,
     },
     placeholder: {
       kind: "string",
       description:
-        'Shown while value is "". Rendered as a disabled option, so a person cannot choose it back.',
+        'Shown in the closed control while value is "". It is not an option, so a person cannot choose it back.',
     },
     hint: {
       kind: "string",
@@ -53,7 +53,8 @@ export const selectMeta = defineAgentMeta({
     },
     name: {
       kind: "string",
-      description: "The native form name submitted with the surrounding form.",
+      description:
+        "The form name submitted with the surrounding form, through a hidden input carrying the value.",
     },
     disabled: {
       kind: "boolean",
@@ -97,13 +98,18 @@ export const selectMeta = defineAgentMeta({
       description: "Present while an error is set.",
       attribute: "data-sprint-invalid",
     },
+    active: {
+      description:
+        "On an option part, present while the list is open and that option is highlighted by the keyboard or pointer.",
+      attribute: "data-sprint-active",
+    },
   },
   tools: {
     select: SELECT_OPTION_TOOL,
   },
   agentView: {
     example:
-      '- **Select** "Region" [value=eu-1] → tool `select-region`\n  - part `option` "North Atlantic"\n  - part `option` "Northern Europe" [checked]\n  - part `option` "East Asia"',
+      '- **Select** "Region" [value=eu-1] → tool `select-region`\n  - part `option` "North Atlantic" [count=12]\n  - part `option` "Northern Europe" [checked, count=30]\n  - part `option` "East Asia" [count=7]',
   },
   examples: [
     {
@@ -111,6 +117,12 @@ export const selectMeta = defineAgentMeta({
       description:
         "In agent view each option renders as its own control, so a DOM-driving agent chooses one directly.",
       code: '<Select\n  label="Region"\n  value={region}\n  onChange={setRegion}\n  placeholder="Choose a region"\n  options={[\n    { value: "na-1", label: "North Atlantic" },\n    { value: "eu-1", label: "Northern Europe" },\n    { value: "ap-1", label: "East Asia" },\n  ]}\n/>',
+    },
+    {
+      title: "Options with counts",
+      description:
+        "A count is data, not label text: it renders as a chip in the list and the closed control, joins the accessible name, and reaches agents as part state while the select tool still takes the plain label.",
+      code: '<Select\n  label="Region"\n  value={region}\n  onChange={setRegion}\n  placeholder="Choose a region"\n  options={[\n    { value: "na-1", label: "North Atlantic", count: 12 },\n    { value: "eu-1", label: "Northern Europe", count: 30 },\n    { value: "ap-1", label: "East Asia", count: 7 },\n  ]}\n/>',
     },
     {
       title: "A required choice with an error",
@@ -128,11 +140,12 @@ export const selectMeta = defineAgentMeta({
   a11y: {
     role: "combobox",
     keyboard: [
-      "Arrow keys move through the options",
-      "Enter or Space opens the list",
-      "Escape closes it",
+      "Enter, Space, or an arrow key opens the list",
+      "Arrow keys, Home, and End move through the options; typing a letter jumps to the next match",
+      "Enter or Space chooses the highlighted option",
+      "Escape or Tab closes the list without choosing",
     ],
     notes:
-      "A native select element, so the platform owns the listbox interaction. The label is associated via htmlFor; errors set aria-invalid and link with aria-describedby.",
+      "A select-only combobox: a button with role combobox that opens a listbox on a plain click, so a synthetic element.click() opens it as reliably as a pointer does, and the list renders in the page rather than in browser chrome an automated session cannot see. Focus stays on the button and aria-activedescendant tracks the highlighted option. The label is linked with aria-labelledby; errors set aria-invalid and link with aria-describedby. An option with a count is named by its label and count together.",
   },
 });

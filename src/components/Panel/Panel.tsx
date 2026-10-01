@@ -13,6 +13,8 @@ export interface PanelProps extends ComponentPropsWithRef<"section"> {
   actions?: ReactNode;
   flush?: boolean;
   emptyLabel?: string;
+  loading?: boolean;
+  loadingLabel?: string;
 }
 
 export function Panel(props: PanelProps) {
@@ -22,6 +24,8 @@ export function Panel(props: PanelProps) {
     actions,
     flush = false,
     emptyLabel = "Empty",
+    loading = false,
+    loadingLabel = "Loading",
     children,
     ...rest
   } = props;
@@ -33,7 +37,7 @@ export function Panel(props: PanelProps) {
     component: panelMeta.name,
     label,
     region: true,
-    state: { flush, empty },
+    state: { flush, empty, loading },
   });
 
   if (view === "agent") {
@@ -48,12 +52,17 @@ export function Panel(props: PanelProps) {
   const Label = headingLevel === undefined ? "span" : (`h${headingLevel}` as const);
 
   return (
-    <section {...rest} {...agentAttributesFor(node)} aria-label={label}>
+    <section
+      {...rest}
+      {...agentAttributesFor(node)}
+      aria-label={label}
+      aria-busy={loading || undefined}
+    >
       <header>
         <Label>{label}</Label>
         {actions === undefined ? null : <span>{actions}</span>}
       </header>
-      <div>{empty ? <span>{emptyLabel}</span> : children}</div>
+      <div>{empty ? <span>{loading ? loadingLabel : emptyLabel}</span> : children}</div>
     </section>
   );
 }

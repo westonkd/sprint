@@ -1,0 +1,83 @@
+@layer sprint.components {
+  [data-sprint="Progress"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--sprint-space-1) var(--sprint-space-3);
+    inline-size: 100%;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-snug);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Progress"] > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Progress"] > span:nth-child(2) {
+    color: var(--sprint-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-sprint="Progress"] > progress {
+    grid-column: 1 / -1;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: var(--sprint-space-3);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-pill);
+    background-color: var(--sprint-surface-inset);
+    box-shadow: var(--sprint-well);
+    color: var(--sprint-info);
+  }
+
+  [data-sprint="Progress"] > progress::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  [data-sprint="Progress"] > progress::-webkit-progress-value {
+    background-color: var(--sprint-info);
+    border-radius: inherit;
+    transition: width var(--sprint-duration-fast) var(--sprint-steps);
+  }
+
+  [data-sprint="Progress"] > progress::-moz-progress-bar {
+    background-color: var(--sprint-info);
+    border-radius: inherit;
+  }
+
+  [data-sprint="Progress"] > progress:indeterminate {
+    background-image: var(--sprint-sweep), var(--sprint-ornament-hatch-dense);
+    background-repeat: no-repeat, repeat;
+    background-size: var(--sprint-sweep-size), auto;
+    background-position:
+      -50% 0,
+      0 0;
+    animation: var(--sprint-sweep-motion);
+  }
+
+  [data-sprint="Progress"] > progress:indeterminate::-moz-progress-bar {
+    background: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="Progress"] > progress:indeterminate {
+      background-image: var(--sprint-ornament-hatch-dense);
+      animation: none;
+    }
+
+    [data-sprint="Progress"] > progress::-webkit-progress-value {
+      transition: none;
+    }
+  }
+}

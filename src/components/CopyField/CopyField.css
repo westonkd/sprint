@@ -1,0 +1,93 @@
+@layer sprint.components {
+  [data-sprint="CopyField"] {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  [data-sprint="CopyField"] > legend {
+    padding: 0;
+    margin-block-end: var(--sprint-space-2);
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="CopyField"] > div {
+    display: flex;
+    align-items: stretch;
+    gap: var(--sprint-space-2);
+    min-width: 0;
+  }
+
+  [data-sprint="CopyField"] [data-sprint-part="value"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: var(--sprint-space-3);
+    border: var(--sprint-keyline-width) dashed var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-surface-inset);
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-text-sm);
+    line-height: var(--sprint-leading-snug);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: all;
+    cursor: text;
+  }
+
+  [data-sprint="CopyField"] [data-sprint-part="copy"] {
+    flex: 0 0 auto;
+    padding: 0 var(--sprint-space-3);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-control);
+    background: transparent;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+    cursor: pointer;
+    transition:
+      color var(--sprint-duration-fast) var(--sprint-easing),
+      border-color var(--sprint-duration-fast) var(--sprint-easing);
+  }
+
+  [data-sprint="CopyField"] [data-sprint-part="copy"]:hover {
+    background: var(--sprint-neutral-hover);
+  }
+
+  [data-sprint="CopyField"] [data-sprint-part="copy"]:focus-visible {
+    outline: var(--sprint-focus-width) solid var(--sprint-focus);
+    outline-offset: var(--sprint-focus-offset);
+  }
+
+  [data-sprint="CopyField"][data-sprint-copied] [data-sprint-part="copy"] {
+    border-color: var(--sprint-action-mark);
+    color: var(--sprint-action-mark);
+  }
+
+  [data-sprint="CopyField"][data-sprint-copy-failed] [data-sprint-part="value"] {
+    border-style: solid;
+    border-color: var(--sprint-danger);
+  }
+
+  @media (pointer: coarse) {
+    [data-sprint="CopyField"] [data-sprint-part="copy"] {
+      min-height: 2.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="CopyField"] [data-sprint-part="copy"] {
+      transition: none;
+    }
+  }
+}

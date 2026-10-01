@@ -18,6 +18,46 @@
       );
   }
 
+  [data-sprint="Stack"][data-sprint-min="10rem"] {
+    --sprint-stack-min: 10rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="12rem"] {
+    --sprint-stack-min: 12rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="14rem"] {
+    --sprint-stack-min: 14rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="16rem"] {
+    --sprint-stack-min: 16rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="18rem"] {
+    --sprint-stack-min: 18rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="20rem"] {
+    --sprint-stack-min: 20rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="22rem"] {
+    --sprint-stack-min: 22rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="24rem"] {
+    --sprint-stack-min: 24rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="28rem"] {
+    --sprint-stack-min: 28rem;
+  }
+
+  [data-sprint="Stack"][data-sprint-min="32rem"] {
+    --sprint-stack-min: 32rem;
+  }
+
   [data-sprint="Stack"][data-sprint-gap="none"] {
     gap: var(--sprint-space-0);
   }

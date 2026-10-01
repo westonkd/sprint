@@ -24,4 +24,27 @@ export const listSpecimens: Record<string, ReactNode> = {
       items={["Register the tool.", "Drive the DOM.", "Return the new state."]}
     />
   ),
+  "Plain bullets": (
+    <List
+      marker="bullet"
+      label="Caveats"
+      items={["Chrome 149 only.", "Tools are a no-op without WebMCP."]}
+    />
+  ),
+  "No marker": (
+    <List
+      marker="none"
+      label="Related"
+      items={["Table for records.", "Stack for layout."]}
+    />
+  ),
 };
+
+export const listGallery: ReactNode = (
+  <>
+    <List label="Plus" items={["The house mark.", "The default."]} />
+    <List marker="bullet" label="Bullet" items={["A plain dot.", "For prose."]} />
+    <List marker="number" label="Number" items={["Counted.", "In order."]} />
+    <List marker="none" label="None" items={["No marker.", "Own lead."]} />
+  </>
+);

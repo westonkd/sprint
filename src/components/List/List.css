@@ -29,10 +29,23 @@
     font-size: var(--sprint-label-size);
   }
 
-  [data-sprint="List"][data-sprint-ordered] > li::before {
+  [data-sprint="List"][data-sprint-marker="bullet"] > li::before {
+    content: "\2022";
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="List"][data-sprint-marker="number"] > li::before {
     content: counter(sprint-list) ".";
     color: var(--sprint-ink-muted);
     letter-spacing: var(--sprint-label-tracking);
+  }
+
+  [data-sprint="List"][data-sprint-marker="none"] > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-sprint="List"][data-sprint-marker="none"] > li::before {
+    content: none;
   }
 
   [data-sprint="List"][data-sprint-empty] > li {
@@ -54,5 +67,27 @@
 
   [data-sprint="List"] strong {
     font-weight: var(--sprint-weight-bold);
+  }
+
+  [data-sprint="List"][data-sprint-loading] {
+    position: relative;
+  }
+
+  [data-sprint="List"][data-sprint-loading]::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 1;
+    block-size: var(--sprint-keyline-width-thick);
+    background-image: var(--sprint-sweep);
+    background-repeat: no-repeat;
+    background-size: var(--sprint-sweep-size);
+    background-position: -50% 0;
+    animation: var(--sprint-sweep-motion);
+    pointer-events: none;
+  }
+
+  [data-sprint="List"][data-sprint-empty][data-sprint-loading] > li {
+    padding-block-start: var(--sprint-space-2);
   }
 }

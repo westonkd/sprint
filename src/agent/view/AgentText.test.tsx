@@ -73,6 +73,23 @@ describe("AgentLine", () => {
       '      - part `close` "Close" [disabled] → tool `press-close`',
     );
   });
+
+  it("emits no line and adds no depth when silent", () => {
+    const panel = buildAgentNode({ component: "Panel", label: "Billing" });
+    const pending = buildAgentNode({ component: "Pending", label: "Loading" });
+
+    const view = render(
+      <AgentLine node={panel}>
+        <AgentLine node={pending} silent>
+          <AgentLine node={dialog} />
+        </AgentLine>
+      </AgentLine>,
+    );
+
+    const lines = (view.container.textContent ?? "").split("\n");
+    expect(lines[0]).toBe('- **Panel** "Billing"');
+    expect(lines[1]).toBe('  - **Dialog** "Confirm purge" [open]');
+  });
 });
 
 describe("AgentControl", () => {

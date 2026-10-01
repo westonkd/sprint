@@ -12,10 +12,11 @@ export interface MetaLineEntry {
 
 export interface MetaLineProps extends ComponentPropsWithRef<"p"> {
   entries: readonly MetaLineEntry[];
+  wrap?: boolean;
 }
 
 export function MetaLine(props: MetaLineProps) {
-  const { entries, ...rest } = props;
+  const { entries, wrap = false, ...rest } = props;
 
   const view = useSprintView();
 
@@ -26,7 +27,7 @@ export function MetaLine(props: MetaLineProps) {
   const node = buildAgentNode({
     component: metaLineMeta.name,
     label: line,
-    state: { entries: String(entries.length) },
+    state: { entries: String(entries.length), wrap },
   });
 
   if (view === "agent") return <AgentLine node={node} />;
@@ -35,10 +36,11 @@ export function MetaLine(props: MetaLineProps) {
     <p {...rest} {...agentAttributesFor(node)}>
       {entries.map((entry, index) => (
         <Fragment key={`${entry.term}-${index}`}>
-          {index > 0 ? " / " : null}
+          {index > 0 ? " " : null}
           <span>
             <span>{entry.term}: </span>
             <span>{entry.detail}</span>
+            {index < entries.length - 1 ? <span> /</span> : null}
           </span>
         </Fragment>
       ))}

@@ -47,8 +47,45 @@ export const shellMeta = defineAgentMeta({
       description: "Label of the drawer button while the drawer is open.",
       default: "Close",
     },
+    collapsible: {
+      kind: "boolean",
+      description:
+        "Lets a person hide the sidebar on wide viewports too. A second toggle appears beside the bar there, and while collapsed the page takes the narrow layout: the bar runs across the top and the sidebar is gone until it is shown again.",
+      default: false,
+    },
+    collapsed: {
+      kind: "boolean",
+      description:
+        "Whether the sidebar is collapsed on wide viewports, when the owner keeps that state. Pair it with onCollapsedChange.",
+    },
+    defaultCollapsed: {
+      kind: "boolean",
+      description:
+        "Whether a collapsible sidebar starts collapsed when the Shell keeps its own state.",
+      default: false,
+    },
+    onCollapsedChange: {
+      kind: "handler",
+      description:
+        "Called with the collapsed state the Shell wants. Use it to remember the choice across visits.",
+    },
+    hideLabel: {
+      kind: "string",
+      description: "Label of the wide-viewport toggle while the sidebar is shown.",
+      default: "Hide menu",
+    },
+    showLabel: {
+      kind: "string",
+      description: "Label of the wide-viewport toggle while the sidebar is collapsed.",
+      default: "Show menu",
+    },
   },
   state: {
+    collapsed: {
+      description:
+        "Present while a collapsible sidebar is hidden on wide viewports. Narrow viewports ignore it and keep the drawer.",
+      attribute: "data-sprint-collapsed",
+    },
     open: {
       description:
         "Present while the mobile drawer is open. On wide viewports the sidebar is always visible and this state is inert.",
@@ -66,6 +103,12 @@ export const shellMeta = defineAgentMeta({
       description:
         "One Shell per view. The sidebar collapses to a top bar with a drawer on narrow screens, and an agent reading the page sees the nav and the content with no frame in between.",
       code: '<Shell\n  bar={<Link href="#/">ACME</Link>}\n  side={\n    <Nav label="Main">\n      <Link href="#/reports" active>Reports</Link>\n      <Link href="#/settings">Settings</Link>\n    </Nav>\n  }\n>\n  <Panel label="Reports" headingLevel={2}>\n    <Text>Quarterly numbers land here.</Text>\n  </Panel>\n</Shell>',
+    },
+    {
+      title: "A sidebar that can be hidden",
+      description:
+        "With collapsible, a person can put the sidebar away on a wide screen as well as a narrow one, and get the full width for the page.",
+      code: '<Shell\n  collapsible\n  bar={<Link href="#/">ACME</Link>}\n  side={\n    <Nav label="Main">\n      <Link href="#/reports" active>Reports</Link>\n      <Link href="#/settings">Settings</Link>\n    </Nav>\n  }\n>\n  <Text>Quarterly numbers land here.</Text>\n</Shell>',
     },
   ],
 });

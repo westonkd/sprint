@@ -1,0 +1,126 @@
+@layer sprint.components {
+  [data-sprint="EntityRow"] {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sprint-space-2);
+    justify-items: start;
+    width: 100%;
+    margin: 0;
+    padding: var(--sprint-space-3) var(--sprint-space-4);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
+    background-color: var(--sprint-surface);
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size);
+    line-height: var(--sprint-leading-snug);
+    text-align: left;
+    text-decoration: none;
+    transition: border-color var(--sprint-duration-instant) var(--sprint-easing);
+  }
+
+  [data-sprint="EntityRow"] + [data-sprint="EntityRow"] {
+    margin-block-start: calc(-1 * var(--sprint-keyline-width));
+  }
+
+  a[data-sprint="EntityRow"],
+  button[data-sprint="EntityRow"] {
+    cursor: pointer;
+  }
+
+  a[data-sprint="EntityRow"]:hover,
+  button[data-sprint="EntityRow"]:hover:not(:disabled),
+  [data-sprint="EntityRow"]:focus-visible {
+    z-index: 1;
+    border-color: var(--sprint-action-mark);
+  }
+
+  [data-sprint="EntityRow"] > [data-sprint-part="title"] {
+    max-width: 100%;
+    overflow: hidden;
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    text-overflow: ellipsis;
+    text-transform: var(--sprint-label-transform);
+    white-space: nowrap;
+  }
+
+  [data-sprint="EntityRow"] > :not([data-sprint-part]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sprint-space-1);
+  }
+
+  [data-sprint="EntityRow"] > [data-sprint-part="meta"] {
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size-small);
+    letter-spacing: var(--sprint-label-tracking);
+    text-overflow: ellipsis;
+    text-transform: var(--sprint-label-transform);
+    white-space: nowrap;
+  }
+
+  [data-sprint="EntityRow"] > [data-sprint-part="meta"] > span > span:last-child {
+    color: var(--sprint-ink);
+  }
+
+  [data-sprint="EntityRow"] > [data-sprint-part="description"] {
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-text-sm);
+    line-height: var(--sprint-leading-relaxed);
+  }
+
+  [data-sprint="EntityRow"]:disabled {
+    background: var(--sprint-inert);
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  [data-sprint="EntityRow"]:disabled > [data-sprint-part="meta"],
+  [data-sprint="EntityRow"]:disabled
+    > [data-sprint-part="meta"]
+    > span
+    > span:last-child,
+  [data-sprint="EntityRow"]:disabled > [data-sprint-part="description"] {
+    color: var(--sprint-inert-ink);
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="EntityRow"] {
+      grid-template-columns: minmax(0, max-content) auto minmax(0, 1fr);
+      grid-template-areas:
+        "title tags meta"
+        "description description description";
+      column-gap: var(--sprint-space-4);
+      row-gap: var(--sprint-space-1);
+      align-items: center;
+    }
+
+    [data-sprint="EntityRow"] > [data-sprint-part="title"] {
+      grid-area: title;
+    }
+
+    [data-sprint="EntityRow"] > :not([data-sprint-part]) {
+      grid-area: tags;
+      flex-wrap: nowrap;
+    }
+
+    [data-sprint="EntityRow"] > [data-sprint-part="meta"] {
+      grid-area: meta;
+      justify-self: end;
+    }
+
+    [data-sprint="EntityRow"] > [data-sprint-part="description"] {
+      grid-area: description;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="EntityRow"] {
+      transition: none;
+    }
+  }
+}

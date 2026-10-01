@@ -19,4 +19,15 @@ export const metaLineSpecimens: Record<string, ReactNode> = {
       ]}
     />
   ),
+  "Wrapping in a narrow rail": (
+    <MetaLine
+      wrap
+      entries={[
+        { term: "Sprint", detail: "v0.0.0" },
+        { term: "Channel", detail: "dev" },
+        { term: "WebMCP", detail: "chrome 149" },
+        { term: "Build", detail: "2744.07.22-a1" },
+      ]}
+    />
+  ),
 };

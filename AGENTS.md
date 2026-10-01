@@ -229,7 +229,7 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   tokens. Edge treatment beyond a keyline is roles too: `--sprint-plate` with `-ink`, `-rule`,
   `-link`, `-control-ink` and `-keyline` for a stamped header band, `--sprint-misregister` for a
   solid offset second pass, and `--sprint-header-rule` with `-height` for the strip that closes a
-  page header. All of them are inert by default, so a register opts in. Component CSS reaches for those roles, never for
+  page header, `--sprint-divider-band` with `-size` and `-height` for a Divider's band. All of them are inert by default, so a register opts in. Component CSS reaches for those roles, never for
   `text-transform: uppercase`, a raw `line-height`, a raw `--sprint-text-*` where a label size
   belongs, or `--sprint-font-mono` — the mono primitive is reserved for code and secret values.
 
@@ -321,6 +321,9 @@ the floor.
 
 - No comments in source. Prefer clear names and small functions.
 - Props are forwarded; every component takes `ref` and spreads the rest onto its root.
+- Never write a `style` attribute for a documented value; a strict `style-src` CSP drops it. Publish
+  the value as a data attribute and map it in the stylesheet, on a fixed scale if it was a length.
+  `src/components/csp.test.tsx` enforces this for the components that used to break it.
 - Style with CSS custom properties, no CSS-in-JS runtime. Components reference only the semantic
   layer in `src/styles/semantic.css`, never a raw color from `primitives.css`.
 - Every color pairing meets WCAG AA. `src/styles/contrast.test.ts` enforces it.

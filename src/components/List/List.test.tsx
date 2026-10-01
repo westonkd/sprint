@@ -28,6 +28,35 @@ describe("List rendering", () => {
     expect(root()).toHaveAttribute("data-sprint-ordered", "");
   });
 
+  it("marks items with a plus unless told otherwise", () => {
+    render(<List label="Tool rules" items={ITEMS} />);
+    expect(root()).toHaveAttribute("data-sprint-marker", "plus");
+    expect(root().tagName).toBe("UL");
+  });
+
+  it("publishes the marker it was given", () => {
+    render(<List label="Caveats" items={ITEMS} marker="bullet" />);
+    expect(root()).toHaveAttribute("data-sprint-marker", "bullet");
+    expect(root()).not.toHaveAttribute("data-sprint-ordered");
+  });
+
+  it("numbers an ordered list by default", () => {
+    render(<List label="Steps" items={ITEMS} ordered />);
+    expect(root()).toHaveAttribute("data-sprint-marker", "number");
+  });
+
+  it("makes a numbered marker a real ol", () => {
+    render(<List label="Steps" items={ITEMS} marker="number" />);
+    expect(root().tagName).toBe("OL");
+    expect(root()).toHaveAttribute("data-sprint-ordered", "");
+  });
+
+  it("keeps an ordered list ordered when its marker is dropped", () => {
+    render(<List label="Steps" items={ITEMS} ordered marker="none" />);
+    expect(root().tagName).toBe("OL");
+    expect(root()).toHaveAttribute("data-sprint-marker", "none");
+  });
+
   it("addresses every item by position", () => {
     render(<List label="Tool rules" items={ITEMS} />);
     const items = document.querySelectorAll(agentSelector("List", "item"));
@@ -73,7 +102,7 @@ describe("List agent view", () => {
     expect(container.querySelector(agentSelector("List"))).toBeNull();
     expect(container.textContent).toBe(
       [
-        '- **List** "Tool rules" [items=2]',
+        '- **List** "Tool rules" [items=2, marker=plus]',
         '  - part `item` "One tool, one action." [index=1]',
         '  - part `item` "Register contextually." [index=2]',
         "",
@@ -95,6 +124,7 @@ describe("List agent view", () => {
     );
 
     const [node] = serializeWithin(container);
+    expect(node?.state.marker).toBe("plus");
     expect(node?.parts).toEqual([
       {
         part: "item",

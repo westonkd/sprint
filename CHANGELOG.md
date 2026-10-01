@@ -5,6 +5,54 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Added: `Progress`, a loading indicator.** Indeterminate by default, a counted bar when given
+  `value` and `max`. It reads as `[loading]` or `[loading, value=40%]` in the agent view, clears
+  `loading` at max so a finished bar does not read as stalled, and registers no WebMCP tool. Built
+  on a native `<progress>`, so the fill never needs a `style` attribute.
+- **Added: `Pending`, and a `loading` prop on `Table`, `List`, `DescriptionList` and `Panel`.**
+  A region being fetched sets `aria-busy`, sweeps a bar along its top edge, and keeps stale content
+  readable while it refreshes. With nothing to show yet it reads `[empty, loading]` and its empty
+  slot says `loadingLabel` ("Loading") rather than `emptyLabel`, so neither a person nor an agent
+  mistakes a pending fetch for an empty result. `Pending` wraps regions you build yourself, and
+  while idle it adds nothing to the agent view.
+
+- **Breaking: `NavBar` is now `Breadcrumb`, over a tree of any depth.** It takes `items` of
+  `{ label, href?, active?, external?, children? }`, and its crumbs are the path to the active item.
+  Crumb text is a link; the `/` after a crumb opens what is inside it, with a search over the whole
+  tree. The root takes an `href`, the trail can be seeded with `defaultVisited` or owned through
+  `visited`, the middle of a long path folds behind `…` past `maxCrumbs`, and page-level `actions`
+  sit at the end of the bar (one with `onSelect` registers an `act` tool). The `depth` state is now
+  `visited`, and the `data-sprint="NavBar"` selector is gone.
+- **Breaking: `Select` is a combobox rather than a native `<select>`.** It opens on any click,
+  including a scripted `element.click()`, and its options are in the page, so automation and
+  screenshots both see them. The `input` part is now a button, the placeholder is no longer an
+  option, and `name` submits through a hidden input, so the browser's own `required` check no
+  longer runs. Options take a `count`.
+- **Added: `Divider`,** a horizontal rule for segmenting a page, in `hairline`, `heavy` or `band`
+  weight, with an optional `label`. The band draws each register's own mark through the new
+  `--sprint-divider-band` slot.
+- **Added: `Steps`, `CopyField`, `Pagination`, `Disclosure`, `SearchField`, `ChangeList`,
+  `ChoiceGrid`, `EntityRow` and `EmptyState`.** Numbered steps with done and current states; a
+  read-only value with a Copy button; previous and next with a page summary; a show/hide region; a
+  search field with a clear button and an optional `/` shortcut; a list of added, removed and
+  changed rows; large glyph-and-label choice tiles that submit a form or select a value; a one-line
+  clickable row with tags and meta; and a standard empty block with an optional action.
+- **Added: `Shell` can collapse its sidebar on wide screens.** Pass `collapsible`; the toggle sits
+  at the leading edge in both states, and `collapsed` / `onCollapsedChange` let the owner remember
+  the choice.
+- **Added: `readOnly` on `TextInput`, `wrap` on `MetaLine`, `marker` on `List`, and `count`,
+  `block`, `savedValue` and `hint` on `SegmentedControl`.** A stretched SegmentedControl now keeps
+  its own width unless `block` is set. Its options sit in an inner wrapper, so a border put on the
+  root by consumer CSS now lands on the wrong box.
+- **Fixed: no component writes a `style` attribute for documented values.** `Stack`'s grid `min`
+  and `Table`'s column `width` take a fixed scale published as data attributes, so a strict
+  `style-src` CSP no longer collapses a grid to one column. Off-scale values still work, as a
+  documented CSP-unsafe inline style.
+- **Fixed: `DescriptionList` lays itself out from its own width,** stacking term over value in a
+  narrow container instead of squeezing the value to a few characters.
+- **Fixed: WebMCP tool input is checked against `minimum`, `maximum` and whole-number `integer`
+  before a tool runs.**
+
 ## v0.5.0 - 2026-09-29
 
 - **Added: `NavBar`, navigation as a coordinate you can edit.** The whole navigation is one line —

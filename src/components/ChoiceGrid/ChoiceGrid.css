@@ -1,0 +1,121 @@
+@layer sprint.components {
+  [data-sprint="ChoiceGrid"] {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  [data-sprint="ChoiceGrid"] > legend {
+    padding: 0 0 var(--sprint-space-3);
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-tight);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="ChoiceGrid"] > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: var(--sprint-space-3);
+  }
+
+  [data-sprint="ChoiceGrid"] [data-sprint-part="choice"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sprint-space-2);
+    min-width: 0;
+    min-height: 5.5rem;
+    padding: var(--sprint-space-5) var(--sprint-space-3);
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
+    background-color: var(--sprint-neutral);
+    background-image: var(--sprint-sheen), var(--sprint-shade);
+    background-blend-mode: var(--sprint-blend-lit);
+    box-shadow: var(--sprint-mold), var(--sprint-cast);
+    color: var(--sprint-neutral-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    line-height: var(--sprint-leading-tight);
+    text-align: center;
+    text-transform: var(--sprint-label-transform);
+    overflow-wrap: anywhere;
+    cursor: pointer;
+    transition:
+      --sprint-gloss-x var(--sprint-duration-instant) linear,
+      --sprint-gloss-fade var(--sprint-duration-instant) linear,
+      --sprint-cast-shift var(--sprint-duration-instant) linear,
+      background-color var(--sprint-duration-instant) var(--sprint-easing),
+      color var(--sprint-duration-instant) var(--sprint-easing),
+      border-color var(--sprint-duration-instant) var(--sprint-easing),
+      box-shadow var(--sprint-duration-instant) var(--sprint-easing),
+      transform var(--sprint-duration-instant) var(--sprint-easing);
+  }
+
+  [data-sprint="ChoiceGrid"] [data-sprint-part="choice"] > [aria-hidden="true"] {
+    font-size: var(--sprint-text-2xl);
+    letter-spacing: 0;
+    line-height: var(--sprint-leading-flat);
+    text-transform: none;
+  }
+
+  [data-sprint="ChoiceGrid"] [data-sprint-part="choice"]:hover:not(:disabled) {
+    background-color: var(--sprint-neutral-hover);
+    border-color: var(--sprint-keyline-strong);
+    box-shadow: var(--sprint-mold), var(--sprint-cast-raised);
+  }
+
+  [data-sprint="ChoiceGrid"] [data-sprint-part="choice"]:active:not(:disabled) {
+    transform: translateY(var(--sprint-press-shift)) scaleY(var(--sprint-press-scale));
+    box-shadow: var(--sprint-mold-pressed), var(--sprint-cast-pressed);
+  }
+
+  [data-sprint="ChoiceGrid"] [data-sprint-part="choice"][data-sprint-checked] {
+    background-color: var(--sprint-action);
+    border-color: var(--sprint-action-mark);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="ChoiceGrid"]
+    [data-sprint-part="choice"][data-sprint-checked]:hover:not(:disabled) {
+    background-color: var(--sprint-action-hover);
+    color: var(--sprint-action-ink);
+  }
+
+  [data-sprint="ChoiceGrid"] [data-sprint-part="choice"]:disabled {
+    background-color: var(--sprint-inert);
+    background-image: none;
+    box-shadow: none;
+    border-color: var(--sprint-keyline);
+    color: var(--sprint-inert-ink);
+    cursor: not-allowed;
+  }
+
+  @media (min-width: 40rem) {
+    [data-sprint="ChoiceGrid"][data-sprint-columns="3"] > div {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    [data-sprint="ChoiceGrid"][data-sprint-columns="4"] > div {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    [data-sprint="ChoiceGrid"] [data-sprint-part="choice"] {
+      min-height: 6.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sprint="ChoiceGrid"] [data-sprint-part="choice"] {
+      transition: none;
+    }
+  }
+}

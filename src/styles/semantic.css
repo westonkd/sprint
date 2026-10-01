@@ -190,6 +190,9 @@
     --sprint-display-stretch: normal;
     --sprint-header-rule: none;
     --sprint-header-rule-height: 0;
+    --sprint-divider-band: var(--sprint-ornament-hatch-dense);
+    --sprint-divider-band-size: auto;
+    --sprint-divider-band-height: 6px;
 
     --sprint-duration-instant: 80ms;
     --sprint-duration-fast: 120ms;
@@ -258,6 +261,9 @@
   [data-sprint-theme="calorie-dark"] {
     --sprint-ornament-empty: var(--sprint-ornament-pin);
     --sprint-ornament-empty-size: var(--sprint-ornament-pin-size);
+    --sprint-divider-band: var(--sprint-ornament-dots);
+    --sprint-divider-band-size: 6px 6px;
+    --sprint-divider-band-height: 6px;
     --sprint-empty-field: 6rem;
     --sprint-label-size: var(--sprint-text-2xs);
     --sprint-label-size-small: var(--sprint-text-3xs);
@@ -458,6 +464,9 @@
 
     --sprint-header-rule: var(--sprint-ornament-barcode);
     --sprint-header-rule-height: 7px;
+    --sprint-divider-band: var(--sprint-ornament-barcode);
+    --sprint-divider-band-size: auto;
+    --sprint-divider-band-height: 7px;
 
     --sprint-radius-pill: 999px;
 

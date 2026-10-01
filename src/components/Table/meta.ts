@@ -20,7 +20,7 @@ export const tableMeta = defineAgentMeta({
     columns: {
       kind: "array",
       description:
-        "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column.",
+        "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column. width is one of 4rem, 5rem, 6rem, 7rem, 8rem, 9rem, 10rem, 12rem, 14rem, 16rem, 20rem, or 24rem, mapped in the stylesheet through data-sprint-width on the header cell so it works under a strict Content Security Policy; any other CSS length is still accepted but is written to an inline style attribute, which a style-src policy without unsafe-inline blocks.",
       required: true,
     },
     rows: {
@@ -33,6 +33,17 @@ export const tableMeta = defineAgentMeta({
       kind: "string",
       description: "What the table says when it has no rows.",
       default: "No rows",
+    },
+    loading: {
+      kind: "boolean",
+      description:
+        "Set while the rows are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing rows stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+      default: false,
+    },
+    loadingLabel: {
+      kind: "string",
+      description: "What the empty slot says while loading.",
+      default: "Loading",
     },
   },
   state: {
@@ -48,6 +59,11 @@ export const tableMeta = defineAgentMeta({
       description: "Present when the table has no rows.",
       attribute: "data-sprint-empty",
     },
+    loading: {
+      description:
+        "Present while the rows are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+      attribute: "data-sprint-loading",
+    },
     column: {
       description: "On a cell: which column it belongs to.",
       attribute: "data-sprint-column",
@@ -55,6 +71,11 @@ export const tableMeta = defineAgentMeta({
     row: {
       description: "On a cell: which row it belongs to.",
       attribute: "data-sprint-row",
+    },
+    width: {
+      description:
+        "On a column header: the width its column asked for, if any. A value off the scale is carried here too, with the length itself in an inline style.",
+      attribute: "data-sprint-width",
     },
     align: {
       description: "On a cell: the alignment its column asked for, if any.",
@@ -78,6 +99,12 @@ export const tableMeta = defineAgentMeta({
       description:
         "An empty table keeps its header and says so, rather than rendering a bare keyline.",
       code: '<Table\n  label="Registered tools"\n  emptyLabel="No tools registered"\n  columns={[{ key: "name", header: "Name" }]}\n  rows={[]}\n/>',
+    },
+    {
+      title: "A table while fetching",
+      description:
+        "Before the first rows arrive the table reads [empty, loading], so an agent waits rather than concluding there is nothing.",
+      code: '<Table\n  label="Loadouts"\n  loading={isFetching}\n  columns={[{ key: "name", header: "Name" }]}\n  rows={loadouts ?? []}\n/>',
     },
   ],
   a11y: {

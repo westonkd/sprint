@@ -131,6 +131,34 @@ describe("Table rendering", () => {
   });
 });
 
+describe("Table column widths", () => {
+  it("publishes a scale width as an attribute and writes no style", () => {
+    render(
+      <Table
+        label="Props"
+        columns={[{ key: "prop", header: "Prop", width: "9rem" }]}
+        rows={[]}
+      />,
+    );
+    const header = screen.getByRole("columnheader", { name: "Prop" });
+    expect(header).toHaveAttribute("data-sprint-width", "9rem");
+    expect(header).not.toHaveAttribute("style");
+  });
+
+  it("writes an off-scale width through an inline style", () => {
+    render(
+      <Table
+        label="Props"
+        columns={[{ key: "prop", header: "Prop", width: "33%" }]}
+        rows={[]}
+      />,
+    );
+    const header = screen.getByRole("columnheader", { name: "Prop" });
+    expect(header).toHaveAttribute("data-sprint-width", "33%");
+    expect(header.style.width).toBe("33%");
+  });
+});
+
 describe("Table agent view", () => {
   it("renders the data as a Markdown table and no element", () => {
     const { container } = render(

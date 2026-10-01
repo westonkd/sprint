@@ -6,7 +6,7 @@ export const metaLineMeta = defineAgentMeta({
   summary:
     "A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.",
   whenToUse:
-    "Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short and the line truncates rather than wraps.",
+    "Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short. By default the line truncates with an ellipsis rather than wrapping; set wrap where it sits in a narrow container and every entry has to stay visible.",
   whenNotToUse:
     "Do not use it for the details of a record a person is meant to study; that is a DescriptionList. Do not put anything interactive in it, and do not use it for prose.",
   status: "experimental",
@@ -17,11 +17,21 @@ export const metaLineMeta = defineAgentMeta({
         "Term–detail pairs in display order: { term, detail }, both strings. Rendered as TERM: DETAIL, slash-separated, and carried as one line in the agent view. An empty array renders nothing.",
       required: true,
     },
+    wrap: {
+      kind: "boolean",
+      description:
+        "Let entries flow onto further lines instead of truncating the line. Each entry stays whole on one line, and a separator stays at the end of the line it closes, so no line starts with a slash. An entry wider than the container is the only thing that still truncates.",
+      default: false,
+    },
   },
   state: {
     entries: {
       description: "How many term–detail pairs the line carries.",
       attribute: "data-sprint-entries",
+    },
+    wrap: {
+      description: "Present when entries may flow onto further lines.",
+      attribute: "data-sprint-wrap",
     },
   },
   agentView: {
@@ -39,6 +49,12 @@ export const metaLineMeta = defineAgentMeta({
       title: "Version chrome for a footer",
       description: "The line an app pins under its content or into a Shell rail.",
       code: '<MetaLine\n  entries={[\n    { term: "Sprint", detail: "v0.0.0" },\n    { term: "Channel", detail: "dev" },\n    { term: "WebMCP", detail: "chrome 149" },\n  ]}\n/>',
+    },
+    {
+      title: "Wrapping in a narrow rail",
+      description:
+        "With wrap, a sidebar shows every entry on as many lines as it needs instead of cutting the later ones off.",
+      code: '<MetaLine\n  wrap\n  entries={[\n    { term: "Sprint", detail: "v0.0.0" },\n    { term: "Channel", detail: "dev" },\n    { term: "WebMCP", detail: "chrome 149" },\n    { term: "Build", detail: "2744.07.22-a1" },\n  ]}\n/>',
     },
   ],
   a11y: {

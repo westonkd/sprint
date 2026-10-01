@@ -20,6 +20,14 @@ export const tableSpecimens: Record<string, ReactNode> = {
       rows={[]}
     />
   ),
+  "A table while fetching": (
+    <Table
+      label="Loadouts"
+      loading
+      columns={[{ key: "name", header: "Name" }]}
+      rows={[]}
+    />
+  ),
 };
 
 export const tableGallery: ReactNode = (

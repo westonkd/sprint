@@ -20,6 +20,12 @@ export interface ShellProps extends ComponentPropsWithRef<"div"> {
   skipLabel?: string;
   menuLabel?: string;
   closeLabel?: string;
+  collapsible?: boolean;
+  collapsed?: boolean;
+  defaultCollapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
+  hideLabel?: string;
+  showLabel?: string;
 }
 
 export function Shell(props: ShellProps) {
@@ -30,12 +36,20 @@ export function Shell(props: ShellProps) {
     skipLabel = "Skip to content",
     menuLabel = "Menu",
     closeLabel = "Close",
+    collapsible = false,
+    collapsed: controlled,
+    defaultCollapsed = false,
+    onCollapsedChange,
+    hideLabel = "Hide menu",
+    showLabel = "Show menu",
     children,
     ...rest
   } = props;
 
   const view = useSprintView();
   const [open, setOpen] = useState(false);
+  const [held, setHeld] = useState(defaultCollapsed);
+  const collapsed = collapsible && (controlled ?? held);
   const drawerId = useId();
   const main = useRef<HTMLElement | null>(null);
 
@@ -47,7 +61,7 @@ export function Shell(props: ShellProps) {
   const node = buildAgentNode({
     component: shellMeta.name,
     region: true,
-    state: { open },
+    state: { open, collapsed },
   });
 
   if (view === "agent") {
@@ -77,6 +91,19 @@ export function Shell(props: ShellProps) {
             >
               {open ? closeLabel : menuLabel}
             </Button>
+            {collapsible ? (
+              <Button
+                agentTool={false}
+                aria-expanded={!collapsed}
+                aria-controls={drawerId}
+                onClick={() => {
+                  setHeld(!collapsed);
+                  onCollapsedChange?.(!collapsed);
+                }}
+              >
+                {collapsed ? showLabel : hideLabel}
+              </Button>
+            ) : null}
           </span>
         </div>
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: closing the drawer after a click on a link inside it; the links handle their own keyboard interaction */}
