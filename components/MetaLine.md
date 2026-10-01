@@ -7,7 +7,7 @@
 
 ## When to use
 
-Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short and the line truncates rather than wraps.
+Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short. By default the line truncates with an ellipsis rather than wrapping; set wrap where it sits in a narrow container and every entry has to stay visible.
 
 ### When not to
 
@@ -49,11 +49,28 @@ The line an app pins under its content or into a Shell rail.
 />
 ```
 
+### Wrapping in a narrow rail
+
+With wrap, a sidebar shows every entry on as many lines as it needs instead of cutting the later ones off.
+
+```tsx
+<MetaLine
+  wrap
+  entries={[
+    { term: "Sprint", detail: "v0.0.0" },
+    { term: "Channel", detail: "dev" },
+    { term: "WebMCP", detail: "chrome 149" },
+    { term: "Build", detail: "2744.07.22-a1" },
+  ]}
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
 | --- | --- | --- | --- |
 | `entries` | array (required) | — | Term–detail pairs in display order: { term, detail }, both strings. Rendered as TERM: DETAIL, slash-separated, and carried as one line in the agent view. An empty array renders nothing. |
+| `wrap` | boolean | `false` | Let entries flow onto further lines instead of truncating the line. Each entry stays whole on one line, and a separator stays at the end of the line it closes, so no line starts with a slash. An entry wider than the container is the only thing that still truncates. |
 
 ## State attributes
 
@@ -62,6 +79,7 @@ Public API: agents write selectors against these.
 | Attribute | Values | Description |
 | --- | --- | --- |
 | `data-sprint-entries` | present or absent | How many term–detail pairs the line carries. |
+| `data-sprint-wrap` | present or absent | Present when entries may flow onto further lines. |
 
 ## Agent view
 

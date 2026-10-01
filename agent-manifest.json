@@ -111,6 +111,186 @@
       }
     },
     {
+      "name": "Breadcrumb",
+      "category": "navigation",
+      "summary": "A navigation landmark that renders as one line: the path to the current page, where every crumb opens the level it sits in. Every destination in the tree stays in the page as an addressable part; the crumbs decide which of them a person is shown.",
+      "whenToUse": "Use it as an application's primary navigation when the destinations form a tree, or when the catalogue is larger than a rail can hold. A crumb opens its siblings, a branch drills into its children, and typing in an open crumb searches the whole tree, so what a person chooses from is one level rather than the whole set. Put a page-level command or two in actions. It takes destinations as data because it counts, filters and orders them.",
+      "whenNotToUse": "Do not use it for a handful of links that fit in a sidebar; that is Nav with NavGroup, which keeps every destination visible at once. Do not use it for links inside prose, and do not pass components in items or actions: each destination is a label, an href and its children, not a node.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What this navigation is for. Rendered as the landmark's accessible name and as the root of the path.",
+          "required": true
+        },
+        "href": {
+          "kind": "string",
+          "description": "Where the root of the path leads, such as the list a detail page belongs to. Without it the root is plain text."
+        },
+        "items": {
+          "kind": "array",
+          "description": "The destinations, as a tree of { label, href?, active?, external?, children? }. The item marked active is the current page, and the crumbs are the path to it. A branch without an href is a level, not a destination.",
+          "required": true
+        },
+        "actions": {
+          "kind": "array",
+          "description": "Commands for the whole page, rendered at the end of the bar, as { label, href?, external?, onSelect? }. An action with an href is a link; one without runs onSelect."
+        },
+        "maxCrumbs": {
+          "kind": "number",
+          "description": "How many crumbs the bar shows before it folds the middle of the path behind an ellipsis. On a narrow screen every crumb but the last folds regardless.",
+          "default": 4
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the bar says when a filter matches no destination.",
+          "default": "No match"
+        },
+        "trailEmptyLabel": {
+          "kind": "string",
+          "description": "What the bar says when nothing has been visited through it yet.",
+          "default": "Nothing visited yet"
+        },
+        "open": {
+          "kind": "string",
+          "description": "Which crumb is open, as its depth from 0, or 'trail', or 'closed'. Pass it to drive the bar from outside, such as from an application-level shortcut; leave it off and the bar keeps its own state."
+        },
+        "onOpenChange": {
+          "kind": "handler",
+          "description": "Called with the crumb depth the bar wants open, 'trail', or 'closed'. Required when open is controlled, so the bar can still close itself."
+        },
+        "defaultVisited": {
+          "kind": "array",
+          "description": "The hrefs already visited, oldest first, to seed the trail with. Use it to restore a trail recorded through onNavigate when the bar remounts."
+        },
+        "visited": {
+          "kind": "array",
+          "description": "The trail as hrefs, oldest first, when the owner keeps it. Leave it off and the bar keeps its own trail for as long as it is mounted."
+        },
+        "onNavigate": {
+          "kind": "handler",
+          "description": "Called with the item when a destination is chosen, before the browser follows the href. Use it to record the visit somewhere that outlives this component."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Overrides the label when deriving the action tool's name."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Whether actions without an href register a WebMCP tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "href": {
+          "description": "On the root: where the root of the path leads. On a destination or an action: where it goes.",
+          "attribute": "data-sprint-href"
+        },
+        "recency": {
+          "description": "On a group of results while the trail is open: 1 for the group visited most recently, counting up. Orders the groups without a style attribute.",
+          "attribute": "data-sprint-recency"
+        },
+        "path": {
+          "description": "The path to the current page, labels joined by ' / '. Absent when no item is active.",
+          "attribute": "data-sprint-path"
+        },
+        "destinations": {
+          "description": "How many destinations the tree holds.",
+          "attribute": "data-sprint-destinations"
+        },
+        "visited": {
+          "description": "How many destinations have been visited through this bar.",
+          "attribute": "data-sprint-visited"
+        },
+        "open": {
+          "description": "Which crumb is open, as its depth, or trail. Absent when the bar is closed to its one line.",
+          "attribute": "data-sprint-open"
+        },
+        "matches": {
+          "description": "How many entries the open crumb is showing.",
+          "attribute": "data-sprint-matches"
+        },
+        "shown": {
+          "description": "On a destination: present when the open crumb is currently showing it to a person. Every destination stays in the page either way.",
+          "attribute": "data-sprint-shown"
+        },
+        "parent": {
+          "description": "On a destination: the labels of the levels above it, joined by ' / '.",
+          "attribute": "data-sprint-parent"
+        },
+        "active": {
+          "description": "On a destination: present when it is the current page.",
+          "attribute": "data-sprint-active"
+        },
+        "ancestor": {
+          "description": "On a destination: present when it is on the path to the current page.",
+          "attribute": "data-sprint-ancestor"
+        }
+      },
+      "tools": {
+        "act": {
+          "verb": "act",
+          "description": "Run one of this breadcrumb's trailing actions by its visible label, exactly as a person pressing it would. Only actions that do something in the page are offered; an action that is a link is reachable by its href instead. Returns the breadcrumb's state after the action, so a follow-up read is usually unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "The visible label of the action to run, as shown at the end of the bar."
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The breadcrumb is mounted, has at least one action without an href, and no other component claims the same tool name. The registered schema enumerates those actions' labels.",
+          "unregisteredWhen": "The breadcrumb unmounts, or its last action without an href is removed."
+        }
+      },
+      "agentView": {
+        "example": "- **Breadcrumb** \"Workbench\" [destinations=2, path=display / Table, visited=0] → tool `act-workbench`\n  - part `action` \"Copy link\"\n  - part `destination` \"Button\" [href=#/Button, parent=action]\n  - part `destination` \"Table\" [active, href=#/Table, parent=display]"
+      },
+      "a11y": {
+        "role": "navigation",
+        "notes": "The label is the landmark's accessible name and the crumbs are an ordered list, the current one carrying aria-current=page. Destinations the open crumb is not showing are hidden from the accessibility tree by CSS, so a screen reader travels one level at a time exactly as a sighted reader does, while the page itself keeps all of them. From the field, ArrowDown enters the results and ArrowUp at the top returns to it; typing anywhere in the results goes back to the field and keeps the character. Enter takes the first result. Escape closes the bar, as does a press outside it, and the match count is a polite live region. ArrowUp in an empty field recalls the trail, the way a console recalls history. The ellipsis that folds the middle of the path is a toggle with aria-expanded."
+      },
+      "relatedComponents": [
+        "Nav",
+        "NavGroup",
+        "Link",
+        "Shell"
+      ],
+      "examples": [
+        {
+          "title": "A path you can edit",
+          "description": "One line of chrome over a tree. Each crumb opens the level it sits in and filters it as you type; a branch drills into its children.",
+          "code": "<Breadcrumb\n  label=\"Workbench\"\n  items={[\n    { label: \"action\", children: [{ href: \"#/Button\", label: \"Button\" }] },\n    {\n      label: \"display\",\n      children: [{ href: \"#/Table\", label: \"Table\", active: true }],\n    },\n  ]}\n/>"
+        },
+        {
+          "title": "A deep path that folds",
+          "description": "Past maxCrumbs the middle of the path folds behind an ellipsis, which unfolds it again. A crumb that is open is never folded.",
+          "code": "<Breadcrumb\n  label=\"Store\"\n  maxCrumbs={3}\n  items={[\n    {\n      label: \"Clothing\",\n      href: \"#/clothing\",\n      children: [\n        {\n          label: \"Outerwear\",\n          href: \"#/clothing/outerwear\",\n          children: [\n            {\n              label: \"Jackets\",\n              href: \"#/clothing/outerwear/jackets\",\n              children: [{ label: \"Rain shell\", href: \"#/rain-shell\", active: true }],\n            },\n          ],\n        },\n      ],\n    },\n  ]}\n/>"
+        },
+        {
+          "title": "Trailing actions",
+          "description": "Commands for the whole page sit at the end of the bar. A link action publishes its href; one with onSelect registers a WebMCP tool, since an agent has no URL to reach it by.",
+          "code": "<Breadcrumb\n  label=\"Docs\"\n  items={[{ label: \"guides\", children: [{ href: \"#/guide/webmcp\", label: \"WebMCP\", active: true }] }]}\n  actions={[\n    { label: \"Copy link\", onSelect: () => navigator.clipboard.writeText(location.href) },\n    { label: \"Source\", href: \"https://github.com/westonkd/sprint\", external: true },\n  ]}\n/>"
+        },
+        {
+          "title": "A root that leads back",
+          "description": "Give the root an href and it becomes a link back to the list the page belongs to, the way \"People\" leads from a person back to everyone.",
+          "code": "<Breadcrumb\n  label=\"People\"\n  href=\"#/people\"\n  items={[\n    {\n      label: \"Admin\",\n      href: \"#/people?role=admin\",\n      children: [{ label: \"Tess Ocampo\", href: \"#/people/tess\", active: true }],\n    },\n  ]}\n/>"
+        },
+        {
+          "title": "Recording where a person has been",
+          "description": "The bar keeps a trail of the destinations chosen through it, reachable from the visited count at its head. Record visits through onNavigate and hand them back in defaultVisited, and the trail survives the bar remounting.",
+          "code": "<Breadcrumb\n  label=\"Docs\"\n  items={[{ label: \"guides\", children: [{ href: \"#/guide/webmcp\", label: \"WebMCP\" }] }]}\n  defaultVisited={[\"#/guide/webmcp\"]}\n  onNavigate={(item) => console.log(item.href)}\n/>"
+        }
+      ]
+    },
+    {
       "name": "Button",
       "category": "action",
       "summary": "A single action a person or an agent can trigger. Registers one press tool named from its own label.",
@@ -320,6 +500,99 @@
       }
     },
     {
+      "name": "ChangeList",
+      "category": "display",
+      "summary": "A review of what will change or has changed: each row is marked added, removed or changed, and a changed row reads from → to. The kind of every row is a glyph, a tone and spoken text at once, and an agent reads it as state rather than from the glyph.",
+      "whenToUse": "Use it to show a diff before someone confirms it: a role change from Write to Maintain, members added to a team, settings a migration will drop. Pass the changes as data so each row is an addressable part carrying its kind, from and to. It registers no tool, because it only reports: the action is the Button that confirms the change, and the rows are already fully readable in the agent view.",
+      "whenNotToUse": "Do not use it for a list whose marks carry no meaning; that is List. Do not use it for a full record of fields; that is DescriptionList or Table. Do not put components in a change; label, from, to and detail are text.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is changing. Names the list for a screen reader and for the agent view.",
+          "required": true
+        },
+        "changes": {
+          "kind": "array",
+          "description": "The rows in order, each { kind, label, from?, to?, detail? }. kind is \"added\", \"removed\" or \"changed\"; label is the thing that changed; from and to are its old and new values, usually on a changed row; detail is one short line of consequence beneath it.",
+          "required": true
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the list says when there is nothing to change.",
+          "default": "No changes"
+        }
+      },
+      "state": {
+        "changes": {
+          "description": "How many rows the list has.",
+          "attribute": "data-sprint-changes"
+        },
+        "added": {
+          "description": "How many rows are additions. Absent when there are none.",
+          "attribute": "data-sprint-added"
+        },
+        "removed": {
+          "description": "How many rows are removals. Absent when there are none.",
+          "attribute": "data-sprint-removed"
+        },
+        "changed": {
+          "description": "How many rows are changes of value. Absent when there are none.",
+          "attribute": "data-sprint-changed"
+        },
+        "empty": {
+          "description": "Present when there is nothing to change.",
+          "attribute": "data-sprint-empty"
+        },
+        "kind": {
+          "description": "On a change: whether the row was added, removed or changed.",
+          "attribute": "data-sprint-kind",
+          "values": [
+            "added",
+            "removed",
+            "changed"
+          ]
+        },
+        "from": {
+          "description": "On a change: the old value, when it has one.",
+          "attribute": "data-sprint-from"
+        },
+        "to": {
+          "description": "On a change: the new value, when it has one.",
+          "attribute": "data-sprint-to"
+        }
+      },
+      "agentView": {
+        "example": "- **ChangeList** \"Role changes\" [changed=1, changes=1]\n  - part `change` \"Changed: Ada Lovelace, from Write to Maintain\" [from=Write, kind=changed, to=Maintain]"
+      },
+      "a11y": {
+        "role": "list",
+        "notes": "A ul named by its label, with an explicit list role. The +, − and → glyphs are aria-hidden; each row instead starts with visually hidden text naming its kind, and a changed row says from and to in words, so the kind never rests on the glyph or its color alone. Old values are a del and new values an ins."
+      },
+      "relatedComponents": [
+        "List",
+        "DescriptionList",
+        "Dialog"
+      ],
+      "examples": [
+        {
+          "title": "A role change",
+          "description": "The one row a permission review is about: what it was, and what it becomes.",
+          "code": "<ChangeList\n  label=\"Role changes\"\n  changes={[{ kind: \"changed\", label: \"Ada Lovelace\", from: \"Write\", to: \"Maintain\" }]}\n/>"
+        },
+        {
+          "title": "A review before confirming",
+          "description": "Additions, removals and changes together, each with a line of consequence where one matters.",
+          "code": "<ChangeList\n  label=\"Team changes\"\n  changes={[\n    { kind: \"added\", label: \"Grace Hopper\", detail: \"Gets read access to every repository.\" },\n    { kind: \"removed\", label: \"Alan Turing\" },\n    { kind: \"changed\", label: \"Ada Lovelace\", from: \"Write\", to: \"Maintain\" },\n  ]}\n/>"
+        },
+        {
+          "title": "Nothing to change",
+          "description": "An empty review says so rather than rendering nothing.",
+          "code": "<ChangeList label=\"Role changes\" changes={[]} emptyLabel=\"No role changes\" />"
+        }
+      ]
+    },
+    {
       "name": "Checkbox",
       "category": "input",
       "summary": "A single on/off choice recorded as form data. It registers one set tool that takes the end state rather than toggling.",
@@ -444,6 +717,146 @@
       }
     },
     {
+      "name": "ChoiceGrid",
+      "category": "input",
+      "summary": "A question answered by pressing one of several large, equal-sized tiles, each a glyph such as an emoji over a text label. It works in two modes: submit mode, where every tile is a real submit button carrying its value, and select mode, where the tiles are a radio group driven by value and onChange.",
+      "whenToUse": "Use it when one tap should answer a question and the options are few enough to show at once, ideally six to twelve: an emoji verification step at sign-in (\"pick the emoji you were sent\"), a reaction, a mood, or a category picked by icon. Submit mode needs no client state, so it suits a server-rendered form page: give it a name and no onChange, and the pressed tile submits its form with name=value. Use select mode, by passing value and onChange, when the answer is one field among several and the form is submitted by something else. A verification challenge meant for a human, such as the emoji check, should pass agentTool={false} so the page does not offer an agent a one-call way through it.",
+      "whenNotToUse": "Do not use it for two to four short text options, which is a SegmentedControl, for long lists, which are a Select, or for choosing several at once, which is a set of Checkboxes. Do not put components in an option: label and glyph are strings, and the label is the tile's accessible name because an emoji on its own is not one.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The question the tiles answer. Rendered as the legend of the grid's fieldset and used to derive the tool name, so write it as a person would read it, such as \"Which emoji were you sent?\".",
+          "required": true
+        },
+        "options": {
+          "kind": "array",
+          "description": "The tiles in display order: { value, label, glyph? }. value is what the form receives, label is what a person reads and what the choose tool accepts, and glyph is a short string such as an emoji drawn large above the label and hidden from assistive technology.",
+          "required": true
+        },
+        "columns": {
+          "kind": "enum",
+          "values": [
+            "2",
+            "3",
+            "4"
+          ],
+          "description": "How many columns the grid has at 40rem and wider. Narrower screens always get two, so every tile stays large enough to press.",
+          "default": 3
+        },
+        "name": {
+          "kind": "string",
+          "description": "The form field name. In submit mode each tile is a submit button with this name and its option's value; in select mode a hidden input carries the selected value under this name."
+        },
+        "value": {
+          "kind": "string",
+          "description": "Select mode only: the value of the selected option. Ignored in submit mode, where nothing stays selected."
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Passing it switches the grid to select mode. Called with the chosen value; the choose tool drives a real click, so it runs for agent choices too."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable every tile and unregister the choose tool.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when the question is long or two grids on a page would collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the grid without registering a choose tool. Pass false for any challenge that exists to prove a human is present.",
+          "default": true
+        }
+      },
+      "state": {
+        "mode": {
+          "description": "submit when pressing a tile submits the form, select when it changes a selection.",
+          "attribute": "data-sprint-mode",
+          "values": [
+            "submit",
+            "select"
+          ]
+        },
+        "value": {
+          "description": "Select mode: the value of the option currently selected.",
+          "attribute": "data-sprint-value"
+        },
+        "columns": {
+          "description": "The column count at 40rem and wider.",
+          "attribute": "data-sprint-columns",
+          "values": [
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        "disabled": {
+          "description": "Present when no tile can be pressed.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "choose": {
+          "verb": "choose",
+          "description": "Choose one of this grid's options by its visible label, exactly as a person pressing it would. In submit mode the choice submits the surrounding form with the option's value, so it can navigate away; in select mode it replaces the current selection. Returns the grid's state after the choice.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "description": "The visible label of the option to choose, as shown under its glyph."
+              }
+            },
+            "required": [
+              "option"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The grid is mounted, enabled, has a resolvable label, agentTool is not false, and no other component claims the same tool name. The registered schema enumerates the current option labels.",
+          "unregisteredWhen": "The grid unmounts, becomes disabled, or agentTool turns false."
+        }
+      },
+      "agentView": {
+        "example": "- **ChoiceGrid** \"Pick a reaction\" [columns=4, mode=select, value=fire] → tool `choose-pick-a-reaction`\n  - part `choice` \"Thumbs up\" [value=up]\n  - part `choice` \"Fire\" [checked, value=fire]\n  - part `choice` \"Laughing\" [value=laugh]\n  - part `choice` \"Sad\" [value=sad]"
+      },
+      "examples": [
+        {
+          "title": "An emoji verification check",
+          "description": "Submit mode in a plain form: each tile is a submit button named emoji, so the form posts emoji=fox with no client state. agentTool is false because the check exists to prove a person is present.",
+          "code": "<form method=\"post\" action=\"verify\">\n  <ChoiceGrid\n    label=\"Which emoji were you sent?\"\n    name=\"emoji\"\n    agentTool={false}\n    options={[\n      { value: \"fox\", label: \"Fox\", glyph: \"🦊\" },\n      { value: \"rocket\", label: \"Rocket\", glyph: \"🚀\" },\n      { value: \"cactus\", label: \"Cactus\", glyph: \"🌵\" },\n      { value: \"anchor\", label: \"Anchor\", glyph: \"⚓\" },\n      { value: \"pizza\", label: \"Pizza\", glyph: \"🍕\" },\n      { value: \"comet\", label: \"Comet\", glyph: \"☄️\" },\n    ]}\n  />\n</form>"
+        },
+        {
+          "title": "Picking one with state",
+          "description": "Select mode with four columns: the tiles are a radio group, and in agent view each one renders as its own control so an agent can choose without WebMCP.",
+          "code": "<ChoiceGrid\n  label=\"Pick a reaction\"\n  columns={4}\n  name=\"reaction\"\n  value={reaction}\n  onChange={setReaction}\n  options={[\n    { value: \"up\", label: \"Thumbs up\", glyph: \"👍\" },\n    { value: \"fire\", label: \"Fire\", glyph: \"🔥\" },\n    { value: \"laugh\", label: \"Laughing\", glyph: \"😂\" },\n    { value: \"sad\", label: \"Sad\", glyph: \"😢\" },\n  ]}\n/>"
+        },
+        {
+          "title": "A disabled grid",
+          "description": "Disabled unregisters the tool and renders the agent view as text only, so an agent cannot press a tile a person could not.",
+          "code": "<ChoiceGrid\n  label=\"Delivery window\"\n  columns={2}\n  disabled\n  value=\"morning\"\n  onChange={setWindow}\n  options={[\n    { value: \"morning\", label: \"Morning\", glyph: \"☀\" },\n    { value: \"evening\", label: \"Evening\", glyph: \"☾\" },\n  ]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "group, or radiogroup in select mode",
+        "keyboard": [
+          "Tab reaches every tile in submit mode, and the group once in select mode",
+          "Arrow keys move to the next or previous tile; in select mode they also select it",
+          "Home and End move to the first and last tile",
+          "Enter or Space presses the focused tile"
+        ],
+        "notes": "The root is a fieldset labelled by its legend. A glyph is aria-hidden and the label is always visible text, so each tile's accessible name is its label. In select mode, selection follows focus with a roving tabindex. In agent view a hidden input stays in the form so a choice made there submits the same field a person's would."
+      },
+      "relatedComponents": [
+        "SegmentedControl",
+        "Select",
+        "Button"
+      ]
+    },
+    {
       "name": "CodeBlock",
       "category": "display",
       "summary": "A snippet of code with a caption band and a copy control. In agent view the snippet is carried verbatim as the code part, so an agent reads the source instead of the highlighting.",
@@ -529,10 +942,83 @@
       }
     },
     {
+      "name": "CopyField",
+      "category": "input",
+      "summary": "A labelled, read-only value with a Copy control: a setup link, an invite URL, a webhook address. The value truncates with an ellipsis on one line, stays selectable, and the control confirms with Copied for two seconds.",
+      "whenToUse": "Use it to hand a person a value they are meant to paste somewhere else, such as \"Copy the link\" under a device setup step. The whole value stays in the DOM and in the agent view however narrow the field is drawn, so truncation never hides it from a screen reader or an agent.",
+      "whenNotToUse": "Do not use it for a secret; that is a SecretField, which masks the value and keeps it off every agent surface. Do not use it for a plain read-only value nobody needs to copy; that is a TextInput with readOnly, or a DescriptionList row. Do not use it for multi-line code; that is a CodeBlock.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the value is, shown above it as the field label and used as the node's label in the agent view, e.g. \"Setup link\".",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The text shown and copied, verbatim. It is never masked: an agent reads it from the value part.",
+          "required": true
+        },
+        "copyLabel": {
+          "kind": "string",
+          "description": "The copy control's label while idle.",
+          "default": "Copy"
+        },
+        "copiedLabel": {
+          "kind": "string",
+          "description": "The copy control's label for two seconds after the value reaches the clipboard.",
+          "default": "Copied"
+        },
+        "onCopy": {
+          "kind": "handler",
+          "description": "Called with the value once it is on the clipboard. Not called when the clipboard refuses the write."
+        }
+      },
+      "state": {
+        "copied": {
+          "description": "Present for two seconds after the copy control has put the value on the clipboard.",
+          "attribute": "data-sprint-copied"
+        },
+        "copy-failed": {
+          "description": "Present after the clipboard refused the write or is unavailable. The value's text is selected instead, so the person can copy it by hand.",
+          "attribute": "data-sprint-copy-failed"
+        }
+      },
+      "agentView": {
+        "example": "- **CopyField** \"Setup link\"\n  - part `value` \"https://sprint.example/setup/7HW4\"\n  - part `copy` \"Copy\""
+      },
+      "examples": [
+        {
+          "title": "Copy the link",
+          "description": "The first real need: a setup link a person pastes into another device. A long URL truncates in the field and is still copied whole.",
+          "code": "<CopyField\n  label=\"Setup link\"\n  value=\"https://sprint.example/setup/7HW4-XK92-QQ1D?station=KX-2209&expires=2026-10-01\"\n/>"
+        },
+        {
+          "title": "Custom control labels",
+          "description": "Relabel the control in the language of the task, and react once the value is on the clipboard.",
+          "code": "<CopyField\n  label=\"Invite code\"\n  value=\"NOMAD-0042\"\n  copyLabel=\"Copy code\"\n  copiedLabel=\"Code copied\"\n  onCopy={() => setShared(true)}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "group",
+        "keyboard": [
+          "Tab reaches the copy control",
+          "Enter or Space copies"
+        ],
+        "notes": "The group is named by its visible label. The full value is in the DOM however it is truncated, and its title shows it on hover. The copy control is a real button whose label swap is a polite live region. If the clipboard refuses, the value's text is selected so a keyboard copy still works. No WebMCP tool is registered: the value is already readable in the agent view, and an agent gains nothing from writing it to the person's clipboard that reading it does not give."
+      },
+      "relatedComponents": [
+        "SecretField",
+        "TextInput",
+        "CodeBlock",
+        "DescriptionList"
+      ]
+    },
+    {
       "name": "DescriptionList",
       "category": "display",
       "summary": "Labelled term–description pairs for the details of one thing: metadata, settings, profile fields.",
-      "whenToUse": "Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description.",
+      "whenToUse": "Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description. It lays itself out from its own width, not the viewport's: the term sits above its value until the list is at least 32rem wide, then moves into a column of its own, so it reads the same in a sidebar as in a full-width panel.",
       "whenNotToUse": "Do not use for many entities with the same fields; that is a Table. Do not put components inside term or description; both are flattened to text for the agent view, so only inline content survives. Do not use for prose sequences; that is a List.",
       "status": "experimental",
       "props": {
@@ -550,6 +1036,16 @@
           "kind": "string",
           "description": "Text shown when items is empty. The region keeps its frame.",
           "default": "Empty"
+        },
+        "loading": {
+          "kind": "boolean",
+          "description": "Set while the pairs are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing pairs stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+          "default": false
+        },
+        "loadingLabel": {
+          "kind": "string",
+          "description": "What the empty slot says while loading.",
+          "default": "Loading"
         }
       },
       "state": {
@@ -560,6 +1056,10 @@
         "empty": {
           "description": "Present when there are no pairs.",
           "attribute": "data-sprint-empty"
+        },
+        "loading": {
+          "description": "Present while the pairs are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+          "attribute": "data-sprint-loading"
         }
       },
       "agentView": {
@@ -675,6 +1175,363 @@
         ],
         "notes": "A native dialog element shown with showModal, so focus containment, inerting the page behind, and Escape come from the browser. The title names the dialog via aria-label."
       }
+    },
+    {
+      "name": "Disclosure",
+      "category": "layout",
+      "summary": "A labelled region a person can show or hide with a toggle that carries its expanded state. Collapsing conceals the content from a person only: it stays in the page, and the agent view always renders it.",
+      "whenToUse": "Use it for secondary detail a person reads on demand beside the primary content, such as an access breakdown on a user page behind \"Show access breakdown\". It replaces a Button that swaps its own label, because the toggle publishes aria-expanded and the region it controls, and the content stays readable to an agent without a click.",
+      "whenNotToUse": "Do not use it to hide content an agent should not read; collapsing is a human affordance and the agent view carries the content regardless. Do not use it for a region that is always visible, which is a Panel, or for content that must interrupt the page, which is a Dialog. Do not use it to switch between alternative views of the same data, which is a SegmentedControl.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the region is, as a noun phrase such as \"Access breakdown\". It names the region for a screen reader, derives the toggle text and the tool name.",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "The region's content. It is always mounted: collapsing hides it from a person with CSS, so components inside keep their tools and stay in the page projection."
+        },
+        "expanded": {
+          "kind": "boolean",
+          "description": "Whether the region is revealed. Pass it with onExpandedChange to control the disclosure; leave it unset to let the disclosure keep its own state."
+        },
+        "defaultExpanded": {
+          "kind": "boolean",
+          "description": "The initial state when the disclosure is uncontrolled.",
+          "default": false
+        },
+        "onExpandedChange": {
+          "kind": "handler",
+          "description": "Called with the new state whenever the toggle is pressed, by a person, a DOM-driving agent, or the expand tool."
+        },
+        "showLabel": {
+          "kind": "string",
+          "description": "The toggle text while collapsed.",
+          "default": "\"Show \" followed by the label"
+        },
+        "hideLabel": {
+          "kind": "string",
+          "description": "The toggle text while expanded.",
+          "default": "\"Hide \" followed by the label"
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two disclosures on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the disclosure without registering an expand tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "expanded": {
+          "description": "Present while the region is revealed to a person. Absent means collapsed: the content is still in the page, concealed by CSS rather than unmounted or marked hidden.",
+          "attribute": "data-sprint-expanded"
+        }
+      },
+      "tools": {
+        "expand": {
+          "verb": "expand",
+          "description": "Expand or collapse this region for the person viewing the page, by stating the end state, exactly as a person pressing its toggle would. The content is already readable in the agent view either way, so call this only to change what a person sees. Setting the state it already has succeeds and changes nothing. Returns the region's state after the call.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "expanded": {
+                "type": "boolean",
+                "description": "The end state: true reveals the region, false conceals it."
+              }
+            },
+            "required": [
+              "expanded"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The disclosure is mounted, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The disclosure unmounts or agentTool is set false."
+        }
+      },
+      "agentView": {
+        "example": "- **Disclosure** \"Access breakdown\" → tool `expand-access-breakdown`\n  - part `toggle` \"Show access breakdown\"\n  - **Text** \"Admin through the Operators group.\""
+      },
+      "examples": [
+        {
+          "title": "Secondary detail on demand",
+          "description": "Uncontrolled: the disclosure keeps its own state. In agent view the content renders beneath the line whether or not a person has opened it, and the toggle is one control.",
+          "code": "<Disclosure label=\"Access breakdown\">\n  <Text>Admin through the Operators group.</Text>\n</Disclosure>"
+        },
+        {
+          "title": "A controlled disclosure",
+          "description": "Pass expanded and onExpandedChange when something else on the page needs to know or set whether the region is open. The expand tool drives the same toggle.",
+          "code": "<Disclosure\n  label=\"Access breakdown\"\n  expanded={open}\n  onExpandedChange={setOpen}\n>\n  <Text>Admin through the Operators group.</Text>\n</Disclosure>"
+        },
+        {
+          "title": "Custom toggle text",
+          "description": "showLabel and hideLabel replace the derived toggle text when the noun phrase does not read naturally after Show and Hide.",
+          "code": "<Disclosure label=\"Audit trail\" showLabel=\"Show 12 events\" hideLabel=\"Hide events\">\n  <Text>Last change was a role grant by the on-call operator.</Text>\n</Disclosure>"
+        }
+      ],
+      "a11y": {
+        "role": "region",
+        "keyboard": [
+          "Enter toggles",
+          "Space toggles"
+        ],
+        "notes": "The root is a section named by the label. The toggle is a real button with aria-expanded and aria-controls pointing at the content. Collapsed content is display: none, which removes it from the accessibility tree for a person and a screen reader while leaving it in the DOM for the agent projection."
+      },
+      "relatedComponents": [
+        "Panel",
+        "Switch"
+      ]
+    },
+    {
+      "name": "Divider",
+      "category": "layout",
+      "summary": "A horizontal rule that segments a page: the line between a header or a breadcrumb and the body under it, or between two runs of content. It draws in the active theme's own keyline or band, and can name the segment it opens.",
+      "whenToUse": "Use it where a page changes subject and nothing else marks the change: under a PageHeader or a Breadcrumb before the body starts, or between groups of panels. Give it a label when the segment that follows has a name worth reading; an unlabelled Divider is invisible in agent view, because an agent does not care where a line is drawn, only what the line announces.",
+      "whenNotToUse": "Do not use it to space things out; that is the gap on Stack. Do not use it to frame a region with a header; that is Panel, which draws its own keylines. Do not stack two in a row, and do not use it inside a Panel to separate a list's items; the list draws its own.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The name of the segment the divider opens, rendered small on the rule."
+        },
+        "weight": {
+          "kind": "enum",
+          "description": "How hard the break is. \"hairline\" is a keyline, \"heavy\" a thick strong keyline, \"band\" a strip of the theme's own ornament for the one break that matters most on a page.",
+          "values": [
+            "hairline",
+            "heavy",
+            "band"
+          ],
+          "default": "hairline"
+        }
+      },
+      "state": {
+        "weight": {
+          "description": "How hard the break is.",
+          "attribute": "data-sprint-weight",
+          "values": [
+            "hairline",
+            "heavy",
+            "band"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Divider** \"Results\" [weight=band]"
+      },
+      "a11y": {
+        "role": "separator",
+        "notes": "The rule is a native hr, so assistive technology announces a separator. A label is ordinary text read just before it, the way a person reads it on the rule."
+      },
+      "relatedComponents": [
+        "Stack",
+        "PageHeader",
+        "Breadcrumb",
+        "Panel"
+      ],
+      "examples": [
+        {
+          "title": "Separating the header from the body",
+          "description": "The plainest break: a keyline under the page's chrome, before the content starts.",
+          "code": "<Stack>\n  <Breadcrumb\n    label=\"Docs\"\n    items={[{ label: \"guides\", children: [{ href: \"#/guide/webmcp\", label: \"WebMCP\", active: true }] }]}\n  />\n  <Divider />\n  <Text>The body of the page starts here.</Text>\n</Stack>"
+        },
+        {
+          "title": "A named segment",
+          "description": "A label names what follows, on the rule itself and to an agent reading the page.",
+          "code": "<Divider label=\"Results\" weight=\"heavy\" />"
+        },
+        {
+          "title": "The page's main break",
+          "description": "A band draws the theme's own ornament: hatching in the default register, pins in calorie, a barcode strip in trax. Use it once per page.",
+          "code": "<Divider label=\"Body\" weight=\"band\" />"
+        }
+      ]
+    },
+    {
+      "name": "EmptyState",
+      "category": "feedback",
+      "summary": "A region that says there is nothing here, and why: a headline, an optional sentence, and an optional way out such as clearing filters or creating the first record. It marks the empty field with the register's own empty ornament.",
+      "whenToUse": "Use it in place of a list, grid, or set of results that has nothing to show, so the space says it is empty rather than rendering nothing. Set reason=\"filtered\" when records exist but none match, so an agent knows to relax the filters rather than conclude there is no data.",
+      "whenNotToUse": "Do not use it for an empty Table, List, or Panel; those already carry their own emptyLabel. Do not use it for a failure; that is an Alert. Do not use it while data is still loading; that is Pending.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The headline, saying what is empty in a few words: \"No one matches these filters\". The region's accessible name.",
+          "required": true
+        },
+        "description": {
+          "kind": "string",
+          "description": "One sentence of explanation or next step. Carried as the description part."
+        },
+        "action": {
+          "kind": "object",
+          "description": "The one way out, as data: { label, onSelect?, href? }. An href renders a Link, otherwise a Button that registers its own press tool, so the action is a single control in the agent view."
+        },
+        "reason": {
+          "kind": "enum",
+          "description": "Why it is empty: nothing exists yet, or nothing matches the current filters.",
+          "values": [
+            "empty",
+            "filtered"
+          ],
+          "default": "empty"
+        }
+      },
+      "state": {
+        "empty": {
+          "description": "Always present, so one selector finds every empty region.",
+          "attribute": "data-sprint-empty"
+        },
+        "reason": {
+          "description": "Why the region is empty.",
+          "attribute": "data-sprint-reason",
+          "values": [
+            "empty",
+            "filtered"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **EmptyState** \"No one matches these filters\" [empty, reason=filtered]\n  - part `description` \"Try a different role or clear the search.\""
+      },
+      "examples": [
+        {
+          "title": "Nothing matches",
+          "description": "Records exist but the filters exclude them all. The action is a Button, so it registers press-clear-filters.",
+          "code": "<EmptyState\n  reason=\"filtered\"\n  label=\"No one matches these filters\"\n  description=\"Try a different role or clear the search.\"\n  action={{ label: \"Clear filters\", onSelect: clearFilters }}\n/>"
+        },
+        {
+          "title": "Nothing yet",
+          "description": "The first-run case, with a link to where records are made.",
+          "code": "<EmptyState\n  label=\"No projects yet\"\n  description=\"Projects you create or are invited to appear here.\"\n  action={{ label: \"Create a project\", href: \"#/projects/new\" }}\n/>"
+        },
+        {
+          "title": "Just the headline",
+          "code": "<EmptyState label=\"No notifications\" />"
+        }
+      ],
+      "a11y": {
+        "role": "group",
+        "notes": "The headline names the group and the description describes it. The action is an ordinary Button or Link inside it, reached in normal tab order."
+      },
+      "relatedComponents": [
+        "Pending",
+        "Alert",
+        "Button",
+        "Link"
+      ]
+    },
+    {
+      "name": "EntityRow",
+      "category": "display",
+      "summary": "One record in a list of records, as a single clickable row: a title, a few Tags, and one line of meta. Give it an href and the whole row is a link; give it onSelect and it is an action that registers an open tool.",
+      "whenToUse": "Use it for a list of people, projects, or anything else a person scans and picks one of, where each entry needs a name, a classification, and a line of context such as last activity. Stack several in a Stack with gap=\"none\" and adjacent rows share their keylines. The title is the accessible name, so it is also what an agent selects on.",
+      "whenNotToUse": "Do not use it when the entries are compared column by column; that is a Table. Do not use it for a catalogue entry with a paragraph of body; that is a Card. Do not put controls in it: the whole row is already one link or button, so tags and meta are data, not components.",
+      "status": "experimental",
+      "props": {
+        "title": {
+          "kind": "string",
+          "description": "The record's name, and the row's accessible name. Also derives the tool name when the row acts.",
+          "required": true
+        },
+        "href": {
+          "kind": "string",
+          "description": "Destination, which makes the whole row a link. A row that navigates registers no tool by default, because an agent can follow the href itself."
+        },
+        "onSelect": {
+          "kind": "handler",
+          "description": "What clicking does, called with the click event. Alone it makes the row a button that registers an open tool by default. Alongside href the row stays a link and the handler rides the click, so a router can call preventDefault."
+        },
+        "tags": {
+          "kind": "array",
+          "description": "Classifications rendered as Tags after the title: { label, tone? }, where tone is one of the Tag tones. Carried as Tag lines under the row in the agent view."
+        },
+        "meta": {
+          "kind": "array",
+          "description": "One line of context, each entry a string or { term?, detail }, joined with a middle dot. Truncates rather than wraps when the row is short of room. Carried as the meta part."
+        },
+        "description": {
+          "kind": "string",
+          "description": "An optional sentence under the row, for a record that needs more than a line of meta. Carried as the description part."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable an acting row and unregister its tool. Has no effect on a row that navigates or does nothing.",
+          "default": false
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Override the default: on for a row that acts, off for a row that navigates. A row with neither href nor onSelect never registers one."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the title used to derive the tool name, when two rows share a title."
+        }
+      },
+      "state": {
+        "href": {
+          "description": "Where the row goes, when it navigates.",
+          "attribute": "data-sprint-href"
+        },
+        "disabled": {
+          "description": "Present when an acting row cannot be opened.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "open": {
+          "verb": "open",
+          "description": "Open this row, exactly as a person clicking it would. What opening does is the row's own business: it may select the record, reveal its detail, or start a flow. Returns the row's state after the click.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {}
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The row acts rather than navigates, is mounted, enabled, has a resolvable title, and no other component claims the same tool name.",
+          "unregisteredWhen": "The row unmounts, becomes disabled, or turns into a link by taking an href."
+        }
+      },
+      "agentView": {
+        "example": "- **EntityRow** \"Ada Lovelace\" [href=#/people/ada]\n  - part `title` \"Ada Lovelace\"\n  - part `meta` \"Last sign-in: 3 days ago · 2 apps\"\n  - **Tag** \"admin\" [tone=info]\n  - **Tag** \"billing\" [tone=neutral]"
+      },
+      "examples": [
+        {
+          "title": "A person in a directory",
+          "description": "A row that navigates. No tool, because the href is already public; tags and meta are data.",
+          "code": "<EntityRow\n  title=\"Ada Lovelace\"\n  href=\"#/people/ada\"\n  tags={[{ label: \"admin\", tone: \"info\" }, { label: \"billing\" }]}\n  meta={[{ term: \"Last sign-in\", detail: \"3 days ago\" }, \"2 apps\"]}\n/>"
+        },
+        {
+          "title": "A row that acts",
+          "description": "onSelect instead of href, so the row registers open-grace-hopper and an agent can pick it.",
+          "code": "<EntityRow\n  title=\"Grace Hopper\"\n  onSelect={() => select(\"grace\")}\n  tags={[{ label: \"owner\", tone: \"warning\" }]}\n  meta={[\"Invited yesterday\"]}\n/>"
+        },
+        {
+          "title": "A directory of rows",
+          "description": "Rows stacked with no gap share their keylines, so the list reads as one ruled block.",
+          "code": "<Stack gap=\"none\">\n  {people.map((person) => (\n    <EntityRow\n      key={person.id}\n      title={person.name}\n      href={person.href}\n      tags={person.roles.map((role) => ({ label: role }))}\n      meta={[{ term: \"Last sign-in\", detail: person.lastSignIn }]}\n    />\n  ))}\n</Stack>"
+        },
+        {
+          "title": "With a description",
+          "description": "A sentence under the row, for a record that needs one.",
+          "code": "<EntityRow\n  title=\"Payments service\"\n  href=\"#/projects/payments\"\n  tags={[{ label: \"degraded\", tone: \"danger\" }]}\n  meta={[\"Updated 4 min ago\"]}\n  description=\"Card authorisations are timing out in eu-west.\"\n/>"
+        }
+      ],
+      "a11y": {
+        "notes": "The whole row is one control: a link with an href, a button with onSelect, or a labelled group with neither. The title is the accessible name, and the tags, meta, and description are its accessible description, so a screen reader announces the name first and the context after."
+      },
+      "relatedComponents": [
+        "Card",
+        "Tag",
+        "Stack",
+        "Table"
+      ]
     },
     {
       "name": "Heading",
@@ -935,7 +1792,7 @@
       "category": "display",
       "summary": "A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.",
       "whenToUse": "Use it for a short sequence of related points: rules, steps, links, caveats. Passing items as data rather than as children is what lets the agent view carry each one as its own part.",
-      "whenNotToUse": "Do not use it for records with fields; that is Table. Do not use it as a layout for cards or controls; that is Stack.",
+      "whenNotToUse": "Do not use it for a diff or a review of what will change, where each mark means added or removed; that is ChangeList. Do not use it for records with fields; that is Table. Do not use it as a layout for cards or controls; that is Stack.",
       "status": "experimental",
       "props": {
         "label": {
@@ -953,10 +1810,31 @@
           "description": "Number the items instead of bulleting them. Use it when the order is the point.",
           "default": false
         },
+        "marker": {
+          "kind": "enum",
+          "description": "The mark before each item. \"plus\" is the house bullet, \"bullet\" a plain dot for quieter prose, \"number\" counts the items and makes the list ordered, \"none\" drops the marker column for a list whose items already lead with their own mark. Defaults to \"number\" when ordered is set and \"plus\" otherwise. The marker is drawn, not read: an item whose mark means something, such as added or removed, belongs in a ChangeList.",
+          "values": [
+            "plus",
+            "bullet",
+            "number",
+            "none"
+          ],
+          "default": "plus"
+        },
         "emptyLabel": {
           "kind": "string",
           "description": "What the list says when it has no items.",
           "default": "Empty"
+        },
+        "loading": {
+          "kind": "boolean",
+          "description": "Set while the items are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing items stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+          "default": false
+        },
+        "loadingLabel": {
+          "kind": "string",
+          "description": "What the empty slot says while loading.",
+          "default": "Loading"
         }
       },
       "state": {
@@ -965,12 +1843,26 @@
           "attribute": "data-sprint-items"
         },
         "ordered": {
-          "description": "Present when the items are numbered rather than bulleted.",
+          "description": "Present when the list is a real ol: ordered is set, or the marker is number.",
           "attribute": "data-sprint-ordered"
+        },
+        "marker": {
+          "description": "The mark drawn before each item.",
+          "attribute": "data-sprint-marker",
+          "values": [
+            "plus",
+            "bullet",
+            "number",
+            "none"
+          ]
         },
         "empty": {
           "description": "Present when the list has no items.",
           "attribute": "data-sprint-empty"
+        },
+        "loading": {
+          "description": "Present while the items are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+          "attribute": "data-sprint-loading"
         },
         "index": {
           "description": "On an item: its 1-based position in the list.",
@@ -978,7 +1870,7 @@
         }
       },
       "agentView": {
-        "example": "- **List** \"Tool rules\" [items=1]\n  - part `item` \"One tool, one action.\" [index=1]"
+        "example": "- **List** \"Tool rules\" [items=1, marker=plus]\n  - part `item` \"One tool, one action.\" [index=1]"
       },
       "examples": [
         {
@@ -988,18 +1880,28 @@
         {
           "title": "A numbered sequence",
           "code": "<List\n  ordered\n  label=\"Steps\"\n  items={[\"Register the tool.\", \"Drive the DOM.\", \"Return the new state.\"]}\n/>"
+        },
+        {
+          "title": "Plain bullets",
+          "description": "A quieter dot for running prose, where the house plus would shout.",
+          "code": "<List\n  marker=\"bullet\"\n  label=\"Caveats\"\n  items={[\"Chrome 149 only.\", \"Tools are a no-op without WebMCP.\"]}\n/>"
+        },
+        {
+          "title": "No marker",
+          "description": "For items that already lead with their own mark, such as a link or a chip.",
+          "code": "<List\n  marker=\"none\"\n  label=\"Related\"\n  items={[\"Table for records.\", \"Stack for layout.\"]}\n/>"
         }
       ],
       "a11y": {
         "role": "list",
-        "notes": "A real ul or ol named by its label, with an explicit list role because the custom markers require list-style none and Safari would otherwise drop the list semantics. The item count is announced, and the markers are drawn as pseudo-elements."
+        "notes": "A real ul or ol named by its label, with an explicit list role because the custom markers require list-style none and Safari would otherwise drop the list semantics. The item count is announced, and the markers are drawn as pseudo-elements, so a marker never carries meaning a screen reader would miss."
       }
     },
     {
       "name": "MetaLine",
       "category": "display",
       "summary": "A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.",
-      "whenToUse": "Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short and the line truncates rather than wraps.",
+      "whenToUse": "Use it for the compact strip of identifying metadata that belongs to a page, panel, or footer: version and build identifiers, timestamps, serial numbers, owners. Values are short. By default the line truncates with an ellipsis rather than wrapping; set wrap where it sits in a narrow container and every entry has to stay visible.",
       "whenNotToUse": "Do not use it for the details of a record a person is meant to study; that is a DescriptionList. Do not put anything interactive in it, and do not use it for prose.",
       "status": "experimental",
       "props": {
@@ -1007,12 +1909,21 @@
           "kind": "array",
           "description": "Term–detail pairs in display order: { term, detail }, both strings. Rendered as TERM: DETAIL, slash-separated, and carried as one line in the agent view. An empty array renders nothing.",
           "required": true
+        },
+        "wrap": {
+          "kind": "boolean",
+          "description": "Let entries flow onto further lines instead of truncating the line. Each entry stays whole on one line, and a separator stays at the end of the line it closes, so no line starts with a slash. An entry wider than the container is the only thing that still truncates.",
+          "default": false
         }
       },
       "state": {
         "entries": {
           "description": "How many term–detail pairs the line carries.",
           "attribute": "data-sprint-entries"
+        },
+        "wrap": {
+          "description": "Present when entries may flow onto further lines.",
+          "attribute": "data-sprint-wrap"
         }
       },
       "agentView": {
@@ -1028,6 +1939,11 @@
           "title": "Version chrome for a footer",
           "description": "The line an app pins under its content or into a Shell rail.",
           "code": "<MetaLine\n  entries={[\n    { term: \"Sprint\", detail: \"v0.0.0\" },\n    { term: \"Channel\", detail: \"dev\" },\n    { term: \"WebMCP\", detail: \"chrome 149\" },\n  ]}\n/>"
+        },
+        {
+          "title": "Wrapping in a narrow rail",
+          "description": "With wrap, a sidebar shows every entry on as many lines as it needs instead of cutting the later ones off.",
+          "code": "<MetaLine\n  wrap\n  entries={[\n    { term: \"Sprint\", detail: \"v0.0.0\" },\n    { term: \"Channel\", detail: \"dev\" },\n    { term: \"WebMCP\", detail: \"chrome 149\" },\n    { term: \"Build\", detail: \"2744.07.22-a1\" },\n  ]}\n/>"
         }
       ],
       "a11y": {
@@ -1076,113 +1992,6 @@
           "title": "A flat nav",
           "description": "A short list of destinations needs no grouping.",
           "code": "<Nav label=\"Site\">\n  <Link href=\"#/\">Home</Link>\n  <Link href=\"#/pricing\">Pricing</Link>\n</Nav>"
-        }
-      ]
-    },
-    {
-      "name": "NavBar",
-      "category": "navigation",
-      "summary": "A navigation landmark that renders as one line: where you are, written as a coordinate you can edit. Every destination stays in the page as an addressable part; the coordinate decides which of them a person is shown.",
-      "whenToUse": "Use it as an application's primary navigation when the catalogue is larger than a rail can hold, or when the layout needs its full width. Each segment of the coordinate opens its own level and filters as you type, so what a person chooses from is one level rather than the whole set. It takes destinations as data because it counts, filters and orders them.",
-      "whenNotToUse": "Do not use it for a handful of links that fit in a sidebar; that is Nav with NavGroup, which keeps every destination visible at once. Do not use it for links inside prose, and do not pass components in groups: each destination is a label and an href, not a node.",
-      "status": "experimental",
-      "props": {
-        "label": {
-          "kind": "string",
-          "description": "What this navigation is for. Rendered as the landmark's accessible name and as the root of the coordinate.",
-          "required": true
-        },
-        "groups": {
-          "kind": "array",
-          "description": "The destinations, as groups of { label, items }, each item { href, label, active?, external? }. Order is the order a person travels them.",
-          "required": true
-        },
-        "emptyLabel": {
-          "kind": "string",
-          "description": "What the bar says when a filter matches no destination.",
-          "default": "No match"
-        },
-        "trailEmptyLabel": {
-          "kind": "string",
-          "description": "What the bar says when nothing has been visited through it yet.",
-          "default": "Nothing visited yet"
-        },
-        "open": {
-          "kind": "enum",
-          "description": "Which segment is open, or 'closed'. Pass it to drive the bar from outside, such as from an application-level shortcut; leave it off and the bar keeps its own state.",
-          "values": [
-            "trail",
-            "group",
-            "leaf",
-            "closed"
-          ]
-        },
-        "onOpenChange": {
-          "kind": "handler",
-          "description": "Called with the segment the bar wants open, or 'closed'. Required when open is controlled, so the bar can still close itself."
-        },
-        "onNavigate": {
-          "kind": "handler",
-          "description": "Called with the destination when one is chosen, before the browser follows the href. Use it to record the visit somewhere that outlives this component."
-        }
-      },
-      "state": {
-        "destinations": {
-          "description": "How many destinations the bar holds.",
-          "attribute": "data-sprint-destinations"
-        },
-        "open": {
-          "description": "Which segment of the coordinate is open: trail, group, or leaf. Absent when the bar is closed to its one line.",
-          "attribute": "data-sprint-open"
-        },
-        "depth": {
-          "description": "How many destinations have been visited through this bar.",
-          "attribute": "data-sprint-depth"
-        },
-        "matches": {
-          "description": "How many destinations the open segment is showing.",
-          "attribute": "data-sprint-matches"
-        },
-        "shown": {
-          "description": "On a destination: present when the open segment is currently showing it to a person. Every destination stays in the page either way.",
-          "attribute": "data-sprint-shown"
-        },
-        "group": {
-          "description": "On a destination: the group it belongs to.",
-          "attribute": "data-sprint-group"
-        },
-        "href": {
-          "description": "On a destination: where it goes.",
-          "attribute": "data-sprint-href"
-        },
-        "active": {
-          "description": "On a destination: present when it is the current page.",
-          "attribute": "data-sprint-active"
-        }
-      },
-      "agentView": {
-        "example": "- **NavBar** \"Workbench\" [destinations=2, depth=0]\n  - part `destination` \"Button\" [group=action, href=#/Button]\n  - part `destination` \"Table\" [group=display, href=#/Table, active, shown]"
-      },
-      "a11y": {
-        "role": "navigation",
-        "notes": "The label is the landmark's accessible name. The current destination carries aria-current=page. Destinations the coordinate is not showing are hidden from the accessibility tree by CSS, so a screen reader travels one level at a time exactly as a sighted reader does, while the page itself keeps all of them. From the field, ArrowDown enters the results and ArrowUp at the top returns to it; typing anywhere in the results goes back to the field and keeps the character. Escape closes the bar, as does a press outside it, and the match count is a polite live region. ArrowUp in an empty field recalls the trail, the way a console recalls history."
-      },
-      "relatedComponents": [
-        "Nav",
-        "NavGroup",
-        "Link",
-        "Shell"
-      ],
-      "examples": [
-        {
-          "title": "A coordinate bar",
-          "description": "One line of chrome over a grouped catalogue. Clicking a segment opens that level and filters it as you type.",
-          "code": "<NavBar\n  label=\"Workbench\"\n  groups={[\n    { label: \"action\", items: [{ href: \"#/Button\", label: \"Button\" }] },\n    { label: \"display\", items: [{ href: \"#/Table\", label: \"Table\", active: true }] },\n  ]}\n/>"
-        },
-        {
-          "title": "Recording where a person has been",
-          "description": "The bar keeps a trail of the destinations chosen through it, reachable from the depth count at its head. onNavigate is how that outlives the component.",
-          "code": "<NavBar\n  label=\"Docs\"\n  groups={[{ label: \"guides\", items: [{ href: \"#/guide/webmcp\", label: \"WebMCP\" }] }]}\n  onNavigate={(destination) => console.log(destination.href)}\n/>"
         }
       ]
     },
@@ -1273,6 +2082,147 @@
       ]
     },
     {
+      "name": "Pagination",
+      "category": "navigation",
+      "summary": "A navigation landmark for a long set shown one page at a time: Previous and Next controls, a \"Page 2 of 3\" readout, and a \"Showing 26–50 of 61\" summary of which items are on screen. It takes counts rather than items, so it works the same over a local array or a server query.",
+      "whenToUse": "Use it under or above a Table or List whose items arrive a page at a time, when the count is known. Give it onPageChange to page in place, which registers one turn tool that can jump straight to any page; give it href to make every page a URL, which needs no tool because a link is already reachable. Its state carries the page, the page count and the item range, so an agent reading the page knows how much it has not seen.",
+      "whenNotToUse": "Do not use it when the total is unknown or the set grows as it is read; that is a load-more Button. Do not use it for steps in a flow a person must complete in order, and do not use it to move between unrelated pages, which is Nav or Breadcrumb. Do not use it for a set that fits on one screen: it renders, but has nothing to do.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is being paged. Names the navigation landmark and derives the tool name, so prefer a noun phrase such as \"Users pages\".",
+          "required": true
+        },
+        "page": {
+          "kind": "number",
+          "description": "The 1-based page currently shown. The component is controlled; a value outside 1 to the page count is clamped into it.",
+          "required": true
+        },
+        "pageSize": {
+          "kind": "number",
+          "description": "How many items a full page holds. Values below 1 are treated as 1.",
+          "required": true
+        },
+        "total": {
+          "kind": "number",
+          "description": "How many items the whole set holds. The page count is total divided by pageSize, rounded up, and never less than 1, so an empty set is one empty page.",
+          "required": true
+        },
+        "onPageChange": {
+          "kind": "handler",
+          "description": "Called with the page to show. Without href the controls are buttons and the turn tool registers; with href it runs alongside the link, for routers that intercept clicks."
+        },
+        "href": {
+          "kind": "handler",
+          "description": "Given a page number, returns its URL. When present, Previous and Next render as links, each publishes its URL as data-sprint-href, and no tool registers."
+        },
+        "previousLabel": {
+          "kind": "string",
+          "description": "The text of the control that goes back a page.",
+          "default": "Previous"
+        },
+        "nextLabel": {
+          "kind": "string",
+          "description": "The text of the control that goes forward a page.",
+          "default": "Next"
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two paginations on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the controls without registering a turn tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "page": {
+          "description": "The 1-based page shown, after clamping.",
+          "attribute": "data-sprint-page"
+        },
+        "pages": {
+          "description": "How many pages the set spans. Never less than 1.",
+          "attribute": "data-sprint-pages"
+        },
+        "total": {
+          "description": "How many items the whole set holds.",
+          "attribute": "data-sprint-total"
+        },
+        "first": {
+          "description": "The 1-based position of the first item on this page, or 0 when the set is empty.",
+          "attribute": "data-sprint-first"
+        },
+        "last": {
+          "description": "The 1-based position of the last item on this page, or 0 when the set is empty.",
+          "attribute": "data-sprint-last"
+        }
+      },
+      "tools": {
+        "turn": {
+          "verb": "turn",
+          "description": "Go to a page of this paginated set by its 1-based number, exactly as a person pressing Previous or Next until they reach it would. Any page from 1 to the page count is accepted, not just the neighbours. Returns the pagination's state after the change, including which items are now showing, so a follow-up read is unnecessary.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer",
+                "description": "The 1-based number of the page to show.",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "page"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": false,
+          "registeredWhen": "The pagination is mounted, changes page through onPageChange rather than href, has more than one page, has a resolvable label, and no other component claims the same tool name. The registered schema states the current page count.",
+          "unregisteredWhen": "The pagination unmounts, is given href, loses onPageChange, or shrinks to a single page."
+        }
+      },
+      "agentView": {
+        "example": "- **Pagination** \"Users pages\" [first=26, last=50, page=2, pages=3, total=61] → tool `turn-users-pages`\n  - part `previous` \"Previous\"\n  - part `next` \"Next\""
+      },
+      "a11y": {
+        "role": "navigation",
+        "keyboard": [
+          "Tab reaches Previous and Next in order",
+          "Enter or Space on a button, Enter on a link, turns the page"
+        ],
+        "notes": "The root is a nav landmark named by label. A control with nowhere to go is a disabled button, or a link with no href and aria-disabled, so it leaves the tab order. The item summary is a polite live region, so a screen reader hears the new range after a turn."
+      },
+      "relatedComponents": [
+        "Table",
+        "List",
+        "Nav",
+        "Breadcrumb"
+      ],
+      "examples": [
+        {
+          "title": "Paging a table in place",
+          "description": "With onPageChange the controls are buttons and one turn tool registers, so an agent can jump to page 3 without pressing Next twice.",
+          "code": "<Pagination\n  label=\"Users pages\"\n  page={page}\n  pageSize={25}\n  total={61}\n  onPageChange={setPage}\n/>"
+        },
+        {
+          "title": "Pages as links",
+          "description": "With href every page is a URL. The controls are links, nothing registers, and each link publishes where it goes.",
+          "code": "<Pagination\n  label=\"Changelog pages\"\n  page={2}\n  pageSize={10}\n  total={42}\n  href={(page) => `#/changelog?page=${page}`}\n/>"
+        },
+        {
+          "title": "The last page, relabelled",
+          "description": "On the last page Next is disabled and the summary shows the short final range. The labels are overridable for sets that read better as time.",
+          "code": "<Pagination\n  label=\"Activity pages\"\n  page={4}\n  pageSize={8}\n  total={31}\n  previousLabel=\"Newer\"\n  nextLabel=\"Older\"\n  onPageChange={setPage}\n/>"
+        },
+        {
+          "title": "An empty set",
+          "description": "No items is one empty page. Both controls are disabled, no tool registers, and the summary still says what it is showing.",
+          "code": "<Pagination\n  label=\"Search results pages\"\n  page={1}\n  pageSize={20}\n  total={0}\n  onPageChange={setPage}\n/>"
+        }
+      ]
+    },
+    {
       "name": "Panel",
       "category": "layout",
       "summary": "A labelled region with a header band and an optional slot for the controls that act on it. Everything on a Sprint page lives inside one.",
@@ -1311,6 +2261,16 @@
           "kind": "string",
           "description": "What the panel says when it has no content.",
           "default": "Empty"
+        },
+        "loading": {
+          "kind": "boolean",
+          "description": "Set while the content are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing content stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+          "default": false
+        },
+        "loadingLabel": {
+          "kind": "string",
+          "description": "What the empty slot says while loading.",
+          "default": "Loading"
         }
       },
       "state": {
@@ -1321,6 +2281,10 @@
         "empty": {
           "description": "Present when the panel has no content. The panel still renders its keyline and says it is empty.",
           "attribute": "data-sprint-empty"
+        },
+        "loading": {
+          "description": "Present while the content are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+          "attribute": "data-sprint-loading"
         }
       },
       "agentView": {
@@ -1356,6 +2320,249 @@
           "description": "An empty panel keeps its border and states that it is empty, rather than vanishing and leaving a person or an agent unsure whether it failed to load.",
           "code": "<Panel label=\"Registered tools\" emptyLabel=\"No tools registered\" />"
         }
+      ]
+    },
+    {
+      "name": "Pending",
+      "category": "feedback",
+      "summary": "Marks a region whose data is being fetched. Keeps stale content visible and readable while it refreshes, and holds a labelled pending field when there is nothing to show yet.",
+      "whenToUse": "Wrap a region you build yourself while its data loads: a profile card, a chart, a custom summary. Pass the children only once data exists, so the first load shows the pending field and a refetch keeps the old content under a busy bar. Table, List, DescriptionList and Panel take a loading prop of their own, so reach for that first.",
+      "whenNotToUse": "Do not wrap a Table, List, DescriptionList or Panel; use its loading prop, which keeps the region's own label and frame. Do not use for a long job with a countable amount of work; that is a Progress. Do not use for a busy action; that is Button's loading prop.",
+      "status": "experimental",
+      "props": {
+        "loading": {
+          "kind": "boolean",
+          "description": "Whether the region's data is being fetched. While false the wrapper adds nothing to the agent view.",
+          "required": true
+        },
+        "label": {
+          "kind": "string",
+          "description": "What is loading, as a phrase a person can read in the empty field, such as \"Loading profile\".",
+          "required": true
+        },
+        "children": {
+          "kind": "node",
+          "description": "The region's content. Omit it until data exists; while loading with children they stay visible as stale content."
+        }
+      },
+      "state": {
+        "loading": {
+          "description": "Present while the region's data is being fetched.",
+          "attribute": "data-sprint-loading"
+        },
+        "empty": {
+          "description": "Present while loading with no content yet, so nothing on screen is data.",
+          "attribute": "data-sprint-empty"
+        }
+      },
+      "agentView": {
+        "example": "- **Pending** \"Loading profile\" [empty, loading]"
+      },
+      "examples": [
+        {
+          "title": "First load",
+          "description": "No data yet, so the region holds a labelled pending field.",
+          "code": "<Pending loading={isLoading} label=\"Loading profile\">\n  {profile && <ProfileSummary profile={profile} />}\n</Pending>"
+        },
+        {
+          "title": "Refetching stale content",
+          "description": "Content already on screen stays readable under a busy bar, and an agent reads it nested under a loading line.",
+          "code": "<Pending loading={isFetching} label=\"Refreshing pilot\">\n  <Stack gap=\"tight\">\n    <Heading level={3}>{pilot.callsign}</Heading>\n    <Text tone=\"muted\">{pilot.status}</Text>\n  </Stack>\n</Pending>"
+        }
+      ],
+      "a11y": {
+        "role": "group",
+        "notes": "While loading the wrapper is a group named by its label with aria-busy set, so assistive technology knows the content may change. Idle, it is a plain element with no role."
+      }
+    },
+    {
+      "name": "Progress",
+      "category": "feedback",
+      "summary": "A labelled loading indicator for work in progress. Indeterminate by default; pass value for a known fraction complete.",
+      "whenToUse": "Use while something the person is waiting on is still running: a page section fetching, an upload, an import, a long job. Omit value when the remaining work is unknown, and pass value with max when it can be counted. Keep the label a stable noun phrase for what is loading, not a percentage.",
+      "whenNotToUse": "Do not use for a busy action; Button's loading prop already marks the button itself. Do not use for the outcome of work that finished or failed; that is an Alert. Do not use for a quantity that is not progress, such as disk usage.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is loading, such as \"Importing manifest\". It is the indicator's accessible name and its agent label.",
+          "required": true
+        },
+        "value": {
+          "kind": "number",
+          "description": "Work completed so far, in the same units as max. Omit for an indeterminate indicator. Clamped to the range 0 to max."
+        },
+        "max": {
+          "kind": "number",
+          "description": "The value at which the work is complete.",
+          "default": 100
+        }
+      },
+      "state": {
+        "loading": {
+          "description": "Present until the work completes. An indeterminate indicator is always loading.",
+          "attribute": "data-sprint-loading"
+        },
+        "value": {
+          "description": "The fraction complete as a whole percentage, such as 40%. Absent while indeterminate.",
+          "attribute": "data-sprint-value"
+        }
+      },
+      "agentView": {
+        "example": "- **Progress** \"Importing manifest\" [loading, value=40%]"
+      },
+      "examples": [
+        {
+          "title": "Indeterminate load",
+          "description": "Nothing to count yet, so the indicator only says that work is running.",
+          "code": "<Progress label=\"Loading flight plan\" />"
+        },
+        {
+          "title": "Counted progress",
+          "description": "With value and max the agent reads a percentage instead of guessing.",
+          "code": "<Progress label=\"Importing manifest\" value={imported} max={total} />"
+        },
+        {
+          "title": "Complete",
+          "description": "At max the loading state clears, so the line reads as finished rather than stalled.",
+          "code": "<Progress label=\"Importing manifest\" value={240} max={240} />"
+        }
+      ],
+      "a11y": {
+        "role": "progressbar",
+        "notes": "Renders a native progress element named by the visible label. Omitting value leaves it indeterminate, which assistive technology announces as busy. The percentage readout is hidden from assistive technology because the progressbar already carries its value."
+      }
+    },
+    {
+      "name": "SearchField",
+      "category": "input",
+      "summary": "A search box inside its own search landmark: a labelled query field with a clear control, Escape to clear, Enter to submit, and an optional page-wide key that focuses it. It registers one search tool that sets the query and submits it.",
+      "whenToUse": "Use it to filter or search a collection on the page, such as narrowing a users list by name. The landmark lets screen reader users jump straight to it, and the optional shortcut gives keyboard users the familiar slash-to-search.",
+      "whenNotToUse": "Do not use it for any other single-line value; a name, an email address, or an identifier is a TextInput. Do not use it to choose from a short known set, which is a Select or a SegmentedControl. Do not give two fields on one page the same shortcut.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is being searched, as a noun phrase such as \"Users\". Names the landmark and the field, and derives the tool name, so \"Users\" becomes search-users.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The current query. The field is fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the new query on every change, including the clear control, Escape, and the search tool.",
+          "required": true
+        },
+        "onSubmit": {
+          "kind": "handler",
+          "description": "Called with the query when Enter is pressed or the search tool runs. Leave it off for a live filter that reacts to onChange alone."
+        },
+        "placeholder": {
+          "kind": "string",
+          "description": "Ghost text shown while the field is empty, e.g. \"Name or email\"."
+        },
+        "hideLabel": {
+          "kind": "boolean",
+          "description": "Hide the label visually while keeping it for screen readers and agents. Pair it with a placeholder so sighted people still know what the field searches.",
+          "default": false
+        },
+        "shortcut": {
+          "kind": "string",
+          "description": "A single key that focuses the field from anywhere on the page, shown as a key chip while the field is empty and unfocused. Ignored while focus is in another editable element or a modifier is held. Pass \"/\" for the common convention; omit or pass false for none."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name of the query input."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the field, its shortcut, and its search tool.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name, when two search fields on a page would otherwise collide."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the field without registering a search tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The current query, absent while the field is empty.",
+          "attribute": "data-sprint-value"
+        },
+        "empty": {
+          "description": "Present while the field holds no query.",
+          "attribute": "data-sprint-empty"
+        },
+        "shortcut": {
+          "description": "The key that focuses the field from anywhere on the page.",
+          "attribute": "data-sprint-shortcut"
+        },
+        "disabled": {
+          "description": "Present when the field cannot be edited.",
+          "attribute": "data-sprint-disabled"
+        }
+      },
+      "tools": {
+        "search": {
+          "verb": "search",
+          "description": "Search with this field: replace its text with the query, exactly as a person typing it would, then submit it as pressing Enter would. Pass an empty string to clear the search. Results usually render elsewhere on the page; this returns the field's state after the search, so read the results region next.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The full search text. Replaces the current query rather than appending to it; an empty string clears the search."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The field is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The field unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **SearchField** \"Users\" [empty, shortcut=/] → tool `search-users`"
+      },
+      "examples": [
+        {
+          "title": "Filtering a list",
+          "description": "A live filter: onChange narrows the list as the person types, so there is no onSubmit. The label is hidden and the placeholder says what can be matched.",
+          "code": "<SearchField\n  label=\"Users\"\n  hideLabel\n  value={query}\n  onChange={setQuery}\n  placeholder=\"Name or email\"\n/>"
+        },
+        {
+          "title": "A slash shortcut",
+          "description": "Pressing / anywhere on the page focuses the field unless focus is already in something editable. The key chip disappears once the field has focus or a query.",
+          "code": "<SearchField\n  label=\"Users\"\n  value={query}\n  onChange={setQuery}\n  shortcut=\"/\"\n  placeholder=\"Name or email\"\n/>"
+        },
+        {
+          "title": "Submitting a query",
+          "description": "For a search that is too costly to run on every keystroke, onSubmit receives the query on Enter and when the search tool runs.",
+          "code": "<SearchField\n  label=\"Flight logs\"\n  value={query}\n  onChange={setQuery}\n  onSubmit={runSearch}\n  placeholder=\"Callsign or tail number\"\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "search",
+        "keyboard": [
+          "Enter submits the query",
+          "Escape clears a non-empty query and keeps focus; on an empty field it passes through, so an enclosing dialog can close",
+          "The shortcut key, when set, focuses the field from anywhere on the page"
+        ],
+        "notes": "The root is a form with role search, labelled by the field's label, so it is listed as a search landmark. The input is type search and announces its shortcut with aria-keyshortcuts; the key chip itself is hidden from assistive technology. The clear control appears only while there is a query, and returns focus to the field."
+      },
+      "relatedComponents": [
+        "TextInput"
       ]
     },
     {
@@ -1429,7 +2636,7 @@
         },
         "options": {
           "kind": "array",
-          "description": "The choices in display order: { value, label }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value.",
+          "description": "The choices in display order: { value, label, count? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label.",
           "required": true
         },
         "value": {
@@ -1441,6 +2648,19 @@
           "kind": "handler",
           "description": "Called with the newly selected value. The select tool drives a real click, so this runs for agent selections too.",
           "required": true
+        },
+        "savedValue": {
+          "kind": "string",
+          "description": "The value currently in effect, for a control that stages a change until something confirms it. While it differs from value the saved option keeps a marker and the control reports itself dirty, so both the saved and the proposed choice stay readable."
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance shown under the options, linked with aria-describedby and carried into the agent view. Say what a staged change does, such as when it takes effect."
+        },
+        "block": {
+          "kind": "boolean",
+          "description": "Fill the container's width, with every option taking an equal share. Without it the control stays as wide as its options, even inside a stretching column.",
+          "default": false
         },
         "disabled": {
           "kind": "boolean",
@@ -1461,6 +2681,14 @@
         "value": {
           "description": "The value of the option currently selected.",
           "attribute": "data-sprint-value"
+        },
+        "dirty": {
+          "description": "Present while savedValue is set and differs from value. The saved option carries data-sprint-saved.",
+          "attribute": "data-sprint-dirty"
+        },
+        "block": {
+          "description": "Present when the control fills its container.",
+          "attribute": "data-sprint-block"
         },
         "disabled": {
           "description": "Present when no option can be chosen.",
@@ -1490,13 +2718,28 @@
         }
       },
       "agentView": {
-        "example": "- **SegmentedControl** \"Page view\" [value=human] → tool `select-page-view`\n  - part `option` \"human\" [checked]\n  - part `option` \"agent\""
+        "example": "- **SegmentedControl** \"Access\" [dirty, value=write] → tool `select-access`\n  - part `option` \"Read\" [count=17, saved]\n  - part `option` \"Write\" [checked, count=4]\n  - part `hint` \"Currently Read. Nothing changes until you confirm.\""
       },
       "examples": [
         {
           "title": "A view switch",
           "description": "In agent view each option renders as its own control, so an agent driving the DOM can click one without WebMCP.",
           "code": "<SegmentedControl\n  label=\"Page view\"\n  value={view}\n  onChange={setView}\n  options={[\n    { value: \"human\", label: \"human\" },\n    { value: \"agent\", label: \"agent\" },\n  ]}\n/>"
+        },
+        {
+          "title": "Options with counts",
+          "description": "A count is data, not label text: it renders as a chip, joins the accessible name, and reaches agents as part state while the select tool still takes the plain label.",
+          "code": "<SegmentedControl\n  label=\"Members\"\n  value={filter}\n  onChange={setFilter}\n  options={[\n    { value: \"all\", label: \"All\", count: 48 },\n    { value: \"active\", label: \"Active\", count: 18 },\n    { value: \"never\", label: \"Never signed in\", count: 30 },\n  ]}\n/>"
+        },
+        {
+          "title": "A staged change",
+          "description": "savedValue keeps the value in effect visible while another is selected, and hint says what confirming will do. The control reports itself dirty until the two agree.",
+          "code": "<SegmentedControl\n  label=\"Access\"\n  value={access}\n  savedValue=\"read\"\n  onChange={setAccess}\n  hint=\"Currently Read. Nothing changes until you confirm.\"\n  options={[\n    { value: \"read\", label: \"Read\" },\n    { value: \"write\", label: \"Write\" },\n    { value: \"admin\", label: \"Admin\" },\n  ]}\n/>"
+        },
+        {
+          "title": "A full-width control",
+          "description": "block fills the container and shares the width equally between options. Without it the control keeps its own width inside a stretching Stack.",
+          "code": "<SegmentedControl\n  label=\"Range\"\n  block\n  value={range}\n  onChange={setRange}\n  options={[\n    { value: \"day\", label: \"Day\" },\n    { value: \"week\", label: \"Week\" },\n    { value: \"month\", label: \"Month\" },\n  ]}\n/>"
         },
         {
           "title": "A disabled control",
@@ -1512,13 +2755,13 @@
           "End selects the last option",
           "Tab enters and leaves the group once"
         ],
-        "notes": "Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group."
+        "notes": "Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group. An option with a count is named by its label and its count together; the hint is linked to the group with aria-describedby."
       }
     },
     {
       "name": "Select",
       "category": "input",
-      "summary": "A dropdown of mutually exclusive options behind a native select, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
+      "summary": "A dropdown of mutually exclusive options: a select-only combobox that opens a listbox on click or keyboard, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
       "whenToUse": "Use it when one value is chosen from a list too long to lay out flat: a region, a squad, a category. Options are data ({ value, label }), the tool accepts the visible label, and in agent view every option renders as its own control, so an agent picks one without opening anything.",
       "whenNotToUse": "Do not use it for two to four short options a person should compare at a glance; that is a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch, and never for navigation.",
       "status": "experimental",
@@ -1530,7 +2773,7 @@
         },
         "options": {
           "kind": "array",
-          "description": "The choices in display order: { value, label }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value.",
+          "description": "The choices in display order: { value, label, count? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label.",
           "required": true
         },
         "value": {
@@ -1540,12 +2783,12 @@
         },
         "onChange": {
           "kind": "handler",
-          "description": "Called with the newly chosen value. The select tool drives a real change event, so this runs for agent selections too.",
+          "description": "Called with the newly chosen value. The select tool clicks the real option, so this runs for agent selections too.",
           "required": true
         },
         "placeholder": {
           "kind": "string",
-          "description": "Shown while value is \"\". Rendered as a disabled option, so a person cannot choose it back."
+          "description": "Shown in the closed control while value is \"\". It is not an option, so a person cannot choose it back."
         },
         "hint": {
           "kind": "string",
@@ -1557,7 +2800,7 @@
         },
         "name": {
           "kind": "string",
-          "description": "The native form name submitted with the surrounding form."
+          "description": "The form name submitted with the surrounding form, through a hidden input carrying the value."
         },
         "disabled": {
           "kind": "boolean",
@@ -1599,6 +2842,10 @@
         "invalid": {
           "description": "Present while an error is set.",
           "attribute": "data-sprint-invalid"
+        },
+        "active": {
+          "description": "On an option part, present while the list is open and that option is highlighted by the keyboard or pointer.",
+          "attribute": "data-sprint-active"
         }
       },
       "tools": {
@@ -1624,13 +2871,18 @@
         }
       },
       "agentView": {
-        "example": "- **Select** \"Region\" [value=eu-1] → tool `select-region`\n  - part `option` \"North Atlantic\"\n  - part `option` \"Northern Europe\" [checked]\n  - part `option` \"East Asia\""
+        "example": "- **Select** \"Region\" [value=eu-1] → tool `select-region`\n  - part `option` \"North Atlantic\" [count=12]\n  - part `option` \"Northern Europe\" [checked, count=30]\n  - part `option` \"East Asia\" [count=7]"
       },
       "examples": [
         {
           "title": "A dropdown",
           "description": "In agent view each option renders as its own control, so a DOM-driving agent chooses one directly.",
           "code": "<Select\n  label=\"Region\"\n  value={region}\n  onChange={setRegion}\n  placeholder=\"Choose a region\"\n  options={[\n    { value: \"na-1\", label: \"North Atlantic\" },\n    { value: \"eu-1\", label: \"Northern Europe\" },\n    { value: \"ap-1\", label: \"East Asia\" },\n  ]}\n/>"
+        },
+        {
+          "title": "Options with counts",
+          "description": "A count is data, not label text: it renders as a chip in the list and the closed control, joins the accessible name, and reaches agents as part state while the select tool still takes the plain label.",
+          "code": "<Select\n  label=\"Region\"\n  value={region}\n  onChange={setRegion}\n  placeholder=\"Choose a region\"\n  options={[\n    { value: \"na-1\", label: \"North Atlantic\", count: 12 },\n    { value: \"eu-1\", label: \"Northern Europe\", count: 30 },\n    { value: \"ap-1\", label: \"East Asia\", count: 7 },\n  ]}\n/>"
         },
         {
           "title": "A required choice with an error",
@@ -1646,11 +2898,12 @@
       "a11y": {
         "role": "combobox",
         "keyboard": [
-          "Arrow keys move through the options",
-          "Enter or Space opens the list",
-          "Escape closes it"
+          "Enter, Space, or an arrow key opens the list",
+          "Arrow keys, Home, and End move through the options; typing a letter jumps to the next match",
+          "Enter or Space chooses the highlighted option",
+          "Escape or Tab closes the list without choosing"
         ],
-        "notes": "A native select element, so the platform owns the listbox interaction. The label is associated via htmlFor; errors set aria-invalid and link with aria-describedby."
+        "notes": "A select-only combobox: a button with role combobox that opens a listbox on a plain click, so a synthetic element.click() opens it as reliably as a pointer does, and the list renders in the page rather than in browser chrome an automated session cannot see. Focus stays on the button and aria-activedescendant tracks the highlighted option. The label is linked with aria-labelledby; errors set aria-invalid and link with aria-describedby. An option with a count is named by its label and count together."
       }
     },
     {
@@ -1693,9 +2946,41 @@
           "kind": "string",
           "description": "Label of the drawer button while the drawer is open.",
           "default": "Close"
+        },
+        "collapsible": {
+          "kind": "boolean",
+          "description": "Lets a person hide the sidebar on wide viewports too. A second toggle appears beside the bar there, and while collapsed the page takes the narrow layout: the bar runs across the top and the sidebar is gone until it is shown again.",
+          "default": false
+        },
+        "collapsed": {
+          "kind": "boolean",
+          "description": "Whether the sidebar is collapsed on wide viewports, when the owner keeps that state. Pair it with onCollapsedChange."
+        },
+        "defaultCollapsed": {
+          "kind": "boolean",
+          "description": "Whether a collapsible sidebar starts collapsed when the Shell keeps its own state.",
+          "default": false
+        },
+        "onCollapsedChange": {
+          "kind": "handler",
+          "description": "Called with the collapsed state the Shell wants. Use it to remember the choice across visits."
+        },
+        "hideLabel": {
+          "kind": "string",
+          "description": "Label of the wide-viewport toggle while the sidebar is shown.",
+          "default": "Hide menu"
+        },
+        "showLabel": {
+          "kind": "string",
+          "description": "Label of the wide-viewport toggle while the sidebar is collapsed.",
+          "default": "Show menu"
         }
       },
       "state": {
+        "collapsed": {
+          "description": "Present while a collapsible sidebar is hidden on wide viewports. Narrow viewports ignore it and keep the drawer.",
+          "attribute": "data-sprint-collapsed"
+        },
         "open": {
           "description": "Present while the mobile drawer is open. On wide viewports the sidebar is always visible and this state is inert.",
           "attribute": "data-sprint-open"
@@ -1714,6 +2999,11 @@
           "title": "A sidebar app shell",
           "description": "One Shell per view. The sidebar collapses to a top bar with a drawer on narrow screens, and an agent reading the page sees the nav and the content with no frame in between.",
           "code": "<Shell\n  bar={<Link href=\"#/\">ACME</Link>}\n  side={\n    <Nav label=\"Main\">\n      <Link href=\"#/reports\" active>Reports</Link>\n      <Link href=\"#/settings\">Settings</Link>\n    </Nav>\n  }\n>\n  <Panel label=\"Reports\" headingLevel={2}>\n    <Text>Quarterly numbers land here.</Text>\n  </Panel>\n</Shell>"
+        },
+        {
+          "title": "A sidebar that can be hidden",
+          "description": "With collapsible, a person can put the sidebar away on a wide screen as well as a narrow one, and get the full width for the page.",
+          "code": "<Shell\n  collapsible\n  bar={<Link href=\"#/\">ACME</Link>}\n  side={\n    <Nav label=\"Main\">\n      <Link href=\"#/reports\" active>Reports</Link>\n      <Link href=\"#/settings\">Settings</Link>\n    </Nav>\n  }\n>\n  <Text>Quarterly numbers land here.</Text>\n</Shell>"
         }
       ]
     },
@@ -1783,8 +3073,20 @@
           "default": false
         },
         "min": {
-          "kind": "string",
-          "description": "Minimum track width for direction=\"grid\", as a CSS length. Tracks never exceed the container.",
+          "kind": "enum",
+          "description": "Minimum track width for direction=\"grid\", from a fixed scale of rem lengths. Tracks never exceed the container. Scale values are mapped in the stylesheet through data-sprint-min, so they work under a strict Content Security Policy. Any other CSS length is still accepted as an escape hatch, but it is written to an inline style attribute, which a style-src policy without unsafe-inline blocks: under such a policy an off-scale grid falls back to one column.",
+          "values": [
+            "10rem",
+            "12rem",
+            "14rem",
+            "16rem",
+            "18rem",
+            "20rem",
+            "22rem",
+            "24rem",
+            "28rem",
+            "32rem"
+          ],
           "default": "18rem"
         }
       },
@@ -1836,6 +3138,10 @@
         "collapse": {
           "description": "Present when the row stacks into a column on narrow viewports.",
           "attribute": "data-sprint-collapse"
+        },
+        "min": {
+          "description": "The minimum track width in use, present only when direction=\"grid\". A value off the scale is carried here too, with the length itself in an inline style.",
+          "attribute": "data-sprint-min"
         }
       },
       "examples": [
@@ -1852,6 +3158,91 @@
         {
           "title": "A header bar that stacks on a phone",
           "code": "<Stack direction=\"row\" justify=\"between\" align=\"center\" collapse>\n  <Heading level={1}>Button</Heading>\n  <Tag tone=\"warning\">experimental</Tag>\n</Stack>"
+        }
+      ]
+    },
+    {
+      "name": "Steps",
+      "category": "display",
+      "summary": "An ordered set of numbered steps a person works through: each one a number badge, a short title and an optional body, with a rule between them. A step can be marked done or current, so the list doubles as a record of how far someone has got.",
+      "whenToUse": "Use it when the order is the instruction: a handful of things to do one after another, each worth a title of its own, like the two things to send someone or the stages of a setup. Mark the step in progress as current and the finished ones as done when the page knows; leave every state off when the steps are simply instructions. Each step is an addressable part carrying its position and state, so an agent can say which step is next without counting lines.",
+      "whenNotToUse": "Do not use it for a plain numbered list of short points with no titles or progress; that is List with ordered. Do not use it as a wizard that moves between screens: Steps only displays where someone is, it has no actions and registers no WebMCP tool, because there is nothing to press and an agent reads every step and its state from the agent view. Pair it with a Button when the page itself advances. Do not put components or links in a step; title and body are plain strings.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the steps achieve, as a short phrase like \"Send Tess two things\". Names the list for a screen reader and for the agent view.",
+          "required": true
+        },
+        "steps": {
+          "kind": "array",
+          "description": "The steps in order, each { title: string; body?: string; state?: \"done\" | \"current\" }. Title is the instruction in a few words; body is an optional sentence of detail. A step with no state is upcoming. Mark at most one step current.",
+          "required": true
+        },
+        "doneLabel": {
+          "kind": "string",
+          "description": "What a screen reader hears as the description of a finished step, since the done mark is drawn rather than written.",
+          "default": "Done"
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the list says when it has no steps.",
+          "default": "No steps"
+        }
+      },
+      "state": {
+        "steps": {
+          "description": "How many steps there are.",
+          "attribute": "data-sprint-steps"
+        },
+        "complete": {
+          "description": "Present when every step is done.",
+          "attribute": "data-sprint-complete"
+        },
+        "empty": {
+          "description": "Present when there are no steps.",
+          "attribute": "data-sprint-empty"
+        },
+        "index": {
+          "description": "On a step: its 1-based position, which is also the number in its badge.",
+          "attribute": "data-sprint-index"
+        },
+        "done": {
+          "description": "On a step: present once the step is finished.",
+          "attribute": "data-sprint-done"
+        },
+        "current": {
+          "description": "On a step: present on the step in progress.",
+          "attribute": "data-sprint-current"
+        }
+      },
+      "agentView": {
+        "example": "- **Steps** \"Send Tess two things\" [steps=2]\n  - part `step` \"Copy the link\" [index=1]\n  - part `step` \"Pass on the emoji\" [index=2]"
+      },
+      "a11y": {
+        "role": "list",
+        "notes": "A real ol named by its label, with an explicit list role because the drawn badges require list-style none and Safari would otherwise drop the list semantics, so the position of each step is announced. The badge number is aria-hidden for the same reason. The current step carries aria-current=\"step\", and a done step is described by doneLabel. Title and body are read as one item, separated by a colon that is hidden visually."
+      },
+      "relatedComponents": [
+        "List",
+        "Progress",
+        "Panel"
+      ],
+      "examples": [
+        {
+          "title": "Send Tess two things",
+          "description": "The plainest case: two instructions in order, with no progress to report.",
+          "code": "<Steps\n  label=\"Send Tess two things\"\n  steps={[{ title: \"Copy the link\" }, { title: \"Pass on the emoji\" }]}\n/>"
+        },
+        {
+          "title": "Partway through",
+          "description": "A finished step, the one in progress, and one still to come, each with a line of detail.",
+          "code": "<Steps\n  label=\"Connect a tool\"\n  steps={[\n    {\n      title: \"Register the tool\",\n      body: \"Give it a name and an input schema.\",\n      state: \"done\",\n    },\n    {\n      title: \"Drive the DOM\",\n      body: \"Click the real element rather than calling a prop.\",\n      state: \"current\",\n    },\n    { title: \"Return the new state\", body: \"Read it back from the page.\" },\n  ]}\n/>"
+        },
+        {
+          "title": "Every step done",
+          "description": "When all steps are done the list publishes that it is complete.",
+          "code": "<Steps\n  label=\"Send Tess two things\"\n  steps={[\n    { title: \"Copy the link\", state: \"done\" },\n    { title: \"Pass on the emoji\", state: \"done\" },\n  ]}\n/>"
         }
       ]
     },
@@ -1964,7 +3355,7 @@
         },
         "columns": {
           "kind": "array",
-          "description": "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column.",
+          "description": "Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column. width is one of 4rem, 5rem, 6rem, 7rem, 8rem, 9rem, 10rem, 12rem, 14rem, 16rem, 20rem, or 24rem, mapped in the stylesheet through data-sprint-width on the header cell so it works under a strict Content Security Policy; any other CSS length is still accepted but is written to an inline style attribute, which a style-src policy without unsafe-inline blocks.",
           "required": true
         },
         "rows": {
@@ -1976,6 +3367,16 @@
           "kind": "string",
           "description": "What the table says when it has no rows.",
           "default": "No rows"
+        },
+        "loading": {
+          "kind": "boolean",
+          "description": "Set while the rows are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing rows stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel.",
+          "default": false
+        },
+        "loadingLabel": {
+          "kind": "string",
+          "description": "What the empty slot says while loading.",
+          "default": "Loading"
         }
       },
       "state": {
@@ -1991,6 +3392,10 @@
           "description": "Present when the table has no rows.",
           "attribute": "data-sprint-empty"
         },
+        "loading": {
+          "description": "Present while the rows are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing.",
+          "attribute": "data-sprint-loading"
+        },
         "column": {
           "description": "On a cell: which column it belongs to.",
           "attribute": "data-sprint-column"
@@ -1998,6 +3403,10 @@
         "row": {
           "description": "On a cell: which row it belongs to.",
           "attribute": "data-sprint-row"
+        },
+        "width": {
+          "description": "On a column header: the width its column asked for, if any. A value off the scale is carried here too, with the length itself in an inline style.",
+          "attribute": "data-sprint-width"
         },
         "align": {
           "description": "On a cell: the alignment its column asked for, if any.",
@@ -2021,6 +3430,11 @@
           "title": "A table with no rows",
           "description": "An empty table keeps its header and says so, rather than rendering a bare keyline.",
           "code": "<Table\n  label=\"Registered tools\"\n  emptyLabel=\"No tools registered\"\n  columns={[{ key: \"name\", header: \"Name\" }]}\n  rows={[]}\n/>"
+        },
+        {
+          "title": "A table while fetching",
+          "description": "Before the first rows arrive the table reads [empty, loading], so an agent waits rather than concluding there is nothing.",
+          "code": "<Table\n  label=\"Loadouts\"\n  loading={isFetching}\n  columns={[{ key: \"name\", header: \"Name\" }]}\n  rows={loadouts ?? []}\n/>"
         }
       ],
       "a11y": {
@@ -2322,7 +3736,7 @@
       "category": "input",
       "summary": "A single-line text field carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the field's text with an explicit value.",
       "whenToUse": "Use it for any free-form single-line value: a name, an email address, a search term. The label is part of the component, so a form never needs a separate label element, and the error prop is how validation reaches both a person and an agent.",
-      "whenNotToUse": "Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch.",
+      "whenNotToUse": "Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch. Do not use a read-only TextInput to hand someone a value to paste elsewhere; that is a CopyField.",
       "status": "experimental",
       "props": {
         "label": {
@@ -2377,6 +3791,11 @@
           "description": "Disable the field and unregister its fill tool.",
           "default": false
         },
+        "readOnly": {
+          "kind": "boolean",
+          "description": "Show the value without letting anyone change it. The field stays focusable and selectable, renders as plain text in the agent view, and registers no fill tool, because nothing can change it.",
+          "default": false
+        },
         "required": {
           "kind": "boolean",
           "description": "Mark the field required, visually and in the agent view.",
@@ -2409,6 +3828,10 @@
           "description": "Present when the field cannot be edited.",
           "attribute": "data-sprint-disabled"
         },
+        "readonly": {
+          "description": "Present when the field shows a value that cannot be changed. No fill tool is registered while it is set.",
+          "attribute": "data-sprint-readonly"
+        },
         "required": {
           "description": "Present when the field must be filled.",
           "attribute": "data-sprint-required"
@@ -2436,8 +3859,8 @@
           },
           "readOnly": false,
           "untrustedContent": true,
-          "registeredWhen": "The field is mounted, enabled, has a resolvable label, and no other component claims the same tool name.",
-          "unregisteredWhen": "The field unmounts or becomes disabled."
+          "registeredWhen": "The field is mounted, enabled, editable rather than read-only, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The field unmounts, becomes disabled, or becomes read-only."
         }
       },
       "agentView": {
@@ -2458,6 +3881,11 @@
           "title": "A password",
           "description": "The value stays off every agent surface: state reflects filled or empty, and tool results never echo the text.",
           "code": "<TextInput\n  label=\"Access code\"\n  type=\"password\"\n  value={code}\n  onChange={setCode}\n  autoComplete=\"current-password\"\n/>"
+        },
+        {
+          "title": "A read-only value",
+          "description": "A value shown in the shape of a form field that nobody may edit. It stays focusable and selectable, reads as text in the agent view, and registers no fill tool. To hand someone a value to paste elsewhere, a CopyField adds the copy control.",
+          "code": "<TextInput\n  label=\"Station ID\"\n  value=\"KX-2209-ALPHA\"\n  onChange={() => {}}\n  readOnly\n  hint=\"Assigned at registration\"\n/>"
         }
       ],
       "a11y": {

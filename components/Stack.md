@@ -64,7 +64,7 @@ Tracks fill the container and never go below min, so this is one column on a pho
 | `justify` | enum start \\| center \\| end \\| between | — | Main-axis distribution. |
 | `wrap` | boolean | `false` | Let a row wrap onto more lines instead of overflowing. |
 | `collapse` | boolean | `false` | Stack a row into a column on narrow viewports. This is how a toolbar survives a phone. |
-| `min` | string | `"18rem"` | Minimum track width for direction="grid", as a CSS length. Tracks never exceed the container. |
+| `min` | enum 10rem \\| 12rem \\| 14rem \\| 16rem \\| 18rem \\| 20rem \\| 22rem \\| 24rem \\| 28rem \\| 32rem | `"18rem"` | Minimum track width for direction="grid", from a fixed scale of rem lengths. Tracks never exceed the container. Scale values are mapped in the stylesheet through data-sprint-min, so they work under a strict Content Security Policy. Any other CSS length is still accepted as an escape hatch, but it is written to an inline style attribute, which a style-src policy without unsafe-inline blocks: under such a policy an off-scale grid falls back to one column. |
 
 ## State attributes
 
@@ -78,3 +78,4 @@ Public API: agents write selectors against these.
 | `data-sprint-justify` | start \\| center \\| end \\| between | Main-axis distribution, when one was asked for. |
 | `data-sprint-wrap` | present or absent | Present when a row is allowed to wrap. |
 | `data-sprint-collapse` | present or absent | Present when the row stacks into a column on narrow viewports. |
+| `data-sprint-min` | present or absent | The minimum track width in use, present only when direction="grid". A value off the scale is carried here too, with the length itself in an inline style. |

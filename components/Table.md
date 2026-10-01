@@ -50,14 +50,29 @@ An empty table keeps its header and says so, rather than rendering a bare keylin
 />
 ```
 
+### A table while fetching
+
+Before the first rows arrive the table reads [empty, loading], so an agent waits rather than concluding there is nothing.
+
+```tsx
+<Table
+  label="Loadouts"
+  loading={isFetching}
+  columns={[{ key: "name", header: "Name" }]}
+  rows={loadouts ?? []}
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
 | --- | --- | --- | --- |
 | `label` | string (required) | — | What this table is a table of. Used as its accessible name and read back by the agent view. |
-| `columns` | array (required) | — | Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column. |
+| `columns` | array (required) | — | Column definitions, in display order: { key, header, align?, width? }. The key addresses the cell in each row and appears on the cell as data-sprint-column. width is one of 4rem, 5rem, 6rem, 7rem, 8rem, 9rem, 10rem, 12rem, 14rem, 16rem, 20rem, or 24rem, mapped in the stylesheet through data-sprint-width on the header cell so it works under a strict Content Security Policy; any other CSS length is still accepted but is written to an inline style attribute, which a style-src policy without unsafe-inline blocks. |
 | `rows` | array (required) | — | Rows in display order: { id?, cells }, where cells maps a column key to inline content. id names the row for an agent and defaults to its 1-based position. |
 | `emptyLabel` | string | `"No rows"` | What the table says when it has no rows. |
+| `loading` | boolean | `false` | Set while the rows are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing rows stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel. |
+| `loadingLabel` | string | `"Loading"` | What the empty slot says while loading. |
 
 ## State attributes
 
@@ -68,8 +83,10 @@ Public API: agents write selectors against these.
 | `data-sprint-columns` | present or absent | How many columns the table has. |
 | `data-sprint-rows` | present or absent | How many rows the table currently has. |
 | `data-sprint-empty` | present or absent | Present when the table has no rows. |
+| `data-sprint-loading` | present or absent | Present while the rows are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing. |
 | `data-sprint-column` | present or absent | On a cell: which column it belongs to. |
 | `data-sprint-row` | present or absent | On a cell: which row it belongs to. |
+| `data-sprint-width` | present or absent | On a column header: the width its column asked for, if any. A value off the scale is carried here too, with the length itself in an inline style. |
 | `data-sprint-align` | start \\| end | On a cell: the alignment its column asked for, if any. |
 
 ## Agent view

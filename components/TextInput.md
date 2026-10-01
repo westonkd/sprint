@@ -11,7 +11,7 @@ Use it for any free-form single-line value: a name, an email address, a search t
 
 ### When not to
 
-Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch.
+Do not use it for multi-line text, which is a Textarea. Do not use it to pick from a known set of values; that is a Select or a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch. Do not use a read-only TextInput to hand someone a value to paste elsewhere; that is a CopyField.
 
 ## Install
 
@@ -64,6 +64,20 @@ The value stays off every agent surface: state reflects filled or empty, and too
 />
 ```
 
+### A read-only value
+
+A value shown in the shape of a form field that nobody may edit. It stays focusable and selectable, reads as text in the agent view, and registers no fill tool. To hand someone a value to paste elsewhere, a CopyField adds the copy control.
+
+```tsx
+<TextInput
+  label="Station ID"
+  value="KX-2209-ALPHA"
+  onChange={() => {}}
+  readOnly
+  hint="Assigned at registration"
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -78,6 +92,7 @@ The value stays off every agent surface: state reflects filled or empty, and too
 | `name` | string | — | The native form name submitted with the surrounding form. |
 | `autoComplete` | string | — | The native autocomplete hint, forwarded to the input. |
 | `disabled` | boolean | `false` | Disable the field and unregister its fill tool. |
+| `readOnly` | boolean | `false` | Show the value without letting anyone change it. The field stays focusable and selectable, renders as plain text in the agent view, and registers no fill tool, because nothing can change it. |
 | `required` | boolean | `false` | Mark the field required, visually and in the agent view. |
 | `agentName` | string | — | Override the label used to derive the tool name, when two fields on a page would otherwise collide. |
 | `agentTool` | boolean | `true` | Set false to render the field without registering a fill tool. |
@@ -92,6 +107,7 @@ Public API: agents write selectors against these.
 | `data-sprint-filled` | present or absent | Present when a password field holds text. |
 | `data-sprint-empty` | present or absent | Present while the field holds no text. |
 | `data-sprint-disabled` | present or absent | Present when the field cannot be edited. |
+| `data-sprint-readonly` | present or absent | Present when the field shows a value that cannot be changed. No fill tool is registered while it is set. |
 | `data-sprint-required` | present or absent | Present when the field must be filled. |
 | `data-sprint-invalid` | present or absent | Present while an error is set. |
 
@@ -102,8 +118,8 @@ Public API: agents write selectors against these.
 Replace this field's text with the value provided, exactly as a person typing it would. The value is the full text the field ends up containing; pass an empty string to clear it. Returns the field's state after the change, so a follow-up read is unnecessary.
 
 - Read-only: no
-- Registered when: The field is mounted, enabled, has a resolvable label, and no other component claims the same tool name.
-- Unregistered when: The field unmounts or becomes disabled.
+- Registered when: The field is mounted, enabled, editable rather than read-only, has a resolvable label, and no other component claims the same tool name.
+- Unregistered when: The field unmounts, becomes disabled, or becomes read-only.
 
 ```json
 {

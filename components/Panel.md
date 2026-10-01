@@ -87,6 +87,8 @@ An empty panel keeps its border and states that it is empty, rather than vanishi
 | `actions` | node | — | Controls that act on this region, rendered at the end of the header band. Keep it to one or two. |
 | `flush` | boolean | `false` | Drop the body padding, for content that draws its own edges such as a Table or a CodeBlock. |
 | `emptyLabel` | string | `"Empty"` | What the panel says when it has no content. |
+| `loading` | boolean | `false` | Set while the content are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing content stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel. |
+| `loadingLabel` | string | `"Loading"` | What the empty slot says while loading. |
 
 ## State attributes
 
@@ -96,6 +98,7 @@ Public API: agents write selectors against these.
 | --- | --- | --- |
 | `data-sprint-flush` | present or absent | Present when the body carries no padding of its own. |
 | `data-sprint-empty` | present or absent | Present when the panel has no content. The panel still renders its keyline and says it is empty. |
+| `data-sprint-loading` | present or absent | Present while the content are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing. |
 
 ## Agent view
 

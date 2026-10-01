@@ -7,7 +7,7 @@
 
 ## When to use
 
-Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description.
+Use for the properties of a single entity: a token's created date and scopes, a session's device and last activity, a profile's fields. Each item pairs one term with one description. It lays itself out from its own width, not the viewport's: the term sits above its value until the list is at least 32rem wide, then moves into a column of its own, so it reads the same in a sidebar as in a full-width panel.
 
 ### When not to
 
@@ -50,6 +50,8 @@ The region keeps its frame and states its emptiness.
 | `label` | string (required) | — | The accessible name for the list, describing what entity it details. |
 | `items` | array (required) | — | The pairs, in order. Each item is { term, description }; both are inline content flattened to text for the agent view. |
 | `emptyLabel` | string | `"Empty"` | Text shown when items is empty. The region keeps its frame. |
+| `loading` | boolean | `false` | Set while the pairs are being fetched. Sets aria-busy and sweeps a bar along the top edge. Existing pairs stay visible; with none yet, the empty slot says loadingLabel instead of emptyLabel. |
+| `loadingLabel` | string | `"Loading"` | What the empty slot says while loading. |
 
 ## State attributes
 
@@ -59,6 +61,7 @@ Public API: agents write selectors against these.
 | --- | --- | --- |
 | `data-sprint-items` | present or absent | The number of pairs. |
 | `data-sprint-empty` | present or absent | Present when there are no pairs. |
+| `data-sprint-loading` | present or absent | Present while the pairs are being fetched. Alongside empty it means nothing has arrived yet, not that there is nothing. |
 
 ## Agent view
 
