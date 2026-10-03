@@ -11,7 +11,7 @@
     {
       "name": "agent-manifest.json",
       "digest": {
-        "sha256": "6d34a5c0855189958c66d767566cc055d89c51b0c3fe3950ae70ff533157047e"
+        "sha256": "535013d516dd8decc0e3150f715dbaaa2219ff74fca49cca6919ca534da8f56e"
       }
     },
     {
@@ -21,33 +21,33 @@
       }
     },
     {
-      "name": "assets/index-BMcvMeDA.js",
+      "name": "assets/index-CNARImYc.js",
       "digest": {
-        "sha256": "c6fc2a584a8174ed837640387d9372f8ed9439d48fa5b3045e4360a36642a390"
+        "sha256": "82c19ff5b578be45cabad7b1c9d0d6c5f187015e05cca4ccc1a63666420e5b19"
       }
     },
     {
-      "name": "assets/workbench-C2s3LD2Y.js",
+      "name": "assets/workbench-8qEaYxNP.css",
       "digest": {
-        "sha256": "de40a84618150ebd838d0481282c36ffe33dc9fec28a840068bba7058f97eed6"
+        "sha256": "7b5330c36591f00ca3cfa28ccf581ce93d5b199fd2874878d88d1d1abbab91ff"
       }
     },
     {
-      "name": "assets/workbench-DCI4YSZC.css",
+      "name": "assets/workbench-B53S0L_l.css",
       "digest": {
-        "sha256": "36f9c86f3d130d648a1e943a5a1d672af26d83ca9920d4ee687564fdc5b719d3"
+        "sha256": "291ea89e43a9fe5ce62fb4db61a7f063f7995aaa12264cff3d932e0178cfe685"
       }
     },
     {
-      "name": "assets/workbench-Dr0NP9q5.js",
+      "name": "assets/workbench-C1RfQaHz.js",
       "digest": {
-        "sha256": "b3306bce2ba44ca30626c19691106d4448faac94049a76a3058a5632db5c0751"
+        "sha256": "00ca2141d319cba46c91f4cafd57005953c57919573b14f72060cbbd775ab481"
       }
     },
     {
-      "name": "assets/workbench-V6O0Hksy.css",
+      "name": "assets/workbench-UDuQXvMG.js",
       "digest": {
-        "sha256": "91a6e17ac1fa31be0afb6bfdac2fded7b08e1925f0b1099dc4c69024993d9bd4"
+        "sha256": "62bb561abe9dfeee3118a567587dd0cb28b56815dd5f62e62ca62faa69d850c1"
       }
     },
     {
@@ -125,7 +125,7 @@
     {
       "name": "components/Divider.md",
       "digest": {
-        "sha256": "5f22e0ca746f1984f5e16baab686a50969e0ad0e77509fa92463dabcb1008fe2"
+        "sha256": "196952876c29824587d757d9901f64ca57d44c768143341a5c25ff00853f8636"
       }
     },
     {
@@ -293,7 +293,7 @@
     {
       "name": "index.html",
       "digest": {
-        "sha256": "417a78d45bfc88c34211d2a21775368df231a6c23b2bba6e1aaa96ad356ced26"
+        "sha256": "acaa557c061372faec04ab6bad8d9175a723ff8bac7130812a86396cfd9fde24"
       }
     },
     {
@@ -323,7 +323,7 @@
     {
       "name": "workbench.html",
       "digest": {
-        "sha256": "82ca09bf0779a2894d64fb8395cb1753868d5687e87576ade1ad6751d8562c13"
+        "sha256": "bb675a28cceba730513c475c1485aa86606d3314c063707d41aa9b5aa96fbf38"
       }
     }
   ],
@@ -370,7 +370,7 @@
                 "target": "docs-site",
                 "vcs:localdir:context": ".",
                 "vcs:localdir:dockerfile": ".",
-                "vcs:revision": "3642b7148d9297ec1ef1336d454eae6071b1300a",
+                "vcs:revision": "49843d3ef395d1c934112bae9839a5f010bf8d03",
                 "vcs:source": "https://github.com/westonkd/sprint"
               }
             }
@@ -381,19 +381,19 @@
       "internalParameters": {
         "buildConfig": {
           "digestMapping": {
-            "sha256:3393a95186ed00911ed0f6ce3f7979325d8bf50f73ff6652cc911f75db28bf5e": "step11",
+            "sha256:05e932f70951caa27cc9b070fda8cd3b328defdc0dd0a9c5bbd51b2ea114efd1": "step8",
+            "sha256:19ea9618bf71980f545d8b309191aa3814566eaab265688db135f92c82d4db2c": "step9",
+            "sha256:2e5013304fb1cfe3647e32618625f1d25b1d0649e02809f93c17ac277686dada": "step7",
             "sha256:43cc447ed38ec84855f6c51567c6b13a385b249e3c83c345dc2c059ecbed6539": "step4",
-            "sha256:702f87a64c8c55d87b9d703f4c80e869d14aff2cea43157a374d22f701c34c5c": "step8",
-            "sha256:76117aff451eb6845ff746690d076451458a461a0cb5ebc9caee2960cc0b40c6": "step6",
+            "sha256:74da7c52023b7865baa0bc9f2defd50bda08a8694f97ab625e446ae2825da378": "step12",
+            "sha256:8a9658e9e36ab18c0e4a69c23619f2498919c775be50bff2f5035dc091ff82b6": "step10",
             "sha256:8f00fc42cebfc3f6de3c968ff6ee54c3df2cff19b446871f35e16c4b7cd8ea7f": "step1",
-            "sha256:927a95c671b579d89b6aec933f1a010cc444194946216afce272adb03414f344": "step9",
             "sha256:a86a2116873c5d55cfb38547c4b573e6988163a752c108078ac5c4fe619e2437": "step5",
+            "sha256:aa96a8818a0a3a71213e41696b9aa6d9a8bf3b781f4b41f3bade9f3349a65d27": "step11",
             "sha256:b6e95194e9a4ca35c591656bfaa839638a44bef2516f756899d83ace75dbc44d": "step0",
-            "sha256:b6fe4bd10fc1a8e667396f9b68902611daba602218498f0c596fc12e67a7bf43": "step12",
             "sha256:cb1361f3d588675663c530897ac147f663e6eea44c5f42701db48f122886532a": "step3",
             "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2",
-            "sha256:d81ca20ed9293e48a322ed04de00e10646c817c69a9956258b6b51edc52b79ad": "step10",
-            "sha256:f9462b69cfc6c0a6860448b2ba87caa0e60c4845dc7e0ddbd1220f4d034117a1": "step7"
+            "sha256:fd6253bb5bdd77a624398c0190d21d987b6ca793ce4153ae7384642fb65a089d": "step6"
           },
           "llbDefinition": [
             {
@@ -839,9 +839,9 @@
         "github_actor_id": "6128215",
         "github_event_name": "push",
         "github_event_payload": {
-          "after": "3642b7148d9297ec1ef1336d454eae6071b1300a",
+          "after": "49843d3ef395d1c934112bae9839a5f010bf8d03",
           "base_ref": null,
-          "before": "4dc272a415ef118d925ab4ad49ffe65ebbfccfa5",
+          "before": "3642b7148d9297ec1ef1336d454eae6071b1300a",
           "commits": [
             {
               "author": {
@@ -855,14 +855,14 @@
                 "username": "web-flow"
               },
               "distinct": true,
-              "id": "3642b7148d9297ec1ef1336d454eae6071b1300a",
-              "message": "Update the README for the published 0.6.0 package (#26)\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
-              "timestamp": "2026-09-30T22:41:40-06:00",
-              "tree_id": "e6d24f24e2300ec1e31c00cd568cc3bac97eb187",
-              "url": "https://github.com/westonkd/sprint/commit/3642b7148d9297ec1ef1336d454eae6071b1300a"
+              "id": "49843d3ef395d1c934112bae9839a5f010bf8d03",
+              "message": "Add the ambient register and a control voice (#27)\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
+              "timestamp": "2026-10-03T09:36:46-06:00",
+              "tree_id": "9a51204fa940f1e95053e4723b124f356c2e63b4",
+              "url": "https://github.com/westonkd/sprint/commit/49843d3ef395d1c934112bae9839a5f010bf8d03"
             }
           ],
-          "compare": "https://github.com/westonkd/sprint/compare/4dc272a415ef...3642b7148d92",
+          "compare": "https://github.com/westonkd/sprint/compare/3642b7148d92...49843d3ef395",
           "created": false,
           "deleted": false,
           "forced": false,
@@ -878,11 +878,11 @@
               "username": "web-flow"
             },
             "distinct": true,
-            "id": "3642b7148d9297ec1ef1336d454eae6071b1300a",
-            "message": "Update the README for the published 0.6.0 package (#26)\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
-            "timestamp": "2026-09-30T22:41:40-06:00",
-            "tree_id": "e6d24f24e2300ec1e31c00cd568cc3bac97eb187",
-            "url": "https://github.com/westonkd/sprint/commit/3642b7148d9297ec1ef1336d454eae6071b1300a"
+            "id": "49843d3ef395d1c934112bae9839a5f010bf8d03",
+            "message": "Add the ambient register and a control voice (#27)\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
+            "timestamp": "2026-10-03T09:36:46-06:00",
+            "tree_id": "9a51204fa940f1e95053e4723b124f356c2e63b4",
+            "url": "https://github.com/westonkd/sprint/commit/49843d3ef395d1c934112bae9839a5f010bf8d03"
           },
           "pusher": {
             "email": "wdrans@gmail.com",
@@ -952,8 +952,8 @@
             "name": "sprint",
             "node_id": "R_kgDOUBLXkw",
             "notifications_url": "https://api.github.com/repos/westonkd/sprint/notifications{?since,all,participating}",
-            "open_issues": 1,
-            "open_issues_count": 1,
+            "open_issues": 0,
+            "open_issues_count": 0,
             "owner": {
               "avatar_url": "https://avatars.githubusercontent.com/u/6128215?v=4",
               "email": "wdrans@gmail.com",
@@ -980,9 +980,9 @@
             "private": false,
             "pull_request_creation_policy": "all",
             "pulls_url": "https://api.github.com/repos/westonkd/sprint/pulls{/number}",
-            "pushed_at": 1790829701,
+            "pushed_at": 1791041806,
             "releases_url": "https://api.github.com/repos/westonkd/sprint/releases{/id}",
-            "size": 3039,
+            "size": 1345,
             "ssh_url": "git@github.com:westonkd/sprint.git",
             "stargazers": 0,
             "stargazers_count": 0,
@@ -995,7 +995,7 @@
             "teams_url": "https://api.github.com/repos/westonkd/sprint/teams",
             "topics": [],
             "trees_url": "https://api.github.com/repos/westonkd/sprint/git/trees{/sha}",
-            "updated_at": "2026-10-01T04:32:28Z",
+            "updated_at": "2026-10-01T04:41:45Z",
             "url": "https://api.github.com/repos/westonkd/sprint",
             "visibility": "public",
             "watchers": 0,
@@ -1034,35 +1034,35 @@
         "github_repository_owner": "westonkd",
         "github_repository_owner_id": "6128215",
         "github_run_attempt": "1",
-        "github_run_id": "36816304756",
-        "github_run_number": "21",
+        "github_run_id": "37133858585",
+        "github_run_number": "22",
         "github_runner_arch": "X64",
         "github_runner_environment": "github-hosted",
         "github_runner_image_os": "ubuntu24",
         "github_runner_image_version": "20260927.320.1",
-        "github_runner_name": "GitHub Actions 1000000535",
+        "github_runner_name": "GitHub Actions 1000000762",
         "github_runner_os": "Linux",
-        "github_runner_tracking_id": "github_7a0c150a-cfa0-4a1e-9c48-bcc95a4b1991",
+        "github_runner_tracking_id": "github_e9525517-c95c-41a6-a564-27f8596aa396",
         "github_server_url": "https://github.com",
         "github_triggering_actor": "westonkd",
         "github_workflow": "Pages",
         "github_workflow_ref": "westonkd/sprint/.github/workflows/pages.yml@refs/heads/main",
-        "github_workflow_sha": "3642b7148d9297ec1ef1336d454eae6071b1300a"
+        "github_workflow_sha": "49843d3ef395d1c934112bae9839a5f010bf8d03"
       }
     },
     "runDetails": {
       "builder": {
-        "id": "https://github.com/westonkd/sprint/actions/runs/36816304756/attempts/1"
+        "id": "https://github.com/westonkd/sprint/actions/runs/37133858585/attempts/1"
       },
       "metadata": {
-        "invocationId": "eudck2awlw2le0n43kjvrjlzw",
-        "startedOn": "2026-10-01T04:42:04.170807568Z",
-        "finishedOn": "2026-10-01T04:42:19.924378889Z",
+        "invocationId": "n0n9ytbf2a7lycyvszxxaem2k",
+        "startedOn": "2026-10-03T15:37:05.067961755Z",
+        "finishedOn": "2026-10-03T15:37:20.531995726Z",
         "buildkit_metadata": {
           "vcs": {
             "localdir:context": ".",
             "localdir:dockerfile": ".",
-            "revision": "3642b7148d9297ec1ef1336d454eae6071b1300a",
+            "revision": "49843d3ef395d1c934112bae9839a5f010bf8d03",
             "source": "https://github.com/westonkd/sprint"
           },
           "source": {
@@ -1278,8 +1278,8 @@
                   }
                 ],
                 "digestMapping": {
-                  "sha256:c65769ab7e6a7fb288663530b0a9a03dfabffaccc5409cd5c3d27440f234144d": "step1",
-                  "sha256:d724d71f6ddd4ce19975ce7d7009c24ea7e5350ee5750f913fa16ca1523623f3": "step0"
+                  "sha256:33da80c880875e338cc3a13c9897d06d2d301fd96dd22fb313e1cf0669f5bc4d": "step1",
+                  "sha256:6d6abed08de2aa61540bb9e23787a669ae0992d7547219514248d6d07ac19119": "step0"
                 }
               }
             ]
