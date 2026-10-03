@@ -4,7 +4,8 @@
 
 :root[data-sprint-theme="light"],
 :root[data-sprint-theme="calorie"],
-:root[data-sprint-theme="trax"] {
+:root[data-sprint-theme="trax"],
+:root[data-sprint-theme="ambient"] {
   color-scheme: light;
 }
 

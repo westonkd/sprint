@@ -114,11 +114,40 @@
     --sprint-color-press-red-hover: #4a0400;
     --sprint-color-press-full: #000000;
 
+    --sprint-color-fog: #f6f7f9;
+    --sprint-color-fog-50: #ffffff;
+    --sprint-color-fog-200: #eef0f3;
+    --sprint-color-fog-300: #e1e3e8;
+    --sprint-color-fog-400: #c9ccd3;
+    --sprint-color-fog-500: #848892;
+    --sprint-color-fog-600: #5b5f69;
+    --sprint-color-fog-700: #30333a;
+    --sprint-color-fog-900: #17181c;
+
+    --sprint-color-graphite: #111214;
+    --sprint-color-graphite-100: #18191c;
+    --sprint-color-graphite-200: #1f2024;
+    --sprint-color-graphite-250: #24262a;
+    --sprint-color-graphite-300: #2c2e33;
+    --sprint-color-graphite-500: #6b6f79;
+    --sprint-color-graphite-600: #9a9ea8;
+    --sprint-color-graphite-800: #d4d6db;
+    --sprint-color-graphite-900: #ecedf0;
+
+    --sprint-color-signal: #3341d6;
+    --sprint-color-signal-pale: #8f9bff;
+    --sprint-color-rose: #c42139;
+    --sprint-color-rose-deep: #a51a2f;
+    --sprint-color-rose-pale: #ff7a8a;
+    --sprint-color-rose-paler: #ff98a5;
+
     --sprint-font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
     --sprint-font-serif: "Didot", "Bodoni MT", "Bodoni 72", Georgia, serif;
     --sprint-font-grotesk:
       "Inter", "Helvetica Neue", "Archivo", "Segoe UI Variable Display", ui-sans-serif,
       system-ui, Arial, sans-serif;
+    --sprint-font-system:
+      system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --sprint-font-condensed:
       "Helvetica Neue Condensed", "Roboto Condensed", "Archivo Narrow",
       "DejaVu Sans Condensed", "Liberation Sans Narrow", "Arial Narrow", ui-sans-serif,
@@ -133,9 +162,14 @@
     --sprint-text-xl: 1.375rem;
     --sprint-text-2xl: 1.75rem;
     --sprint-text-display: clamp(2.25rem, 1.25rem + 3.5vw, 4.25rem);
+    --sprint-text-display-quiet: clamp(1.75rem, 1.4rem + 1.2vw, 2.375rem);
 
     --sprint-tracking-display: -0.03em;
+    --sprint-tracking-snug: -0.015em;
+    --sprint-tracking-none: 0;
     --sprint-tracking-tight: 0.02em;
+    --sprint-tracking-quiet: 0.06em;
+    --sprint-tracking-quiet-wide: 0.08em;
     --sprint-tracking-label: 0.12em;
     --sprint-tracking-wide: 0.16em;
 
@@ -148,6 +182,8 @@
     --sprint-leading-loose: 1.7;
 
     --sprint-weight-regular: 400;
+    --sprint-weight-medium: 500;
+    --sprint-weight-semibold: 600;
     --sprint-weight-bold: 700;
     --sprint-weight-heavy: 800;
   }

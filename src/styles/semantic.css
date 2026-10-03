@@ -159,6 +159,12 @@
     --sprint-label-transform: uppercase;
     --sprint-display-transform: uppercase;
 
+    --sprint-control-size: var(--sprint-label-size);
+    --sprint-control-size-small: var(--sprint-label-size-small);
+    --sprint-control-tracking: var(--sprint-label-tracking);
+    --sprint-control-transform: var(--sprint-label-transform);
+    --sprint-control-weight: var(--sprint-weight-bold);
+
     --sprint-radius-control: 0;
     --sprint-radius-control-tight: 0;
     --sprint-radius-surface: 0;
@@ -611,6 +617,192 @@
       );
 
     --sprint-ornament-ink: var(--sprint-color-char-edge);
+  }
+
+  [data-sprint-theme="ambient"],
+  [data-sprint-theme="ambient-dark"] {
+    --sprint-keyline-width: 1px;
+    --sprint-keyline-width-thick: 2px;
+    --sprint-keyline-width-plate: 1px;
+    --sprint-keyline-halo: transparent;
+    --sprint-keyline-halo-offset: 0;
+    --sprint-misregister: 0 0 0 0 transparent;
+
+    --sprint-font-ui: var(--sprint-font-system);
+    --sprint-font-display: var(--sprint-font-system);
+    --sprint-display-size: var(--sprint-text-display-quiet);
+    --sprint-display-tracking: var(--sprint-tracking-snug);
+    --sprint-display-weight: var(--sprint-weight-semibold);
+    --sprint-display-transform: none;
+    --sprint-display-stretch: normal;
+
+    --sprint-heading-2-font: var(--sprint-font-display);
+    --sprint-heading-2-size: var(--sprint-text-xl);
+    --sprint-heading-2-weight: var(--sprint-weight-semibold);
+    --sprint-heading-2-ink: var(--sprint-ink);
+    --sprint-heading-3-size: var(--sprint-text-lg);
+    --sprint-heading-4-size: var(--sprint-text-md);
+
+    --sprint-label-size: var(--sprint-text-2xs);
+    --sprint-label-size-small: var(--sprint-text-3xs);
+    --sprint-label-tracking: var(--sprint-tracking-quiet);
+    --sprint-label-tracking-wide: var(--sprint-tracking-quiet-wide);
+    --sprint-label-transform: uppercase;
+
+    --sprint-control-size: var(--sprint-text-sm);
+    --sprint-control-size-small: var(--sprint-text-xs);
+    --sprint-control-tracking: var(--sprint-tracking-none);
+    --sprint-control-transform: none;
+    --sprint-control-weight: var(--sprint-weight-medium);
+
+    --sprint-radius-control: 6px;
+    --sprint-radius-control-tight: 4px;
+    --sprint-radius-surface: 10px;
+    --sprint-radius-pill: 999px;
+
+    --sprint-lip-ink: transparent;
+    --sprint-fresnel-ink: transparent;
+    --sprint-rim-ink: transparent;
+    --sprint-well-ink: transparent;
+    --sprint-sheen-ink: transparent;
+    --sprint-ground-sweep: none;
+    --sprint-press-shift: 0;
+    --sprint-press-scale: 1;
+
+    --sprint-ornament-empty: var(--sprint-ornament-dots);
+    --sprint-ornament-empty-size: var(--sprint-ornament-dots-size);
+    --sprint-ornament-alarm: var(--sprint-ornament-hatch-dense);
+    --sprint-ornament-alarm-size: auto;
+    --sprint-empty-field: 4rem;
+    --sprint-scanline-opacity: 0.3;
+
+    --sprint-header-rule: none;
+    --sprint-header-rule-height: 0;
+    --sprint-divider-band: var(--sprint-ornament-dots);
+    --sprint-divider-band-size: 6px 6px;
+    --sprint-divider-band-height: 6px;
+
+    --sprint-duration-instant: 100ms;
+    --sprint-duration-fast: 150ms;
+    --sprint-duration-slow: 200ms;
+    --sprint-easing: cubic-bezier(0.2, 0, 0, 1);
+    --sprint-steps: cubic-bezier(0.2, 0, 0, 1);
+
+    --sprint-space-0: 0;
+    --sprint-space-1: 0.25rem;
+    --sprint-space-2: 0.5rem;
+    --sprint-space-3: 0.625rem;
+    --sprint-space-4: 0.875rem;
+    --sprint-space-5: 1.125rem;
+    --sprint-space-6: 1.75rem;
+  }
+
+  [data-sprint-theme="ambient"] {
+    color-scheme: light;
+
+    --sprint-surface: var(--sprint-color-fog);
+    --sprint-surface-raised: var(--sprint-color-fog-50);
+    --sprint-surface-inset: var(--sprint-color-fog-200);
+
+    --sprint-ink: var(--sprint-color-fog-900);
+    --sprint-ink-muted: var(--sprint-color-fog-600);
+    --sprint-ink-inverse: var(--sprint-color-fog-50);
+
+    --sprint-keyline: var(--sprint-color-fog-300);
+    --sprint-keyline-strong: var(--sprint-color-fog-500);
+    --sprint-keyline-muted: var(--sprint-color-fog-200);
+
+    --sprint-action: var(--sprint-color-fog-900);
+    --sprint-action-ink: var(--sprint-color-fog-50);
+    --sprint-action-hover: var(--sprint-color-fog-700);
+    --sprint-action-mark: var(--sprint-color-fog-900);
+
+    --sprint-danger: var(--sprint-color-rose);
+    --sprint-danger-ink: var(--sprint-color-fog-50);
+    --sprint-danger-hover: var(--sprint-color-rose-deep);
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-fog-900);
+    --sprint-neutral-hover: var(--sprint-color-fog-200);
+
+    --sprint-inert: var(--sprint-color-fog-200);
+    --sprint-inert-ink: var(--sprint-color-fog-600);
+
+    --sprint-info: var(--sprint-color-cyan-deep);
+    --sprint-info-ink: var(--sprint-color-fog-50);
+    --sprint-warning: var(--sprint-color-warning-deep);
+    --sprint-warning-ink: var(--sprint-color-fog-50);
+
+    --sprint-link: var(--sprint-color-signal);
+    --sprint-link-rule: transparent;
+    --sprint-plate: var(--sprint-surface-raised);
+    --sprint-plate-ink: var(--sprint-ink-muted);
+    --sprint-plate-rule: var(--sprint-keyline);
+    --sprint-plate-link: var(--sprint-color-signal);
+    --sprint-plate-control-ink: var(--sprint-color-fog-900);
+    --sprint-plate-keyline: var(--sprint-color-fog-300);
+
+    --sprint-focus: var(--sprint-color-signal);
+
+    --sprint-cast-ink: rgb(15 18 25 / 0.08);
+    --sprint-cast-contact-ink: rgb(15 18 25 / 0.07);
+    --sprint-scrim: rgb(15 18 25 / 0.4);
+
+    --sprint-ornament-ink: var(--sprint-color-fog-400);
+  }
+
+  [data-sprint-theme="ambient-dark"] {
+    color-scheme: dark;
+
+    --sprint-surface: var(--sprint-color-graphite);
+    --sprint-surface-raised: var(--sprint-color-graphite-100);
+    --sprint-surface-inset: var(--sprint-color-graphite-200);
+
+    --sprint-ink: var(--sprint-color-graphite-900);
+    --sprint-ink-muted: var(--sprint-color-graphite-600);
+    --sprint-ink-inverse: var(--sprint-color-graphite);
+
+    --sprint-keyline: var(--sprint-color-graphite-300);
+    --sprint-keyline-strong: var(--sprint-color-graphite-500);
+    --sprint-keyline-muted: var(--sprint-color-graphite-200);
+
+    --sprint-action: var(--sprint-color-graphite-900);
+    --sprint-action-ink: var(--sprint-color-graphite);
+    --sprint-action-hover: var(--sprint-color-graphite-800);
+    --sprint-action-mark: var(--sprint-color-graphite-900);
+
+    --sprint-danger: var(--sprint-color-rose-pale);
+    --sprint-danger-ink: var(--sprint-color-graphite);
+    --sprint-danger-hover: var(--sprint-color-rose-paler);
+
+    --sprint-neutral: transparent;
+    --sprint-neutral-ink: var(--sprint-color-graphite-900);
+    --sprint-neutral-hover: var(--sprint-color-graphite-250);
+
+    --sprint-inert: var(--sprint-color-graphite-200);
+    --sprint-inert-ink: var(--sprint-color-graphite-600);
+
+    --sprint-info: var(--sprint-color-cyan-pale);
+    --sprint-info-ink: var(--sprint-color-graphite);
+    --sprint-warning: var(--sprint-color-amber-pale);
+    --sprint-warning-ink: var(--sprint-color-graphite);
+
+    --sprint-link: var(--sprint-color-signal-pale);
+    --sprint-link-rule: transparent;
+    --sprint-plate: var(--sprint-surface-raised);
+    --sprint-plate-ink: var(--sprint-ink-muted);
+    --sprint-plate-rule: var(--sprint-keyline);
+    --sprint-plate-link: var(--sprint-color-signal-pale);
+    --sprint-plate-control-ink: var(--sprint-color-graphite-900);
+    --sprint-plate-keyline: var(--sprint-color-graphite-300);
+
+    --sprint-focus: var(--sprint-color-signal-pale);
+
+    --sprint-cast-ink: rgb(0 0 0 / 0.45);
+    --sprint-cast-contact-ink: rgb(0 0 0 / 0.4);
+    --sprint-scrim: rgb(0 0 0 / 0.6);
+
+    --sprint-ornament-ink: var(--sprint-color-graphite-300);
   }
 
   [data-sprint],

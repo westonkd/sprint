@@ -11,10 +11,10 @@
     gap: var(--sprint-space-3);
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size);
-    font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-size: var(--sprint-control-size);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
     cursor: pointer;
   }
 
@@ -94,9 +94,9 @@
     margin: 0;
     padding-left: calc(0.875rem + var(--sprint-space-3));
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size-small);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-size: var(--sprint-control-size-small);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="Checkbox"] [data-sprint-part="hint"] {

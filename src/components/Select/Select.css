@@ -152,8 +152,8 @@
   [data-sprint="Select"][data-sprint-empty] [data-sprint-part="input"] {
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-2xs);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="Select"] [data-sprint-part="input"]:disabled {
@@ -166,9 +166,9 @@
   [data-sprint="Select"] [data-sprint-part="error"] {
     margin: 0;
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size-small);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-size: var(--sprint-control-size-small);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="Select"] [data-sprint-part="hint"] {

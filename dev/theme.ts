@@ -10,6 +10,8 @@ export const THEME_OPTIONS: readonly { value: SprintTheme; label: string }[] = [
   { value: "calorie-dark", label: "calorie dark" },
   { value: "trax", label: "trax" },
   { value: "trax-dark", label: "trax dark" },
+  { value: "ambient", label: "ambient" },
+  { value: "ambient-dark", label: "ambient dark" },
 ];
 
 export const VIEW_OPTIONS = [

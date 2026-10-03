@@ -290,10 +290,10 @@
     background: none;
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size);
-    letter-spacing: var(--sprint-label-tracking);
+    font-size: var(--sprint-control-size);
+    letter-spacing: var(--sprint-control-tracking);
     text-align: start;
-    text-transform: var(--sprint-label-transform);
+    text-transform: var(--sprint-control-transform);
     cursor: pointer;
   }
 
@@ -319,9 +319,9 @@
     padding: var(--sprint-space-2) var(--sprint-space-3);
     border: 0;
     color: var(--sprint-ink);
-    font-size: var(--sprint-label-size);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-size: var(--sprint-control-size);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="Breadcrumb"] [data-sprint-part="destination"][data-sprint-shown] {

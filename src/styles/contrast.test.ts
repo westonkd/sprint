@@ -126,6 +126,8 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
 describe("theme discovery", () => {
   it("finds every theme the token files scope", () => {
     expect([...THEMES.keys()].sort()).toEqual([
+      "ambient",
+      "ambient-dark",
       "calorie",
       "calorie-dark",
       "dark",
@@ -251,7 +253,7 @@ describe("theme-specific findings", () => {
     ).toBeGreaterThanOrEqual(AA_NORMAL);
   });
 
-  it.each(["calorie", "calorie-dark", "trax", "trax-dark"])(
+  it.each(["calorie", "calorie-dark", "trax", "trax-dark", "ambient", "ambient-dark"])(
     "clears 3:1 for every %s boundary, on every ground its register offers",
     (name) => {
       const tokens = themeByName(name);
@@ -331,6 +333,40 @@ describe("theme-specific findings", () => {
       for (const hazard of hazards) {
         expect(value, `trax-dark ${role} spends the hero hue`).not.toContain(hazard);
       }
+    }
+  });
+
+  it.each(["ambient", "ambient-dark"])(
+    "keeps the %s action achromatic and rations its one hue to links and focus",
+    (name) => {
+      const tokens = themeByName(name);
+      const ink = resolveToken(tokens, "--sprint-ink");
+      for (const role of ["--sprint-action", "--sprint-action-mark"]) {
+        expect(resolveToken(tokens, role)).toBe(ink);
+      }
+      const hue = resolveToken(tokens, "--sprint-focus");
+      expect(resolveToken(tokens, "--sprint-link")).toBe(hue);
+      for (const role of [
+        "--sprint-surface",
+        "--sprint-keyline",
+        "--sprint-plate",
+        "--sprint-ink-muted",
+        "--sprint-danger",
+        "--sprint-info",
+      ]) {
+        expect(resolveToken(tokens, role), `${name} ${role} spends the hue`).not.toBe(
+          hue,
+        );
+      }
+    },
+  );
+
+  it.each(["ambient", "ambient-dark"])("keeps acid out of %s entirely", (name) => {
+    const tokens = themeByName(name);
+    const acid = resolveToken(tokens, "--sprint-color-acid");
+    for (const [ink, ground] of PAIRINGS) {
+      expect(resolveToken(tokens, ink)).not.toBe(acid);
+      expect(resolveToken(tokens, ground)).not.toBe(acid);
     }
   });
 

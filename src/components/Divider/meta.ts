@@ -56,7 +56,7 @@ export const dividerMeta = defineAgentMeta({
     {
       title: "The page's main break",
       description:
-        "A band draws the theme's own ornament: hatching in the default register, pins in calorie, a barcode strip in trax. Use it once per page.",
+        "A band draws the theme's own ornament: hatching in the default register, pins in calorie, a barcode strip in trax, a row of dots in ambient. Use it once per page.",
       code: '<Divider label="Body" weight="band" />',
     },
   ],

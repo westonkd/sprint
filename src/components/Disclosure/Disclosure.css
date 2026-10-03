@@ -15,12 +15,12 @@
     background: none;
     color: var(--sprint-ink);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size);
-    font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-label-tracking);
+    font-size: var(--sprint-control-size);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
     line-height: var(--sprint-leading-flat);
     text-align: start;
-    text-transform: var(--sprint-label-transform);
+    text-transform: var(--sprint-control-transform);
     cursor: pointer;
   }
 

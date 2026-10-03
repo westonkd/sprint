@@ -32,7 +32,9 @@ export type SprintTheme =
   | "calorie"
   | "calorie-dark"
   | "trax"
-  | "trax-dark";
+  | "trax-dark"
+  | "ambient"
+  | "ambient-dark";
 
 export interface SprintProviderProps {
   children: ReactNode;

@@ -12,9 +12,9 @@
     border-bottom: 0;
     border-left: var(--sprint-keyline-width-thick) solid transparent;
     color: var(--sprint-ink);
-    font-size: var(--sprint-label-size);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-size: var(--sprint-control-size);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="Nav"] [data-sprint="Link"]:hover {
