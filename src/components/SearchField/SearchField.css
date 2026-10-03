@@ -80,8 +80,8 @@
   [data-sprint="SearchField"] [data-sprint-part="input"]::placeholder {
     color: var(--sprint-ink-muted);
     font-size: var(--sprint-text-2xs);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="SearchField"] [data-sprint-part="input"]:disabled {
@@ -97,10 +97,10 @@
     background: transparent;
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size-small);
-    font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-size: var(--sprint-control-size-small);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
     cursor: pointer;
   }
 

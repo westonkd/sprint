@@ -40,9 +40,9 @@
   }
 
   [data-sprint="Card"] [data-sprint-part="title"] {
-    font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-label-tracking);
-    text-transform: var(--sprint-label-transform);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
   }
 
   [data-sprint="Card"] [data-sprint-part="body"] {

@@ -193,9 +193,9 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   mark carries a *role* rather than a shape, it goes through a slot the register fills from its own
   vocabulary: `--sprint-ornament-empty` with `-size` for an empty region, `--sprint-ornament-alarm`
   with `-size` for a danger band. Never hard-code a named mark for one of those.
-- `data-sprint-theme="dark|light|calorie|calorie-dark|trax|trax-dark"` selects the semantic token
+- `data-sprint-theme="dark|light|calorie|calorie-dark|trax|trax-dark|ambient|ambient-dark"` selects the semantic token
   mapping for everything beneath it. Pure CSS: put it on any element, or pass `theme` to
-  `SprintProvider` to stamp it on the view container. The six values are a grid of *register* and *ground*,
+  `SprintProvider` to stamp it on the view container. The eight values are a grid of *register* and *ground*,
   and the attribute names a cell rather than an axis, so a value always resolves to one complete
   palette with no ambient input. Never key a theme off `prefers-color-scheme`; the app picks, the
   same way `dev/theme.ts` does.
@@ -212,7 +212,10 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   paints a pattern on the page, a contour field through `--sprint-ground-sweep`. `trax` is the
   library's one chromatic ground, a full-bleed hazard orange on which every semantic role is a
   near-black; see DESIGN.md's rule 11 before adding a color role, rule 12 before touching a sweep,
-  and rule 13 before reaching for a surface ramp there. The agent view ignores theme entirely.
+  and rule 13 before reaching for a surface ramp there. `ambient` and `ambient-dark` are a fourth,
+  the quiet one, for products that want Sprint to blend in: system sans, small radii, a soft cast
+  shadow, sentence-case controls, an achromatic primary action, and one ultramarine rationed to links
+  and focus. The agent view ignores theme entirely.
 
   In `semantic.css` a register's shape, type, motion, and space tokens are declared once in a block
   selecting both of its values; only the color roles and `color-scheme` are per-ground. Add a ground
@@ -221,7 +224,9 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
 
   A theme remaps the semantic layer, and that layer covers shape, type, and motion as well as color:
   `--sprint-radius-control|-surface|-pill`, `--sprint-font-ui`, `--sprint-label-transform` and
-  `--sprint-display-transform`, `--sprint-label-tracking` and `--sprint-label-tracking-wide`, the
+  `--sprint-display-transform`, `--sprint-label-tracking` and `--sprint-label-tracking-wide`,
+  `--sprint-control-size|-size-small|-tracking|-transform|-weight` for text a person clicks or types
+  into (aliasing the label roles everywhere but ambient), the
   `--sprint-leading-*` scale, `--sprint-heading-2-font|-size|-weight|-ink` with
   `--sprint-heading-3-size|-4-size`, `--sprint-keyline-halo` with `--sprint-keyline-halo-offset`,
   `--sprint-keyline-width` with `-width-thick` and `-width-plate`, `--sprint-display-stretch`,

@@ -269,6 +269,18 @@ export function GuidePhilosophy() {
               two hues on any of them.
             </Text>
             <Text>
+              <code>ambient</code> is the fourth, and the only one built to disappear.
+              It is what a product reaches for when it wants the agent contract without
+              the attitude: system sans, small radii, a soft shadow, a primary button
+              filled with the ink itself, and one ultramarine kept for links and focus.
+              It needed one new idea, a control voice separate from the label voice,
+              because every other register sets buttons and panel headers alike in
+              uppercase tracked type. <code>--sprint-control-transform</code> and its
+              siblings alias the label roles everywhere else, and ambient alone sets
+              them to sentence case, so its buttons look like buttons people already
+              know while its chrome still reads like a spec sheet.
+            </Text>
+            <Text>
               Three things make a theme a Sprint theme: the ornament vocabulary still
               marks empty states, chrome still speaks a grade below body in tracked
               micro-labels, and one hue is rationed to the action and never spent on
@@ -280,7 +292,8 @@ export function GuidePhilosophy() {
               A theme value names a cell in a register-by-ground grid —{" "}
               <code>dark</code> and <code>light</code> for the loud register,{" "}
               <code>calorie</code> and <code>calorie-dark</code> for the molded one,{" "}
-              <code>trax</code> and <code>trax-dark</code> for the freight one — and
+              <code>trax</code> and <code>trax-dark</code> for the freight one,{" "}
+              <code>ambient</code> and <code>ambient-dark</code> for the quiet one — and
               never one axis of it. No value reads <code>prefers-color-scheme</code>,
               because a theme you can drop on any element has to resolve to one palette
               wherever it lands. Your app picks, the way this page's switch does.

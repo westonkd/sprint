@@ -5,6 +5,16 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Added: `ambient` and `ambient-dark`, a quiet fourth register.** For products that want Sprint
+  to blend in: system sans, 6px controls and 10px surfaces, a soft cast shadow, eased motion, a
+  primary action filled with the ink itself, and one ultramarine rationed to links and focus. Panel
+  headers, field labels and table headers keep the tracked micro-label; empty fields keep a faint
+  dot grid. Set it with `data-sprint-theme="ambient"` or `<SprintProvider theme="ambient">`.
+- **Added: a control voice.** `--sprint-control-size`, `-size-small`, `-tracking`, `-transform` and
+  `-weight` style the text of buttons, options, tiles, nav links, placeholders and field errors.
+  They alias the label roles in every existing theme, so nothing there changes, and a custom theme
+  can now set controls in sentence case without losing uppercase chrome.
+
 - **Docs: the README reflects the published package.** It gives the install command and peer
   dependencies, notes that minor versions may break before 1.0, and states the strict-CSP guarantee.
 

@@ -41,11 +41,11 @@
     background: none;
     color: var(--sprint-ink-muted);
     font-family: var(--sprint-font-ui);
-    font-size: var(--sprint-label-size-small);
-    font-weight: var(--sprint-weight-bold);
-    letter-spacing: var(--sprint-label-tracking);
+    font-size: var(--sprint-control-size-small);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
     line-height: var(--sprint-leading-relaxed);
-    text-transform: var(--sprint-label-transform);
+    text-transform: var(--sprint-control-transform);
     white-space: nowrap;
     cursor: pointer;
     transition:

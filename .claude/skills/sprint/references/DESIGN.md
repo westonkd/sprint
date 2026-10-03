@@ -23,9 +23,10 @@ soft, dimensional, or friendly. The system's confidence comes from saturation an
 polish.
 
 Everything below describes the **default register**, which the `dark` and `light` themes both render.
-It is one of three; the others are [Calorie](#calorie-the-second-register), which deliberately breaks
-most of it, and [Trax](#trax-the-freight-register), which keeps the flatness and spends its
-difference on colour, width and ornament. When a component's styling and this section disagree in
+It is one of four; the others are [Calorie](#calorie-the-second-register), which deliberately breaks
+most of it, [Trax](#trax-the-freight-register), which keeps the flatness and spends its
+difference on colour, width and ornament, and [Ambient](#ambient-the-quiet-register), which turns
+everything down so a product can wear Sprint without announcing it. When a component's styling and this section disagree in
 the default register, one of them is a bug. In calorie or trax, check the token instead.
 
 ## The seven rules
@@ -168,6 +169,7 @@ The attribute names a cell in a grid of register and ground, never one axis of i
 | Default register | `dark` | `light` |
 | Calorie register | `calorie-dark` | `calorie` |
 | Trax register | `trax-dark` | `trax` |
+| Ambient register | `ambient-dark` | `ambient` |
 
 A value always resolves to one complete palette, so none of them may depend on `prefers-color-scheme`
 — the app chooses. In `semantic.css` the calorie register's shape, type, motion and space tokens are
@@ -382,6 +384,49 @@ house acid, which is also the one system element the register borrows, and it is
 page legible as a Sprint page.
 
 Acid appears nowhere else in trax, and the hazard orange appears nowhere in the other two registers.
+
+## Ambient, the quiet register
+
+`data-sprint-theme="ambient"` and `data-sprint-theme="ambient-dark"` are for a product that wants
+Sprint's agent contract without Sprint's attitude. The reference is no reference: the ordinary
+settings page, dashboard and admin console a person already uses every day. Where the other three
+registers each ask the host app to adopt a point of view, ambient is built to disappear into one.
+
+| | Default register | Ambient |
+| --- | --- | --- |
+| Ground | Void, or paper in `light` | Cool fog `#f6f7f9` with white panels, or graphite `#111214` with panels a step lighter |
+| Action field | Acid, or ultramarine in `light` | The ink itself: near-black on fog, near-white on graphite |
+| Action mark | Aliases the field | Also the ink, so checked and selected states are monochrome |
+| Link and focus | Cyan | Signal ultramarine `#3341d6`, or `#8f9bff` on graphite: the one hue |
+| Danger | Magenta | Rose `#c42139`, or its pale sibling |
+| Depth | None; planes and keylines | A soft cast shadow only; mold, well and sheen are inert |
+| Corners | Square | 6px controls, 4px checkbox, 10px surfaces, pill for Tag and Switch |
+| Display voice | High-contrast serif, uppercase | System sans, semibold, sentence case, smaller |
+| UI voice | Monospace, uppercase, 0.12em | System sans; labels uppercase at 0.06em |
+| Control voice | Same as the UI voice | Sentence case, untracked, 13px, medium |
+| Motion | `linear`, `steps(4, end)`, 80-160ms | `cubic-bezier(0.2, 0, 0, 1)`, 100-200ms |
+| Empty mark | Hatch | A faint dot grid over a 4rem field |
+| Alarm mark | Dense hatch | The same |
+| Divider band | Dense hatch | A row of dots |
+
+Rule 16, which ambient is the first register to need: **a control is not a label.** Every other
+register speaks one voice for both, uppercase and tracked, and that is part of what makes them
+loud. The semantic layer now carries `--sprint-control-size`, `-size-small`, `-tracking`,
+`-transform` and `-weight` for text a person clicks or types into, aliasing the label roles in the
+other three registers. Ambient splits them: buttons, options, tiles, nav links, placeholders and
+field errors speak sentence case, while panel headers, field labels, table headers and alert titles
+keep the micro-label. That split is what lets the register look familiar and still read as a spec
+sheet where it matters.
+
+Rule 17: **a quiet register rations its hue away from the action.** The primary action is the
+heaviest thing on any screen already, by fill alone, so ambient fills it with the ink and spends
+its single hue on links and focus, the two places a person needs to find where they can go and
+where they are. The first draft edged the action in the hue and every primary button looked
+permanently focused.
+
+The three Sprint carryovers hold, turned down rather than removed: the micro-label voice survives on
+chrome, the ornament vocabulary still marks empty fields, danger bands and the Divider, and one hue
+is rationed. Acid appears nowhere in ambient.
 
 ## Implementation notes
 
