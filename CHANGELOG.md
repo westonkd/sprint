@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.7.0 - 2026-10-03
+
 - **Added: `ambient` and `ambient-dark`, a quiet fourth register.** For products that want Sprint
   to blend in: system sans, 6px controls and 10px surfaces, a soft cast shadow, eased motion, a
   primary action filled with the ink itself, and one ultramarine rationed to links and focus. Panel
