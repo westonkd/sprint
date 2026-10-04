@@ -123,6 +123,8 @@ export type { SwitchProps } from "./Switch/index.ts";
 export { SET_SWITCH_TOOL, Switch, switchMeta } from "./Switch/index.ts";
 export type { TableColumn, TableProps, TableRow, TableWidth } from "./Table/index.ts";
 export { TABLE_WIDTHS, Table, tableMeta } from "./Table/index.ts";
+export type { TabItem, TabsProps } from "./Tabs/index.ts";
+export { SELECT_TAB_TOOL, Tabs, tabsMeta } from "./Tabs/index.ts";
 export type { TagProps, TagTone } from "./Tag/index.ts";
 export { Tag, tagMeta } from "./Tag/index.ts";
 export type { TextProps, TextSize, TextTone } from "./Text/index.ts";

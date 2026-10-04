@@ -38,6 +38,7 @@ import { stackSpecimens } from "./Stack.tsx";
 import { stepsGallery, stepsSpecimens } from "./Steps.tsx";
 import { switchSpecimens } from "./Switch.tsx";
 import { tableGallery, tableSpecimens } from "./Table.tsx";
+import { tabsSpecimens } from "./Tabs.tsx";
 import { tagGallery, tagSpecimens } from "./Tag.tsx";
 import { textGallery, textSpecimens } from "./Text.tsx";
 import { textareaSpecimens } from "./Textarea.tsx";
@@ -86,6 +87,7 @@ const registry: Record<string, Specimens> = {
   Select: { byExample: selectSpecimens },
   Tooltip: { byExample: tooltipSpecimens },
   Kbd: { byExample: kbdSpecimens },
+  Tabs: { byExample: tabsSpecimens },
   Spinner: { byExample: spinnerSpecimens },
   VisuallyHidden: { byExample: visuallyHiddenSpecimens },
   Shell: { byExample: shellSpecimens },
