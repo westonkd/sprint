@@ -46,6 +46,14 @@ At max the loading state clears, so the line reads as finished rather than stall
 <Progress label="Importing manifest" value={240} max={240} />
 ```
 
+### A bare goal bar
+
+A heading beside the bar already names it, so the label is hidden and only the bar shows, in the action tone.
+
+```tsx
+<Progress label="Notes this week" value={3} max={5} tone="action" hideLabel />
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -53,6 +61,8 @@ At max the loading state clears, so the line reads as finished rather than stall
 | `label` | string (required) | — | What is loading, such as "Importing manifest". It is the indicator's accessible name and its agent label. |
 | `value` | number | — | Work completed so far, in the same units as max. Omit for an indeterminate indicator. Clamped to the range 0 to max. |
 | `max` | number | `100` | The value at which the work is complete. |
+| `tone` | enum info \\| action \\| warning \\| danger | `"info"` | The fill colour. info is the default for ordinary loading; action suits a goal being worked towards; warning and danger mark a bar running out or over a limit. |
+| `hideLabel` | boolean | `false` | Hide the label and percentage visually while keeping the label as the bar's accessible name and agent label. Use when a nearby heading already says what the bar measures. |
 
 ## State attributes
 
@@ -62,6 +72,7 @@ Public API: agents write selectors against these.
 | --- | --- | --- |
 | `data-sprint-loading` | present or absent | Present until the work completes. An indeterminate indicator is always loading. |
 | `data-sprint-value` | present or absent | The fraction complete as a whole percentage, such as 40%. Absent while indeterminate. |
+| `data-sprint-tone` | present or absent | The fill tone, when it is not the default info. |
 
 ## Agent view
 

@@ -62,12 +62,26 @@ Disabled unregisters the tool, so an agent cannot change what a person could not
 />
 ```
 
+### A partly picked group
+
+A parent box over a group shows mixed while only some of the group is picked. Pressing it picks everything.
+
+```tsx
+<Checkbox
+  label="Whole crew"
+  checked={picked.length === crew.length}
+  indeterminate={picked.length > 0 && picked.length < crew.length}
+  onChange={(next) => setPicked(next ? crew : [])}
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
 | --- | --- | --- | --- |
 | `label` | string (required) | — | What checking it means. Names the box for a screen reader and derives the tool name, so prefer a statement such as "Accept the terms". |
 | `checked` | boolean (required) | — | Whether the box is checked. The box is fully controlled. |
+| `indeterminate` | boolean | `false` | Show the box as partly checked, for a parent box whose children are some checked and some not. It overrides checked visually and reads as checked=mixed to agents and assistive technology. Pressing a mixed box calls onChange(true); the page then clears indeterminate. |
 | `onChange` | handler (required) | — | Called with the new checked state. The set tool drives a real click, so this runs for agent changes too. |
 | `hint` | string | — | Guidance shown under the box and carried into the agent view. Replaced by error while one is set. |
 | `error` | string | — | A validation message. Marks the box invalid for people, screen readers, and agents alike. |
@@ -83,7 +97,7 @@ Public API: agents write selectors against these.
 
 | Attribute | Values | Description |
 | --- | --- | --- |
-| `data-sprint-checked` | present or absent | Present while the box is checked. |
+| `data-sprint-checked` | present or absent | Present while the box is checked, and "mixed" while it is indeterminate. |
 | `data-sprint-disabled` | present or absent | Present when the box cannot be changed. |
 | `data-sprint-required` | present or absent | Present when the box must be checked. |
 | `data-sprint-invalid` | present or absent | Present while an error is set. |

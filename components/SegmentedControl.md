@@ -109,12 +109,29 @@ Disabled unregisters the tool, so an agent cannot select an option a person coul
 />
 ```
 
+### One option unavailable
+
+A disabled option stays in place so the set of choices reads the same, but nobody can pick it: arrow keys skip it and the select tool does not offer it.
+
+```tsx
+<SegmentedControl
+  label="Interview"
+  value={status}
+  onChange={setStatus}
+  options={[
+    { value: "pending", label: "Pending" },
+    { value: "accepted", label: "Accepted", disabled: !interviewed },
+    { value: "declined", label: "Declined", disabled: !interviewed },
+  ]}
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
 | --- | --- | --- | --- |
 | `label` | string (required) | — | What is being chosen. Names the group for a screen reader and derives the tool name, so prefer a noun phrase such as "Page view". |
-| `options` | array (required) | — | The choices in display order: { value, label, count? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label. |
+| `options` | array (required) | — | The choices in display order: { value, label, count?, disabled? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label. disabled keeps one option visible but unselectable: it is skipped by the arrow keys, left out of the tool's enum, and marked disabled in the agent view. |
 | `value` | string (required) | — | The value of the selected option. The control is fully controlled. |
 | `onChange` | handler (required) | — | Called with the newly selected value. The select tool drives a real click, so this runs for agent selections too. |
 | `savedValue` | string | — | The value currently in effect, for a control that stages a change until something confirms it. While it differs from value the saved option keeps a marker and the control reports itself dirty, so both the saved and the proposed choice stay readable. |
@@ -182,5 +199,5 @@ In agent view the component renders as this Markdown line, projected from the sa
 ## Accessibility
 
 - Role: `radiogroup`
-- Keyboard: Arrow keys move to the next or previous option and select it, Home selects the first option, End selects the last option, Tab enters and leaves the group once
+- Keyboard: Arrow keys move to the next or previous enabled option and select it, Home selects the first enabled option, End selects the last enabled option, Tab enters and leaves the group once
 - Notes: Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group. An option with a count is named by its label and its count together; the hint is linked to the group with aria-describedby.

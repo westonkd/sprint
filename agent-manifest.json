@@ -41,6 +41,14 @@
           ],
           "default": "info"
         },
+        "announce": {
+          "kind": "enum",
+          "description": "Override how assistive technology announces the alert. assertive renders role=alert and interrupts; polite renders role=status and waits. Defaults to assertive for danger and warning and polite otherwise. Pass polite for a standing warning, such as an offline notice, that should not interrupt.",
+          "values": [
+            "assertive",
+            "polite"
+          ]
+        },
         "onDismiss": {
           "kind": "handler",
           "description": "Called when the dismiss control is pressed. Providing it renders the control and registers the dismiss tool; the page owns removing the alert."
@@ -103,11 +111,16 @@
           "title": "A failure",
           "description": "Danger announces assertively via role=alert.",
           "code": "<Alert tone=\"danger\" label=\"Sign-in failed\">Wrong callsign or access code.</Alert>"
+        },
+        {
+          "title": "A standing warning",
+          "description": "A warning that stays on screen while a condition holds announces politely, so it does not interrupt whatever the person is reading.",
+          "code": "<Alert tone=\"warning\" announce=\"polite\" label=\"Offline\">Changes are saved on this device until the connection returns.</Alert>"
         }
       ],
       "a11y": {
         "role": "status",
-        "notes": "Danger and warning render role=alert and announce assertively; info and neutral render role=status. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost."
+        "notes": "Danger and warning render role=alert and announce assertively; info and neutral render role=status, unless announce overrides it. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost."
       }
     },
     {
@@ -610,6 +623,11 @@
           "description": "Whether the box is checked. The box is fully controlled.",
           "required": true
         },
+        "indeterminate": {
+          "kind": "boolean",
+          "description": "Show the box as partly checked, for a parent box whose children are some checked and some not. It overrides checked visually and reads as checked=mixed to agents and assistive technology. Pressing a mixed box calls onChange(true); the page then clears indeterminate.",
+          "default": false
+        },
         "onChange": {
           "kind": "handler",
           "description": "Called with the new checked state. The set tool drives a real click, so this runs for agent changes too.",
@@ -649,7 +667,7 @@
       },
       "state": {
         "checked": {
-          "description": "Present while the box is checked.",
+          "description": "Present while the box is checked, and \"mixed\" while it is indeterminate.",
           "attribute": "data-sprint-checked"
         },
         "disabled": {
@@ -705,6 +723,11 @@
           "title": "A disabled box",
           "description": "Disabled unregisters the tool, so an agent cannot change what a person could not.",
           "code": "<Checkbox\n  label=\"Telemetry\"\n  checked\n  disabled\n  onChange={setTelemetry}\n/>"
+        },
+        {
+          "title": "A partly picked group",
+          "description": "A parent box over a group shows mixed while only some of the group is picked. Pressing it picks everything.",
+          "code": "<Checkbox\n  label=\"Whole crew\"\n  checked={picked.length === crew.length}\n  indeterminate={picked.length > 0 && picked.length < crew.length}\n  onChange={(next) => setPicked(next ? crew : [])}\n/>"
         }
       ],
       "a11y": {
@@ -1118,6 +1141,20 @@
             "4"
           ]
         },
+        "size": {
+          "kind": "enum",
+          "description": "The dialog's width: small (26rem) for a confirmation, medium (36rem) for a short form, large (52rem) for a table or a two-column form. Every size shrinks to fit a phone.",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "small"
+        },
+        "initialFocus": {
+          "kind": "object",
+          "description": "A ref to the element that takes focus when the dialog opens, such as the first field of a form or the safe choice in a destructive confirmation. Without it the browser focuses the first focusable element, which is the close control."
+        },
         "owner": {
           "kind": "string",
           "description": "The tool name of the control that opened this dialog. Published as data-sprint-owner so a reading agent can attach the dialog to its opener."
@@ -1136,6 +1173,14 @@
         "open": {
           "description": "Present while the dialog is shown. A closed dialog is absent from the DOM entirely.",
           "attribute": "data-sprint-open"
+        },
+        "size": {
+          "description": "The width the dialog was given, when it is not the default small.",
+          "attribute": "data-sprint-size",
+          "values": [
+            "medium",
+            "large"
+          ]
         }
       },
       "tools": {
@@ -1165,6 +1210,11 @@
           "title": "Owned by its opener",
           "description": "Passing the opener's tool name lets a reading agent attach the dialog to the control that produced it.",
           "code": "<Dialog\n  label=\"Rotate secret\"\n  open={rotating}\n  owner=\"press-rotate-secret\"\n  onClose={() => setRotating(false)}\n>\n  <Text>The current secret keeps working for one hour.</Text>\n</Dialog>"
+        },
+        {
+          "title": "A form that focuses its first field",
+          "description": "A medium dialog for a short form. initialFocus puts the cursor in the field instead of on the close control, so the person can type straight away.",
+          "code": "<Dialog\n  label=\"Rename station\"\n  size=\"medium\"\n  open={renaming}\n  initialFocus={nameField}\n  onClose={() => setRenaming(false)}\n>\n  <Stack gap=\"tight\">\n    <TextInput label=\"Station name\" value={name} onChange={setName} inputRef={nameField} />\n    <Button tone=\"action\" onClick={save}>Save name</Button>\n  </Stack>\n</Dialog>"
         }
       ],
       "a11y": {
@@ -2396,6 +2446,22 @@
           "kind": "number",
           "description": "The value at which the work is complete.",
           "default": 100
+        },
+        "tone": {
+          "kind": "enum",
+          "values": [
+            "info",
+            "action",
+            "warning",
+            "danger"
+          ],
+          "description": "The fill colour. info is the default for ordinary loading; action suits a goal being worked towards; warning and danger mark a bar running out or over a limit.",
+          "default": "info"
+        },
+        "hideLabel": {
+          "kind": "boolean",
+          "description": "Hide the label and percentage visually while keeping the label as the bar's accessible name and agent label. Use when a nearby heading already says what the bar measures.",
+          "default": false
         }
       },
       "state": {
@@ -2406,6 +2472,10 @@
         "value": {
           "description": "The fraction complete as a whole percentage, such as 40%. Absent while indeterminate.",
           "attribute": "data-sprint-value"
+        },
+        "tone": {
+          "description": "The fill tone, when it is not the default info.",
+          "attribute": "data-sprint-tone"
         }
       },
       "agentView": {
@@ -2426,6 +2496,11 @@
           "title": "Complete",
           "description": "At max the loading state clears, so the line reads as finished rather than stalled.",
           "code": "<Progress label=\"Importing manifest\" value={240} max={240} />"
+        },
+        {
+          "title": "A bare goal bar",
+          "description": "A heading beside the bar already names it, so the label is hidden and only the bar shows, in the action tone.",
+          "code": "<Progress label=\"Notes this week\" value={3} max={5} tone=\"action\" hideLabel />"
         }
       ],
       "a11y": {
@@ -2636,7 +2711,7 @@
         },
         "options": {
           "kind": "array",
-          "description": "The choices in display order: { value, label, count? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label.",
+          "description": "The choices in display order: { value, label, count?, disabled? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label. disabled keeps one option visible but unselectable: it is skipped by the arrow keys, left out of the tool's enum, and marked disabled in the agent view.",
           "required": true
         },
         "value": {
@@ -2745,14 +2820,19 @@
           "title": "A disabled control",
           "description": "Disabled unregisters the tool, so an agent cannot select an option a person could not.",
           "code": "<SegmentedControl\n  label=\"Density\"\n  disabled\n  value=\"dense\"\n  onChange={setDensity}\n  options={[\n    { value: \"dense\", label: \"dense\" },\n    { value: \"roomy\", label: \"roomy\" },\n  ]}\n/>"
+        },
+        {
+          "title": "One option unavailable",
+          "description": "A disabled option stays in place so the set of choices reads the same, but nobody can pick it: arrow keys skip it and the select tool does not offer it.",
+          "code": "<SegmentedControl\n  label=\"Interview\"\n  value={status}\n  onChange={setStatus}\n  options={[\n    { value: \"pending\", label: \"Pending\" },\n    { value: \"accepted\", label: \"Accepted\", disabled: !interviewed },\n    { value: \"declined\", label: \"Declined\", disabled: !interviewed },\n  ]}\n/>"
         }
       ],
       "a11y": {
         "role": "radiogroup",
         "keyboard": [
-          "Arrow keys move to the next or previous option and select it",
-          "Home selects the first option",
-          "End selects the last option",
+          "Arrow keys move to the next or previous enabled option and select it",
+          "Home selects the first enabled option",
+          "End selects the last enabled option",
           "Tab enters and leaves the group once"
         ],
         "notes": "Roving tabindex: only the selected option is in the tab order. Selection follows focus, which is the expected behaviour for a radio group. An option with a count is named by its label and its count together; the hint is linked to the group with aria-describedby."
@@ -3624,8 +3704,13 @@
         },
         "rows": {
           "kind": "number",
-          "description": "The visible line count before scrolling.",
+          "description": "The visible line count before scrolling. With autoGrow it is the minimum height.",
           "default": 4
+        },
+        "autoGrow": {
+          "kind": "boolean",
+          "description": "Grow the area with its content instead of scrolling, never shorter than rows.",
+          "default": false
         },
         "placeholder": {
           "kind": "string",
@@ -3652,6 +3737,19 @@
           "kind": "boolean",
           "description": "Mark the area required, visually and in the agent view.",
           "default": false
+        },
+        "hideLabel": {
+          "kind": "boolean",
+          "description": "Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for.",
+          "default": false
+        },
+        "inputRef": {
+          "kind": "object",
+          "description": "A ref to the underlying <textarea>, for focusing or measuring it. The component's own ref points at the wrapper."
+        },
+        "inputProps": {
+          "kind": "object",
+          "description": "Extra native attributes and handlers for the <textarea> itself, such as autoFocus, maxLength, inputMode, onKeyDown, or onBlur. Props spread on the component land on the wrapper; these land on the area. Anything the component manages (value, onChange, disabled, the error wiring) cannot be overridden here."
         },
         "agentName": {
           "kind": "string",
@@ -3720,6 +3818,11 @@
           "title": "A required area with an error",
           "description": "The error replaces the hint and marks the area invalid on every surface.",
           "code": "<Textarea\n  label=\"Abort reason\"\n  value={reason}\n  onChange={setReason}\n  required\n  rows={3}\n  error=\"State the reason before aborting.\"\n/>"
+        },
+        {
+          "title": "An area that grows",
+          "description": "autoGrow drops the scrollbar: the area starts at rows lines and grows with what is typed. The label is hidden because a heading above already names it, and inputProps puts a length cap and a key handler on the textarea itself.",
+          "code": "<Textarea\n  label=\"Log entry\"\n  hideLabel\n  autoGrow\n  rows={2}\n  value={entry}\n  onChange={setEntry}\n  placeholder=\"What happened on this pass\"\n  inputProps={{ maxLength: 500, onKeyDown: submitOnModEnter }}\n/>"
         }
       ],
       "a11y": {
@@ -3756,13 +3859,15 @@
         },
         "type": {
           "kind": "enum",
-          "description": "The input type. \"password\" masks the field everywhere: the value never appears in agent attributes, the agent view, or tool results.",
+          "description": "The input type. \"password\" masks the field everywhere: the value never appears in agent attributes, the agent view, or tool results. \"number\" keeps value a string, so the page parses it; pass min, max and step through inputProps.",
           "values": [
             "text",
             "email",
             "url",
             "search",
-            "password"
+            "password",
+            "number",
+            "tel"
           ],
           "default": "text"
         },
@@ -3800,6 +3905,19 @@
           "kind": "boolean",
           "description": "Mark the field required, visually and in the agent view.",
           "default": false
+        },
+        "hideLabel": {
+          "kind": "boolean",
+          "description": "Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for.",
+          "default": false
+        },
+        "inputRef": {
+          "kind": "object",
+          "description": "A ref to the underlying <input>, for focusing or measuring it. The component's own ref points at the wrapper."
+        },
+        "inputProps": {
+          "kind": "object",
+          "description": "Extra native attributes and handlers for the <input> itself, such as autoFocus, maxLength, inputMode, onKeyDown, or onBlur. Props spread on the component land on the wrapper; these land on the field. Anything the component manages (value, onChange, disabled, the error wiring) cannot be overridden here."
         },
         "agentName": {
           "kind": "string",
@@ -3886,6 +4004,11 @@
           "title": "A read-only value",
           "description": "A value shown in the shape of a form field that nobody may edit. It stays focusable and selectable, reads as text in the agent view, and registers no fill tool. To hand someone a value to paste elsewhere, a CopyField adds the copy control.",
           "code": "<TextInput\n  label=\"Station ID\"\n  value=\"KX-2209-ALPHA\"\n  onChange={() => {}}\n  readOnly\n  hint=\"Assigned at registration\"\n/>"
+        },
+        {
+          "title": "A number with field attributes",
+          "description": "type=\"number\" keeps value a string. Native attributes for the input itself, such as min, max and autoFocus, go through inputProps, and inputRef reaches the input for focusing it later.",
+          "code": "<TextInput\n  label=\"Link expiry in days\"\n  type=\"number\"\n  value={days}\n  onChange={setDays}\n  inputRef={daysField}\n  inputProps={{ min: 1, max: 90, step: 1 }}\n/>"
         }
       ],
       "a11y": {

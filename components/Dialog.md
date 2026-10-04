@@ -50,6 +50,25 @@ Passing the opener's tool name lets a reading agent attach the dialog to the con
 </Dialog>
 ```
 
+### A form that focuses its first field
+
+A medium dialog for a short form. initialFocus puts the cursor in the field instead of on the close control, so the person can type straight away.
+
+```tsx
+<Dialog
+  label="Rename station"
+  size="medium"
+  open={renaming}
+  initialFocus={nameField}
+  onClose={() => setRenaming(false)}
+>
+  <Stack gap="tight">
+    <TextInput label="Station name" value={name} onChange={setName} inputRef={nameField} />
+    <Button tone="action" onClick={save}>Save name</Button>
+  </Stack>
+</Dialog>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -59,6 +78,8 @@ Passing the opener's tool name lets a reading agent attach the dialog to the con
 | `onClose` | handler (required) | — | Called when the person or an agent asks to close: the close control, Escape, or the close tool. Set open to false in response. |
 | `children` | node (required) | — | The dialog's contents. Ordinary components; anything actionable registers its own tools, scoped under the dialog's label. |
 | `headingLevel` | enum 2 \\| 3 \\| 4 | — | Render the title as a real heading at this level, joining the page outline. |
+| `size` | enum small \\| medium \\| large | `"small"` | The dialog's width: small (26rem) for a confirmation, medium (36rem) for a short form, large (52rem) for a table or a two-column form. Every size shrinks to fit a phone. |
+| `initialFocus` | object | — | A ref to the element that takes focus when the dialog opens, such as the first field of a form or the safe choice in a destructive confirmation. Without it the browser focuses the first focusable element, which is the close control. |
 | `owner` | string | — | The tool name of the control that opened this dialog. Published as data-sprint-owner so a reading agent can attach the dialog to its opener. |
 | `agentName` | string | — | Override the label used to derive the close tool name. |
 | `agentTool` | boolean | `true` | Set false to render without registering the close tool. |
@@ -70,6 +91,7 @@ Public API: agents write selectors against these.
 | Attribute | Values | Description |
 | --- | --- | --- |
 | `data-sprint-open` | present or absent | Present while the dialog is shown. A closed dialog is absent from the DOM entirely. |
+| `data-sprint-size` | medium \\| large | The width the dialog was given, when it is not the default small. |
 
 ## WebMCP tools
 

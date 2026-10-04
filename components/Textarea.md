@@ -50,6 +50,23 @@ The error replaces the hint and marks the area invalid on every surface.
 />
 ```
 
+### An area that grows
+
+autoGrow drops the scrollbar: the area starts at rows lines and grows with what is typed. The label is hidden because a heading above already names it, and inputProps puts a length cap and a key handler on the textarea itself.
+
+```tsx
+<Textarea
+  label="Log entry"
+  hideLabel
+  autoGrow
+  rows={2}
+  value={entry}
+  onChange={setEntry}
+  placeholder="What happened on this pass"
+  inputProps={{ maxLength: 500, onKeyDown: submitOnModEnter }}
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -57,13 +74,17 @@ The error replaces the hint and marks the area invalid on every surface.
 | `label` | string (required) | — | What the area holds. Names it for a screen reader and derives the tool name, so prefer a noun phrase such as "Mission notes". |
 | `value` | string (required) | — | The area's current text. The area is fully controlled. |
 | `onChange` | handler (required) | — | Called with the new text on every change. The fill tool drives a real input event, so this runs for agent fills too. |
-| `rows` | number | `4` | The visible line count before scrolling. |
+| `rows` | number | `4` | The visible line count before scrolling. With autoGrow it is the minimum height. |
+| `autoGrow` | boolean | `false` | Grow the area with its content instead of scrolling, never shorter than rows. |
 | `placeholder` | string | — | Ghost text shown while the area is empty. |
 | `hint` | string | — | Guidance shown under the area and carried into the agent view. Replaced by error while one is set. |
 | `error` | string | — | A validation message. Marks the area invalid for people, screen readers, and agents alike. |
 | `name` | string | — | The native form name submitted with the surrounding form. |
 | `disabled` | boolean | `false` | Disable the area and unregister its fill tool. |
 | `required` | boolean | `false` | Mark the area required, visually and in the agent view. |
+| `hideLabel` | boolean | `false` | Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for. |
+| `inputRef` | object | — | A ref to the underlying <textarea>, for focusing or measuring it. The component's own ref points at the wrapper. |
+| `inputProps` | object | — | Extra native attributes and handlers for the <textarea> itself, such as autoFocus, maxLength, inputMode, onKeyDown, or onBlur. Props spread on the component land on the wrapper; these land on the area. Anything the component manages (value, onChange, disabled, the error wiring) cannot be overridden here. |
 | `agentName` | string | — | Override the label used to derive the tool name, when two areas on a page would otherwise collide. |
 | `agentTool` | boolean | `true` | Set false to render the area without registering a fill tool. |
 

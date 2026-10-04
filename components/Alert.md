@@ -46,6 +46,14 @@ Danger announces assertively via role=alert.
 <Alert tone="danger" label="Sign-in failed">Wrong callsign or access code.</Alert>
 ```
 
+### A standing warning
+
+A warning that stays on screen while a condition holds announces politely, so it does not interrupt whatever the person is reading.
+
+```tsx
+<Alert tone="warning" announce="polite" label="Offline">Changes are saved on this device until the connection returns.</Alert>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -53,6 +61,7 @@ Danger announces assertively via role=alert.
 | `children` | node (required) | — | The message. Inline content only; it is flattened to text for the agent view. |
 | `label` | string | — | A short uppercase title above the message. Also derives the dismiss tool name, so prefer a stable phrase. |
 | `tone` | enum neutral \\| info \\| warning \\| danger | `"info"` | The message's severity. Danger and warning announce assertively; info and neutral announce politely. |
+| `announce` | enum assertive \\| polite | — | Override how assistive technology announces the alert. assertive renders role=alert and interrupts; polite renders role=status and waits. Defaults to assertive for danger and warning and polite otherwise. Pass polite for a standing warning, such as an offline notice, that should not interrupt. |
 | `onDismiss` | handler | — | Called when the dismiss control is pressed. Providing it renders the control and registers the dismiss tool; the page owns removing the alert. |
 | `agentName` | string | — | Override the label used to derive the dismiss tool name. Required for a dismissible alert with no label. |
 | `agentTool` | boolean | `true` | Set false to render a dismissible alert without registering a tool. |
@@ -102,4 +111,4 @@ In agent view the component renders as this Markdown line, projected from the sa
 ## Accessibility
 
 - Role: `status`
-- Notes: Danger and warning render role=alert and announce assertively; info and neutral render role=status. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost.
+- Notes: Danger and warning render role=alert and announce assertively; info and neutral render role=status, unless announce overrides it. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost.
