@@ -65,7 +65,7 @@ export const toastMeta = defineAgentMeta({
   },
   agentView: {
     example:
-      '- **Toast** [tone=neutral]\n  - part `message` "Moved Sister Amaral to Primary."\n  - part `dismiss` "Dismiss"\n  - **Button** "Undo" [size=small, tone=action] → tool `press-undo`',
+      '- **Toast** [tone=neutral]\n  - part `message` "Moved Sister Amaral to Primary."\n  - part `dismiss` "Dismiss"\n  - **Button** "Undo" [size=small, tone=action]',
   },
   examples: [
     {

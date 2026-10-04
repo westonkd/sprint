@@ -1,0 +1,134 @@
+@layer sprint.components {
+  [data-sprint="Prose"] {
+    min-width: 0;
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-text-sm);
+    line-height: var(--sprint-leading-relaxed);
+    overflow-wrap: anywhere;
+  }
+
+  [data-sprint="Prose"][data-sprint-size="small"] {
+    font-size: var(--sprint-text-2xs);
+  }
+
+  [data-sprint="Prose"] > div > :first-child {
+    margin-top: 0;
+  }
+
+  [data-sprint="Prose"] > div > :last-child {
+    margin-bottom: 0;
+  }
+
+  [data-sprint="Prose"] :is(p, ul, ol, blockquote, pre, table, hr, dl) {
+    margin: 0 0 var(--sprint-space-4);
+  }
+
+  [data-sprint="Prose"] :is(h1, h2, h3, h4, h5, h6) {
+    margin: var(--sprint-space-5) 0 var(--sprint-space-2);
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-weight: var(--sprint-weight-bold);
+    line-height: var(--sprint-leading-tight);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Prose"] h1 {
+    font-size: var(--sprint-heading-2-size);
+  }
+
+  [data-sprint="Prose"] h2 {
+    font-size: var(--sprint-heading-3-size);
+  }
+
+  [data-sprint="Prose"] :is(h3, h4, h5, h6) {
+    font-size: var(--sprint-heading-4-size);
+  }
+
+  [data-sprint="Prose"] :is(ul, ol) {
+    padding-inline-start: var(--sprint-space-5);
+  }
+
+  [data-sprint="Prose"] li + li {
+    margin-top: var(--sprint-space-1);
+  }
+
+  [data-sprint="Prose"] li > :is(ul, ol) {
+    margin: var(--sprint-space-1) 0 0;
+  }
+
+  [data-sprint="Prose"] ul > li::marker {
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="Prose"] a {
+    color: var(--sprint-link);
+    text-decoration-color: var(--sprint-link-rule);
+    text-underline-offset: 0.2em;
+  }
+
+  [data-sprint="Prose"] :is(strong, b) {
+    font-weight: var(--sprint-weight-bold);
+  }
+
+  [data-sprint="Prose"] blockquote {
+    padding: var(--sprint-space-1) 0 var(--sprint-space-1) var(--sprint-space-4);
+    border-inline-start: var(--sprint-keyline-width-thick) solid
+      var(--sprint-keyline-strong);
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="Prose"] :not(pre) > code {
+    padding: 0 0.25em;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-surface-inset);
+    font-family: var(--sprint-font-mono);
+    font-size: 0.9em;
+  }
+
+  [data-sprint="Prose"] pre {
+    padding: var(--sprint-space-3) var(--sprint-space-4);
+    overflow-x: auto;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    border-radius: var(--sprint-radius-surface);
+    background: var(--sprint-surface-inset);
+    font-family: var(--sprint-font-mono);
+    font-size: var(--sprint-text-2xs);
+    line-height: var(--sprint-leading-normal);
+  }
+
+  [data-sprint="Prose"] table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+  }
+
+  [data-sprint="Prose"] :is(th, td) {
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    border-bottom: var(--sprint-keyline-width) solid var(--sprint-keyline);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  [data-sprint="Prose"] th {
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-label-size-small);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="Prose"] hr {
+    height: 0;
+    border: 0;
+    border-top: var(--sprint-keyline-width) solid var(--sprint-keyline);
+  }
+
+  [data-sprint="Prose"] img {
+    max-width: 100%;
+    height: auto;
+  }
+}

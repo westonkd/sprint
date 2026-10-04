@@ -91,6 +91,8 @@ export type { PendingProps } from "./Pending/index.ts";
 export { Pending, pendingMeta } from "./Pending/index.ts";
 export type { ProgressProps } from "./Progress/index.ts";
 export { Progress, progressMeta } from "./Progress/index.ts";
+export type { ProseProps, ProseSize } from "./Prose/index.ts";
+export { Prose, proseMeta } from "./Prose/index.ts";
 export type { RadioGroupProps, RadioOption } from "./RadioGroup/index.ts";
 export { RadioGroup, radioGroupMeta, SELECT_RADIO_TOOL } from "./RadioGroup/index.ts";
 export type { SearchFieldProps } from "./SearchField/index.ts";

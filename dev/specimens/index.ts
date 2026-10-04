@@ -29,6 +29,7 @@ import { paginationSpecimens } from "./Pagination.tsx";
 import { panelSpecimens } from "./Panel.tsx";
 import { pendingSpecimens } from "./Pending.tsx";
 import { progressGallery, progressSpecimens } from "./Progress.tsx";
+import { proseSpecimens } from "./Prose.tsx";
 import { radioGroupSpecimens } from "./RadioGroup.tsx";
 import { searchFieldSpecimens } from "./SearchField.tsx";
 import { secretFieldSpecimens } from "./SecretField.tsx";
@@ -90,6 +91,7 @@ const registry: Record<string, Specimens> = {
   Select: { byExample: selectSpecimens },
   Tooltip: { byExample: tooltipSpecimens },
   Kbd: { byExample: kbdSpecimens },
+  Prose: { byExample: proseSpecimens },
   Toast: { byExample: toastSpecimens },
   Avatar: { byExample: avatarSpecimens },
   RadioGroup: { byExample: radioGroupSpecimens },
