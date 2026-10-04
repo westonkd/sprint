@@ -5,6 +5,10 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Fixed: a theme island sets its own text colour.** An element carrying `data-sprint-theme` now
+  sets `color` to its theme's ink, so plain text inside, such as untokenized code, no longer keeps
+  the outer theme's colour. The rule has zero specificity, so a consumer's own colour still wins.
+
 - **Added: `Combobox`.** A searchable single-choice field for long lists, with groups, per-group
   limits, descriptions, keywords, custom option rendering, a clear control, a loading spinner and a
   server-search mode. Its `choose` tool accepts a label or a search.
