@@ -1,5 +1,7 @@
 import {
   type ComponentPropsWithRef,
+  type InputHTMLAttributes,
+  type Ref,
   useCallback,
   useEffect,
   useId,
@@ -17,11 +19,36 @@ import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
 import { setFieldValue } from "@/agent/webmcp/drive.ts";
 import { commitSync } from "@/agent/webmcp/flush.ts";
 import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
+import { assignRef } from "../refs.ts";
 import { textInputMeta } from "./meta.ts";
 import { FILL_TOOL } from "./tool.ts";
 import "./TextInput.css";
 
-export type TextInputType = "text" | "email" | "url" | "search" | "password";
+export type TextInputType =
+  | "text"
+  | "email"
+  | "url"
+  | "search"
+  | "password"
+  | "number"
+  | "tel";
+
+export type TextInputFieldProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  | "id"
+  | "type"
+  | "value"
+  | "defaultValue"
+  | "onChange"
+  | "placeholder"
+  | "name"
+  | "autoComplete"
+  | "disabled"
+  | "readOnly"
+  | "required"
+  | "aria-invalid"
+  | "aria-describedby"
+>;
 
 export interface TextInputProps extends Omit<ComponentPropsWithRef<"div">, "onChange"> {
   label: string;
@@ -36,6 +63,9 @@ export interface TextInputProps extends Omit<ComponentPropsWithRef<"div">, "onCh
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
+  hideLabel?: boolean;
+  inputRef?: Ref<HTMLInputElement>;
+  inputProps?: TextInputFieldProps;
   agentName?: string;
   agentTool?: boolean;
 }
@@ -60,6 +90,9 @@ export function TextInput(props: TextInputProps) {
     disabled = false,
     readOnly = false,
     required = false,
+    hideLabel = false,
+    inputRef,
+    inputProps,
     agentName,
     agentTool = true,
     ...rest
@@ -135,6 +168,7 @@ export function TextInput(props: TextInputProps) {
         onValueChange={onChange}
         ref={(target: HTMLInputElement | null) => {
           element.current = target;
+          assignRef(inputRef, target);
         }}
       />
     );
@@ -145,12 +179,16 @@ export function TextInput(props: TextInputProps) {
 
   return (
     <div {...rest} {...agentAttributesFor(node)}>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} {...(hideLabel ? { "data-sprint-visually-hidden": "" } : {})}>
+        {label}
+      </label>
       <input
+        {...inputProps}
         id={id}
         {...agentPartAttributesFor({ part: "input", state: {} })}
         ref={(target) => {
           element.current = target;
+          assignRef(inputRef, target);
         }}
         type={type}
         value={value}

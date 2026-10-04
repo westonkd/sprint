@@ -5,6 +5,29 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Fixed: `Select` opens above the field when there is no room below.** The listbox measures the
+  space on both sides, flips when the options would run off the bottom of the viewport, caps its
+  height to the room it has, and stays inside the viewport horizontally.
+- **Fixed: `Select`'s scrollbar no longer cuts through its rounded corners.** The listbox is now a
+  clipping layer around an inner scroller, so the drop shadow survives too.
+- **Fixed: the `Dialog` backdrop is quiet in `ambient`.** The backdrop texture is a new
+  `--sprint-ornament-scrim` slot (`-size` alongside it): the shade hatch everywhere else, nothing in
+  ambient.
+- **Added: `TextInput` and `Textarea` reach their field.** `inputRef` points at the native input,
+  `inputProps` puts native attributes and handlers such as `autoFocus`, `maxLength` and `onKeyDown`
+  on it, and `hideLabel` keeps the label for screen readers and agents only. `TextInput` takes
+  `type="number"` and `type="tel"`; `Textarea` takes `autoGrow`.
+- **Added: `Dialog` `size` and `initialFocus`.** `small` (the old width), `medium` or `large`, and a
+  ref to the element that takes focus on open.
+- **Added: `SegmentedControl` options take `disabled`.** A disabled option stays visible, is skipped
+  by the arrow keys, and is left out of the select tool's enum.
+- **Added: `Checkbox` `indeterminate`.** A mixed box reads as `checked=mixed`; pressing it calls
+  `onChange(true)`.
+- **Added: `Alert` `announce`.** `polite` or `assertive` overrides the role a tone implies, so a
+  standing warning can be a polite `role="status"`.
+- **Added: `Progress` `tone` and `hideLabel`.** `info`, `action`, `warning` or `danger` fills, and a
+  bar whose label and percentage are for assistive technology and agents only.
+
 ## v0.7.0 - 2026-10-03
 
 - **Added: `ambient` and `ambient-dark`, a quiet fourth register.** For products that want Sprint

@@ -23,6 +23,25 @@ const ACCESS = [
   { value: "admin", label: "Admin" },
 ];
 
+const INTERVIEW = [
+  { value: "pending", label: "Pending" },
+  { value: "accepted", label: "Accepted", disabled: true },
+  { value: "declined", label: "Declined", disabled: true },
+  { value: "deferred", label: "Deferred" },
+];
+
+function UnavailableExample() {
+  const [status, setStatus] = useState("pending");
+  return (
+    <SegmentedControl
+      label="Interview"
+      value={status}
+      onChange={setStatus}
+      options={INTERVIEW}
+    />
+  );
+}
+
 const RANGES = [
   { value: "day", label: "Day" },
   { value: "week", label: "Week" },
@@ -94,4 +113,5 @@ export const segmentedControlSpecimens: Record<string, ReactNode> = {
       options={DENSITY}
     />
   ),
+  "One option unavailable": <UnavailableExample />,
 };

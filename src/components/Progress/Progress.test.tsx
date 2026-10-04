@@ -26,6 +26,25 @@ function root(): HTMLElement {
 }
 
 describe("Progress rendering", () => {
+  it("keeps a hidden label as the accessible name and drops the percentage", () => {
+    render(<Progress label="Notes this week" value={3} max={5} hideLabel />);
+    expect(
+      screen.getByRole("progressbar", { name: "Notes this week" }),
+    ).toHaveAttribute("value", "60");
+    expect(screen.getByText("Notes this week")).toHaveAttribute(
+      "data-sprint-visually-hidden",
+    );
+    expect(screen.queryByText("60%")).toBeNull();
+    expect(root()).toHaveAttribute("data-sprint-value", "60%");
+  });
+
+  it("publishes a tone other than info", () => {
+    const view = render(<Progress label="Fuel" value={30} tone="warning" />);
+    expect(root()).toHaveAttribute("data-sprint-tone", "warning");
+    view.rerender(<Progress label="Fuel" value={30} />);
+    expect(root()).not.toHaveAttribute("data-sprint-tone");
+  });
+
   it("is indeterminate and loading without a value", () => {
     render(<Progress label="Loading flight plan" />);
     const bar = screen.getByRole("progressbar", { name: "Loading flight plan" });

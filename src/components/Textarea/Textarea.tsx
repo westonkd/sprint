@@ -1,8 +1,11 @@
 import {
   type ComponentPropsWithRef,
+  type Ref,
+  type TextareaHTMLAttributes,
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
 } from "react";
 import { AgentFieldControl, AgentLine } from "@/agent/view/AgentText.tsx";
@@ -17,9 +20,31 @@ import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
 import { setFieldValue } from "@/agent/webmcp/drive.ts";
 import { commitSync } from "@/agent/webmcp/flush.ts";
 import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
+import { assignRef } from "../refs.ts";
 import { textareaMeta } from "./meta.ts";
 import { FILL_TEXTAREA_TOOL } from "./tool.ts";
 import "./Textarea.css";
+
+export type TextareaFieldProps = Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  | "id"
+  | "rows"
+  | "value"
+  | "defaultValue"
+  | "onChange"
+  | "placeholder"
+  | "name"
+  | "disabled"
+  | "required"
+  | "aria-invalid"
+  | "aria-describedby"
+>;
+
+function fitContent(field: HTMLTextAreaElement): void {
+  field.style.setProperty("height", "auto");
+  const edges = field.offsetHeight - field.clientHeight;
+  field.style.setProperty("height", `${field.scrollHeight + edges}px`);
+}
 
 export interface TextareaProps extends Omit<ComponentPropsWithRef<"div">, "onChange"> {
   label: string;
@@ -32,6 +57,10 @@ export interface TextareaProps extends Omit<ComponentPropsWithRef<"div">, "onCha
   name?: string;
   disabled?: boolean;
   required?: boolean;
+  autoGrow?: boolean;
+  hideLabel?: boolean;
+  inputRef?: Ref<HTMLTextAreaElement>;
+  inputProps?: TextareaFieldProps;
   agentName?: string;
   agentTool?: boolean;
 }
@@ -54,6 +83,10 @@ export function Textarea(props: TextareaProps) {
     name,
     disabled = false,
     required = false,
+    autoGrow = false,
+    hideLabel = false,
+    inputRef,
+    inputProps,
     agentName,
     agentTool = true,
     ...rest
@@ -78,6 +111,19 @@ export function Textarea(props: TextareaProps) {
       mounted.current = false;
     };
   }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the height is measured from the rendered value, so a new value has to re-run the fit
+  useLayoutEffect(() => {
+    const field = element.current;
+    if (!autoGrow || view === "agent" || field === null) return;
+    fitContent(field);
+  }, [autoGrow, value, view]);
+
+  useLayoutEffect(() => {
+    const field = element.current;
+    if (autoGrow || field === null) return;
+    field.style.removeProperty("height");
+  }, [autoGrow]);
 
   const execute = useCallback(async (inputs: Record<string, unknown>) => {
     const next = inputs.value;
@@ -126,6 +172,7 @@ export function Textarea(props: TextareaProps) {
         onValueChange={onChange}
         ref={(target: HTMLTextAreaElement | null) => {
           element.current = target;
+          assignRef(inputRef, target);
         }}
       />
     );
@@ -136,12 +183,16 @@ export function Textarea(props: TextareaProps) {
 
   return (
     <div {...rest} {...agentAttributesFor(node)}>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} {...(hideLabel ? { "data-sprint-visually-hidden": "" } : {})}>
+        {label}
+      </label>
       <textarea
+        {...inputProps}
         id={id}
         {...agentPartAttributesFor({ part: "input", state: {} })}
         ref={(target) => {
           element.current = target;
+          assignRef(inputRef, target);
         }}
         rows={rows}
         value={value}

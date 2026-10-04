@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import { TextInput } from "../../src/index.ts";
 
 function LabelledField() {
@@ -52,9 +52,25 @@ function ReadOnly() {
   );
 }
 
+function NumberField() {
+  const [days, setDays] = useState("14");
+  const daysField = useRef<HTMLInputElement>(null);
+  return (
+    <TextInput
+      label="Link expiry in days"
+      type="number"
+      value={days}
+      onChange={setDays}
+      inputRef={daysField}
+      inputProps={{ min: 1, max: 90, step: 1 }}
+    />
+  );
+}
+
 export const textInputSpecimens: Record<string, ReactNode> = {
   "A labelled field": <LabelledField />,
   "A validation error": <ValidationError />,
   "A password": <Password />,
   "A read-only value": <ReadOnly />,
+  "A number with field attributes": <NumberField />,
 };

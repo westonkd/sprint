@@ -27,7 +27,24 @@ function RequiredArea() {
   );
 }
 
+function GrowingArea() {
+  const [entry, setEntry] = useState("");
+  return (
+    <Textarea
+      label="Log entry"
+      hideLabel
+      autoGrow
+      rows={2}
+      value={entry}
+      onChange={setEntry}
+      placeholder="What happened on this pass"
+      inputProps={{ maxLength: 500 }}
+    />
+  );
+}
+
 export const textareaSpecimens: Record<string, ReactNode> = {
   "A notes area": <NotesArea />,
   "A required area with an error": <RequiredArea />,
+  "An area that grows": <GrowingArea />,
 };

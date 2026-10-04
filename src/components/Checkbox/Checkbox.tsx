@@ -23,6 +23,7 @@ import "./Checkbox.css";
 export interface CheckboxProps extends Omit<ComponentPropsWithRef<"div">, "onChange"> {
   label: string;
   checked: boolean;
+  indeterminate?: boolean;
   onChange: (checked: boolean) => void;
   hint?: string;
   error?: string;
@@ -43,6 +44,7 @@ export function Checkbox(props: CheckboxProps) {
   const {
     label,
     checked,
+    indeterminate = false,
     onChange,
     hint,
     error,
@@ -64,6 +66,9 @@ export function Checkbox(props: CheckboxProps) {
   onChangeRef.current = onChange;
   const checkedRef = useRef(checked);
   checkedRef.current = checked;
+  const mixedRef = useRef(indeterminate);
+  mixedRef.current = indeterminate;
+  const field = useRef<HTMLInputElement | null>(null);
   const formatRef = useRef(formatter);
   formatRef.current = formatter;
   const nodeRef = useRef(buildAgentNode({ component: checkboxMeta.name }));
@@ -76,16 +81,21 @@ export function Checkbox(props: CheckboxProps) {
     };
   }, []);
 
+  useEffect(() => {
+    if (field.current !== null) field.current.indeterminate = indeterminate;
+  });
+
   const execute = useCallback(async (inputs: Record<string, unknown>) => {
     const desired = inputs.checked;
     if (typeof desired !== "boolean") {
       return 'Pass "checked" as true or false; it states the end state.';
     }
 
-    const already = desired === checkedRef.current;
+    const mixed = mixedRef.current;
+    const already = !mixed && desired === checkedRef.current;
     if (!already) {
       const target = element.current;
-      if (target !== null) target.click();
+      if (target !== null && !mixed) target.click();
       else commitSync(() => onChangeRef.current(desired));
     }
 
@@ -111,7 +121,7 @@ export function Checkbox(props: CheckboxProps) {
     label,
     tool: toolName,
     state: {
-      checked,
+      checked: indeterminate ? "mixed" : checked,
       disabled,
       required,
       invalid: error !== undefined,
@@ -128,7 +138,7 @@ export function Checkbox(props: CheckboxProps) {
         ref={(target: HTMLButtonElement | null) => {
           element.current = target;
         }}
-        onClick={() => onChange(!checked)}
+        onClick={() => onChange(indeterminate ? true : !checked)}
       />
     );
   }
@@ -144,6 +154,8 @@ export function Checkbox(props: CheckboxProps) {
           {...agentPartAttributesFor({ part: "input", state: {} })}
           ref={(target) => {
             element.current = target;
+            field.current = target;
+            if (target !== null) target.indeterminate = indeterminate;
           }}
           type="checkbox"
           checked={checked}

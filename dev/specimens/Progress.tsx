@@ -19,6 +19,9 @@ export const progressSpecimens: Record<string, ReactNode> = {
   "Indeterminate load": <Progress label="Loading flight plan" />,
   "Counted progress": <CountedImport />,
   Complete: <Progress label="Importing manifest" value={240} max={240} />,
+  "A bare goal bar": (
+    <Progress label="Notes this week" value={3} max={5} tone="action" hideLabel />
+  ),
 };
 
 export const progressGallery: ReactNode = (
@@ -27,5 +30,7 @@ export const progressGallery: ReactNode = (
     <Progress label="Uploading telemetry" value={0} />
     <Progress label="Importing manifest" value={40} />
     <Progress label="Syncing loadouts" value={100} />
+    <Progress label="Fuel reserve" value={30} tone="warning" />
+    <Progress label="Hull integrity" value={12} tone="danger" />
   </>
 );

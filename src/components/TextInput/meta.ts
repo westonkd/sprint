@@ -32,8 +32,8 @@ export const textInputMeta = defineAgentMeta({
     type: {
       kind: "enum",
       description:
-        'The input type. "password" masks the field everywhere: the value never appears in agent attributes, the agent view, or tool results.',
-      values: ["text", "email", "url", "search", "password"],
+        'The input type. "password" masks the field everywhere: the value never appears in agent attributes, the agent view, or tool results. "number" keeps value a string, so the page parses it; pass min, max and step through inputProps.',
+      values: ["text", "email", "url", "search", "password", "number", "tel"],
       default: "text",
     },
     placeholder: {
@@ -73,6 +73,22 @@ export const textInputMeta = defineAgentMeta({
       kind: "boolean",
       description: "Mark the field required, visually and in the agent view.",
       default: false,
+    },
+    hideLabel: {
+      kind: "boolean",
+      description:
+        "Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for.",
+      default: false,
+    },
+    inputRef: {
+      kind: "object",
+      description:
+        "A ref to the underlying <input>, for focusing or measuring it. The component's own ref points at the wrapper.",
+    },
+    inputProps: {
+      kind: "object",
+      description:
+        "Extra native attributes and handlers for the <input> itself, such as autoFocus, maxLength, inputMode, onKeyDown, or onBlur. Props spread on the component land on the wrapper; these land on the field. Anything the component manages (value, onChange, disabled, the error wiring) cannot be overridden here.",
     },
     agentName: {
       kind: "string",
@@ -148,6 +164,12 @@ export const textInputMeta = defineAgentMeta({
       description:
         "A value shown in the shape of a form field that nobody may edit. It stays focusable and selectable, reads as text in the agent view, and registers no fill tool. To hand someone a value to paste elsewhere, a CopyField adds the copy control.",
       code: '<TextInput\n  label="Station ID"\n  value="KX-2209-ALPHA"\n  onChange={() => {}}\n  readOnly\n  hint="Assigned at registration"\n/>',
+    },
+    {
+      title: "A number with field attributes",
+      description:
+        'type="number" keeps value a string. Native attributes for the input itself, such as min, max and autoFocus, go through inputProps, and inputRef reaches the input for focusing it later.',
+      code: '<TextInput\n  label="Link expiry in days"\n  type="number"\n  value={days}\n  onChange={setDays}\n  inputRef={daysField}\n  inputProps={{ min: 1, max: 90, step: 1 }}\n/>',
     },
   ],
   a11y: {

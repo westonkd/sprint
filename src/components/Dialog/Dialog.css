@@ -14,10 +14,19 @@
     max-height: calc(100vh - var(--sprint-space-6) * 2);
   }
 
+  [data-sprint="Dialog"][data-sprint-size="medium"] {
+    width: min(36rem, calc(100vw - var(--sprint-space-6) * 2));
+  }
+
+  [data-sprint="Dialog"][data-sprint-size="large"] {
+    width: min(52rem, calc(100vw - var(--sprint-space-6) * 2));
+  }
+
   [data-sprint="Dialog"]::backdrop {
     --sprint-ornament-ink: var(--sprint-surface);
     background-color: var(--sprint-scrim);
-    background-image: var(--sprint-ornament-shade);
+    background-image: var(--sprint-ornament-scrim);
+    background-size: var(--sprint-ornament-scrim-size);
   }
 
   [data-sprint="Dialog"] > header {

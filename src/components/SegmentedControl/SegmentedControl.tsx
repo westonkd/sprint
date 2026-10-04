@@ -27,6 +27,7 @@ export interface SegmentedOption {
   value: string;
   label: string;
   count?: number;
+  disabled?: boolean;
 }
 
 export interface SegmentedControlProps
@@ -51,7 +52,14 @@ function optionSchema(options: readonly SegmentedOption[]): JsonSchemaObject {
       ...SELECT_TOOL.inputSchema.properties,
       ...(option === undefined
         ? {}
-        : { option: { ...option, enum: options.map((entry) => entry.label) } }),
+        : {
+            option: {
+              ...option,
+              enum: options
+                .filter((entry) => !entry.disabled)
+                .map((entry) => entry.label),
+            },
+          }),
     },
   };
 }
@@ -113,6 +121,12 @@ export function SegmentedControl(props: SegmentedControlProps) {
           .map((entry) => `"${entry.label}"`)
           .join(", ")}.`;
       }
+      if (match.disabled) {
+        return `"${match.label}" is unavailable right now. Choose one of: ${available
+          .filter((entry) => !entry.disabled)
+          .map((entry) => `"${entry.label}"`)
+          .join(", ")}.`;
+      }
 
       select(match.value);
       await afterCommit();
@@ -144,7 +158,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
       ...(option.value === value ? { checked: true as const } : {}),
       ...(option.value === savedValue ? { saved: true as const } : {}),
       ...(option.count === undefined ? {} : { count: String(option.count) }),
-      ...(disabled ? { disabled: true as const } : {}),
+      ...(disabled || option.disabled ? { disabled: true as const } : {}),
     },
   }));
 
@@ -164,16 +178,19 @@ export function SegmentedControl(props: SegmentedControlProps) {
     const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp", "Home", "End"];
     if (!keys.includes(event.key) || disabled) return;
 
-    const current = options.findIndex((option) => option.value === value);
+    const enabled = options.filter((option) => !option.disabled);
+    if (enabled.length === 0) return;
+    const current = enabled.findIndex((option) => option.value === value);
     const step = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
+    const from = current < 0 && step < 0 ? 0 : current;
     const next =
       event.key === "Home"
         ? 0
         : event.key === "End"
-          ? options.length - 1
-          : (current + step + options.length) % options.length;
+          ? enabled.length - 1
+          : (from + step + enabled.length) % enabled.length;
 
-    const target = options[next];
+    const target = enabled[next];
     if (target === undefined) return;
 
     event.preventDefault();
@@ -186,7 +203,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
     return (
       <AgentControlGroup
         node={node}
-        isActionable={(part) => part.part === "option"}
+        isActionable={(part) => part.part === "option" && part.state.disabled !== true}
         onActivate={(_part, index) => {
           const target = options[index];
           if (target !== undefined) select(target.value);
@@ -196,6 +213,10 @@ export function SegmentedControl(props: SegmentedControlProps) {
   }
 
   const hintId = hint === undefined ? undefined : `${id}-hint`;
+  const enabledOptions = options.filter((option) => !option.disabled);
+  const focusable = (
+    enabledOptions.find((option) => option.value === value) ?? enabledOptions[0]
+  )?.value;
 
   return (
     <div
@@ -209,9 +230,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
       <div>
         {options.map((option, index) => {
           const selected = option.value === value;
-          const active = options.some((entry) => entry.value === value)
-            ? selected
-            : index === 0;
+          const active = option.value === focusable;
           const labelId = `${id}-${index}-label`;
           const countId = `${id}-${index}-count`;
           return (
@@ -224,7 +243,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
                 option.count === undefined ? undefined : `${labelId} ${countId}`
               }
               tabIndex={active ? 0 : -1}
-              disabled={disabled}
+              disabled={disabled || option.disabled}
               ref={(element) => {
                 if (element === null) elements.current.delete(option.value);
                 else elements.current.set(option.value, element);

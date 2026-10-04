@@ -21,7 +21,7 @@ export const segmentedControlMeta = defineAgentMeta({
     options: {
       kind: "array",
       description:
-        "The choices in display order: { value, label, count? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label.",
+        "The choices in display order: { value, label, count?, disabled? }. The label is what a person sees and what the select tool accepts, so an agent never has to know the value. count renders as a muted chip beside the label and reaches the agent view as part state, so never fold a count into the label. disabled keeps one option visible but unselectable: it is skipped by the arrow keys, left out of the tool's enum, and marked disabled in the agent view.",
       required: true,
     },
     value: {
@@ -124,13 +124,19 @@ export const segmentedControlMeta = defineAgentMeta({
         "Disabled unregisters the tool, so an agent cannot select an option a person could not.",
       code: '<SegmentedControl\n  label="Density"\n  disabled\n  value="dense"\n  onChange={setDensity}\n  options={[\n    { value: "dense", label: "dense" },\n    { value: "roomy", label: "roomy" },\n  ]}\n/>',
     },
+    {
+      title: "One option unavailable",
+      description:
+        "A disabled option stays in place so the set of choices reads the same, but nobody can pick it: arrow keys skip it and the select tool does not offer it.",
+      code: '<SegmentedControl\n  label="Interview"\n  value={status}\n  onChange={setStatus}\n  options={[\n    { value: "pending", label: "Pending" },\n    { value: "accepted", label: "Accepted", disabled: !interviewed },\n    { value: "declined", label: "Declined", disabled: !interviewed },\n  ]}\n/>',
+    },
   ],
   a11y: {
     role: "radiogroup",
     keyboard: [
-      "Arrow keys move to the next or previous option and select it",
-      "Home selects the first option",
-      "End selects the last option",
+      "Arrow keys move to the next or previous enabled option and select it",
+      "Home selects the first enabled option",
+      "End selects the last enabled option",
       "Tab enters and leaves the group once",
     ],
     notes:
