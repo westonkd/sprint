@@ -16,6 +16,7 @@ import { emptyStateSpecimens } from "./EmptyState.tsx";
 import { entityRowSpecimens } from "./EntityRow.tsx";
 import { headingGallery, headingSpecimens } from "./Heading.tsx";
 import { imageGallery, imageSpecimens } from "./Image.tsx";
+import { kbdSpecimens } from "./Kbd.tsx";
 import { linkSpecimens } from "./Link.tsx";
 import { listGallery, listSpecimens } from "./List.tsx";
 import { menuSpecimens } from "./Menu.tsx";
@@ -32,6 +33,7 @@ import { secretFieldSpecimens } from "./SecretField.tsx";
 import { segmentedControlSpecimens } from "./SegmentedControl.tsx";
 import { selectSpecimens } from "./Select.tsx";
 import { shellSpecimens } from "./Shell.tsx";
+import { spinnerSpecimens } from "./Spinner.tsx";
 import { stackSpecimens } from "./Stack.tsx";
 import { stepsGallery, stepsSpecimens } from "./Steps.tsx";
 import { switchSpecimens } from "./Switch.tsx";
@@ -41,6 +43,7 @@ import { textGallery, textSpecimens } from "./Text.tsx";
 import { textareaSpecimens } from "./Textarea.tsx";
 import { textInputSpecimens } from "./TextInput.tsx";
 import { tooltipSpecimens } from "./Tooltip.tsx";
+import { visuallyHiddenSpecimens } from "./VisuallyHidden.tsx";
 
 export interface Specimens {
   gallery?: ReactNode;
@@ -82,6 +85,9 @@ const registry: Record<string, Specimens> = {
   SegmentedControl: { byExample: segmentedControlSpecimens },
   Select: { byExample: selectSpecimens },
   Tooltip: { byExample: tooltipSpecimens },
+  Kbd: { byExample: kbdSpecimens },
+  Spinner: { byExample: spinnerSpecimens },
+  VisuallyHidden: { byExample: visuallyHiddenSpecimens },
   Shell: { byExample: shellSpecimens },
   Stack: { byExample: stackSpecimens },
   Switch: { byExample: switchSpecimens },

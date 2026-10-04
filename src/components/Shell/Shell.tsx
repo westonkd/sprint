@@ -24,6 +24,8 @@ export interface ShellProps extends ComponentPropsWithRef<"div"> {
   collapsed?: boolean;
   defaultCollapsed?: boolean;
   onCollapsedChange?: (collapsed: boolean) => void;
+  drawerOpen?: boolean;
+  onDrawerOpenChange?: (open: boolean) => void;
   hideLabel?: string;
   showLabel?: string;
 }
@@ -40,6 +42,8 @@ export function Shell(props: ShellProps) {
     collapsed: controlled,
     defaultCollapsed = false,
     onCollapsedChange,
+    drawerOpen,
+    onDrawerOpenChange,
     hideLabel = "Hide menu",
     showLabel = "Show menu",
     children,
@@ -47,16 +51,26 @@ export function Shell(props: ShellProps) {
   } = props;
 
   const view = useSprintView();
-  const [open, setOpen] = useState(false);
+  const [heldOpen, setHeldOpen] = useState(false);
+  const open = drawerOpen ?? heldOpen;
+  const notifyOpen = useRef(onDrawerOpenChange);
+  notifyOpen.current = onDrawerOpenChange;
+  const setOpen = useCallback((next: boolean) => {
+    setHeldOpen(next);
+    notifyOpen.current?.(next);
+  }, []);
   const [held, setHeld] = useState(defaultCollapsed);
   const collapsed = collapsible && (controlled ?? held);
   const drawerId = useId();
   const main = useRef<HTMLElement | null>(null);
 
-  const closeOnNavigate = useCallback((event: MouseEvent<HTMLDivElement>) => {
-    const target = event.target;
-    if (target instanceof Element && target.closest("a") !== null) setOpen(false);
-  }, []);
+  const closeOnNavigate = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest("a") !== null) setOpen(false);
+    },
+    [setOpen],
+  );
 
   const node = buildAgentNode({
     component: shellMeta.name,

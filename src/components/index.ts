@@ -65,6 +65,8 @@ export type { HeadingLevel, HeadingProps } from "./Heading/index.ts";
 export { Heading, headingMeta } from "./Heading/index.ts";
 export type { ImageFit, ImageProps, ImageRatio, ImageStatus } from "./Image/index.ts";
 export { Image, imageMeta } from "./Image/index.ts";
+export type { KbdProps } from "./Kbd/index.ts";
+export { Kbd, kbdMeta } from "./Kbd/index.ts";
 export type { LinkProps } from "./Link/index.ts";
 export { Link, linkMeta, OPEN_LINK_TOOL } from "./Link/index.ts";
 export type { ListMarker, ListProps } from "./List/index.ts";
@@ -104,6 +106,8 @@ export type { SelectOption, SelectProps } from "./Select/index.ts";
 export { SELECT_OPTION_TOOL, Select, selectMeta } from "./Select/index.ts";
 export type { ShellProps } from "./Shell/index.ts";
 export { Shell, shellMeta } from "./Shell/index.ts";
+export type { SpinnerProps, SpinnerSize } from "./Spinner/index.ts";
+export { Spinner, spinnerMeta } from "./Spinner/index.ts";
 export type {
   StackAlign,
   StackDirection,
@@ -129,3 +133,5 @@ export type { TextInputProps, TextInputType } from "./TextInput/index.ts";
 export { FILL_TOOL, TextInput, textInputMeta } from "./TextInput/index.ts";
 export type { TooltipProps } from "./Tooltip/index.ts";
 export { Tooltip, tooltipMeta } from "./Tooltip/index.ts";
+export type { VisuallyHiddenProps } from "./VisuallyHidden/index.ts";
+export { VisuallyHidden, visuallyHiddenMeta } from "./VisuallyHidden/index.ts";
