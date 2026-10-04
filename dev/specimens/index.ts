@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { alertGallery, alertSpecimens } from "./Alert.tsx";
+import { avatarSpecimens } from "./Avatar.tsx";
 import { breadcrumbSpecimens } from "./Breadcrumb.tsx";
 import { buttonGallery, buttonSpecimens } from "./Button.tsx";
 import { cardSpecimens } from "./Card.tsx";
@@ -44,6 +45,7 @@ import { tagGallery, tagSpecimens } from "./Tag.tsx";
 import { textGallery, textSpecimens } from "./Text.tsx";
 import { textareaSpecimens } from "./Textarea.tsx";
 import { textInputSpecimens } from "./TextInput.tsx";
+import { toastSpecimens } from "./Toast.tsx";
 import { tooltipSpecimens } from "./Tooltip.tsx";
 import { visuallyHiddenSpecimens } from "./VisuallyHidden.tsx";
 
@@ -88,6 +90,8 @@ const registry: Record<string, Specimens> = {
   Select: { byExample: selectSpecimens },
   Tooltip: { byExample: tooltipSpecimens },
   Kbd: { byExample: kbdSpecimens },
+  Toast: { byExample: toastSpecimens },
+  Avatar: { byExample: avatarSpecimens },
   RadioGroup: { byExample: radioGroupSpecimens },
   Tabs: { byExample: tabsSpecimens },
   Spinner: { byExample: spinnerSpecimens },

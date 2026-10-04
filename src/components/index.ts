@@ -1,5 +1,7 @@
 export type { AlertProps, AlertTone } from "./Alert/index.ts";
 export { Alert, alertMeta, DISMISS_ALERT_TOOL } from "./Alert/index.ts";
+export type { AvatarProps, AvatarSize } from "./Avatar/index.ts";
+export { Avatar, avatarMeta, initialsOf } from "./Avatar/index.ts";
 export type {
   BreadcrumbAction,
   BreadcrumbItem,
@@ -135,6 +137,8 @@ export type { TextareaProps } from "./Textarea/index.ts";
 export { FILL_TEXTAREA_TOOL, Textarea, textareaMeta } from "./Textarea/index.ts";
 export type { TextInputProps, TextInputType } from "./TextInput/index.ts";
 export { FILL_TOOL, TextInput, textInputMeta } from "./TextInput/index.ts";
+export type { ToastAction, ToastProps, ToastTone } from "./Toast/index.ts";
+export { Toast, toastMeta } from "./Toast/index.ts";
 export type { TooltipProps } from "./Tooltip/index.ts";
 export { Tooltip, tooltipMeta } from "./Tooltip/index.ts";
 export type { VisuallyHiddenProps } from "./VisuallyHidden/index.ts";
