@@ -11,7 +11,7 @@
     {
       "name": "agent-manifest.json",
       "digest": {
-        "sha256": "a68b9f92f6f3bf12b2b6f0d1b8c823b7fa2f81a41b7038963a43d87a93ecfbe2"
+        "sha256": "6f2ac2521ff3830929494a40b88f30c918364d562d734e1019d7602a60a93f46"
       }
     },
     {
@@ -21,33 +21,33 @@
       }
     },
     {
-      "name": "assets/index-BaGIJyHd.js",
+      "name": "assets/index-EVVE5RMl.js",
       "digest": {
-        "sha256": "dad897de2968e63cb110c42a4e44fde45b52a874e98c4d3384c2c762db312dab"
+        "sha256": "384d64b49e17eb87bc0793db84769680c72a08f8b521fb0fbca53b133aa130ed"
       }
     },
     {
-      "name": "assets/workbench-C4HVTO0D.js",
+      "name": "assets/workbench-Bh_QcEch.css",
       "digest": {
-        "sha256": "9ad18ced69d2770478089ee56ff0426e008b6ac3b251787a9b31d249fb1cc293"
+        "sha256": "e231948d340ad7cec6160ce4aa3537bd20f3e0d8e457a3f88dbc83e110608395"
       }
     },
     {
-      "name": "assets/workbench-Ctf4tkQN.js",
+      "name": "assets/workbench-DrDpSqyy.js",
       "digest": {
-        "sha256": "4b052b4220bca1457591c09b797a0fa9c35502359599a8045e9c57d130efb49f"
+        "sha256": "2b11b3d7ac1f478a6f46c1b507724462a6aef96a10a8a5b82c877ecef30a3b56"
       }
     },
     {
-      "name": "assets/workbench-D9LfSFop.css",
+      "name": "assets/workbench-GUD10zxQ.js",
       "digest": {
-        "sha256": "c29275a1e7f8b52f26666adb24d7c6cd81bf85f1bf078f8ff1975975ef7972df"
+        "sha256": "964392360f39378b3192ca30b87d23608bc32595f8008a5fd3313ab147984a9b"
       }
     },
     {
-      "name": "assets/workbench-DrwsFyPF.css",
+      "name": "assets/workbench-yx9O-UAn.css",
       "digest": {
-        "sha256": "927c00175308dd06e850beeafe8af75d6d7f76ba94df7eaf4051c3d8237354a8"
+        "sha256": "e6e43869ad0192a73c26585f831db88eaee78336633bdfdc9cf3cfd151f5bc45"
       }
     },
     {
@@ -65,7 +65,7 @@
     {
       "name": "components/Button.md",
       "digest": {
-        "sha256": "7ce0d470f19c932e1f75d446db795bd0c63b94c57a602b7885d094a53e2b7b72"
+        "sha256": "547417a8892a705d69a0774817e9b537f35e592f74d4500998e993121cefb085"
       }
     },
     {
@@ -162,6 +162,12 @@
       "name": "components/List.md",
       "digest": {
         "sha256": "daeb779212acd41dd6123955c42a758e50de28a52a82dcbb4a9c5fb614625d4a"
+      }
+    },
+    {
+      "name": "components/Menu.md",
+      "digest": {
+        "sha256": "e9ff9756fc7f2a97b9c2868f615b5a72cc266a5327cacd6d6e9753099d136cb0"
       }
     },
     {
@@ -291,15 +297,21 @@
       }
     },
     {
+      "name": "components/Tooltip.md",
+      "digest": {
+        "sha256": "eafcf0e05078704474f14a5834fbf5e22e80fd00289122529568b55ee0ccb310"
+      }
+    },
+    {
       "name": "index.html",
       "digest": {
-        "sha256": "3709f58889e4c88fab87e95aad449539e63e56594ed24dde6a23071f494cd8f6"
+        "sha256": "1968d48e372f151ef5996c2f6a941c50a463b05a6c0a9e4fc69047eb3e33ca6d"
       }
     },
     {
       "name": "llms.txt",
       "digest": {
-        "sha256": "59e3cd41ea1d83e5ddb461a409d5081955a173fbe33cd7e49edf3c09976e30ef"
+        "sha256": "0f565383c03b2ade3fbb97254f090cbbbec31223fb9392d80622930c4d8349ea"
       }
     },
     {
@@ -323,7 +335,7 @@
     {
       "name": "workbench.html",
       "digest": {
-        "sha256": "e8985178a3f95ced6af950bf97626749f4a1ab138d6c5af81041185ac1eb6ed7"
+        "sha256": "b226cad604b8a17279c28a625f148707e55a52f42aa2b5d13749069a0d1a22ac"
       }
     }
   ],
@@ -370,7 +382,7 @@
                 "target": "docs-site",
                 "vcs:localdir:context": ".",
                 "vcs:localdir:dockerfile": ".",
-                "vcs:revision": "97e1012781e769fa8e3369006419ea51f255434b",
+                "vcs:revision": "023dd8b2ba02fdb611e4e9564798b28059cbef2e",
                 "vcs:source": "https://github.com/westonkd/sprint"
               }
             }
@@ -381,19 +393,19 @@
       "internalParameters": {
         "buildConfig": {
           "digestMapping": {
-            "sha256:26c8ceeb0ebf08162a14b40a915352853b4b88f541b8226851ada4b0113f8188": "step7",
-            "sha256:27447ef52c275530d6c48b222d113bb17967b486b2f276c9716b710eb1c5f15f": "step6",
+            "sha256:25c1760fc5189fb65d1dbb82a5401f3c654dc4d191a37b0aaa32501ef344865f": "step11",
             "sha256:43cc447ed38ec84855f6c51567c6b13a385b249e3c83c345dc2c059ecbed6539": "step4",
-            "sha256:6f1945f06898b6e94793f1be79f636f32dacba48ada43eca83d64bee443a8eee": "step11",
-            "sha256:8962026f93fc1303ec24520348e28caba467e393aad12830cd4a48e7a471209f": "step9",
+            "sha256:44016be518916ab360571fc5693f7c29dcfa225e7c24779b980f875f46532415": "step9",
+            "sha256:7faac1ddb0280d2dc4fcbb5071ee5c68e37e3aef08a945efc2fbb30e44f5c884": "step7",
             "sha256:8f00fc42cebfc3f6de3c968ff6ee54c3df2cff19b446871f35e16c4b7cd8ea7f": "step1",
+            "sha256:942dd3612fd1f531e798d10ff92ca3032545c28069d213433d0bd69a6e78c2b0": "step6",
+            "sha256:9dfa183eb908e4b17a5f7aff34440d2850390d4ba5b842fdf75a40a65a1eadeb": "step10",
             "sha256:a86a2116873c5d55cfb38547c4b573e6988163a752c108078ac5c4fe619e2437": "step5",
             "sha256:b6e95194e9a4ca35c591656bfaa839638a44bef2516f756899d83ace75dbc44d": "step0",
-            "sha256:c66a8fad7f0a9b7f2c7d0e063c0211498c3a7a0315f13811bb4b017f513e54f7": "step10",
             "sha256:cb1361f3d588675663c530897ac147f663e6eea44c5f42701db48f122886532a": "step3",
             "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2",
-            "sha256:ceb9d58f651b9115834c0d3837878230b90e8be20b47e2d7bcc78881e34f5f56": "step8",
-            "sha256:dbf5efa04d573d830d28e72856f337facfa8190258e0b4f762b5677b631c3484": "step12"
+            "sha256:e53733296d33d2406c69e1392819afe25b0dab62c7d04dbc546777386a81838b": "step12",
+            "sha256:ed1df28005b9f1ba639968b15cabc7e3b8ac33622dd7db351f474433788e9f50": "step8"
           },
           "llbDefinition": [
             {
@@ -839,9 +851,9 @@
         "github_actor_id": "6128215",
         "github_event_name": "push",
         "github_event_payload": {
-          "after": "97e1012781e769fa8e3369006419ea51f255434b",
+          "after": "023dd8b2ba02fdb611e4e9564798b28059cbef2e",
           "base_ref": null,
-          "before": "7fe072f176c820678fa74c5590a9f667d5b8bba3",
+          "before": "97e1012781e769fa8e3369006419ea51f255434b",
           "commits": [
             {
               "author": {
@@ -855,14 +867,14 @@
                 "username": "web-flow"
               },
               "distinct": true,
-              "id": "97e1012781e769fa8e3369006419ea51f255434b",
-              "message": "Fix Select placement and clipping, quiet the ambient scrim, and fill field, dialog and control gaps (#28)\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
-              "timestamp": "2026-10-03T23:37:09-06:00",
-              "tree_id": "00781a69aa052c79e8d50504c5a0e6b1423087e5",
-              "url": "https://github.com/westonkd/sprint/commit/97e1012781e769fa8e3369006419ea51f255434b"
+              "id": "023dd8b2ba02fdb611e4e9564798b28059cbef2e",
+              "message": "Add Menu, Tooltip, useFloating, and icon and small Buttons (#29)\n\n* Fix Select placement and clipping, quiet the ambient scrim, and fill field, dialog and control gaps\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Menu, Tooltip, useFloating, and Button size, icons and hideLabel\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
+              "timestamp": "2026-10-03T23:40:19-06:00",
+              "tree_id": "f68c63f3926cf959dc026802b444eddd912b2b35",
+              "url": "https://github.com/westonkd/sprint/commit/023dd8b2ba02fdb611e4e9564798b28059cbef2e"
             }
           ],
-          "compare": "https://github.com/westonkd/sprint/compare/7fe072f176c8...97e1012781e7",
+          "compare": "https://github.com/westonkd/sprint/compare/97e1012781e7...023dd8b2ba02",
           "created": false,
           "deleted": false,
           "forced": false,
@@ -878,11 +890,11 @@
               "username": "web-flow"
             },
             "distinct": true,
-            "id": "97e1012781e769fa8e3369006419ea51f255434b",
-            "message": "Fix Select placement and clipping, quiet the ambient scrim, and fill field, dialog and control gaps (#28)\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
-            "timestamp": "2026-10-03T23:37:09-06:00",
-            "tree_id": "00781a69aa052c79e8d50504c5a0e6b1423087e5",
-            "url": "https://github.com/westonkd/sprint/commit/97e1012781e769fa8e3369006419ea51f255434b"
+            "id": "023dd8b2ba02fdb611e4e9564798b28059cbef2e",
+            "message": "Add Menu, Tooltip, useFloating, and icon and small Buttons (#29)\n\n* Fix Select placement and clipping, quiet the ambient scrim, and fill field, dialog and control gaps\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Menu, Tooltip, useFloating, and Button size, icons and hideLabel\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
+            "timestamp": "2026-10-03T23:40:19-06:00",
+            "tree_id": "f68c63f3926cf959dc026802b444eddd912b2b35",
+            "url": "https://github.com/westonkd/sprint/commit/023dd8b2ba02fdb611e4e9564798b28059cbef2e"
           },
           "pusher": {
             "email": "wdrans@gmail.com",
@@ -952,8 +964,8 @@
             "name": "sprint",
             "node_id": "R_kgDOUBLXkw",
             "notifications_url": "https://api.github.com/repos/westonkd/sprint/notifications{?since,all,participating}",
-            "open_issues": 2,
-            "open_issues_count": 2,
+            "open_issues": 1,
+            "open_issues_count": 1,
             "owner": {
               "avatar_url": "https://avatars.githubusercontent.com/u/6128215?v=4",
               "email": "wdrans@gmail.com",
@@ -980,7 +992,7 @@
             "private": false,
             "pull_request_creation_policy": "all",
             "pulls_url": "https://api.github.com/repos/westonkd/sprint/pulls{/number}",
-            "pushed_at": 1791092229,
+            "pushed_at": 1791092419,
             "releases_url": "https://api.github.com/repos/westonkd/sprint/releases{/id}",
             "size": 1753,
             "ssh_url": "git@github.com:westonkd/sprint.git",
@@ -995,7 +1007,7 @@
             "teams_url": "https://api.github.com/repos/westonkd/sprint/teams",
             "topics": [],
             "trees_url": "https://api.github.com/repos/westonkd/sprint/git/trees{/sha}",
-            "updated_at": "2026-10-03T15:39:10Z",
+            "updated_at": "2026-10-04T05:37:14Z",
             "url": "https://api.github.com/repos/westonkd/sprint",
             "visibility": "public",
             "watchers": 0,
@@ -1034,35 +1046,35 @@
         "github_repository_owner": "westonkd",
         "github_repository_owner_id": "6128215",
         "github_run_attempt": "1",
-        "github_run_id": "37180416726",
-        "github_run_number": "24",
+        "github_run_id": "37180566554",
+        "github_run_number": "25",
         "github_runner_arch": "X64",
         "github_runner_environment": "github-hosted",
         "github_runner_image_os": "ubuntu24",
         "github_runner_image_version": "20260927.320.1",
-        "github_runner_name": "GitHub Actions 1000000822",
+        "github_runner_name": "GitHub Actions 1000000829",
         "github_runner_os": "Linux",
-        "github_runner_tracking_id": "github_84a566ea-472f-4cb3-bf58-a39cb3900180",
+        "github_runner_tracking_id": "github_38debf33-7040-493a-9a41-7373bbec98b0",
         "github_server_url": "https://github.com",
         "github_triggering_actor": "westonkd",
         "github_workflow": "Pages",
         "github_workflow_ref": "westonkd/sprint/.github/workflows/pages.yml@refs/heads/main",
-        "github_workflow_sha": "97e1012781e769fa8e3369006419ea51f255434b"
+        "github_workflow_sha": "023dd8b2ba02fdb611e4e9564798b28059cbef2e"
       }
     },
     "runDetails": {
       "builder": {
-        "id": "https://github.com/westonkd/sprint/actions/runs/37180416726/attempts/1"
+        "id": "https://github.com/westonkd/sprint/actions/runs/37180566554/attempts/1"
       },
       "metadata": {
-        "invocationId": "5jmxs4oztqk4st7vwgm3wytar",
-        "startedOn": "2026-10-04T05:37:31.375059385Z",
-        "finishedOn": "2026-10-04T05:37:45.597842442Z",
+        "invocationId": "kdmqtovqk8qffdj9vfp0rzcw6",
+        "startedOn": "2026-10-04T05:40:34.689704427Z",
+        "finishedOn": "2026-10-04T05:40:46.905376173Z",
         "buildkit_metadata": {
           "vcs": {
             "localdir:context": ".",
             "localdir:dockerfile": ".",
-            "revision": "97e1012781e769fa8e3369006419ea51f255434b",
+            "revision": "023dd8b2ba02fdb611e4e9564798b28059cbef2e",
             "source": "https://github.com/westonkd/sprint"
           },
           "source": {
@@ -1278,8 +1290,8 @@
                   }
                 ],
                 "digestMapping": {
-                  "sha256:8ba315dccb3c858216dfc87494df3b33d4312a9509f09c71473deeb254389b9f": "step0",
-                  "sha256:988e26f8dc4cf98dcd27d4d7cb890b87b44386f82bc68adc730bbaecbd837830": "step1"
+                  "sha256:46aa93e7d816aead70c956a72db553d8f122d514f15c8a16e48e05f6fc0ea7b1": "step1",
+                  "sha256:94b5e8d24aabdf2c6e6d0276a2aabe49b94f8c2bd78d98c0243dadd29399f673": "step0"
                 }
               }
             ]

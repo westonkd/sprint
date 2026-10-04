@@ -25,6 +25,7 @@ Component roots carry `data-sprint="<ComponentName>"`, addressable parts carry `
 - [Image](/components/Image.md): A framed picture in a slot that holds its shape. It is the one component whose content an agent cannot read, so alt is not decoration: it is the whole of what the agent gets, and the source URL is published beside it for an agent that can fetch pixels of its own.
 - [Link](/components/Link.md): A navigation link. It publishes its destination as state, so an agent reading the page in text learns the URL rather than having to click to find out, and it renders a real anchor in both views.
 - [List](/components/List.md): A bulleted or numbered list built from an array of items. Each item is an addressable part carrying its position, so an agent can cite item three without counting lines.
+- [Menu](/components/Menu.md): A button that opens a short list of actions, links, or one-of-several choices. Registers one choose tool enumerating the items an agent can run.
 - [MetaLine](/components/MetaLine.md): A slash-separated manifest line of term–detail pairs: serials, build strings, issue dates. It is chrome, not content, and in the agent view it reads as the same single line of text a person sees.
 - [Nav](/components/Nav.md): A labelled navigation landmark: the region that holds a page's links to elsewhere.
 - [NavGroup](/components/NavGroup.md): A labelled cluster of links inside a Nav. The label names the group for screen readers and agents alike.
@@ -46,6 +47,7 @@ Component roots carry `data-sprint="<ComponentName>"`, addressable parts carry `
 - [Text](/components/Text.md): A run of prose, sized and toned from the semantic scale. In agent view it renders as its own text content, so an agent reads the words rather than inferring them from styling.
 - [Textarea](/components/Textarea.md): A multi-line text area carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the whole content with an explicit value, line breaks included.
 - [TextInput](/components/TextInput.md): A single-line text field carrying its own label, hint, and error. Fully controlled, and it registers one fill tool that replaces the field's text with an explicit value.
+- [Tooltip](/components/Tooltip.md): A short hint that appears beside one control on hover or keyboard focus. A human affordance only: it adds nothing to the agent view.
 
 ## Reference
 

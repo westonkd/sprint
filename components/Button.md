@@ -22,6 +22,26 @@ import "@westonkd/sprint/styles.css";
 
 ## Examples
 
+### An icon-only button
+
+hideLabel draws only the icon. The label still names the button and its tool, and shows as a tooltip, so the control is never a mystery.
+
+```tsx
+<Button icon={<SidebarIcon />} hideLabel onClick={collapse}>
+  Hide sidebar
+</Button>
+```
+
+### A compact button with an icon
+
+size="small" for a dense row; the icon sits before the label.
+
+```tsx
+<Button size="small" icon={<PlusIcon />} onClick={addSpeaker}>
+  Add speaker
+</Button>
+```
+
 ### Primary action
 
 The one rationed acid action bar for a view.
@@ -66,6 +86,10 @@ A label carrying a value would otherwise rename the tool on every change, churni
 | --- | --- | --- | --- |
 | `children` | node (required) | — | The button label. Its text also derives the WebMCP tool name, so prefer a verb phrase like "Prepare launch" over "OK". |
 | `tone` | enum neutral \\| action \\| danger | `"neutral"` | Visual and semantic weight. Acid is rationed to one primary action per view. |
+| `size` | enum medium \\| small | `"medium"` | medium for ordinary forms and toolbars; small for dense surfaces such as table rows, cards and toasts. |
+| `icon` | node | — | An icon drawn before the label, sized to the text. It is decorative and hidden from assistive technology; the label still names the button. |
+| `iconEnd` | node | — | An icon drawn after the label, such as a chevron on a button that opens something. Ignored when hideLabel is set. |
+| `hideLabel` | boolean | `false` | Show only the icon, as a square button. The label stays in the page for screen readers and agents, names the press tool, and appears as a tooltip on hover and focus. Requires icon. |
 | `block` | boolean | `false` | Render as a full-width bar. Combine with tone="action" for the primary action of a region. |
 | `loading` | boolean | `false` | Mark work in progress. Sets aria-busy, disables the control, and unregisters the press tool until it clears. |
 | `disabled` | boolean | `false` | Disable the control and unregister its press tool. |
@@ -80,6 +104,7 @@ Public API: agents write selectors against these.
 | Attribute | Values | Description |
 | --- | --- | --- |
 | `data-sprint-tone` | neutral \\| action \\| danger | The button's current tone. |
+| `data-sprint-size` | small | Present as small on a compact button. |
 | `data-sprint-block` | present or absent | Present when the button renders as a full-width bar. |
 | `data-sprint-loading` | present or absent | Present while the button is busy. |
 | `data-sprint-disabled` | present or absent | Present when the button cannot be pressed. |
