@@ -5,6 +5,23 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Added: `Combobox`.** A searchable single-choice field for long lists, with groups, per-group
+  limits, descriptions, keywords, custom option rendering, a clear control, a loading spinner and a
+  server-search mode. Its `choose` tool accepts a label or a search.
+- **Added: `Tabs`.** Real tablist semantics, tabs as data, only the selected panel mounted, an
+  actions slot, and a `select` tool.
+- **Added: `RadioGroup`.** Native radios with a description under each option and per-option
+  `disabled`.
+- **Added: `Toast`.** A bottom-of-screen message that dismisses itself, pauses under the pointer or
+  focus, and carries one action rendered as a Button with an optional shortcut.
+- **Added: `Avatar`, `Prose`, `Spinner`, `Kbd` and `VisuallyHidden`.** A photo with an initials
+  fallback; typography for rendered Markdown, carrying its source to agents; an inline busy mark;
+  key caps for shortcuts; and screen-reader-only text.
+- **Added: options on existing components.** Text `weight`, `align`, `lines` and `italic`; Stack
+  `padding` and a nine-step gap scale (`--sprint-space-7` and `-8` are new); Heading levels 5 and 6
+  and a `size` independent of level; Tag `provisional`; TextInput `icon` and `trailing`; Shell
+  `drawerOpen` and `onDrawerOpenChange`.
+
 - **Added: `Menu`.** A button that opens a list of actions, links or radio choices, given as data.
   Keyboard navigation, grouping, danger items and an icon-only trigger. One `choose` tool runs any
   enabled item that is not a link, without opening the menu.
