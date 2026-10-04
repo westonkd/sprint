@@ -72,7 +72,7 @@ export const toastMeta = defineAgentMeta({
       title: "An undo toast",
       description:
         "The action is a real Button, so an agent can press Undo through its tool while the toast is up.",
-      code: '<Toast\n  open={moved !== null}\n  message={`Moved ${moved?.name} to ${moved?.calling}.`}\n  action={{ label: "Undo", onSelect: undo, shortcut: "Ctrl+Z" }}\n  onDismiss={() => setMoved(null)}\n/>',
+      code: '<Toast\n  open={moved !== null}\n  message={movedMessage}\n  action={{ label: "Undo", onSelect: undo, shortcut: "Ctrl+Z" }}\n  onDismiss={() => setMoved(null)}\n/>',
     },
     {
       title: "A toast that stays",

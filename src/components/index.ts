@@ -34,6 +34,17 @@ export type {
   TokenKind,
 } from "./CodeBlock/index.ts";
 export { CodeBlock, codeBlockMeta, tokenize } from "./CodeBlock/index.ts";
+export type {
+  ComboboxFilter,
+  ComboboxOption,
+  ComboboxProps,
+} from "./Combobox/index.ts";
+export {
+  CHOOSE_COMBOBOX_TOOL,
+  Combobox,
+  comboboxMeta,
+  matchesQuery,
+} from "./Combobox/index.ts";
 export type { CopyFieldProps } from "./CopyField/index.ts";
 export { CopyField, copyFieldMeta } from "./CopyField/index.ts";
 export type {

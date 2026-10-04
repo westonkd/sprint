@@ -8,6 +8,7 @@ import { changeListGallery, changeListSpecimens } from "./ChangeList.tsx";
 import { checkboxSpecimens } from "./Checkbox.tsx";
 import { choiceGridGallery, choiceGridSpecimens } from "./ChoiceGrid.tsx";
 import { codeBlockSpecimens } from "./CodeBlock.tsx";
+import { comboboxSpecimens } from "./Combobox.tsx";
 import { copyFieldSpecimens } from "./CopyField.tsx";
 import { descriptionListSpecimens } from "./DescriptionList.tsx";
 import { dialogSpecimens } from "./Dialog.tsx";
@@ -91,6 +92,7 @@ const registry: Record<string, Specimens> = {
   Select: { byExample: selectSpecimens },
   Tooltip: { byExample: tooltipSpecimens },
   Kbd: { byExample: kbdSpecimens },
+  Combobox: { byExample: comboboxSpecimens },
   Prose: { byExample: proseSpecimens },
   Toast: { byExample: toastSpecimens },
   Avatar: { byExample: avatarSpecimens },

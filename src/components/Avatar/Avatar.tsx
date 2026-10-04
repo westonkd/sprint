@@ -1,4 +1,4 @@
-import { type ComponentPropsWithRef, useEffect, useState } from "react";
+import { type ComponentPropsWithRef, useState } from "react";
 import { AgentLine } from "@/agent/view/AgentText.tsx";
 import { useSprintView } from "@/agent/view/mode.ts";
 import { agentAttributesFor, buildAgentNode } from "@/agent/view/project.ts";
@@ -28,13 +28,8 @@ export function Avatar(props: AvatarProps) {
   const { name, src, size = "medium", decorative = false, ...rest } = props;
 
   const view = useSprintView();
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    setFailed(false);
-  }, [src]);
-
-  const photo = src !== undefined && !failed;
+  const [failedSrc, setFailedSrc] = useState<string | undefined>(undefined);
+  const photo = src !== undefined && failedSrc !== src;
 
   const node = buildAgentNode({
     component: avatarMeta.name,
@@ -51,7 +46,7 @@ export function Avatar(props: AvatarProps) {
       {...(decorative ? { "aria-hidden": true } : { role: "img", "aria-label": name })}
     >
       {photo ? (
-        <img src={src} alt="" onError={() => setFailed(true)} />
+        <img src={src} alt="" onError={() => setFailedSrc(src)} />
       ) : (
         <span aria-hidden="true">{initialsOf(name)}</span>
       )}

@@ -127,11 +127,11 @@ export function Toast(props: ToastProps) {
   }
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: hover and focus only pause the dismiss timer so a person can reach the action; nothing is activated
     <div
       {...rest}
       {...agentAttributesFor(node)}
       role={tone === "danger" ? "alert" : "status"}
-      aria-label={label}
       popover="manual"
       ref={element}
       onPointerEnter={stop}

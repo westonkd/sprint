@@ -35,8 +35,8 @@ export interface RadioGroupProps
   options: readonly RadioOption[];
   value: string;
   onChange: (value: string) => void;
-  hint?: string;
-  error?: string;
+  hint?: string | undefined;
+  error?: string | undefined;
   name?: string;
   disabled?: boolean;
   required?: boolean;
@@ -195,8 +195,6 @@ export function RadioGroup(props: RadioGroupProps) {
       {...agentAttributesFor(node)}
       disabled={disabled}
       aria-describedby={messageId}
-      aria-invalid={error !== undefined || undefined}
-      aria-required={required || undefined}
     >
       <legend>{label}</legend>
       {options.map((option, index) => {
@@ -213,6 +211,7 @@ export function RadioGroup(props: RadioGroupProps) {
               checked={option.value === value}
               disabled={option.disabled === true}
               required={required}
+              aria-invalid={error !== undefined || undefined}
               aria-labelledby={labelId}
               aria-describedby={
                 option.description === undefined ? undefined : descriptionId

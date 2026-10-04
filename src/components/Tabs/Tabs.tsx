@@ -257,6 +257,7 @@ export function Tabs(props: TabsProps) {
           id={panelId}
           role="tabpanel"
           aria-labelledby={tabId(current.value)}
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: the tab pattern puts a tabpanel in the tab order so a panel with no focusable content can still be reached from its tab
           tabIndex={0}
         >
           {current.panel}
