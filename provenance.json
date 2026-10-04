@@ -11,7 +11,7 @@
     {
       "name": "agent-manifest.json",
       "digest": {
-        "sha256": "0763e5deaeb0ce5bfd493ff2a3d1622c76da60bbda788906e77c3283c241d8c0"
+        "sha256": "af6ef1947b0d49aa08472895ea85e3d5f8aaf0e816bca9876525b510350e09e9"
       }
     },
     {
@@ -21,27 +21,27 @@
       }
     },
     {
-      "name": "assets/index-XcpVeukr.js",
+      "name": "assets/index-C-qScRUx.js",
       "digest": {
-        "sha256": "26ac0abbf77999a403dae4510d91c418c0574f7c83526324ca66907646f3ef82"
+        "sha256": "25d53098928a24010a513dda0799a169b558a72d42f3ef7ae2f4c67a865e1e45"
+      }
+    },
+    {
+      "name": "assets/workbench-BXaI2_X2.js",
+      "digest": {
+        "sha256": "79213721b30fad8c1fa2da99b0f3d7105c83b544bb8592f9895ba5ec1f78e7bb"
+      }
+    },
+    {
+      "name": "assets/workbench-BsPC2LQ5.js",
+      "digest": {
+        "sha256": "6ceca5e580c3b98439f878be9177653d5c29e91b910e23bb1e0237af87f93670"
       }
     },
     {
       "name": "assets/workbench-D4nRMoHg.css",
       "digest": {
         "sha256": "f880e1f18978adaae9eb7cc4fbf6fbae5bd795313fcb4a3815f79cf5afa151db"
-      }
-    },
-    {
-      "name": "assets/workbench-DPkt4Fpp.js",
-      "digest": {
-        "sha256": "de2095735f260863b3128ff1bbd073a186bffc1a4f04f758d4c6e1ddc6826c73"
-      }
-    },
-    {
-      "name": "assets/workbench-DZcObxFZ.js",
-      "digest": {
-        "sha256": "a8351978bf1b6d5817d86404ddfdf80ab77543ca55c70ff32153f1b7848eab97"
       }
     },
     {
@@ -359,7 +359,7 @@
     {
       "name": "index.html",
       "digest": {
-        "sha256": "6ad63c0bacd0e6520b013b9640ce0ca582b5ea4d25f3b036f6202722b237ca96"
+        "sha256": "f16bcf56f2401b070d35bc416f8bafb8bc53a0e8132184072fffa3eafb85bd2a"
       }
     },
     {
@@ -395,7 +395,7 @@
     {
       "name": "workbench.html",
       "digest": {
-        "sha256": "d5668359e4efb5d8f3ec6f233866a6751ff88b4e3fdd1270bfc1178aecd306d6"
+        "sha256": "0f5cd96cd2bed793ec700e601867816a9c9c6d772ca6ca38d768b8459ef800b1"
       }
     }
   ],
@@ -442,7 +442,7 @@
                 "target": "docs-site",
                 "vcs:localdir:context": ".",
                 "vcs:localdir:dockerfile": ".",
-                "vcs:revision": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c",
+                "vcs:revision": "838cc8b971c068eb58be5335d488ed459a6e9b5d",
                 "vcs:source": "https://github.com/westonkd/sprint"
               }
             }
@@ -453,19 +453,19 @@
       "internalParameters": {
         "buildConfig": {
           "digestMapping": {
-            "sha256:064c7b0bf6359153ddcedd697cc513d004a9324ba50bea7c9d0e1d59b6d83c87": "step6",
-            "sha256:10909c92687e17dd57681767208df0b49d77a13dedddfb113e2b554dd59f5b30": "step12",
-            "sha256:3606828625f08ec5c3f32440f3d5cf81a66a4cae77e833e16c503f79871d6430": "step9",
-            "sha256:41f396f7e54ced1e0e590164437ce2a41e88fa5a214db2403bbba6fcb672b2c5": "step8",
+            "sha256:154aacd5f498cf55e01af557d059a7661769e08aa3923a445e2d81a845b9521a": "step12",
+            "sha256:2bc95c724d84315b215570251791cb85354d5d3c42584af33b5e090ddee7c4f2": "step7",
+            "sha256:393adfc2a8cdd58b35d4c3035196bfbb11b218c991b9a573e4f27f880d594927": "step11",
             "sha256:43cc447ed38ec84855f6c51567c6b13a385b249e3c83c345dc2c059ecbed6539": "step4",
-            "sha256:57c500795dc0d25bb5d585adbf3b1795623e8f7075342b9e1df9d6b337fe62a4": "step10",
+            "sha256:66ae07a5d5626978b951c737821064708cbdd07ef9ba638df35521208b4e0bc3": "step10",
+            "sha256:68dd3ae30a6f8ac1e43085f20c294e1aef5d8b7240c7edd2c1cc4287158b88eb": "step6",
             "sha256:8f00fc42cebfc3f6de3c968ff6ee54c3df2cff19b446871f35e16c4b7cd8ea7f": "step1",
-            "sha256:a27a29a115c30864c7e924d1602038c2c3f216c9e2c99b9843c5cee2b3be0131": "step7",
+            "sha256:98aa61b8fd3c299bab1b20e0a4f2215c94f3a0bec20b7d35deef6fab828c2ef4": "step8",
             "sha256:a86a2116873c5d55cfb38547c4b573e6988163a752c108078ac5c4fe619e2437": "step5",
+            "sha256:b219466a3e0636e55957d83ed9ea8c41b02df499c288170ffdbcac7cab7a9f3e": "step9",
             "sha256:b6e95194e9a4ca35c591656bfaa839638a44bef2516f756899d83ace75dbc44d": "step0",
             "sha256:cb1361f3d588675663c530897ac147f663e6eea44c5f42701db48f122886532a": "step3",
-            "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2",
-            "sha256:fa04678bc38cdcc5e3a065ae0bb13fa81cd55fa3e3031d66fae61384e9564f71": "step11"
+            "sha256:cdec6f97191509b34bea19981b6660f652c1f5f60fc2c42a7de79422e2c1ebf8": "step2"
           },
           "llbDefinition": [
             {
@@ -911,9 +911,9 @@
         "github_actor_id": "6128215",
         "github_event_name": "push",
         "github_event_payload": {
-          "after": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c",
+          "after": "838cc8b971c068eb58be5335d488ed459a6e9b5d",
           "base_ref": null,
-          "before": "023dd8b2ba02fdb611e4e9564798b28059cbef2e",
+          "before": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c",
           "commits": [
             {
               "author": {
@@ -922,19 +922,19 @@
                 "username": "westonkd"
               },
               "committer": {
-                "email": "noreply@github.com",
-                "name": "GitHub",
-                "username": "web-flow"
+                "email": "wdrans@gmail.com",
+                "name": "Weston Dransfield",
+                "username": "westonkd"
               },
               "distinct": true,
-              "id": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c",
-              "message": "Add Combobox, Tabs, RadioGroup, Toast and the rest of the consumer gaps (#30)\n\n* Add Text, Stack, Heading, Tag and TextInput options from consumer feedback\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Kbd, Spinner, VisuallyHidden, and a controlled Shell drawer\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Tabs\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add RadioGroup\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Avatar and Toast\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Prose\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Combobox\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Record the batch decisions and changelog\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Reset text colour on theme islands\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Menu, Tooltip, useFloating, and icon and small Buttons (#29)\n\n* Fix Select placement and clipping, quiet the ambient scrim, and fill field, dialog and control gaps\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Menu, Tooltip, useFloating, and Button size, icons and hideLabel\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
-              "timestamp": "2026-10-03T23:42:22-06:00",
-              "tree_id": "dac8cbbeca37c1d833d7540ac487755d602eff03",
-              "url": "https://github.com/westonkd/sprint/commit/6f3ad6d0e763562ba0e0f68febc17e8be302fa1c"
+              "id": "838cc8b971c068eb58be5335d488ed459a6e9b5d",
+              "message": "Release v0.8.0",
+              "timestamp": "2026-10-03T23:44:03-06:00",
+              "tree_id": "7724177b5dcb81fa013c5c4a9f2bbb8f621ea735",
+              "url": "https://github.com/westonkd/sprint/commit/838cc8b971c068eb58be5335d488ed459a6e9b5d"
             }
           ],
-          "compare": "https://github.com/westonkd/sprint/compare/023dd8b2ba02...6f3ad6d0e763",
+          "compare": "https://github.com/westonkd/sprint/compare/6f3ad6d0e763...838cc8b971c0",
           "created": false,
           "deleted": false,
           "forced": false,
@@ -945,16 +945,16 @@
               "username": "westonkd"
             },
             "committer": {
-              "email": "noreply@github.com",
-              "name": "GitHub",
-              "username": "web-flow"
+              "email": "wdrans@gmail.com",
+              "name": "Weston Dransfield",
+              "username": "westonkd"
             },
             "distinct": true,
-            "id": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c",
-            "message": "Add Combobox, Tabs, RadioGroup, Toast and the rest of the consumer gaps (#30)\n\n* Add Text, Stack, Heading, Tag and TextInput options from consumer feedback\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Kbd, Spinner, VisuallyHidden, and a controlled Shell drawer\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Tabs\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add RadioGroup\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Avatar and Toast\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Prose\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Combobox\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Record the batch decisions and changelog\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Reset text colour on theme islands\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Menu, Tooltip, useFloating, and icon and small Buttons (#29)\n\n* Fix Select placement and clipping, quiet the ambient scrim, and fill field, dialog and control gaps\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n* Add Menu, Tooltip, useFloating, and Button size, icons and hideLabel\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\n\n---------\n\nCo-authored-by: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
-            "timestamp": "2026-10-03T23:42:22-06:00",
-            "tree_id": "dac8cbbeca37c1d833d7540ac487755d602eff03",
-            "url": "https://github.com/westonkd/sprint/commit/6f3ad6d0e763562ba0e0f68febc17e8be302fa1c"
+            "id": "838cc8b971c068eb58be5335d488ed459a6e9b5d",
+            "message": "Release v0.8.0",
+            "timestamp": "2026-10-03T23:44:03-06:00",
+            "tree_id": "7724177b5dcb81fa013c5c4a9f2bbb8f621ea735",
+            "url": "https://github.com/westonkd/sprint/commit/838cc8b971c068eb58be5335d488ed459a6e9b5d"
           },
           "pusher": {
             "email": "wdrans@gmail.com",
@@ -1052,9 +1052,9 @@
             "private": false,
             "pull_request_creation_policy": "all",
             "pulls_url": "https://api.github.com/repos/westonkd/sprint/pulls{/number}",
-            "pushed_at": 1791092542,
+            "pushed_at": 1791092647,
             "releases_url": "https://api.github.com/repos/westonkd/sprint/releases{/id}",
-            "size": 1753,
+            "size": 2562,
             "ssh_url": "git@github.com:westonkd/sprint.git",
             "stargazers": 0,
             "stargazers_count": 0,
@@ -1067,7 +1067,7 @@
             "teams_url": "https://api.github.com/repos/westonkd/sprint/teams",
             "topics": [],
             "trees_url": "https://api.github.com/repos/westonkd/sprint/git/trees{/sha}",
-            "updated_at": "2026-10-04T05:40:24Z",
+            "updated_at": "2026-10-04T05:42:27Z",
             "url": "https://api.github.com/repos/westonkd/sprint",
             "visibility": "public",
             "watchers": 0,
@@ -1106,35 +1106,35 @@
         "github_repository_owner": "westonkd",
         "github_repository_owner_id": "6128215",
         "github_run_attempt": "1",
-        "github_run_id": "37180659065",
-        "github_run_number": "26",
+        "github_run_id": "37180738939",
+        "github_run_number": "27",
         "github_runner_arch": "X64",
         "github_runner_environment": "github-hosted",
         "github_runner_image_os": "ubuntu24",
         "github_runner_image_version": "20260927.320.1",
-        "github_runner_name": "GitHub Actions 1000000837",
+        "github_runner_name": "GitHub Actions 1000000842",
         "github_runner_os": "Linux",
-        "github_runner_tracking_id": "github_11ade72b-4c64-4aee-a578-d5aa6e295d52",
+        "github_runner_tracking_id": "github_e52b1fea-bc5c-4b6f-aed2-0769a941641e",
         "github_server_url": "https://github.com",
         "github_triggering_actor": "westonkd",
         "github_workflow": "Pages",
         "github_workflow_ref": "westonkd/sprint/.github/workflows/pages.yml@refs/heads/main",
-        "github_workflow_sha": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c"
+        "github_workflow_sha": "838cc8b971c068eb58be5335d488ed459a6e9b5d"
       }
     },
     "runDetails": {
       "builder": {
-        "id": "https://github.com/westonkd/sprint/actions/runs/37180659065/attempts/1"
+        "id": "https://github.com/westonkd/sprint/actions/runs/37180738939/attempts/1"
       },
       "metadata": {
-        "invocationId": "wb2ldp57s19zno7ry6puwrmng",
-        "startedOn": "2026-10-04T05:42:42.831316758Z",
-        "finishedOn": "2026-10-04T05:42:54.889188683Z",
+        "invocationId": "f5jnvfjrk3jrtxb27onzwzdpg",
+        "startedOn": "2026-10-04T05:44:18.916272193Z",
+        "finishedOn": "2026-10-04T05:44:26.638779934Z",
         "buildkit_metadata": {
           "vcs": {
             "localdir:context": ".",
             "localdir:dockerfile": ".",
-            "revision": "6f3ad6d0e763562ba0e0f68febc17e8be302fa1c",
+            "revision": "838cc8b971c068eb58be5335d488ed459a6e9b5d",
             "source": "https://github.com/westonkd/sprint"
           },
           "source": {
@@ -1350,8 +1350,8 @@
                   }
                 ],
                 "digestMapping": {
-                  "sha256:a2327836840d30c7651b2d922f7daf573fa5785b0817d64e43914482e8dfc7d2": "step0",
-                  "sha256:c039444f50d35b4a9a82ac5253d09f70fb1a1cf01feae6e418185d8f61a04b6f": "step1"
+                  "sha256:56e550051d9d470ece104d9160e8984a02337482b7749133a15cdf7352ce84fc": "step0",
+                  "sha256:7e7c7d9ba68f744a33cbe8f0680fee77fb7c3f65dc8f70da83d100346552b3f3": "step1"
                 }
               }
             ]
@@ -1500,109 +1500,6 @@
                   "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
                   "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
                   "size": 32
-                }
-              ]
-            ],
-            "step7:0": [
-              [
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5",
-                  "size": 3849738
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:3c504d5a797be28f9de43147d49cd8ecb2eea46dfaf7beb8715db695d5f0a7f0",
-                  "size": 56519242
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:02f40d53b06f6b91fec0cd6a6719656da99270bff8ee54ed8dcdf4c157763fc1",
-                  "size": 1261993
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:7ce7dcbafb7f750cf0c6be3c30e34372b06dd1182fa67f6ae30782c8150c5444",
-                  "size": 444
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:6b0583ac85d676041f11effc108dc920de3646068a5dd3b34c33617e90dfdeeb",
-                  "size": 10262
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4a466d4cb722f95e3cb523089129f9362f71a35a7cb24822d43053dfe45c5e9b",
-                  "size": 38049860
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:ebcd97fc35cda659645138e177c2f14e07fad0705cfa003cae0cedba25468daf",
-                  "size": 159
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
-                  "size": 32
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:7f8f442399a8694a01d0305c15cc542ef9fdadbfc68408b942356d704ab49e5e",
-                  "size": 34517
-                }
-              ]
-            ],
-            "step8:0": [
-              [
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5",
-                  "size": 3849738
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:3c504d5a797be28f9de43147d49cd8ecb2eea46dfaf7beb8715db695d5f0a7f0",
-                  "size": 56519242
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:02f40d53b06f6b91fec0cd6a6719656da99270bff8ee54ed8dcdf4c157763fc1",
-                  "size": 1261993
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:7ce7dcbafb7f750cf0c6be3c30e34372b06dd1182fa67f6ae30782c8150c5444",
-                  "size": 444
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:6b0583ac85d676041f11effc108dc920de3646068a5dd3b34c33617e90dfdeeb",
-                  "size": 10262
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4a466d4cb722f95e3cb523089129f9362f71a35a7cb24822d43053dfe45c5e9b",
-                  "size": 38049860
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:ebcd97fc35cda659645138e177c2f14e07fad0705cfa003cae0cedba25468daf",
-                  "size": 159
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
-                  "size": 32
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:7f8f442399a8694a01d0305c15cc542ef9fdadbfc68408b942356d704ab49e5e",
-                  "size": 34517
-                },
-                {
-                  "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
-                  "digest": "sha256:6bc0b0e187117ef84cbef2f121fb58d23916451827d67e6db8180b53b32febbd",
-                  "size": 78960556
                 }
               ]
             ]
