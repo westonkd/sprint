@@ -119,3 +119,24 @@ describe("Stack agent view", () => {
     expect(container.textContent?.startsWith("- **Button**")).toBe(true);
   });
 });
+
+describe("Stack spacing scale", () => {
+  it("publishes the finer gap steps and a padding step", () => {
+    render(
+      <Stack gap="hairline" padding="medium">
+        <span>a</span>
+      </Stack>,
+    );
+    expect(root()).toHaveAttribute("data-sprint-gap", "hairline");
+    expect(root()).toHaveAttribute("data-sprint-padding", "medium");
+  });
+
+  it("leaves padding unpublished by default", () => {
+    render(
+      <Stack>
+        <span>a</span>
+      </Stack>,
+    );
+    expect(root()).not.toHaveAttribute("data-sprint-padding");
+  });
+});

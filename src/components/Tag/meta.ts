@@ -29,6 +29,12 @@ export const tagMeta = defineAgentMeta({
         "Render as a solid field of the tone with inverted ink, instead of a keyline. Use for the one chip that must be read first.",
       default: false,
     },
+    provisional: {
+      kind: "boolean",
+      description:
+        "Draw a dashed keyline for something that is not real yet: a draft, a scenario, a proposed change. It reads as provisional to agents too.",
+      default: false,
+    },
   },
   state: {
     tone: {
@@ -40,11 +46,21 @@ export const tagMeta = defineAgentMeta({
       description: "Present when the chip is a solid field rather than a keyline.",
       attribute: "data-sprint-filled",
     },
+    provisional: {
+      description: "Present on a chip for something that is not real yet.",
+      attribute: "data-sprint-provisional",
+    },
   },
   agentView: {
     example: '- **Tag** "experimental" [filled, tone=warning]',
   },
   examples: [
+    {
+      title: "A provisional chip",
+      description:
+        "A dashed keyline separates a scenario from the live roster without spending a colour.",
+      code: '<Tag tone="info" provisional>Scenario: fall reshuffle</Tag>',
+    },
     {
       title: "A release status",
       code: '<Tag tone="warning" filled>experimental</Tag>',

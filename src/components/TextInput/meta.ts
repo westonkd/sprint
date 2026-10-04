@@ -80,6 +80,16 @@ export const textInputMeta = defineAgentMeta({
         "Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for.",
       default: false,
     },
+    icon: {
+      kind: "node",
+      description:
+        "A decorative icon drawn inside the start of the field, such as a magnifier on a search box. Hidden from assistive technology.",
+    },
+    trailing: {
+      kind: "node",
+      description:
+        'Controls drawn inside the end of the field, such as a clear Button with hideLabel and size="small". It renders only in the human view; give an agent the same action some other way, or rely on the fill tool, which can set the field to empty.',
+    },
     inputRef: {
       kind: "object",
       description:
@@ -170,6 +180,12 @@ export const textInputMeta = defineAgentMeta({
       description:
         'type="number" keeps value a string. Native attributes for the input itself, such as min, max and autoFocus, go through inputProps, and inputRef reaches the input for focusing it later.',
       code: '<TextInput\n  label="Link expiry in days"\n  type="number"\n  value={days}\n  onChange={setDays}\n  inputRef={daysField}\n  inputProps={{ min: 1, max: 90, step: 1 }}\n/>',
+    },
+    {
+      title: "A search field with a clear control",
+      description:
+        "The icon sits inside the start of the field and a small icon-only Button clears it from the end. An agent clears it by filling an empty string.",
+      code: '<TextInput\n  label="Filter the board"\n  hideLabel\n  placeholder="Filter by name or calling"\n  icon={<SearchIcon />}\n  value={query}\n  onChange={setQuery}\n  trailing={\n    query === "" ? null : (\n      <Button size="small" icon={<CloseIcon />} hideLabel onClick={() => setQuery("")}>\n        Clear filter\n      </Button>\n    )\n  }\n/>',
     },
   ],
   a11y: {

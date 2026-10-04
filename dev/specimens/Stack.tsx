@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Button, Card, Heading, Stack, Tag } from "../../src/index.ts";
+import { Button, Card, Heading, Stack, Tag, Text } from "../../src/index.ts";
 
 export const stackSpecimens: Record<string, ReactNode> = {
   "A row of actions": (
@@ -22,6 +22,13 @@ export const stackSpecimens: Record<string, ReactNode> = {
     <Stack direction="row" justify="between" align="center" collapse>
       <Heading level={1}>Button</Heading>
       <Tag tone="warning">experimental</Tag>
+    </Stack>
+  ),
+  "A padded, dense list": (
+    <Stack gap="snug" padding="medium">
+      <Text>Opening hymn</Text>
+      <Text>Invocation</Text>
+      <Text>Sacrament hymn</Text>
     </Stack>
   ),
 };

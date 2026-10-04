@@ -11,17 +11,24 @@ export type TagTone = "neutral" | "action" | "danger" | "info" | "warning" | "in
 export interface TagProps extends ComponentPropsWithRef<"span"> {
   tone?: TagTone;
   filled?: boolean;
+  provisional?: boolean;
 }
 
 export function Tag(props: TagProps) {
-  const { tone = "neutral", filled = false, children, ...rest } = props;
+  const {
+    tone = "neutral",
+    filled = false,
+    provisional = false,
+    children,
+    ...rest
+  } = props;
 
   const view = useSprintView();
 
   const node = buildAgentNode({
     component: tagMeta.name,
     label: reactText(children),
-    state: { tone, filled },
+    state: { tone, filled, provisional },
   });
 
   if (view === "agent") return <AgentLine node={node} />;

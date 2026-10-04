@@ -8,6 +8,11 @@ export const tagSpecimens: Record<string, ReactNode> = {
     </Tag>
   ),
   "A category chip": <Tag>action</Tag>,
+  "A provisional chip": (
+    <Tag tone="info" provisional>
+      Scenario: fall reshuffle
+    </Tag>
+  ),
   "Read-only against changes-state": (
     <Stack direction="row" gap="tight">
       <Tag tone="info">read only</Tag>

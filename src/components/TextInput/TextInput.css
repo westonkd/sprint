@@ -106,4 +106,55 @@
       min-height: 2.25rem;
     }
   }
+
+  [data-sprint="TextInput"] > div {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  [data-sprint="TextInput"] > div > * {
+    grid-row: 1;
+  }
+
+  [data-sprint="TextInput"] > div > [data-sprint-part="input"] {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  [data-sprint="TextInput"] > div > [data-sprint-icon] {
+    grid-column: 1;
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    margin-inline-start: var(--sprint-space-3);
+    color: var(--sprint-ink-muted);
+    font-size: var(--sprint-text-sm);
+    pointer-events: none;
+  }
+
+  [data-sprint="TextInput"] > div > [data-sprint-icon] > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-sprint="TextInput"] > div > span:last-child:not([data-sprint-icon]) {
+    grid-column: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sprint-space-1);
+    margin-inline-end: var(--sprint-space-2);
+  }
+
+  [data-sprint="TextInput"]
+    > div:has(> [data-sprint-icon])
+    > [data-sprint-part="input"] {
+    padding-inline-start: calc(var(--sprint-space-3) * 2 + 1em);
+  }
+
+  [data-sprint="TextInput"]
+    > div:has(> span:last-child:not([data-sprint-icon]))
+    > [data-sprint-part="input"] {
+    padding-inline-end: calc(var(--sprint-space-2) + 2.5rem);
+  }
 }

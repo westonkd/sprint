@@ -19,15 +19,26 @@ export const headingMeta = defineAgentMeta({
     level: {
       kind: "enum",
       description:
-        "Outline depth, rendered as the matching h element. 1 is the page title and there should be one per page.",
-      values: ["1", "2", "3", "4"],
+        "Outline depth, rendered as the matching h element. 1 is the page title and there should be one per page. 5 and 6 take the level-4 voice unless size says otherwise.",
+      values: ["1", "2", "3", "4", "5", "6"],
       default: "2",
+    },
+    size: {
+      kind: "enum",
+      description:
+        "The type voice, from 1 (display) to 4 (smallest), when it should differ from the level. Use it when a heading's place in the outline and its visual weight disagree, such as a level-2 title inside a dense card that should read small.",
+      values: ["1", "2", "3", "4"],
     },
   },
   state: {
     level: {
       description: "The outline depth, and so the type voice in use.",
       attribute: "data-sprint-level",
+      values: ["1", "2", "3", "4", "5", "6"],
+    },
+    size: {
+      description: "The type voice, present only when it differs from the level.",
+      attribute: "data-sprint-size",
       values: ["1", "2", "3", "4"],
     },
   },
@@ -43,6 +54,12 @@ export const headingMeta = defineAgentMeta({
       title: "A section title",
       description: "The default level, for a region inside a page.",
       code: "<Heading>Every variant</Heading>",
+    },
+    {
+      title: "A deep heading in a small voice",
+      description:
+        "The outline needs a level-3 heading, but inside a compact card it should read at the smallest size.",
+      code: "<Heading level={3} size={4}>Sunday speakers</Heading>",
     },
   ],
 });

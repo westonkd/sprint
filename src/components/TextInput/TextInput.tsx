@@ -1,6 +1,7 @@
 import {
   type ComponentPropsWithRef,
   type InputHTMLAttributes,
+  type ReactNode,
   type Ref,
   useCallback,
   useEffect,
@@ -64,6 +65,8 @@ export interface TextInputProps extends Omit<ComponentPropsWithRef<"div">, "onCh
   readOnly?: boolean;
   required?: boolean;
   hideLabel?: boolean;
+  icon?: ReactNode;
+  trailing?: ReactNode;
   inputRef?: Ref<HTMLInputElement>;
   inputProps?: TextInputFieldProps;
   agentName?: string;
@@ -91,6 +94,8 @@ export function TextInput(props: TextInputProps) {
     readOnly = false,
     required = false,
     hideLabel = false,
+    icon,
+    trailing,
     inputRef,
     inputProps,
     agentName,
@@ -177,31 +182,47 @@ export function TextInput(props: TextInputProps) {
   const messageId =
     error !== undefined ? `${id}-error` : hint !== undefined ? `${id}-hint` : undefined;
 
+  const field = (
+    <input
+      {...inputProps}
+      id={id}
+      {...agentPartAttributesFor({ part: "input", state: {} })}
+      ref={(target) => {
+        element.current = target;
+        assignRef(inputRef, target);
+      }}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      name={name}
+      autoComplete={autoComplete}
+      disabled={disabled}
+      readOnly={readOnly}
+      required={required}
+      aria-invalid={error !== undefined || undefined}
+      aria-describedby={messageId}
+      onChange={(event) => onChange(event.currentTarget.value)}
+    />
+  );
+
   return (
     <div {...rest} {...agentAttributesFor(node)}>
       <label htmlFor={id} {...(hideLabel ? { "data-sprint-visually-hidden": "" } : {})}>
         {label}
       </label>
-      <input
-        {...inputProps}
-        id={id}
-        {...agentPartAttributesFor({ part: "input", state: {} })}
-        ref={(target) => {
-          element.current = target;
-          assignRef(inputRef, target);
-        }}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        name={name}
-        autoComplete={autoComplete}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        aria-invalid={error !== undefined || undefined}
-        aria-describedby={messageId}
-        onChange={(event) => onChange(event.currentTarget.value)}
-      />
+      {icon === undefined && trailing === undefined ? (
+        field
+      ) : (
+        <div>
+          {icon === undefined ? null : (
+            <span data-sprint-icon="" aria-hidden="true">
+              {icon}
+            </span>
+          )}
+          {field}
+          {trailing === undefined ? null : <span>{trailing}</span>}
+        </div>
+      )}
       {error !== undefined ? (
         <p id={messageId} {...agentPartAttributesFor({ part: "error", state: {} })}>
           {error}
