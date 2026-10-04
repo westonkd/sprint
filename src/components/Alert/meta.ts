@@ -30,6 +30,12 @@ export const alertMeta = defineAgentMeta({
       values: ["neutral", "info", "warning", "danger"],
       default: "info",
     },
+    announce: {
+      kind: "enum",
+      description:
+        "Override how assistive technology announces the alert. assertive renders role=alert and interrupts; polite renders role=status and waits. Defaults to assertive for danger and warning and polite otherwise. Pass polite for a standing warning, such as an offline notice, that should not interrupt.",
+      values: ["assertive", "polite"],
+    },
     onDismiss: {
       kind: "handler",
       description:
@@ -81,10 +87,16 @@ export const alertMeta = defineAgentMeta({
       description: "Danger announces assertively via role=alert.",
       code: '<Alert tone="danger" label="Sign-in failed">Wrong callsign or access code.</Alert>',
     },
+    {
+      title: "A standing warning",
+      description:
+        "A warning that stays on screen while a condition holds announces politely, so it does not interrupt whatever the person is reading.",
+      code: '<Alert tone="warning" announce="polite" label="Offline">Changes are saved on this device until the connection returns.</Alert>',
+    },
   ],
   a11y: {
     role: "status",
     notes:
-      "Danger and warning render role=alert and announce assertively; info and neutral render role=status. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost.",
+      "Danger and warning render role=alert and announce assertively; info and neutral render role=status, unless announce overrides it. The dismiss control is a labelled button. Render the alert when the condition occurs rather than toggling its visibility, or the announcement is lost.",
   },
 });

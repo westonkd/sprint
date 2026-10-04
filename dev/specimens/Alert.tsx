@@ -42,4 +42,9 @@ export const alertSpecimens: Record<string, ReactNode> = {
       Wrong callsign or access code.
     </Alert>
   ),
+  "A standing warning": (
+    <Alert tone="warning" announce="polite" label="Offline">
+      Changes are saved on this device until the connection returns.
+    </Alert>
+  ),
 };

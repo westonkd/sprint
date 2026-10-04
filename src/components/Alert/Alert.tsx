@@ -17,8 +17,11 @@ import "./Alert.css";
 
 export type AlertTone = "neutral" | "info" | "warning" | "danger";
 
+export type AlertAnnouncement = "assertive" | "polite";
+
 export interface AlertProps extends ComponentPropsWithRef<"div"> {
   tone?: AlertTone;
+  announce?: AlertAnnouncement;
   label?: string;
   onDismiss?: () => void;
   agentName?: string;
@@ -28,6 +31,7 @@ export interface AlertProps extends ComponentPropsWithRef<"div"> {
 export function Alert(props: AlertProps) {
   const {
     tone = "info",
+    announce,
     label,
     onDismiss,
     agentName,
@@ -113,7 +117,9 @@ export function Alert(props: AlertProps) {
     );
   }
 
-  const role = tone === "danger" || tone === "warning" ? "alert" : "status";
+  const urgency =
+    announce ?? (tone === "danger" || tone === "warning" ? "assertive" : "polite");
+  const role = urgency === "assertive" ? "alert" : "status";
 
   return (
     <div

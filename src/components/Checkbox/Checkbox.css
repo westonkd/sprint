@@ -59,6 +59,15 @@
   }
 
   [data-sprint="Checkbox"]
+    [data-sprint-part="input"]:indeterminate
+    + [data-sprint-part="box"] {
+    border-color: var(--sprint-action-mark);
+    background:
+      linear-gradient(var(--sprint-action) 0 0) center / 0.5rem 0.125rem no-repeat,
+      var(--sprint-surface);
+  }
+
+  [data-sprint="Checkbox"]
     [data-sprint-part="input"]:focus-visible
     + [data-sprint-part="box"] {
     outline: var(--sprint-focus-width) solid var(--sprint-focus);
@@ -81,6 +90,15 @@
     + [data-sprint-part="box"] {
     background:
       linear-gradient(var(--sprint-inert-ink) 0 0) center / 0.5rem 0.5rem no-repeat,
+      var(--sprint-inert);
+  }
+
+  [data-sprint="Checkbox"]
+    [data-sprint-part="input"]:indeterminate:disabled
+    + [data-sprint-part="box"] {
+    border-color: var(--sprint-keyline);
+    background:
+      linear-gradient(var(--sprint-inert-ink) 0 0) center / 0.5rem 0.125rem no-repeat,
       var(--sprint-inert);
   }
 

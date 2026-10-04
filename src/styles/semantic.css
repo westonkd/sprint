@@ -183,6 +183,8 @@
     --sprint-ornament-empty-size: auto;
     --sprint-ornament-alarm: var(--sprint-ornament-hatch-dense);
     --sprint-ornament-alarm-size: auto;
+    --sprint-ornament-scrim: var(--sprint-ornament-shade);
+    --sprint-ornament-scrim-size: auto;
     --sprint-empty-field: 0;
     --sprint-scanline-opacity: 0.5;
 
@@ -673,6 +675,8 @@
     --sprint-ornament-empty-size: var(--sprint-ornament-dots-size);
     --sprint-ornament-alarm: var(--sprint-ornament-hatch-dense);
     --sprint-ornament-alarm-size: auto;
+    --sprint-ornament-scrim: none;
+    --sprint-ornament-scrim-size: auto;
     --sprint-empty-field: 4rem;
     --sprint-scanline-opacity: 0.3;
 

@@ -342,3 +342,57 @@ describe("SegmentedControl staged change", () => {
     ]);
   });
 });
+
+describe("SegmentedControl disabled options", () => {
+  const STATUS = [
+    { value: "pending", label: "Pending" },
+    { value: "accepted", label: "Accepted", disabled: true },
+    { value: "deferred", label: "Deferred" },
+  ];
+
+  function Status() {
+    const [status, setStatus] = useState("pending");
+    return (
+      <SegmentedControl
+        label="Interview"
+        options={STATUS}
+        value={status}
+        onChange={setStatus}
+      />
+    );
+  }
+
+  it("disables only that option and skips it with the arrow keys", () => {
+    render(<Status />);
+    const accepted = screen.getByRole("radio", { name: "Accepted" });
+    expect(accepted).toBeDisabled();
+    expect(accepted).toHaveAttribute("data-sprint-disabled", "");
+    expect(screen.getByRole("radio", { name: "Pending" })).toBeEnabled();
+
+    fireEvent.keyDown(screen.getByRole("radio", { name: "Pending" }), {
+      key: "ArrowRight",
+    });
+    expect(root()).toHaveAttribute("data-sprint-value", "deferred");
+    expect(screen.getByRole("radio", { name: "Deferred" })).toHaveFocus();
+  });
+
+  it("leaves a disabled option out of the tool's enum", () => {
+    render(<Status />);
+    const descriptor = mock.find("select-interview")?.descriptor;
+    expect(descriptor?.inputSchema.properties.option?.enum).toEqual([
+      "Pending",
+      "Deferred",
+    ]);
+  });
+
+  it("renders a disabled option as text, not a control, in agent view", () => {
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Status />
+      </SprintProvider>,
+    );
+    expect(container.textContent).toContain('- part `option` "Accepted" [disabled]');
+    expect(screen.queryByRole("button", { name: /"Accepted"/ })).toBeNull();
+    expect(screen.getByRole("button", { name: /"Deferred"/ })).toBeInTheDocument();
+  });
+});

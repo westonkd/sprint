@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
@@ -60,6 +60,35 @@ function Harness(props: { defaultOpen?: boolean; owner?: string }) {
     </>
   );
 }
+
+describe("Dialog sizing and focus", () => {
+  function Form(props: { size?: "small" | "medium" | "large" }) {
+    const field = useRef<HTMLInputElement>(null);
+    return (
+      <Dialog
+        label="Rename station"
+        open
+        onClose={() => {}}
+        initialFocus={field}
+        {...props}
+      >
+        <input aria-label="Station name" ref={field} />
+      </Dialog>
+    );
+  }
+
+  it("focuses the initialFocus element when it opens", () => {
+    render(<Form />);
+    expect(screen.getByLabelText("Station name")).toHaveFocus();
+  });
+
+  it("publishes a size other than small", () => {
+    const view = render(<Form size="large" />);
+    expect(root()).toHaveAttribute("data-sprint-size", "large");
+    view.rerender(<Form />);
+    expect(root()).not.toHaveAttribute("data-sprint-size");
+  });
+});
 
 describe("Dialog rendering", () => {
   it("renders nothing while closed", () => {

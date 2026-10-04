@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { useState } from "react";
+import { createRef, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
@@ -39,6 +39,32 @@ async function call(name: string, inputs: Record<string, unknown>) {
   });
   return result as string | null;
 }
+
+describe("Textarea field access", () => {
+  it("hands inputRef the textarea and puts inputProps on it", () => {
+    const inputRef = createRef<HTMLTextAreaElement>();
+    render(<Harness inputRef={inputRef} inputProps={{ maxLength: 500 }} hideLabel />);
+    const field = screen.getByRole("textbox", { name: "Mission notes" });
+    expect(inputRef.current).toBe(field);
+    expect(field).toHaveAttribute("maxlength", "500");
+    expect(screen.getByText("Mission notes")).toHaveAttribute(
+      "data-sprint-visually-hidden",
+    );
+  });
+
+  it("sizes itself to its content when autoGrow is set", () => {
+    vi.spyOn(HTMLTextAreaElement.prototype, "scrollHeight", "get").mockReturnValue(120);
+    render(<Harness autoGrow />);
+    const field = screen.getByRole("textbox", { name: "Mission notes" });
+    expect(field.style.getPropertyValue("height")).toBe("120px");
+  });
+
+  it("leaves its height to rows without autoGrow", () => {
+    render(<Harness />);
+    const field = screen.getByRole("textbox", { name: "Mission notes" });
+    expect(field.style.getPropertyValue("height")).toBe("");
+  });
+});
 
 describe("Textarea rendering", () => {
   it("associates the label with a multi-line control", () => {

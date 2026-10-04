@@ -192,7 +192,8 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   view ignores it entirely. Components reference the `--sprint-ornament-*` tokens directly. Where a
   mark carries a *role* rather than a shape, it goes through a slot the register fills from its own
   vocabulary: `--sprint-ornament-empty` with `-size` for an empty region, `--sprint-ornament-alarm`
-  with `-size` for a danger band. Never hard-code a named mark for one of those.
+  with `-size` for a danger band, `--sprint-ornament-scrim` with `-size` for the texture over a
+  modal backdrop. Never hard-code a named mark for one of those.
 - `data-sprint-theme="dark|light|calorie|calorie-dark|trax|trax-dark|ambient|ambient-dark"` selects the semantic token
   mapping for everything beneath it. Pure CSS: put it on any element, or pass `theme` to
   `SprintProvider` to stamp it on the view container. The eight values are a grid of *register* and *ground*,

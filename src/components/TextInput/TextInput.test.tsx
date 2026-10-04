@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { useState } from "react";
+import { createRef, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { agentSelector } from "@/agent/attributes.ts";
 import { __resetToolNames } from "@/agent/webmcp/scope.ts";
@@ -37,6 +37,46 @@ async function call(name: string, inputs: Record<string, unknown>) {
   });
   return result as string | null;
 }
+
+describe("TextInput field access", () => {
+  it("hands inputRef the input and the component ref the wrapper", () => {
+    const inputRef = createRef<HTMLInputElement>();
+    const ref = createRef<HTMLDivElement>();
+    render(<Harness ref={ref} inputRef={inputRef} />);
+    expect(inputRef.current).toBe(screen.getByLabelText("Callsign"));
+    expect(ref.current).toBe(root());
+  });
+
+  it("puts inputProps on the input and keeps managed props its own", () => {
+    const onKeyDown = vi.fn();
+    render(
+      <Harness
+        error="Too short"
+        inputProps={{ maxLength: 8, autoFocus: true, onKeyDown, inputMode: "text" }}
+      />,
+    );
+    const field = screen.getByLabelText("Callsign");
+    expect(field).toHaveAttribute("maxlength", "8");
+    expect(field).toHaveFocus();
+    expect(field).toHaveAttribute("aria-invalid", "true");
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(onKeyDown).toHaveBeenCalledOnce();
+    expect(root()).not.toHaveAttribute("maxlength");
+  });
+
+  it("keeps a hidden label as the accessible name", () => {
+    render(<Harness hideLabel />);
+    expect(screen.getByRole("textbox", { name: "Callsign" })).toBeInTheDocument();
+    expect(screen.getByText("Callsign")).toHaveAttribute("data-sprint-visually-hidden");
+  });
+
+  it("renders a number field with a string value", () => {
+    render(<Harness type="number" value="14" />);
+    const field = screen.getByRole("spinbutton", { name: "Callsign" });
+    expect(field).toHaveValue(14);
+    expect(root()).toHaveAttribute("data-sprint-value", "14");
+  });
+});
 
 describe("TextInput rendering", () => {
   it("associates the label with the input", () => {

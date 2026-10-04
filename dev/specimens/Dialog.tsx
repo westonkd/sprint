@@ -1,5 +1,5 @@
-import { type ReactNode, useState } from "react";
-import { Button, Dialog, Stack, Text } from "../../src/index.ts";
+import { type ReactNode, useRef, useState } from "react";
+import { Button, Dialog, Stack, Text, TextInput } from "../../src/index.ts";
 
 function DestructiveConfirmation() {
   const [confirming, setConfirming] = useState(false);
@@ -51,7 +51,38 @@ function OwnedByOpener() {
   );
 }
 
+function FocusedForm() {
+  const [renaming, setRenaming] = useState(false);
+  const [name, setName] = useState("Kestrel Relay");
+  const nameField = useRef<HTMLInputElement>(null);
+  return (
+    <Stack gap="tight">
+      <Button onClick={() => setRenaming(true)}>Rename station</Button>
+      <Dialog
+        label="Rename station"
+        size="medium"
+        open={renaming}
+        initialFocus={nameField}
+        onClose={() => setRenaming(false)}
+      >
+        <Stack gap="tight">
+          <TextInput
+            label="Station name"
+            value={name}
+            onChange={setName}
+            inputRef={nameField}
+          />
+          <Button tone="action" onClick={() => setRenaming(false)}>
+            Save name
+          </Button>
+        </Stack>
+      </Dialog>
+    </Stack>
+  );
+}
+
 export const dialogSpecimens: Record<string, ReactNode> = {
   "A destructive confirmation": <DestructiveConfirmation />,
   "Owned by its opener": <OwnedByOpener />,
+  "A form that focuses its first field": <FocusedForm />,
 };

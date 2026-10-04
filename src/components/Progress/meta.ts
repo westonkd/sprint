@@ -27,6 +27,19 @@ export const progressMeta = defineAgentMeta({
       description: "The value at which the work is complete.",
       default: 100,
     },
+    tone: {
+      kind: "enum",
+      values: ["info", "action", "warning", "danger"],
+      description:
+        "The fill colour. info is the default for ordinary loading; action suits a goal being worked towards; warning and danger mark a bar running out or over a limit.",
+      default: "info",
+    },
+    hideLabel: {
+      kind: "boolean",
+      description:
+        "Hide the label and percentage visually while keeping the label as the bar's accessible name and agent label. Use when a nearby heading already says what the bar measures.",
+      default: false,
+    },
   },
   state: {
     loading: {
@@ -38,6 +51,10 @@ export const progressMeta = defineAgentMeta({
       description:
         "The fraction complete as a whole percentage, such as 40%. Absent while indeterminate.",
       attribute: "data-sprint-value",
+    },
+    tone: {
+      description: "The fill tone, when it is not the default info.",
+      attribute: "data-sprint-tone",
     },
   },
   agentView: {
@@ -61,6 +78,12 @@ export const progressMeta = defineAgentMeta({
       description:
         "At max the loading state clears, so the line reads as finished rather than stalled.",
       code: '<Progress label="Importing manifest" value={240} max={240} />',
+    },
+    {
+      title: "A bare goal bar",
+      description:
+        "A heading beside the bar already names it, so the label is hidden and only the bar shows, in the action tone.",
+      code: '<Progress label="Notes this week" value={3} max={5} tone="action" hideLabel />',
     },
   ],
   a11y: {

@@ -149,3 +149,48 @@ describe("Checkbox agent view", () => {
     expect(container.textContent).toContain("[disabled]");
   });
 });
+
+describe("Checkbox indeterminate", () => {
+  function Group() {
+    const [picked, setPicked] = useState(["pilot"]);
+    return (
+      <>
+        <Checkbox
+          label="Whole crew"
+          checked={picked.length === 2}
+          indeterminate={picked.length === 1}
+          onChange={(next) => setPicked(next ? ["pilot", "navigator"] : [])}
+        />
+        <output>{picked.join(",")}</output>
+      </>
+    );
+  }
+
+  it("marks the native box and the agent state as mixed", () => {
+    render(<Group />);
+    const box = screen.getByRole("checkbox", {
+      name: "Whole crew",
+    }) as HTMLInputElement;
+    expect(box.indeterminate).toBe(true);
+    expect(root()).toHaveAttribute("data-sprint-checked", "mixed");
+  });
+
+  it("picks everything when a mixed box is pressed", () => {
+    render(<Group />);
+    fireEvent.click(screen.getByRole("checkbox", { name: "Whole crew" }));
+    expect(screen.getByRole("status")).toHaveTextContent("pilot,navigator");
+    const box = screen.getByRole("checkbox", {
+      name: "Whole crew",
+    }) as HTMLInputElement;
+    expect(box.indeterminate).toBe(false);
+    expect(root()).toHaveAttribute("data-sprint-checked", "");
+  });
+
+  it("sets the end state an agent asks for from mixed", async () => {
+    render(<Group />);
+    const result = await call("set-whole-crew", { checked: false });
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    expect(root()).not.toHaveAttribute("data-sprint-checked");
+    expect(result).toContain("Unchecked");
+  });
+});

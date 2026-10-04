@@ -61,6 +61,22 @@ describe("Alert rendering", () => {
     expect(root()).toHaveAttribute("role", "alert");
   });
 
+  it("lets announce override the role a tone implies", () => {
+    const { rerender } = render(
+      <Alert tone="warning" announce="polite">
+        Offline.
+      </Alert>,
+    );
+    expect(root()).toHaveAttribute("role", "status");
+    expect(root()).toHaveAttribute("data-sprint-tone", "warning");
+    rerender(
+      <Alert tone="info" announce="assertive">
+        Reconnected.
+      </Alert>,
+    );
+    expect(root()).toHaveAttribute("role", "alert");
+  });
+
   it("renders no dismiss control without onDismiss", () => {
     render(<Alert>Quiet notice.</Alert>);
     expect(root()).not.toHaveAttribute("data-sprint-dismissible");

@@ -48,8 +48,11 @@ export interface SelectProps extends Omit<ComponentPropsWithRef<"div">, "onChang
 }
 
 const LISTBOX_TOP = "--sprint-select-top";
+const LISTBOX_BOTTOM = "--sprint-select-bottom";
 const LISTBOX_LEFT = "--sprint-select-left";
 const LISTBOX_WIDTH = "--sprint-select-width";
+const LISTBOX_ROOM = "--sprint-select-room";
+const LISTBOX_CAP_REM = 16;
 
 function optionSchema(options: readonly SelectOption[]): JsonSchemaObject {
   const option = SELECT_OPTION_TOOL.inputSchema.properties.option;
@@ -70,11 +73,36 @@ function messagePart(error: string | undefined, hint: string | undefined): Agent
   return [];
 }
 
-function place(listbox: HTMLElement, anchor: HTMLElement): void {
+function rootFontSize(): number {
+  const size = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return Number.isFinite(size) ? size : 16;
+}
+
+function preferredHeight(layer: HTMLElement, list: HTMLElement): number {
+  const chrome = layer.offsetHeight - list.clientHeight;
+  return Math.min(list.scrollHeight + chrome, LISTBOX_CAP_REM * rootFontSize());
+}
+
+function place(layer: HTMLElement, list: HTMLElement, anchor: HTMLElement): void {
   const rect = anchor.getBoundingClientRect();
-  listbox.style.setProperty(LISTBOX_TOP, `${rect.bottom}px`);
-  listbox.style.setProperty(LISTBOX_LEFT, `${rect.left}px`);
-  listbox.style.setProperty(LISTBOX_WIDTH, `${rect.width}px`);
+  const viewportHeight = window.innerHeight;
+  const below = viewportHeight - rect.bottom;
+  const above = rect.top;
+  const flip = below < preferredHeight(layer, list) && above > below;
+  const width = Math.min(rect.width, window.innerWidth);
+  const left = Math.max(0, Math.min(rect.left, window.innerWidth - width));
+
+  layer.dataset.placement = flip ? "above" : "below";
+  if (flip) {
+    layer.style.removeProperty(LISTBOX_TOP);
+    layer.style.setProperty(LISTBOX_BOTTOM, `${viewportHeight - rect.top}px`);
+  } else {
+    layer.style.removeProperty(LISTBOX_BOTTOM);
+    layer.style.setProperty(LISTBOX_TOP, `${rect.bottom}px`);
+  }
+  layer.style.setProperty(LISTBOX_ROOM, `${flip ? above : below}px`);
+  layer.style.setProperty(LISTBOX_LEFT, `${left}px`);
+  layer.style.setProperty(LISTBOX_WIDTH, `${width}px`);
 }
 
 function canPopover(element: HTMLElement): boolean {
@@ -118,6 +146,7 @@ export function Select(props: SelectProps) {
 
   const root = useRef<HTMLDivElement | null>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
+  const layer = useRef<HTMLDivElement | null>(null);
   const listbox = useRef<HTMLDivElement | null>(null);
   const elements = useRef(new Map<string, HTMLDivElement>());
   const onChangeRef = useRef(onChange);
@@ -158,18 +187,19 @@ export function Select(props: SelectProps) {
   }, [disabled, hide]);
 
   useLayoutEffect(() => {
+    const surface = layer.current;
     const list = listbox.current;
     const anchor = trigger.current;
-    if (list === null || anchor === null) return;
+    if (surface === null || list === null || anchor === null) return;
     if (!open) {
-      hideLayer(list);
+      hideLayer(surface);
       return;
     }
 
-    place(list, anchor);
-    showLayer(list);
+    showLayer(surface);
+    place(surface, list, anchor);
 
-    const reposition = () => place(list, anchor);
+    const reposition = () => place(surface, list, anchor);
     const dismiss = (event: Event) => {
       const target = event.target;
       if (target instanceof Node && root.current?.contains(target)) return;
@@ -405,54 +435,54 @@ export function Select(props: SelectProps) {
             <span aria-hidden="true">{chosen.count}</span>
           )}
         </button>
-        <div
-          id={listId}
-          role="listbox"
-          aria-labelledby={labelId}
-          tabIndex={-1}
-          popover="manual"
-          hidden={!open}
-          ref={listbox}
-          onMouseDown={(event) => event.preventDefault()}
-        >
-          {options.map((option, index) => {
-            const textId = `${optionId(index)}-label`;
-            const countId = `${optionId(index)}-count`;
-            return (
-              // biome-ignore lint/a11y/useKeyWithClickEvents: focus stays on the combobox, whose keydown handler drives these options through aria-activedescendant
-              <div
-                key={option.value}
-                id={optionId(index)}
-                role="option"
-                tabIndex={-1}
-                aria-selected={option.value === value}
-                aria-labelledby={
-                  option.count === undefined ? undefined : `${textId} ${countId}`
-                }
-                ref={(element) => {
-                  if (element === null) elements.current.delete(option.value);
-                  else elements.current.set(option.value, element);
-                }}
-                {...agentPartAttributesFor(
-                  optionParts[index] ?? { part: "option", state: {} },
-                )}
-                onPointerMove={() => {
-                  if (index !== active) setActive(index);
-                }}
-                onClick={() => {
-                  commit(option.value);
-                  if (open) trigger.current?.focus();
-                }}
-              >
-                <span id={textId}>{option.label}</span>
-                {option.count === undefined ? null : (
-                  <span id={countId} aria-hidden="true">
-                    {option.count}
-                  </span>
-                )}
-              </div>
-            );
-          })}
+        <div popover="manual" hidden={!open} ref={layer}>
+          <div
+            id={listId}
+            role="listbox"
+            aria-labelledby={labelId}
+            tabIndex={-1}
+            ref={listbox}
+            onMouseDown={(event) => event.preventDefault()}
+          >
+            {options.map((option, index) => {
+              const textId = `${optionId(index)}-label`;
+              const countId = `${optionId(index)}-count`;
+              return (
+                // biome-ignore lint/a11y/useKeyWithClickEvents: focus stays on the combobox, whose keydown handler drives these options through aria-activedescendant
+                <div
+                  key={option.value}
+                  id={optionId(index)}
+                  role="option"
+                  tabIndex={-1}
+                  aria-selected={option.value === value}
+                  aria-labelledby={
+                    option.count === undefined ? undefined : `${textId} ${countId}`
+                  }
+                  ref={(element) => {
+                    if (element === null) elements.current.delete(option.value);
+                    else elements.current.set(option.value, element);
+                  }}
+                  {...agentPartAttributesFor(
+                    optionParts[index] ?? { part: "option", state: {} },
+                  )}
+                  onPointerMove={() => {
+                    if (index !== active) setActive(index);
+                  }}
+                  onClick={() => {
+                    commit(option.value);
+                    if (open) trigger.current?.focus();
+                  }}
+                >
+                  <span id={textId}>{option.label}</span>
+                  {option.count === undefined ? null : (
+                    <span id={countId} aria-hidden="true">
+                      {option.count}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </span>
       {name === undefined ? null : (

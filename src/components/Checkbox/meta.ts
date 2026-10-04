@@ -23,6 +23,12 @@ export const checkboxMeta = defineAgentMeta({
       description: "Whether the box is checked. The box is fully controlled.",
       required: true,
     },
+    indeterminate: {
+      kind: "boolean",
+      description:
+        "Show the box as partly checked, for a parent box whose children are some checked and some not. It overrides checked visually and reads as checked=mixed to agents and assistive technology. Pressing a mixed box calls onChange(true); the page then clears indeterminate.",
+      default: false,
+    },
     onChange: {
       kind: "handler",
       description:
@@ -66,7 +72,8 @@ export const checkboxMeta = defineAgentMeta({
   },
   state: {
     checked: {
-      description: "Present while the box is checked.",
+      description:
+        'Present while the box is checked, and "mixed" while it is indeterminate.',
       attribute: "data-sprint-checked",
     },
     disabled: {
@@ -106,6 +113,12 @@ export const checkboxMeta = defineAgentMeta({
       description:
         "Disabled unregisters the tool, so an agent cannot change what a person could not.",
       code: '<Checkbox\n  label="Telemetry"\n  checked\n  disabled\n  onChange={setTelemetry}\n/>',
+    },
+    {
+      title: "A partly picked group",
+      description:
+        "A parent box over a group shows mixed while only some of the group is picked. Pressing it picks everything.",
+      code: '<Checkbox\n  label="Whole crew"\n  checked={picked.length === crew.length}\n  indeterminate={picked.length > 0 && picked.length < crew.length}\n  onChange={(next) => setPicked(next ? crew : [])}\n/>',
     },
   ],
   a11y: {

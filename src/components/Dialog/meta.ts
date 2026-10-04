@@ -42,6 +42,18 @@ export const dialogMeta = defineAgentMeta({
         "Render the title as a real heading at this level, joining the page outline.",
       values: ["2", "3", "4"],
     },
+    size: {
+      kind: "enum",
+      description:
+        "The dialog's width: small (26rem) for a confirmation, medium (36rem) for a short form, large (52rem) for a table or a two-column form. Every size shrinks to fit a phone.",
+      values: ["small", "medium", "large"],
+      default: "small",
+    },
+    initialFocus: {
+      kind: "object",
+      description:
+        "A ref to the element that takes focus when the dialog opens, such as the first field of a form or the safe choice in a destructive confirmation. Without it the browser focuses the first focusable element, which is the close control.",
+    },
     owner: {
       kind: "string",
       description:
@@ -63,6 +75,11 @@ export const dialogMeta = defineAgentMeta({
         "Present while the dialog is shown. A closed dialog is absent from the DOM entirely.",
       attribute: "data-sprint-open",
     },
+    size: {
+      description: "The width the dialog was given, when it is not the default small.",
+      attribute: "data-sprint-size",
+      values: ["medium", "large"],
+    },
   },
   tools: {
     close: CLOSE_DIALOG_TOOL,
@@ -83,6 +100,12 @@ export const dialogMeta = defineAgentMeta({
       description:
         "Passing the opener's tool name lets a reading agent attach the dialog to the control that produced it.",
       code: '<Dialog\n  label="Rotate secret"\n  open={rotating}\n  owner="press-rotate-secret"\n  onClose={() => setRotating(false)}\n>\n  <Text>The current secret keeps working for one hour.</Text>\n</Dialog>',
+    },
+    {
+      title: "A form that focuses its first field",
+      description:
+        "A medium dialog for a short form. initialFocus puts the cursor in the field instead of on the close control, so the person can type straight away.",
+      code: '<Dialog\n  label="Rename station"\n  size="medium"\n  open={renaming}\n  initialFocus={nameField}\n  onClose={() => setRenaming(false)}\n>\n  <Stack gap="tight">\n    <TextInput label="Station name" value={name} onChange={setName} inputRef={nameField} />\n    <Button tone="action" onClick={save}>Save name</Button>\n  </Stack>\n</Dialog>',
     },
   ],
   a11y: {

@@ -5,10 +5,14 @@ import { agentAttributesFor, buildAgentNode } from "@/agent/view/project.ts";
 import { progressMeta } from "./meta.ts";
 import "./Progress.css";
 
+export type ProgressTone = "info" | "action" | "warning" | "danger";
+
 export interface ProgressProps extends Omit<ComponentPropsWithRef<"div">, "children"> {
   label: string;
   value?: number;
   max?: number;
+  tone?: ProgressTone;
+  hideLabel?: boolean;
 }
 
 function percentOf(value: number, max: number): number {
@@ -17,7 +21,7 @@ function percentOf(value: number, max: number): number {
 }
 
 export function Progress(props: ProgressProps) {
-  const { label, value, max = 100, ...rest } = props;
+  const { label, value, max = 100, tone = "info", hideLabel = false, ...rest } = props;
 
   const view = useSprintView();
   const labelId = useId();
@@ -31,6 +35,7 @@ export function Progress(props: ProgressProps) {
     state: {
       loading: percent === undefined || percent < 100,
       value: percent === undefined ? undefined : `${percent}%`,
+      tone: tone === "info" ? undefined : tone,
     },
   });
 
@@ -38,8 +43,12 @@ export function Progress(props: ProgressProps) {
 
   return (
     <div {...rest} {...agentAttributesFor(node)}>
-      <span id={labelId}>{label}</span>
-      {percent === undefined ? null : <span aria-hidden="true">{percent}%</span>}
+      <span id={labelId} {...(hideLabel ? { "data-sprint-visually-hidden": "" } : {})}>
+        {label}
+      </span>
+      {percent === undefined || hideLabel ? null : (
+        <span aria-hidden="true">{percent}%</span>
+      )}
       <progress
         aria-labelledby={labelId}
         {...(percent === undefined ? {} : { value: percent, max: 100 })}

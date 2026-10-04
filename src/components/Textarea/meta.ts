@@ -31,8 +31,15 @@ export const textareaMeta = defineAgentMeta({
     },
     rows: {
       kind: "number",
-      description: "The visible line count before scrolling.",
+      description:
+        "The visible line count before scrolling. With autoGrow it is the minimum height.",
       default: 4,
+    },
+    autoGrow: {
+      kind: "boolean",
+      description:
+        "Grow the area with its content instead of scrolling, never shorter than rows.",
+      default: false,
     },
     placeholder: {
       kind: "string",
@@ -61,6 +68,22 @@ export const textareaMeta = defineAgentMeta({
       kind: "boolean",
       description: "Mark the area required, visually and in the agent view.",
       default: false,
+    },
+    hideLabel: {
+      kind: "boolean",
+      description:
+        "Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for.",
+      default: false,
+    },
+    inputRef: {
+      kind: "object",
+      description:
+        "A ref to the underlying <textarea>, for focusing or measuring it. The component's own ref points at the wrapper.",
+    },
+    inputProps: {
+      kind: "object",
+      description:
+        "Extra native attributes and handlers for the <textarea> itself, such as autoFocus, maxLength, inputMode, onKeyDown, or onBlur. Props spread on the component land on the wrapper; these land on the area. Anything the component manages (value, onChange, disabled, the error wiring) cannot be overridden here.",
     },
     agentName: {
       kind: "string",
@@ -114,6 +137,12 @@ export const textareaMeta = defineAgentMeta({
       description:
         "The error replaces the hint and marks the area invalid on every surface.",
       code: '<Textarea\n  label="Abort reason"\n  value={reason}\n  onChange={setReason}\n  required\n  rows={3}\n  error="State the reason before aborting."\n/>',
+    },
+    {
+      title: "An area that grows",
+      description:
+        "autoGrow drops the scrollbar: the area starts at rows lines and grows with what is typed. The label is hidden because a heading above already names it, and inputProps puts a length cap and a key handler on the textarea itself.",
+      code: '<Textarea\n  label="Log entry"\n  hideLabel\n  autoGrow\n  rows={2}\n  value={entry}\n  onChange={setEntry}\n  placeholder="What happened on this pass"\n  inputProps={{ maxLength: 500, onKeyDown: submitOnModEnter }}\n/>',
     },
   ],
   a11y: {

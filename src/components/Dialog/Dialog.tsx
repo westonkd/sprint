@@ -1,5 +1,6 @@
 import {
   type ComponentPropsWithRef,
+  type RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -22,12 +23,16 @@ import "./Dialog.css";
 
 export type DialogHeadingLevel = 2 | 3 | 4;
 
+export type DialogSize = "small" | "medium" | "large";
+
 export interface DialogProps
   extends Omit<ComponentPropsWithRef<"dialog">, "onClose" | "open"> {
   label: string;
   open: boolean;
   onClose: () => void;
   headingLevel?: DialogHeadingLevel;
+  size?: DialogSize;
+  initialFocus?: RefObject<HTMLElement | null>;
   owner?: string;
   agentName?: string;
   agentTool?: boolean;
@@ -39,6 +44,8 @@ export function Dialog(props: DialogProps) {
     open,
     onClose,
     headingLevel,
+    size = "small",
+    initialFocus,
     owner,
     agentName,
     agentTool = true,
@@ -57,6 +64,8 @@ export function Dialog(props: DialogProps) {
   onCloseRef.current = onClose;
   const openRef = useRef(open);
   openRef.current = open;
+  const initialFocusRef = useRef(initialFocus);
+  initialFocusRef.current = initialFocus;
 
   const setRef = useCallback(
     (target: HTMLDialogElement | null) => {
@@ -74,6 +83,7 @@ export function Dialog(props: DialogProps) {
     if (!target.open) {
       if (typeof target.showModal === "function") target.showModal();
       else target.open = true;
+      initialFocusRef.current?.current?.focus();
     }
     return () => {
       if (!target.open) return;
@@ -111,7 +121,7 @@ export function Dialog(props: DialogProps) {
     label,
     owner,
     region: true,
-    state: { open: true },
+    state: { open: true, size: size === "small" ? undefined : size },
     parts: [
       {
         part: "close",

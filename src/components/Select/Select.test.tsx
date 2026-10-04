@@ -119,6 +119,39 @@ describe("Select rendering", () => {
 });
 
 describe("Select opening", () => {
+  it("opens above the field when the room below is too short for the options", () => {
+    render(<Harness />);
+    vi.spyOn(trigger(), "getBoundingClientRect").mockReturnValue(
+      DOMRect.fromRect({ x: 20, y: window.innerHeight - 60, width: 200, height: 40 }),
+    );
+    Object.defineProperty(listbox(), "scrollHeight", {
+      configurable: true,
+      value: 200,
+    });
+    fireEvent.click(trigger());
+    const layer = listbox().parentElement as HTMLElement;
+    expect(layer.dataset.placement).toBe("above");
+    expect(layer.style.getPropertyValue("--sprint-select-bottom")).toBe(
+      `${window.innerHeight - (window.innerHeight - 60)}px`,
+    );
+    expect(layer.style.getPropertyValue("--sprint-select-top")).toBe("");
+  });
+
+  it("opens below the field when the options fit there", () => {
+    render(<Harness />);
+    vi.spyOn(trigger(), "getBoundingClientRect").mockReturnValue(
+      DOMRect.fromRect({ x: 20, y: 40, width: 200, height: 40 }),
+    );
+    Object.defineProperty(listbox(), "scrollHeight", {
+      configurable: true,
+      value: 200,
+    });
+    fireEvent.click(trigger());
+    const layer = listbox().parentElement as HTMLElement;
+    expect(layer.dataset.placement).toBe("below");
+    expect(layer.style.getPropertyValue("--sprint-select-top")).toBe("80px");
+  });
+
   it("opens on a lone click event with no pointer events around it", () => {
     render(<Harness />);
     fireEvent.click(trigger());
