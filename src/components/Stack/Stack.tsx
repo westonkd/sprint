@@ -5,7 +5,16 @@ import { stackMeta } from "./meta.ts";
 import "./Stack.css";
 
 export type StackDirection = "row" | "column" | "grid";
-export type StackGap = "none" | "tight" | "normal" | "loose";
+export type StackGap =
+  | "none"
+  | "hairline"
+  | "snug"
+  | "tight"
+  | "medium"
+  | "normal"
+  | "loose"
+  | "wide"
+  | "vast";
 export type StackAlign = "start" | "center" | "end" | "stretch" | "baseline";
 export type StackJustify = "start" | "center" | "end" | "between";
 
@@ -27,6 +36,7 @@ export type StackMin = (typeof STACK_MINS)[number];
 export interface StackProps extends ComponentPropsWithRef<"div"> {
   direction?: StackDirection;
   gap?: StackGap;
+  padding?: StackGap;
   align?: StackAlign;
   justify?: StackJustify;
   wrap?: boolean;
@@ -50,6 +60,7 @@ export function Stack(props: StackProps) {
   const {
     direction = "column",
     gap = "normal",
+    padding = "none",
     align,
     justify,
     wrap = false,
@@ -68,6 +79,7 @@ export function Stack(props: StackProps) {
     state: {
       direction,
       gap,
+      padding: padding === "none" ? undefined : padding,
       align,
       justify,
       wrap,

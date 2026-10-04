@@ -100,3 +100,33 @@ describe("Text agent view", () => {
     expect(container.textContent).toContain('"Ready."');
   });
 });
+
+describe("Text emphasis and clamping", () => {
+  it("publishes only the options that differ from the default", () => {
+    const view = render(
+      <Text weight="bold" align="center" lines={2} italic>
+        Note
+      </Text>,
+    );
+    const root = document.querySelector('[data-sprint="Text"]');
+    expect(root).toHaveAttribute("data-sprint-weight", "bold");
+    expect(root).toHaveAttribute("data-sprint-align", "center");
+    expect(root).toHaveAttribute("data-sprint-lines", "2");
+    expect(root).toHaveAttribute("data-sprint-italic", "");
+    view.rerender(<Text>Note</Text>);
+    const plain = document.querySelector('[data-sprint="Text"]');
+    for (const name of ["weight", "align", "lines", "italic"]) {
+      expect(plain).not.toHaveAttribute(`data-sprint-${name}`);
+    }
+  });
+
+  it("keeps the whole text for agents when the screen is clamped", () => {
+    const long = "A long note that the screen cuts off after one line.";
+    const { container } = render(
+      <SprintProvider view="agent" pageTools={false}>
+        <Text lines={1}>{long}</Text>
+      </SprintProvider>,
+    );
+    expect(container.textContent).toContain(long);
+  });
+});

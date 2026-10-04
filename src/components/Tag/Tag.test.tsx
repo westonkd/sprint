@@ -72,3 +72,13 @@ describe("Tag agent view", () => {
     expect(node?.state).toMatchObject({ tone: "warning", filled: true });
   });
 });
+
+describe("Tag provisional", () => {
+  it("marks a chip for something not real yet", () => {
+    render(<Tag provisional>Scenario</Tag>);
+    expect(document.querySelector('[data-sprint="Tag"]')).toHaveAttribute(
+      "data-sprint-provisional",
+      "",
+    );
+  });
+});

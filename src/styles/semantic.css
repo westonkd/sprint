@@ -215,6 +215,8 @@
     --sprint-space-4: 0.75rem;
     --sprint-space-5: 1rem;
     --sprint-space-6: 1.5rem;
+    --sprint-space-7: 2rem;
+    --sprint-space-8: 3rem;
   }
 
   [data-sprint-theme="light"] {
@@ -316,6 +318,8 @@
     --sprint-space-4: 1rem;
     --sprint-space-5: 1.375rem;
     --sprint-space-6: 2rem;
+    --sprint-space-7: 2.75rem;
+    --sprint-space-8: 4rem;
   }
 
   [data-sprint-theme="calorie"] {
@@ -699,6 +703,8 @@
     --sprint-space-4: 0.875rem;
     --sprint-space-5: 1.125rem;
     --sprint-space-6: 1.75rem;
+    --sprint-space-7: 2.5rem;
+    --sprint-space-8: 3.5rem;
   }
 
   [data-sprint-theme="ambient"] {

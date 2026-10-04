@@ -15,6 +15,18 @@ export const textSpecimens: Record<string, ReactNode> = {
       WebMCP is available in this browser.
     </Text>
   ),
+  "A clamped line": (
+    <Text lines={2}>
+      Moved in from the Riverside ward in March. Served a mission in Cebu, plays the
+      organ, and has asked to help with the youth program once the family is settled.
+      Prefers to be contacted by text after six in the evening.
+    </Text>
+  ),
+  "Emphasis and alignment": (
+    <Text weight="bold" align="center" italic>
+      Come, follow me.
+    </Text>
+  ),
 };
 
 export const textGallery: ReactNode = (

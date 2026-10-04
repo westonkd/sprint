@@ -298,3 +298,33 @@ describe("TextInput agent view", () => {
     expect(result).toContain("value=NOMAD");
   });
 });
+
+describe("TextInput slots", () => {
+  it("draws a decorative icon and a trailing control around the field", () => {
+    const onClear = vi.fn();
+    render(
+      <Harness
+        icon={<svg data-testid="icon" />}
+        trailing={
+          <button type="button" onClick={onClear}>
+            Clear
+          </button>
+        }
+      />,
+    );
+    expect(screen.getByTestId("icon").parentElement).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Clear" }));
+    expect(onClear).toHaveBeenCalledOnce();
+    expect(screen.getByRole("textbox", { name: "Callsign" })).toBeInTheDocument();
+  });
+
+  it("keeps the plain structure without slots", () => {
+    render(<Harness />);
+    expect(screen.getByRole("textbox", { name: "Callsign" }).parentElement).toBe(
+      root(),
+    );
+  });
+});

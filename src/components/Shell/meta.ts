@@ -69,6 +69,16 @@ export const shellMeta = defineAgentMeta({
       description:
         "Called with the collapsed state the Shell wants. Use it to remember the choice across visits.",
     },
+    drawerOpen: {
+      kind: "boolean",
+      description:
+        "Whether the narrow-viewport drawer is open, when the owner keeps that state: a guided tour that steps into the sidebar, or a page that closes the drawer after an action. Pair it with onDrawerOpenChange.",
+    },
+    onDrawerOpenChange: {
+      kind: "handler",
+      description:
+        "Called with the drawer state the Shell wants: true from the menu toggle, false from the close toggle or a link followed inside the drawer.",
+    },
     hideLabel: {
       kind: "string",
       description: "Label of the wide-viewport toggle while the sidebar is shown.",
@@ -109,6 +119,12 @@ export const shellMeta = defineAgentMeta({
       description:
         "With collapsible, a person can put the sidebar away on a wide screen as well as a narrow one, and get the full width for the page.",
       code: '<Shell\n  collapsible\n  bar={<Link href="#/">ACME</Link>}\n  side={\n    <Nav label="Main">\n      <Link href="#/reports" active>Reports</Link>\n      <Link href="#/settings">Settings</Link>\n    </Nav>\n  }\n>\n  <Text>Quarterly numbers land here.</Text>\n</Shell>',
+    },
+    {
+      title: "A drawer the page controls",
+      description:
+        "drawerOpen and onDrawerOpenChange hand the phone drawer to the page, so a guided tour can open it to point at a link and close it again.",
+      code: '<Shell\n  drawerOpen={drawerOpen}\n  onDrawerOpenChange={setDrawerOpen}\n  bar={<Link href="#/">ACME</Link>}\n  side={\n    <Nav label="Main">\n      <Link href="#/reports" active>Reports</Link>\n    </Nav>\n  }\n>\n  <Button onClick={() => setDrawerOpen(true)}>Show me the menu</Button>\n</Shell>',
     },
   ],
 });

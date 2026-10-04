@@ -54,3 +54,26 @@ describe("Heading agent view", () => {
     expect(container.textContent).toBe('- **Heading** "Busy state" [level=3]\n');
   });
 });
+
+describe("Heading levels and sizes", () => {
+  it("renders levels five and six as real headings", () => {
+    render(<Heading level={6}>Footnotes</Heading>);
+    expect(screen.getByRole("heading", { level: 6, name: "Footnotes" })).toBe(root());
+  });
+
+  it("publishes a size only when it differs from the level", () => {
+    const view = render(
+      <Heading level={3} size={4}>
+        Speakers
+      </Heading>,
+    );
+    expect(root()).toHaveAttribute("data-sprint-size", "4");
+    expect(screen.getByRole("heading", { level: 3 })).toBeInTheDocument();
+    view.rerender(
+      <Heading level={3} size={3}>
+        Speakers
+      </Heading>,
+    );
+    expect(root()).not.toHaveAttribute("data-sprint-size");
+  });
+});

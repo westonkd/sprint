@@ -1,5 +1,26 @@
-import type { ReactNode } from "react";
-import { Link, Nav, Panel, Shell, Text } from "../../src/index.ts";
+import { type ReactNode, useState } from "react";
+import { Button, Link, Nav, Panel, Shell, Text } from "../../src/index.ts";
+
+function ControlledDrawer() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  return (
+    <Shell
+      style={{ minHeight: "22rem" }}
+      drawerOpen={drawerOpen}
+      onDrawerOpenChange={setDrawerOpen}
+      bar={<Link href="#/">ACME</Link>}
+      side={
+        <Nav label="Main">
+          <Link href="#/reports" active>
+            Reports
+          </Link>
+        </Nav>
+      }
+    >
+      <Button onClick={() => setDrawerOpen(true)}>Show me the menu</Button>
+    </Shell>
+  );
+}
 
 export const shellSpecimens: Record<string, ReactNode> = {
   "A sidebar app shell": (
@@ -37,4 +58,5 @@ export const shellSpecimens: Record<string, ReactNode> = {
       <Text>Quarterly numbers land here.</Text>
     </Shell>
   ),
+  "A drawer the page controls": <ControlledDrawer />,
 };

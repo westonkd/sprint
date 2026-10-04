@@ -1,0 +1,29 @@
+@layer sprint.components {
+  [data-sprint="Kbd"] {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.125em;
+    font-family: var(--sprint-font-ui);
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  [data-sprint="Kbd"] > kbd {
+    display: inline-block;
+    min-width: 1.5em;
+    padding: 0 0.35em;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-bottom-width: var(--sprint-keyline-width-thick);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-surface-inset);
+    color: var(--sprint-ink);
+    font-family: inherit;
+    font-weight: var(--sprint-control-weight);
+    line-height: var(--sprint-leading-snug);
+    text-align: center;
+  }
+
+  [data-sprint="Kbd"] > span {
+    color: var(--sprint-ink-muted);
+  }
+}

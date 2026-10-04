@@ -73,4 +73,16 @@
     border-color: var(--sprint-keyline);
     color: var(--sprint-inert-ink);
   }
+
+  [data-sprint="Tag"][data-sprint-provisional] {
+    border-style: dashed;
+  }
+
+  [data-sprint="Tag"][data-sprint-provisional][data-sprint-filled] {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    border-color: currentColor;
+    color: var(--sprint-ink);
+  }
 }

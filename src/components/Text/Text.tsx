@@ -10,22 +10,49 @@ export type TextTone = "default" | "muted" | "action" | "info" | "warning" | "da
 
 export type TextSize = "small" | "normal";
 
+export type TextWeight = "normal" | "bold";
+
+export type TextAlign = "start" | "center" | "end";
+
+export type TextLines = 1 | 2 | 3 | 4 | 5 | 6;
+
 export interface TextProps extends Omit<ComponentPropsWithRef<"p">, "ref"> {
   tone?: TextTone;
   size?: TextSize;
+  weight?: TextWeight;
+  align?: TextAlign;
+  lines?: TextLines;
+  italic?: boolean;
   as?: "p" | "span" | "div";
   ref?: Ref<HTMLParagraphElement> | Ref<HTMLSpanElement> | Ref<HTMLDivElement>;
 }
 
 export function Text(props: TextProps) {
-  const { tone = "default", size = "normal", as = "p", children, ...rest } = props;
+  const {
+    tone = "default",
+    size = "normal",
+    weight = "normal",
+    align = "start",
+    lines,
+    italic = false,
+    as = "p",
+    children,
+    ...rest
+  } = props;
 
   const view = useSprintView();
 
   const node = buildAgentNode({
     component: textMeta.name,
     label: reactText(children),
-    state: { tone, size },
+    state: {
+      tone,
+      size,
+      weight: weight === "normal" ? undefined : weight,
+      align: align === "start" ? undefined : align,
+      lines: lines === undefined ? undefined : String(lines),
+      italic,
+    },
   });
 
   if (view === "agent") return <AgentLine node={node} />;

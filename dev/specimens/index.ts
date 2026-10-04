@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { alertGallery, alertSpecimens } from "./Alert.tsx";
+import { avatarSpecimens } from "./Avatar.tsx";
 import { breadcrumbSpecimens } from "./Breadcrumb.tsx";
 import { buttonGallery, buttonSpecimens } from "./Button.tsx";
 import { cardSpecimens } from "./Card.tsx";
@@ -7,6 +8,7 @@ import { changeListGallery, changeListSpecimens } from "./ChangeList.tsx";
 import { checkboxSpecimens } from "./Checkbox.tsx";
 import { choiceGridGallery, choiceGridSpecimens } from "./ChoiceGrid.tsx";
 import { codeBlockSpecimens } from "./CodeBlock.tsx";
+import { comboboxSpecimens } from "./Combobox.tsx";
 import { copyFieldSpecimens } from "./CopyField.tsx";
 import { descriptionListSpecimens } from "./DescriptionList.tsx";
 import { dialogSpecimens } from "./Dialog.tsx";
@@ -16,6 +18,7 @@ import { emptyStateSpecimens } from "./EmptyState.tsx";
 import { entityRowSpecimens } from "./EntityRow.tsx";
 import { headingGallery, headingSpecimens } from "./Heading.tsx";
 import { imageGallery, imageSpecimens } from "./Image.tsx";
+import { kbdSpecimens } from "./Kbd.tsx";
 import { linkSpecimens } from "./Link.tsx";
 import { listGallery, listSpecimens } from "./List.tsx";
 import { menuSpecimens } from "./Menu.tsx";
@@ -27,20 +30,26 @@ import { paginationSpecimens } from "./Pagination.tsx";
 import { panelSpecimens } from "./Panel.tsx";
 import { pendingSpecimens } from "./Pending.tsx";
 import { progressGallery, progressSpecimens } from "./Progress.tsx";
+import { proseSpecimens } from "./Prose.tsx";
+import { radioGroupSpecimens } from "./RadioGroup.tsx";
 import { searchFieldSpecimens } from "./SearchField.tsx";
 import { secretFieldSpecimens } from "./SecretField.tsx";
 import { segmentedControlSpecimens } from "./SegmentedControl.tsx";
 import { selectSpecimens } from "./Select.tsx";
 import { shellSpecimens } from "./Shell.tsx";
+import { spinnerSpecimens } from "./Spinner.tsx";
 import { stackSpecimens } from "./Stack.tsx";
 import { stepsGallery, stepsSpecimens } from "./Steps.tsx";
 import { switchSpecimens } from "./Switch.tsx";
 import { tableGallery, tableSpecimens } from "./Table.tsx";
+import { tabsSpecimens } from "./Tabs.tsx";
 import { tagGallery, tagSpecimens } from "./Tag.tsx";
 import { textGallery, textSpecimens } from "./Text.tsx";
 import { textareaSpecimens } from "./Textarea.tsx";
 import { textInputSpecimens } from "./TextInput.tsx";
+import { toastSpecimens } from "./Toast.tsx";
 import { tooltipSpecimens } from "./Tooltip.tsx";
+import { visuallyHiddenSpecimens } from "./VisuallyHidden.tsx";
 
 export interface Specimens {
   gallery?: ReactNode;
@@ -82,6 +91,15 @@ const registry: Record<string, Specimens> = {
   SegmentedControl: { byExample: segmentedControlSpecimens },
   Select: { byExample: selectSpecimens },
   Tooltip: { byExample: tooltipSpecimens },
+  Kbd: { byExample: kbdSpecimens },
+  Combobox: { byExample: comboboxSpecimens },
+  Prose: { byExample: proseSpecimens },
+  Toast: { byExample: toastSpecimens },
+  Avatar: { byExample: avatarSpecimens },
+  RadioGroup: { byExample: radioGroupSpecimens },
+  Tabs: { byExample: tabsSpecimens },
+  Spinner: { byExample: spinnerSpecimens },
+  VisuallyHidden: { byExample: visuallyHiddenSpecimens },
   Shell: { byExample: shellSpecimens },
   Stack: { byExample: stackSpecimens },
   Switch: { byExample: switchSpecimens },

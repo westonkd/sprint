@@ -1,5 +1,6 @@
 import { type ReactNode, useRef, useState } from "react";
-import { TextInput } from "../../src/index.ts";
+import { Button, TextInput } from "../../src/index.ts";
+import { CloseIcon, SearchIcon } from "./icons.tsx";
 
 function LabelledField() {
   const [callsign, setCallsign] = useState("");
@@ -67,10 +68,37 @@ function NumberField() {
   );
 }
 
+function ClearableSearch() {
+  const [query, setQuery] = useState("elders");
+  return (
+    <TextInput
+      label="Filter the board"
+      hideLabel
+      placeholder="Filter by name or calling"
+      icon={<SearchIcon />}
+      value={query}
+      onChange={setQuery}
+      trailing={
+        query === "" ? null : (
+          <Button
+            size="small"
+            icon={<CloseIcon />}
+            hideLabel
+            onClick={() => setQuery("")}
+          >
+            Clear filter
+          </Button>
+        )
+      }
+    />
+  );
+}
+
 export const textInputSpecimens: Record<string, ReactNode> = {
   "A labelled field": <LabelledField />,
   "A validation error": <ValidationError />,
   "A password": <Password />,
   "A read-only value": <ReadOnly />,
   "A number with field attributes": <NumberField />,
+  "A search field with a clear control": <ClearableSearch />,
 };

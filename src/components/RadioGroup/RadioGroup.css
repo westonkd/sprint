@@ -1,0 +1,139 @@
+@layer sprint.components {
+  [data-sprint="RadioGroup"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-3);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  [data-sprint="RadioGroup"] > legend {
+    margin-bottom: var(--sprint-space-2);
+    padding: 0;
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-label-size-small);
+    font-weight: var(--sprint-weight-bold);
+    letter-spacing: var(--sprint-label-tracking);
+    text-transform: var(--sprint-label-transform);
+  }
+
+  [data-sprint="RadioGroup"][data-sprint-required] > legend::after {
+    content: " *";
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="RadioGroup"] > label {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--sprint-space-3);
+    cursor: pointer;
+  }
+
+  [data-sprint="RadioGroup"] > label > input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  [data-sprint="RadioGroup"] > label > span[aria-hidden] {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-top: 0.15em;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-pill);
+    background: var(--sprint-surface);
+    box-shadow: var(--sprint-well);
+  }
+
+  [data-sprint="RadioGroup"] > label:hover > span[aria-hidden] {
+    border-color: var(--sprint-ink);
+  }
+
+  [data-sprint="RadioGroup"] > label > input:checked + span[aria-hidden] {
+    border-color: var(--sprint-action-mark);
+    background:
+      radial-gradient(circle, var(--sprint-action) 0 0.2rem, transparent 0.21rem),
+      var(--sprint-surface);
+  }
+
+  [data-sprint="RadioGroup"] > label > input:focus-visible + span[aria-hidden] {
+    outline: var(--sprint-focus-width) solid var(--sprint-focus);
+    outline-offset: var(--sprint-focus-offset);
+  }
+
+  [data-sprint="RadioGroup"][data-sprint-invalid] > label > span[aria-hidden] {
+    border-color: var(--sprint-danger);
+  }
+
+  [data-sprint="RadioGroup"] > label > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprint-space-1);
+  }
+
+  [data-sprint="RadioGroup"] [data-sprint-part="option"] {
+    color: var(--sprint-ink);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-control-size);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
+    line-height: var(--sprint-leading-snug);
+    text-transform: var(--sprint-control-transform);
+  }
+
+  [data-sprint="RadioGroup"] [data-sprint-part="option"] + span {
+    color: var(--sprint-ink-muted);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-text-sm);
+    line-height: var(--sprint-leading-normal);
+  }
+
+  [data-sprint="RadioGroup"] > label:has(> input:disabled) {
+    cursor: not-allowed;
+  }
+
+  [data-sprint="RadioGroup"] > label > input:disabled + span[aria-hidden] {
+    border-color: var(--sprint-keyline);
+    background: var(--sprint-inert);
+  }
+
+  [data-sprint="RadioGroup"] > label:has(> input:disabled) [data-sprint-part="option"],
+  [data-sprint="RadioGroup"]
+    > label:has(> input:disabled)
+    [data-sprint-part="option"]
+    + span {
+    color: var(--sprint-inert-ink);
+  }
+
+  [data-sprint="RadioGroup"] [data-sprint-part="hint"],
+  [data-sprint="RadioGroup"] [data-sprint-part="error"] {
+    margin: 0;
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-control-size-small);
+    letter-spacing: var(--sprint-control-tracking);
+    text-transform: var(--sprint-control-transform);
+  }
+
+  [data-sprint="RadioGroup"] [data-sprint-part="hint"] {
+    color: var(--sprint-ink-muted);
+  }
+
+  [data-sprint="RadioGroup"] [data-sprint-part="error"] {
+    color: var(--sprint-danger);
+  }
+
+  [data-sprint="RadioGroup"] [data-sprint-part="error"]::before {
+    content: "! ";
+  }
+}

@@ -31,6 +31,30 @@ export const textMeta = defineAgentMeta({
       values: ["small", "normal"],
       default: "normal",
     },
+    weight: {
+      kind: "enum",
+      description:
+        "bold for a line that needs to stand out among its neighbours, such as a name in a list row. Prefer a Heading for a title.",
+      values: ["normal", "bold"],
+      default: "normal",
+    },
+    align: {
+      kind: "enum",
+      description: "Horizontal alignment, in the writing direction.",
+      values: ["start", "center", "end"],
+      default: "start",
+    },
+    lines: {
+      kind: "number",
+      description:
+        "Clamp the text to this many lines, 1 to 6, ending in an ellipsis. Only the screen is clamped: assistive technology and the agent view still get the whole text. Pair it with a Tooltip when a sighted person needs the rest.",
+    },
+    italic: {
+      kind: "boolean",
+      description:
+        "Set in italic, for a quotation, a title of a work, or a scripture reference.",
+      default: false,
+    },
     as: {
       kind: "enum",
       description:
@@ -49,6 +73,25 @@ export const textMeta = defineAgentMeta({
       description: "The type size in use.",
       attribute: "data-sprint-size",
       values: ["small", "normal"],
+    },
+    weight: {
+      description: "Present as bold on emphasised text.",
+      attribute: "data-sprint-weight",
+      values: ["bold"],
+    },
+    align: {
+      description: "The alignment, when it is not start.",
+      attribute: "data-sprint-align",
+      values: ["center", "end"],
+    },
+    lines: {
+      description:
+        "The line clamp, when one is set. The text itself is never shortened.",
+      attribute: "data-sprint-lines",
+    },
+    italic: {
+      description: "Present on italic text.",
+      attribute: "data-sprint-italic",
     },
   },
   agentView: {
@@ -69,6 +112,16 @@ export const textMeta = defineAgentMeta({
       description:
         "Tone is the whole message here, so an agent reading the attribute learns the same thing a person learns from the colour.",
       code: '<Text tone={ready ? "action" : "warning"} size="small">\n  {ready ? "WebMCP is available in this browser." : "WebMCP is unavailable here."}\n</Text>',
+    },
+    {
+      title: "A clamped line",
+      description:
+        "lines clamps the screen to two lines with an ellipsis. The agent view and screen readers still get every word.",
+      code: "<Text lines={2}>{member.notes}</Text>",
+    },
+    {
+      title: "Emphasis and alignment",
+      code: '<Text weight="bold" align="center" italic>Come, follow me.</Text>',
     },
   ],
 });

@@ -25,9 +25,37 @@ export const stackMeta = defineAgentMeta({
     },
     gap: {
       kind: "enum",
-      description: "Space between items, from the space scale.",
-      values: ["none", "tight", "normal", "loose"],
+      description:
+        "Space between items, from the space scale: none, hairline, snug, tight, medium, normal, loose, wide, vast, smallest to largest.",
+      values: [
+        "none",
+        "hairline",
+        "snug",
+        "tight",
+        "medium",
+        "normal",
+        "loose",
+        "wide",
+        "vast",
+      ],
       default: "normal",
+    },
+    padding: {
+      kind: "enum",
+      description:
+        "Space inside the stack's edges, on the same scale as gap. Use it for a stack that is itself a bordered or filled region; between siblings, prefer the parent's gap.",
+      values: [
+        "none",
+        "hairline",
+        "snug",
+        "tight",
+        "medium",
+        "normal",
+        "loose",
+        "wide",
+        "vast",
+      ],
+      default: "none",
     },
     align: {
       kind: "enum",
@@ -78,7 +106,31 @@ export const stackMeta = defineAgentMeta({
     gap: {
       description: "The spacing step in use.",
       attribute: "data-sprint-gap",
-      values: ["none", "tight", "normal", "loose"],
+      values: [
+        "none",
+        "hairline",
+        "snug",
+        "tight",
+        "medium",
+        "normal",
+        "loose",
+        "wide",
+        "vast",
+      ],
+    },
+    padding: {
+      description: "The inner spacing step, when there is one.",
+      attribute: "data-sprint-padding",
+      values: [
+        "hairline",
+        "snug",
+        "tight",
+        "medium",
+        "normal",
+        "loose",
+        "wide",
+        "vast",
+      ],
     },
     align: {
       description: "Cross-axis alignment, when one was asked for.",
@@ -119,6 +171,12 @@ export const stackMeta = defineAgentMeta({
     {
       title: "A header bar that stacks on a phone",
       code: '<Stack direction="row" justify="between" align="center" collapse>\n  <Heading level={1}>Button</Heading>\n  <Tag tone="warning">experimental</Tag>\n</Stack>',
+    },
+    {
+      title: "A padded, dense list",
+      description:
+        "padding insets the stack's own content, and a small gap packs rows closely, without a wrapper element or a class.",
+      code: '<Stack gap="snug" padding="medium">\n  <Text>Opening hymn</Text>\n  <Text>Invocation</Text>\n  <Text>Sacrament hymn</Text>\n</Stack>',
     },
   ],
 });

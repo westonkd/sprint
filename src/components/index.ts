@@ -1,5 +1,7 @@
 export type { AlertProps, AlertTone } from "./Alert/index.ts";
 export { Alert, alertMeta, DISMISS_ALERT_TOOL } from "./Alert/index.ts";
+export type { AvatarProps, AvatarSize } from "./Avatar/index.ts";
+export { Avatar, avatarMeta, initialsOf } from "./Avatar/index.ts";
 export type {
   BreadcrumbAction,
   BreadcrumbItem,
@@ -32,6 +34,17 @@ export type {
   TokenKind,
 } from "./CodeBlock/index.ts";
 export { CodeBlock, codeBlockMeta, tokenize } from "./CodeBlock/index.ts";
+export type {
+  ComboboxFilter,
+  ComboboxOption,
+  ComboboxProps,
+} from "./Combobox/index.ts";
+export {
+  CHOOSE_COMBOBOX_TOOL,
+  Combobox,
+  comboboxMeta,
+  matchesQuery,
+} from "./Combobox/index.ts";
 export type { CopyFieldProps } from "./CopyField/index.ts";
 export { CopyField, copyFieldMeta } from "./CopyField/index.ts";
 export type {
@@ -65,6 +78,8 @@ export type { HeadingLevel, HeadingProps } from "./Heading/index.ts";
 export { Heading, headingMeta } from "./Heading/index.ts";
 export type { ImageFit, ImageProps, ImageRatio, ImageStatus } from "./Image/index.ts";
 export { Image, imageMeta } from "./Image/index.ts";
+export type { KbdProps } from "./Kbd/index.ts";
+export { Kbd, kbdMeta } from "./Kbd/index.ts";
 export type { LinkProps } from "./Link/index.ts";
 export { Link, linkMeta, OPEN_LINK_TOOL } from "./Link/index.ts";
 export type { ListMarker, ListProps } from "./List/index.ts";
@@ -87,6 +102,10 @@ export type { PendingProps } from "./Pending/index.ts";
 export { Pending, pendingMeta } from "./Pending/index.ts";
 export type { ProgressProps } from "./Progress/index.ts";
 export { Progress, progressMeta } from "./Progress/index.ts";
+export type { ProseProps, ProseSize } from "./Prose/index.ts";
+export { Prose, proseMeta } from "./Prose/index.ts";
+export type { RadioGroupProps, RadioOption } from "./RadioGroup/index.ts";
+export { RadioGroup, radioGroupMeta, SELECT_RADIO_TOOL } from "./RadioGroup/index.ts";
 export type { SearchFieldProps } from "./SearchField/index.ts";
 export { SEARCH_TOOL, SearchField, searchFieldMeta } from "./SearchField/index.ts";
 export type { SecretFieldProps } from "./SecretField/index.ts";
@@ -104,6 +123,8 @@ export type { SelectOption, SelectProps } from "./Select/index.ts";
 export { SELECT_OPTION_TOOL, Select, selectMeta } from "./Select/index.ts";
 export type { ShellProps } from "./Shell/index.ts";
 export { Shell, shellMeta } from "./Shell/index.ts";
+export type { SpinnerProps, SpinnerSize } from "./Spinner/index.ts";
+export { Spinner, spinnerMeta } from "./Spinner/index.ts";
 export type {
   StackAlign,
   StackDirection,
@@ -119,6 +140,8 @@ export type { SwitchProps } from "./Switch/index.ts";
 export { SET_SWITCH_TOOL, Switch, switchMeta } from "./Switch/index.ts";
 export type { TableColumn, TableProps, TableRow, TableWidth } from "./Table/index.ts";
 export { TABLE_WIDTHS, Table, tableMeta } from "./Table/index.ts";
+export type { TabItem, TabsProps } from "./Tabs/index.ts";
+export { SELECT_TAB_TOOL, Tabs, tabsMeta } from "./Tabs/index.ts";
 export type { TagProps, TagTone } from "./Tag/index.ts";
 export { Tag, tagMeta } from "./Tag/index.ts";
 export type { TextProps, TextSize, TextTone } from "./Text/index.ts";
@@ -127,5 +150,9 @@ export type { TextareaProps } from "./Textarea/index.ts";
 export { FILL_TEXTAREA_TOOL, Textarea, textareaMeta } from "./Textarea/index.ts";
 export type { TextInputProps, TextInputType } from "./TextInput/index.ts";
 export { FILL_TOOL, TextInput, textInputMeta } from "./TextInput/index.ts";
+export type { ToastAction, ToastProps, ToastTone } from "./Toast/index.ts";
+export { Toast, toastMeta } from "./Toast/index.ts";
 export type { TooltipProps } from "./Tooltip/index.ts";
 export { Tooltip, tooltipMeta } from "./Tooltip/index.ts";
+export type { VisuallyHiddenProps } from "./VisuallyHidden/index.ts";
+export { VisuallyHidden, visuallyHiddenMeta } from "./VisuallyHidden/index.ts";

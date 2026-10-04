@@ -182,3 +182,28 @@ describe("Shell agent view", () => {
     );
   });
 });
+
+describe("Shell controlled drawer", () => {
+  it("follows drawerOpen and reports what the toggle asks for", () => {
+    const changes: boolean[] = [];
+    const view = render(
+      <Shell
+        drawerOpen
+        side={<Text>Side</Text>}
+        onDrawerOpenChange={(next) => changes.push(next)}
+      >
+        <Text>Main</Text>
+      </Shell>,
+    );
+    expect(root()).toHaveAttribute("data-sprint-open", "");
+    fireEvent.click(screen.getByRole("button", { name: "Close" }));
+    expect(changes).toEqual([false]);
+    expect(root()).toHaveAttribute("data-sprint-open", "");
+    view.rerender(
+      <Shell drawerOpen={false} side={<Text>Side</Text>}>
+        <Text>Main</Text>
+      </Shell>,
+    );
+    expect(root()).not.toHaveAttribute("data-sprint-open");
+  });
+});
