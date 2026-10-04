@@ -5,6 +5,19 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Added: `Menu`.** A button that opens a list of actions, links or radio choices, given as data.
+  Keyboard navigation, grouping, danger items and an icon-only trigger. One `choose` tool runs any
+  enabled item that is not a link, without opening the menu.
+- **Added: `Tooltip`.** A hover and focus hint for one element. It is a human affordance only and
+  adds nothing to the agent view. Its markup is styled through the new reserved
+  `data-sprint-tooltip` attribute.
+- **Added: `Button` `size`, `icon`, `iconEnd` and `hideLabel`.** `size="small"` for dense surfaces;
+  `hideLabel` with an `icon` draws a square icon-only button whose label stays the accessible name
+  and tool name and shows as a tooltip.
+- **Added: `useFloating`.** The positioning hook behind Select, Menu and Tooltip, exported for an
+  app's own floating UI: it flips, clamps to the viewport, aligns, and dismisses on an outside
+  pointer. Surfaces render in place as top-layer popovers, so they work inside a modal `Dialog`.
+
 - **Fixed: `Select` opens above the field when there is no room below.** The listbox measures the
   space on both sides, flips when the options would run off the bottom of the viewport, caps its
   height to the room it has, and stays inside the viewport horizontally.

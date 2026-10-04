@@ -185,6 +185,10 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   Markdown stream — on the clipboard, a human affordance with no WebMCP tool. Its visible label is
   CSS-generated from `aria-label`, so it contributes nothing to the page text an agent reads;
   `agentControls="never"` removes it along with every other control.
+- `data-sprint-tooltip` marks a Tooltip's wrapper (`="Tooltip"`) and its bubble (`="bubble"`). A
+  tooltip is a human affordance: it carries no root or part, never enters the projection, and in
+  agent view only the wrapped element renders. Its text must repeat something the element already
+  says.
 - `data-sprint-ornament="hatch|hatch-dense|shade|scanlines|dots|checker|crosses|pin|parting|chevron|barcode|contour"` paints one mark
   from the ornament vocabulary (`src/styles/ornament.css`) onto an element, drawn in
   `--sprint-ornament-ink` (keyline by default — set it locally for another ink). Pure CSS texture
@@ -239,7 +243,7 @@ Attribute conventions, defined in `src/agent/attributes.ts`:
   `text-transform: uppercase`, a raw `line-height`, a raw `--sprint-text-*` where a label size
   belongs, or `--sprint-font-mono` — the mono primitive is reserved for code and secret values.
 
-`part`, `tool`, `owner`, `region`, `view`, `view-copy`, and `theme` are reserved and never read as state. These attributes are part of the
+`part`, `tool`, `owner`, `region`, `view`, `view-copy`, `theme`, and `tooltip` are reserved and never read as state. These attributes are part of the
 public API. Changing or removing one is a breaking change, because agents write selectors against
 them, and because the agent view is projected from them.
 
@@ -301,6 +305,13 @@ alike.
 `serializeElement` / `serializeWithin` still project the agent view from the DOM, but only for
 reading a page that is in *human* mode. Because attributes are generated from the node, the
 projection and the agent render agree by construction.
+
+**Floating surfaces** (a listbox, a menu, a tooltip) render inside their owner's DOM, never in a
+portal, and open as `popover="manual"` so they sit in the top layer above a modal Dialog. Position
+them with `useFloating` from `src/floating/useFloating.ts`, which flips, clamps and dismisses and
+writes only `--sprint-floating-*` custom properties. A rounded scrolling surface is a clipping
+popover around an inner scroller. A human-only trigger that should look like a Button carries
+`data-sprint-control="button"` rather than rendering a Button node.
 
 **Tools** register with `document.modelContext` through the single adapter in
 `src/agent/webmcp/adapter.ts` — the only place that API may be touched. Names derive from the

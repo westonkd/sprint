@@ -228,3 +228,49 @@ describe("Button tool execution", () => {
     await expect(press("press-dismiss")).resolves.toContain("removed");
   });
 });
+
+describe("Button size and icons", () => {
+  it("publishes small and leaves medium unmarked", () => {
+    const view = render(<Button size="small">Add</Button>);
+    expect(root()).toHaveAttribute("data-sprint-size", "small");
+    view.rerender(<Button>Add</Button>);
+    expect(root()).not.toHaveAttribute("data-sprint-size");
+  });
+
+  it("draws icons as decoration around the label", () => {
+    render(
+      <Button icon={<svg data-testid="lead" />} iconEnd={<svg data-testid="tail" />}>
+        Share
+      </Button>,
+    );
+    const button = screen.getByRole("button", { name: "Share" });
+    expect(screen.getByTestId("lead").parentElement).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    expect(button.lastElementChild).toContainElement(screen.getByTestId("tail"));
+  });
+
+  it("keeps a hidden label as the name, the tool name and a tooltip", () => {
+    render(
+      <Button icon={<svg />} hideLabel>
+        Hide sidebar
+      </Button>,
+    );
+    const button = screen.getByRole("button", { name: "Hide sidebar" });
+    expect(button).not.toHaveAccessibleDescription();
+    expect(button.querySelector("[data-sprint-visually-hidden]")).toHaveTextContent(
+      "Hide sidebar",
+    );
+    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent(
+      "Hide sidebar",
+    );
+    expect(mock.names()).toEqual(["press-hide-sidebar"]);
+  });
+
+  it("ignores hideLabel without an icon", () => {
+    render(<Button hideLabel>Save</Button>);
+    expect(screen.queryByRole("tooltip", { hidden: true })).toBeNull();
+    expect(screen.getByText("Save")).not.toHaveAttribute("data-sprint-visually-hidden");
+  });
+});

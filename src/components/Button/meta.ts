@@ -25,6 +25,29 @@ export const buttonMeta = defineAgentMeta({
       values: ["neutral", "action", "danger"],
       default: "neutral",
     },
+    size: {
+      kind: "enum",
+      description:
+        "medium for ordinary forms and toolbars; small for dense surfaces such as table rows, cards and toasts.",
+      values: ["medium", "small"],
+      default: "medium",
+    },
+    icon: {
+      kind: "node",
+      description:
+        "An icon drawn before the label, sized to the text. It is decorative and hidden from assistive technology; the label still names the button.",
+    },
+    iconEnd: {
+      kind: "node",
+      description:
+        "An icon drawn after the label, such as a chevron on a button that opens something. Ignored when hideLabel is set.",
+    },
+    hideLabel: {
+      kind: "boolean",
+      description:
+        "Show only the icon, as a square button. The label stays in the page for screen readers and agents, names the press tool, and appears as a tooltip on hover and focus. Requires icon.",
+      default: false,
+    },
     block: {
       kind: "boolean",
       description:
@@ -65,6 +88,11 @@ export const buttonMeta = defineAgentMeta({
       attribute: "data-sprint-tone",
       values: ["neutral", "action", "danger"],
     },
+    size: {
+      description: "Present as small on a compact button.",
+      attribute: "data-sprint-size",
+      values: ["small"],
+    },
     block: {
       description: "Present when the button renders as a full-width bar.",
       attribute: "data-sprint-block",
@@ -86,6 +114,17 @@ export const buttonMeta = defineAgentMeta({
       '- **Button** "Prepare launch" [tone=action] → tool `press-prepare-launch`',
   },
   examples: [
+    {
+      title: "An icon-only button",
+      description:
+        "hideLabel draws only the icon. The label still names the button and its tool, and shows as a tooltip, so the control is never a mystery.",
+      code: "<Button icon={<SidebarIcon />} hideLabel onClick={collapse}>\n  Hide sidebar\n</Button>",
+    },
+    {
+      title: "A compact button with an icon",
+      description: 'size="small" for a dense row; the icon sits before the label.',
+      code: '<Button size="small" icon={<PlusIcon />} onClick={addSpeaker}>\n  Add speaker\n</Button>',
+    },
     {
       title: "Primary action",
       description: "The one rationed acid action bar for a view.",

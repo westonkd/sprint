@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { AgentRegion, Button } from "../../src/index.ts";
+import { ChevronDownIcon, PlusIcon, SidebarIcon } from "./icons.tsx";
 
 function BusyExample() {
   const [saving, setSaving] = useState(false);
@@ -25,6 +26,16 @@ function CounterExample() {
 }
 
 export const buttonSpecimens: Record<string, ReactNode> = {
+  "An icon-only button": (
+    <Button icon={<SidebarIcon />} hideLabel>
+      Hide sidebar
+    </Button>
+  ),
+  "A compact button with an icon": (
+    <Button size="small" icon={<PlusIcon />}>
+      Add speaker
+    </Button>
+  ),
   "Primary action": (
     <Button tone="action" block>
       Prepare launch
@@ -53,5 +64,13 @@ export const buttonGallery: ReactNode = (
     <Button disabled>Disabled</Button>
     <Button loading>Loading</Button>
     <Button agentTool={false}>No tool</Button>
+    <Button size="small">Small</Button>
+    <Button iconEnd={<ChevronDownIcon />}>Share</Button>
+    <Button tone="action" icon={<PlusIcon />} hideLabel>
+      Add calling
+    </Button>
+    <Button size="small" icon={<SidebarIcon />} hideLabel>
+      Hide sidebar
+    </Button>
   </>
 );
