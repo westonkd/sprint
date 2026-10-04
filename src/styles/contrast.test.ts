@@ -98,6 +98,7 @@ function contrast(foreground: string, background: string): number {
 const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-ink", "--sprint-surface"],
   ["--sprint-ink", "--sprint-surface-raised"],
+  ["--sprint-ink-inverse", "--sprint-ink"],
   ["--sprint-ink-muted", "--sprint-surface"],
   ["--sprint-ink-muted", "--sprint-surface-raised"],
   ["--sprint-action-ink", "--sprint-action"],

@@ -1,5 +1,5 @@
 @layer sprint.components {
-  [data-sprint="Button"] {
+  :is([data-sprint="Button"], [data-sprint-control="button"]) {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -32,45 +32,111 @@
       transform var(--sprint-duration-instant) var(--sprint-easing);
   }
 
-  [data-sprint="Button"]:active:not(:disabled) {
+  :is([data-sprint="Button"], [data-sprint-control="button"]):active:not(:disabled) {
     transform: translateY(var(--sprint-press-shift)) scaleY(var(--sprint-press-scale));
     box-shadow: var(--sprint-mold-pressed), var(--sprint-cast-pressed);
   }
 
-  [data-sprint="Button"]:hover:not(:disabled) {
+  :is([data-sprint="Button"], [data-sprint-control="button"]):hover:not(:disabled) {
     background-color: var(--sprint-neutral-hover);
     border-color: var(--sprint-keyline-strong);
     box-shadow: var(--sprint-mold), var(--sprint-cast-raised);
     transform: translateY(calc(-1 * var(--sprint-press-shift)));
   }
 
-  [data-sprint="Button"][data-sprint-tone="action"] {
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-tone="action"] {
     background-color: var(--sprint-action);
     border-color: var(--sprint-action-mark);
     color: var(--sprint-action-ink);
   }
 
-  [data-sprint="Button"][data-sprint-tone="action"]:hover:not(:disabled) {
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-tone="action"]:hover:not(:disabled) {
     background-color: var(--sprint-action-hover);
   }
 
-  [data-sprint="Button"][data-sprint-tone="danger"] {
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-tone="danger"] {
     background-color: var(--sprint-danger);
     border-color: var(--sprint-danger);
     color: var(--sprint-danger-ink);
   }
 
-  [data-sprint="Button"][data-sprint-tone="danger"]:hover:not(:disabled) {
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-tone="danger"]:hover:not(:disabled) {
     background-color: var(--sprint-danger-hover);
     border-color: var(--sprint-danger-hover);
   }
 
-  [data-sprint="Button"][data-sprint-block] {
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-size="small"] {
+    gap: var(--sprint-space-1);
+    padding: var(--sprint-space-2) var(--sprint-space-3);
+    font-size: var(--sprint-control-size-small);
+  }
+
+  :is([data-sprint="Button"], [data-sprint-control="button"]) > [data-sprint-icon] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    font-size: 1.25em;
+    line-height: var(--sprint-leading-flat);
+  }
+
+  :is([data-sprint="Button"], [data-sprint-control="button"])
+    > [data-sprint-icon]
+    > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  :is([data-sprint="Button"], [data-sprint-control="button"]):has(
+    > [data-sprint-visually-hidden]
+  ) {
+    aspect-ratio: 1;
+    padding: var(--sprint-space-2);
+  }
+
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-size="small"]:has(> [data-sprint-visually-hidden]) {
+    padding: var(--sprint-space-1);
+  }
+
+  :is([data-sprint="Button"], [data-sprint-control="button"])
+    > [data-sprint-visually-hidden] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  :is([data-sprint="Button"], [data-sprint-control="button"])[data-sprint-block] {
     display: flex;
     width: 100%;
   }
 
-  [data-sprint="Button"]:disabled {
+  :is([data-sprint="Button"], [data-sprint-control="button"]):disabled {
     background-color: var(--sprint-inert);
     background-image: none;
     box-shadow: none;
@@ -79,11 +145,14 @@
     cursor: not-allowed;
   }
 
-  [data-sprint="Button"][data-sprint-loading] {
+  :is([data-sprint="Button"], [data-sprint-control="button"])[data-sprint-loading] {
     cursor: progress;
   }
 
-  [data-sprint="Button"][data-sprint-loading]::after {
+  :is(
+    [data-sprint="Button"],
+    [data-sprint-control="button"]
+  )[data-sprint-loading]::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -105,11 +174,14 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-sprint="Button"] {
+    :is([data-sprint="Button"], [data-sprint-control="button"]) {
       transition: none;
     }
 
-    [data-sprint="Button"][data-sprint-loading]::after {
+    :is(
+        [data-sprint="Button"],
+        [data-sprint-control="button"]
+      )[data-sprint-loading]::after {
       animation: none;
     }
   }

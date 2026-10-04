@@ -18,6 +18,7 @@ import { headingGallery, headingSpecimens } from "./Heading.tsx";
 import { imageGallery, imageSpecimens } from "./Image.tsx";
 import { linkSpecimens } from "./Link.tsx";
 import { listGallery, listSpecimens } from "./List.tsx";
+import { menuSpecimens } from "./Menu.tsx";
 import { metaLineSpecimens } from "./MetaLine.tsx";
 import { navSpecimens } from "./Nav.tsx";
 import { navGroupSpecimens } from "./NavGroup.tsx";
@@ -39,6 +40,7 @@ import { tagGallery, tagSpecimens } from "./Tag.tsx";
 import { textGallery, textSpecimens } from "./Text.tsx";
 import { textareaSpecimens } from "./Textarea.tsx";
 import { textInputSpecimens } from "./TextInput.tsx";
+import { tooltipSpecimens } from "./Tooltip.tsx";
 
 export interface Specimens {
   gallery?: ReactNode;
@@ -68,6 +70,7 @@ const registry: Record<string, Specimens> = {
   Image: { gallery: imageGallery, byExample: imageSpecimens },
   Link: { byExample: linkSpecimens },
   List: { gallery: listGallery, byExample: listSpecimens },
+  Menu: { byExample: menuSpecimens },
   MetaLine: { byExample: metaLineSpecimens },
   Nav: { byExample: navSpecimens },
   NavGroup: { byExample: navGroupSpecimens },
@@ -78,6 +81,7 @@ const registry: Record<string, Specimens> = {
   SecretField: { byExample: secretFieldSpecimens },
   SegmentedControl: { byExample: segmentedControlSpecimens },
   Select: { byExample: selectSpecimens },
+  Tooltip: { byExample: tooltipSpecimens },
   Shell: { byExample: shellSpecimens },
   Stack: { byExample: stackSpecimens },
   Switch: { byExample: switchSpecimens },

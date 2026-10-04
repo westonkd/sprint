@@ -19,6 +19,7 @@ export {
   STATE_ATTRIBUTE_PREFIX,
   THEME_ATTRIBUTE,
   TOOL_ATTRIBUTE,
+  TOOLTIP_ATTRIBUTE,
   VIEW_ATTRIBUTE,
   VIEW_COPY_ATTRIBUTE,
 } from "./agent/attributes.ts";
@@ -109,6 +110,17 @@ export type {
 export type { UseAgentToolOptions } from "./agent/webmcp/useAgentTool.ts";
 export { useAgentTool } from "./agent/webmcp/useAgentTool.ts";
 export * from "./components/index.ts";
+export type {
+  FloatingAlign,
+  FloatingSide,
+  UseFloatingOptions,
+} from "./floating/useFloating.ts";
+export {
+  hideFloating,
+  placeFloating,
+  showFloating,
+  useFloating,
+} from "./floating/useFloating.ts";
 export type {
   AgentRegionProps,
   SprintProviderProps,

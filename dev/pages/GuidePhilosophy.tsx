@@ -185,6 +185,15 @@ export function GuidePhilosophy() {
               have to do with each other. The test is whether removing the component
               would lose an agent anything.
             </Text>
+            <Text>
+              Some things exist only to help a person see. A tooltip repeats a label for
+              someone who cannot see an icon's meaning, and a menu's trigger only opens
+              a list an agent can choose from directly. Neither carries a part, so
+              neither reaches the agent view, and a tooltip is only allowed to repeat
+              what its element already says. Floating surfaces open in place, inside
+              their owner, as popovers in the top layer, so a menu inside a dialog is
+              never trapped behind it.
+            </Text>
           </Stack>
         </Panel>
 

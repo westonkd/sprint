@@ -1,6 +1,7 @@
 import {
   type ComponentPropsWithRef,
   type MouseEvent as ReactMouseEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -14,14 +15,21 @@ import { accessibleText } from "@/agent/view/text.ts";
 import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
 import { commitSync } from "@/agent/webmcp/flush.ts";
 import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
+import { Tooltip } from "../Tooltip/Tooltip.tsx";
 import { buttonMeta } from "./meta.ts";
 import { PRESS_TOOL } from "./tool.ts";
 import "./Button.css";
 
 export type ButtonTone = "neutral" | "action" | "danger";
 
+export type ButtonSize = "medium" | "small";
+
 export interface ButtonProps extends ComponentPropsWithRef<"button"> {
   tone?: ButtonTone;
+  size?: ButtonSize;
+  icon?: ReactNode;
+  iconEnd?: ReactNode;
+  hideLabel?: boolean;
   block?: boolean;
   loading?: boolean;
   agentName?: string;
@@ -36,6 +44,10 @@ function syntheticClick(): ReactMouseEvent<HTMLButtonElement> {
 export function Button(props: ButtonProps) {
   const {
     tone = "neutral",
+    size = "medium",
+    icon,
+    iconEnd,
+    hideLabel = false,
     block = false,
     loading = false,
     agentName,
@@ -120,7 +132,13 @@ export function Button(props: ButtonProps) {
     component: buttonMeta.name,
     label,
     tool: toolName,
-    state: { tone, block, loading, disabled: inert },
+    state: {
+      tone,
+      size: size === "medium" ? undefined : size,
+      block,
+      loading,
+      disabled: inert,
+    },
   });
   nodeRef.current = node;
 
@@ -137,7 +155,9 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  return (
+  const iconOnly = hideLabel && icon !== undefined;
+
+  const control = (
     <button
       {...rest}
       {...agentAttributesFor(node)}
@@ -147,7 +167,24 @@ export function Button(props: ButtonProps) {
       disabled={inert}
       aria-busy={loading || undefined}
     >
-      {children}
+      {icon === undefined ? null : (
+        <span data-sprint-icon="" aria-hidden="true">
+          {icon}
+        </span>
+      )}
+      {iconOnly ? <span data-sprint-visually-hidden="">{children}</span> : children}
+      {iconEnd === undefined || iconOnly ? null : (
+        <span data-sprint-icon="" aria-hidden="true">
+          {iconEnd}
+        </span>
+      )}
     </button>
+  );
+
+  if (!iconOnly || label === undefined) return control;
+  return (
+    <Tooltip label={label} describe={false} disabled={inert}>
+      {control}
+    </Tooltip>
   );
 }

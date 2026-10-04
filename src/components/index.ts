@@ -11,7 +11,7 @@ export {
   Breadcrumb,
   breadcrumbMeta,
 } from "./Breadcrumb/index.ts";
-export type { ButtonProps, ButtonTone } from "./Button/index.ts";
+export type { ButtonProps, ButtonSize, ButtonTone } from "./Button/index.ts";
 export { Button, buttonMeta, PRESS_TOOL } from "./Button/index.ts";
 export type { CardProps } from "./Card/index.ts";
 export { Card, cardMeta, OPEN_CARD_TOOL } from "./Card/index.ts";
@@ -69,6 +69,8 @@ export type { LinkProps } from "./Link/index.ts";
 export { Link, linkMeta, OPEN_LINK_TOOL } from "./Link/index.ts";
 export type { ListMarker, ListProps } from "./List/index.ts";
 export { List, listMeta } from "./List/index.ts";
+export type { MenuItem, MenuItemTone, MenuProps } from "./Menu/index.ts";
+export { CHOOSE_MENU_TOOL, Menu, menuMeta } from "./Menu/index.ts";
 export type { MetaLineEntry, MetaLineProps } from "./MetaLine/index.ts";
 export { MetaLine, metaLineMeta } from "./MetaLine/index.ts";
 export type { NavProps } from "./Nav/index.ts";
@@ -125,3 +127,5 @@ export type { TextareaProps } from "./Textarea/index.ts";
 export { FILL_TEXTAREA_TOOL, Textarea, textareaMeta } from "./Textarea/index.ts";
 export type { TextInputProps, TextInputType } from "./TextInput/index.ts";
 export { FILL_TOOL, TextInput, textInputMeta } from "./TextInput/index.ts";
+export type { TooltipProps } from "./Tooltip/index.ts";
+export { Tooltip, tooltipMeta } from "./Tooltip/index.ts";

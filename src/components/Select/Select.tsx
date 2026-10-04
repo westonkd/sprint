@@ -5,7 +5,6 @@ import {
   useCallback,
   useEffect,
   useId,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -22,6 +21,7 @@ import { afterCommit } from "@/agent/webmcp/afterCommit.ts";
 import { commitSync } from "@/agent/webmcp/flush.ts";
 import type { JsonSchemaObject } from "@/agent/webmcp/types.ts";
 import { useAgentTool } from "@/agent/webmcp/useAgentTool.ts";
+import { useFloating } from "@/floating/useFloating.ts";
 import { selectMeta } from "./meta.ts";
 import { SELECT_OPTION_TOOL } from "./tool.ts";
 import "./Select.css";
@@ -47,13 +47,6 @@ export interface SelectProps extends Omit<ComponentPropsWithRef<"div">, "onChang
   agentTool?: boolean;
 }
 
-const LISTBOX_TOP = "--sprint-select-top";
-const LISTBOX_BOTTOM = "--sprint-select-bottom";
-const LISTBOX_LEFT = "--sprint-select-left";
-const LISTBOX_WIDTH = "--sprint-select-width";
-const LISTBOX_ROOM = "--sprint-select-room";
-const LISTBOX_CAP_REM = 16;
-
 function optionSchema(options: readonly SelectOption[]): JsonSchemaObject {
   const option = SELECT_OPTION_TOOL.inputSchema.properties.option;
   return {
@@ -71,52 +64,6 @@ function messagePart(error: string | undefined, hint: string | undefined): Agent
   if (error !== undefined) return [{ part: "error", label: error, state: {} }];
   if (hint !== undefined) return [{ part: "hint", label: hint, state: {} }];
   return [];
-}
-
-function rootFontSize(): number {
-  const size = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-  return Number.isFinite(size) ? size : 16;
-}
-
-function preferredHeight(layer: HTMLElement, list: HTMLElement): number {
-  const chrome = layer.offsetHeight - list.clientHeight;
-  return Math.min(list.scrollHeight + chrome, LISTBOX_CAP_REM * rootFontSize());
-}
-
-function place(layer: HTMLElement, list: HTMLElement, anchor: HTMLElement): void {
-  const rect = anchor.getBoundingClientRect();
-  const viewportHeight = window.innerHeight;
-  const below = viewportHeight - rect.bottom;
-  const above = rect.top;
-  const flip = below < preferredHeight(layer, list) && above > below;
-  const width = Math.min(rect.width, window.innerWidth);
-  const left = Math.max(0, Math.min(rect.left, window.innerWidth - width));
-
-  layer.dataset.placement = flip ? "above" : "below";
-  if (flip) {
-    layer.style.removeProperty(LISTBOX_TOP);
-    layer.style.setProperty(LISTBOX_BOTTOM, `${viewportHeight - rect.top}px`);
-  } else {
-    layer.style.removeProperty(LISTBOX_BOTTOM);
-    layer.style.setProperty(LISTBOX_TOP, `${rect.bottom}px`);
-  }
-  layer.style.setProperty(LISTBOX_ROOM, `${flip ? above : below}px`);
-  layer.style.setProperty(LISTBOX_LEFT, `${left}px`);
-  layer.style.setProperty(LISTBOX_WIDTH, `${width}px`);
-}
-
-function canPopover(element: HTMLElement): boolean {
-  return typeof element.showPopover === "function";
-}
-
-function showLayer(listbox: HTMLElement): void {
-  if (!canPopover(listbox)) return;
-  if (!listbox.matches(":popover-open")) listbox.showPopover();
-}
-
-function hideLayer(listbox: HTMLElement): void {
-  if (!canPopover(listbox)) return;
-  if (listbox.matches(":popover-open")) listbox.hidePopover();
 }
 
 export function Select(props: SelectProps) {
@@ -186,35 +133,14 @@ export function Select(props: SelectProps) {
     if (disabled) hide();
   }, [disabled, hide]);
 
-  useLayoutEffect(() => {
-    const surface = layer.current;
-    const list = listbox.current;
-    const anchor = trigger.current;
-    if (surface === null || list === null || anchor === null) return;
-    if (!open) {
-      hideLayer(surface);
-      return;
-    }
-
-    showLayer(surface);
-    place(surface, list, anchor);
-
-    const reposition = () => place(surface, list, anchor);
-    const dismiss = (event: Event) => {
-      const target = event.target;
-      if (target instanceof Node && root.current?.contains(target)) return;
-      hide();
-    };
-
-    window.addEventListener("resize", reposition);
-    window.addEventListener("scroll", reposition, true);
-    document.addEventListener("pointerdown", dismiss, true);
-    return () => {
-      window.removeEventListener("resize", reposition);
-      window.removeEventListener("scroll", reposition, true);
-      document.removeEventListener("pointerdown", dismiss, true);
-    };
-  }, [open, hide]);
+  useFloating({
+    open,
+    anchor: trigger,
+    floating: layer,
+    matchWidth: true,
+    boundary: root,
+    onDismiss: hide,
+  });
 
   useEffect(() => {
     if (!open || active < 0) return;

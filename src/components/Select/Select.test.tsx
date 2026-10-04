@@ -131,10 +131,10 @@ describe("Select opening", () => {
     fireEvent.click(trigger());
     const layer = listbox().parentElement as HTMLElement;
     expect(layer.dataset.placement).toBe("above");
-    expect(layer.style.getPropertyValue("--sprint-select-bottom")).toBe(
+    expect(layer.style.getPropertyValue("--sprint-floating-bottom")).toBe(
       `${window.innerHeight - (window.innerHeight - 60)}px`,
     );
-    expect(layer.style.getPropertyValue("--sprint-select-top")).toBe("");
+    expect(layer.style.getPropertyValue("--sprint-floating-top")).toBe("");
   });
 
   it("opens below the field when the options fit there", () => {
@@ -149,7 +149,7 @@ describe("Select opening", () => {
     fireEvent.click(trigger());
     const layer = listbox().parentElement as HTMLElement;
     expect(layer.dataset.placement).toBe("below");
-    expect(layer.style.getPropertyValue("--sprint-select-top")).toBe("80px");
+    expect(layer.style.getPropertyValue("--sprint-floating-top")).toBe("80px");
   });
 
   it("opens on a lone click event with no pointer events around it", () => {

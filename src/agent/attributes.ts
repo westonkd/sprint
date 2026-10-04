@@ -8,6 +8,7 @@ export const VIEW_ATTRIBUTE = "data-sprint-view";
 export const VIEW_COPY_ATTRIBUTE = "data-sprint-view-copy";
 export const THEME_ATTRIBUTE = "data-sprint-theme";
 export const REGION_ATTRIBUTE = "data-sprint-region";
+export const TOOLTIP_ATTRIBUTE = "data-sprint-tooltip";
 
 export const RESERVED_STATE_KEYS: readonly string[] = [
   "part",
@@ -19,6 +20,7 @@ export const RESERVED_STATE_KEYS: readonly string[] = [
   "theme",
   "region",
   "ornament",
+  "tooltip",
 ];
 
 export type AgentAttributeValue = string | number | boolean | null | undefined;

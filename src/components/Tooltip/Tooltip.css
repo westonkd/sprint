@@ -1,0 +1,41 @@
+@layer sprint.components {
+  [data-sprint-tooltip="Tooltip"] {
+    display: contents;
+  }
+
+  [data-sprint-tooltip="bubble"] {
+    position: fixed;
+    inset: auto;
+    top: var(--sprint-floating-top, auto);
+    bottom: var(--sprint-floating-bottom, auto);
+    left: var(--sprint-floating-left, 0);
+    z-index: 20;
+    box-sizing: border-box;
+    max-width: min(18rem, calc(100vw - var(--sprint-space-4)));
+    margin: 0;
+    margin-top: var(--sprint-space-1);
+    padding: var(--sprint-space-1) var(--sprint-space-2);
+    overflow: visible;
+    border: var(--sprint-keyline-width) solid var(--sprint-keyline-strong);
+    border-radius: var(--sprint-radius-control);
+    background: var(--sprint-ink);
+    box-shadow: var(--sprint-cast-raised);
+    color: var(--sprint-ink-inverse);
+    font-family: var(--sprint-font-ui);
+    font-size: var(--sprint-control-size-small);
+    font-weight: var(--sprint-control-weight);
+    letter-spacing: var(--sprint-control-tracking);
+    line-height: var(--sprint-leading-snug);
+    text-transform: var(--sprint-control-transform);
+    pointer-events: none;
+  }
+
+  [data-sprint-tooltip="bubble"][data-placement="above"] {
+    margin-top: 0;
+    margin-bottom: var(--sprint-space-1);
+  }
+
+  [data-sprint-tooltip="bubble"][hidden] {
+    display: none;
+  }
+}

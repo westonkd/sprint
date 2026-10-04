@@ -66,17 +66,17 @@
   [data-sprint="Select"] [popover] {
     position: fixed;
     inset: auto;
-    top: var(--sprint-select-top, auto);
-    bottom: var(--sprint-select-bottom, auto);
-    left: var(--sprint-select-left, 0);
+    top: var(--sprint-floating-top, auto);
+    bottom: var(--sprint-floating-bottom, auto);
+    left: var(--sprint-floating-left, 0);
     z-index: 10;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: var(--sprint-select-width, auto);
+    width: var(--sprint-floating-width, auto);
     max-height: min(
       16rem,
-      calc(var(--sprint-select-room, 100vh) - var(--sprint-space-2))
+      calc(var(--sprint-floating-room, 100vh) - var(--sprint-space-2))
     );
     margin: 0;
     margin-top: var(--sprint-space-1);
