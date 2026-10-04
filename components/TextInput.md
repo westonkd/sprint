@@ -93,6 +93,28 @@ type="number" keeps value a string. Native attributes for the input itself, such
 />
 ```
 
+### A search field with a clear control
+
+The icon sits inside the start of the field and a small icon-only Button clears it from the end. An agent clears it by filling an empty string.
+
+```tsx
+<TextInput
+  label="Filter the board"
+  hideLabel
+  placeholder="Filter by name or calling"
+  icon={<SearchIcon />}
+  value={query}
+  onChange={setQuery}
+  trailing={
+    query === "" ? null : (
+      <Button size="small" icon={<CloseIcon />} hideLabel onClick={() => setQuery("")}>
+        Clear filter
+      </Button>
+    )
+  }
+/>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -110,6 +132,8 @@ type="number" keeps value a string. Native attributes for the input itself, such
 | `readOnly` | boolean | `false` | Show the value without letting anyone change it. The field stays focusable and selectable, renders as plain text in the agent view, and registers no fill tool, because nothing can change it. |
 | `required` | boolean | `false` | Mark the field required, visually and in the agent view. |
 | `hideLabel` | boolean | `false` | Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for. |
+| `icon` | node | — | A decorative icon drawn inside the start of the field, such as a magnifier on a search box. Hidden from assistive technology. |
+| `trailing` | node | — | Controls drawn inside the end of the field, such as a clear Button with hideLabel and size="small". It renders only in the human view; give an agent the same action some other way, or rely on the fill tool, which can set the field to empty. |
 | `inputRef` | object | — | A ref to the underlying <input>, for focusing or measuring it. The component's own ref points at the wrapper. |
 | `inputProps` | object | — | Extra native attributes and handlers for the <input> itself, such as autoFocus, maxLength, inputMode, onKeyDown, or onBlur. Props spread on the component land on the wrapper; these land on the field. Anything the component manages (value, onChange, disabled, the error wiring) cannot be overridden here. |
 | `agentName` | string | — | Override the label used to derive the tool name, when two fields on a page would otherwise collide. |

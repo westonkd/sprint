@@ -61,6 +61,25 @@ With collapsible, a person can put the sidebar away on a wide screen as well as 
 </Shell>
 ```
 
+### A drawer the page controls
+
+drawerOpen and onDrawerOpenChange hand the phone drawer to the page, so a guided tour can open it to point at a link and close it again.
+
+```tsx
+<Shell
+  drawerOpen={drawerOpen}
+  onDrawerOpenChange={setDrawerOpen}
+  bar={<Link href="#/">ACME</Link>}
+  side={
+    <Nav label="Main">
+      <Link href="#/reports" active>Reports</Link>
+    </Nav>
+  }
+>
+  <Button onClick={() => setDrawerOpen(true)}>Show me the menu</Button>
+</Shell>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -76,6 +95,8 @@ With collapsible, a person can put the sidebar away on a wide screen as well as 
 | `collapsed` | boolean | — | Whether the sidebar is collapsed on wide viewports, when the owner keeps that state. Pair it with onCollapsedChange. |
 | `defaultCollapsed` | boolean | `false` | Whether a collapsible sidebar starts collapsed when the Shell keeps its own state. |
 | `onCollapsedChange` | handler | — | Called with the collapsed state the Shell wants. Use it to remember the choice across visits. |
+| `drawerOpen` | boolean | — | Whether the narrow-viewport drawer is open, when the owner keeps that state: a guided tour that steps into the sidebar, or a page that closes the drawer after an action. Pair it with onDrawerOpenChange. |
+| `onDrawerOpenChange` | handler | — | Called with the drawer state the Shell wants: true from the menu toggle, false from the close toggle or a link followed inside the drawer. |
 | `hideLabel` | string | `"Hide menu"` | Label of the wide-viewport toggle while the sidebar is shown. |
 | `showLabel` | string | `"Show menu"` | Label of the wide-viewport toggle while the sidebar is collapsed. |
 

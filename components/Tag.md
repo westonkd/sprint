@@ -22,6 +22,14 @@ import "@westonkd/sprint/styles.css";
 
 ## Examples
 
+### A provisional chip
+
+A dashed keyline separates a scenario from the live roster without spending a colour.
+
+```tsx
+<Tag tone="info" provisional>Scenario: fall reshuffle</Tag>
+```
+
 ### A release status
 
 ```tsx
@@ -51,6 +59,7 @@ Two tones doing the work a legend would otherwise have to do in prose.
 | `children` | node (required) | — | The chip text. One or two words. |
 | `tone` | enum neutral \\| action \\| danger \\| info \\| warning \\| inert | `"neutral"` | What class of thing this is. Acid is rationed, so reach for info or inert before action. |
 | `filled` | boolean | `false` | Render as a solid field of the tone with inverted ink, instead of a keyline. Use for the one chip that must be read first. |
+| `provisional` | boolean | `false` | Draw a dashed keyline for something that is not real yet: a draft, a scenario, a proposed change. It reads as provisional to agents too. |
 
 ## State attributes
 
@@ -60,6 +69,7 @@ Public API: agents write selectors against these.
 | --- | --- | --- |
 | `data-sprint-tone` | neutral \\| action \\| danger \\| info \\| warning \\| inert | The class of thing the chip marks. |
 | `data-sprint-filled` | present or absent | Present when the chip is a solid field rather than a keyline. |
+| `data-sprint-provisional` | present or absent | Present on a chip for something that is not real yet. |
 
 ## Agent view
 

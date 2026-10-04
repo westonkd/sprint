@@ -11,7 +11,7 @@ Use it when one value is chosen from a list too long to lay out flat: a region, 
 
 ### When not to
 
-Do not use it for two to four short options a person should compare at a glance; that is a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch, and never for navigation.
+Do not use it for two to four short options a person should compare at a glance; that is a SegmentedControl. Do not use it for a list long enough to need searching, grouping or custom option rendering; that is a Combobox. Do not use it for an on/off state, which is a Checkbox or a Switch, and never for navigation.
 
 ## Install
 

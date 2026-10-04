@@ -124,6 +124,77 @@
       }
     },
     {
+      "name": "Avatar",
+      "category": "display",
+      "summary": "A person's photo in a circle, falling back to their initials when there is no photo or it fails to load.",
+      "whenToUse": "Use beside a person's name in a row, a card, or an account menu trigger. Pass the full name; it is the accessible name and the source of the initials. Set decorative when the name is already printed right beside it, so it is not read twice.",
+      "whenNotToUse": "Do not use for a logo or an illustration; that is an Image. Do not use as a button on its own; put it inside a Button or a Menu trigger that carries the label.",
+      "status": "experimental",
+      "props": {
+        "name": {
+          "kind": "string",
+          "description": "The person's name. Names the avatar and supplies the initials.",
+          "required": true
+        },
+        "src": {
+          "kind": "string",
+          "description": "The photo's URL. Without it, or if it fails to load, the initials show instead."
+        },
+        "size": {
+          "kind": "enum",
+          "description": "small for dense rows, medium beside body text, large in a profile header.",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "decorative": {
+          "kind": "boolean",
+          "description": "Hide the avatar from assistive technology and the agent view, for when the name is printed beside it.",
+          "default": false
+        }
+      },
+      "state": {
+        "photo": {
+          "description": "Present while a photo is showing rather than initials.",
+          "attribute": "data-sprint-photo"
+        },
+        "size": {
+          "description": "The size, when it is not medium.",
+          "attribute": "data-sprint-size",
+          "values": [
+            "small",
+            "large"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Avatar** \"Ada Okafor\" [photo]"
+      },
+      "examples": [
+        {
+          "title": "A photo",
+          "code": "<Avatar name=\"Ada Okafor\" src=\"media/portrait.svg\" />"
+        },
+        {
+          "title": "Initials when there is no photo",
+          "description": "The first and last initials, on the inset surface.",
+          "code": "<Avatar name=\"Brother Lind\" size=\"large\" />"
+        },
+        {
+          "title": "Beside a printed name",
+          "description": "decorative keeps a screen reader and an agent from hearing the name twice.",
+          "code": "<Stack direction=\"row\" gap=\"snug\" align=\"center\">\n  <Avatar name=\"Sister Amaral\" size=\"small\" decorative />\n  <Text as=\"span\">Sister Amaral</Text>\n</Stack>"
+        }
+      ],
+      "a11y": {
+        "role": "img",
+        "notes": "A role=img element named by the person's name, with the photo's own alt left empty so the name is read once. decorative switches it to aria-hidden."
+      }
+    },
+    {
       "name": "Breadcrumb",
       "category": "navigation",
       "summary": "A navigation landmark that renders as one line: the path to the current page, where every crumb opens the level it sits in. Every destination in the tree stays in the page as an addressable part; the crumbs decide which of them a person is shown.",
@@ -1004,6 +1075,203 @@
       }
     },
     {
+      "name": "Combobox",
+      "category": "input",
+      "summary": "A searchable single-choice field for long lists: type to filter, arrow to an option, Enter to pick. Options can be grouped, described, limited per group and rendered your own way. Registers one choose tool that takes a label or a search.",
+      "whenToUse": "Use when there are too many options to scan: a member picker over hundreds of people, a calling picker grouped by organization, a board filter. Options hold data: { value, label, group?, description?, keywords?, disabled? }. The default filter matches every word of the query against the label, description and keywords, ignoring case and accents. For a server-side search, pass filter={false}, update options from onQueryChange, and set loading while results arrive.",
+      "whenNotToUse": "Do not use for a short list a person can scan at once; that is a Select, or a SegmentedControl for two to four options. Do not use for free text that only suggests; this field only accepts its options. Do not use for choosing several values.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is being chosen, such as \"Member\". Names the field and derives the tool name.",
+          "required": true
+        },
+        "options": {
+          "kind": "array",
+          "description": "The options: { value, label, group?, description?, keywords?, disabled? }. Consecutive and non-consecutive options sharing a group are gathered under one heading, in the order groups first appear. keywords are extra search terms that are never shown.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The chosen option's value, or an empty string for none. Fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the chosen value, or an empty string when cleared.",
+          "required": true
+        },
+        "placeholder": {
+          "kind": "string",
+          "description": "Ghost text while nothing is chosen or while searching."
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance under the field. Replaced by error while one is set."
+        },
+        "error": {
+          "kind": "string",
+          "description": "A validation message that marks the field invalid."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name the chosen value submits under."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable the field and unregister the choose tool.",
+          "default": false
+        },
+        "required": {
+          "kind": "boolean",
+          "description": "Mark the field required. A required field is not clearable by default.",
+          "default": false
+        },
+        "hideLabel": {
+          "kind": "boolean",
+          "description": "Hide the label visually while keeping it for screen readers and agents. Pair it with a placeholder.",
+          "default": false
+        },
+        "clearable": {
+          "kind": "boolean",
+          "description": "Show a clear control while something is chosen. Defaults to not required."
+        },
+        "clearLabel": {
+          "kind": "string",
+          "description": "Accessible name of the clear control.",
+          "default": "Clear"
+        },
+        "loading": {
+          "kind": "boolean",
+          "description": "Show a small spinner in the field while options are being fetched.",
+          "default": false
+        },
+        "filter": {
+          "kind": "handler",
+          "description": "(option, query) => boolean, replacing the built-in word match. Pass false when the options are already the results of a search the page ran."
+        },
+        "onQueryChange": {
+          "kind": "handler",
+          "description": "Called with the search text as it changes, and with an empty string on close."
+        },
+        "groupLimit": {
+          "kind": "number",
+          "description": "Show at most this many options per group, with a \"more; keep typing\" note for the rest, so one large group cannot bury the others."
+        },
+        "limit": {
+          "kind": "number",
+          "description": "Show at most this many options in total.",
+          "default": 200
+        },
+        "emptyLabel": {
+          "kind": "string",
+          "description": "What the list says when nothing matches.",
+          "default": "No matches"
+        },
+        "renderOption": {
+          "kind": "handler",
+          "description": "(option) => ReactNode, drawing an option your own way, such as with an Avatar. It is the human rendering only: the label is still what is searched, announced and offered to agents."
+        },
+        "inputRef": {
+          "kind": "object",
+          "description": "A ref to the underlying input, for focusing it."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the field without registering the choose tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The chosen option's label.",
+          "attribute": "data-sprint-value"
+        },
+        "empty": {
+          "description": "Present while nothing is chosen.",
+          "attribute": "data-sprint-empty"
+        },
+        "options": {
+          "description": "How many options the field holds.",
+          "attribute": "data-sprint-options"
+        },
+        "loading": {
+          "description": "Present while options are being fetched.",
+          "attribute": "data-sprint-loading"
+        },
+        "disabled": {
+          "description": "Present when the field cannot be changed.",
+          "attribute": "data-sprint-disabled"
+        },
+        "required": {
+          "description": "Present when a choice is needed.",
+          "attribute": "data-sprint-required"
+        },
+        "invalid": {
+          "description": "Present while an error is set.",
+          "attribute": "data-sprint-invalid"
+        }
+      },
+      "tools": {
+        "choose": {
+          "verb": "choose",
+          "description": "Choose an option in this searchable field. Pass an option's exact label to select it. Pass part of a label to search: one match is selected, several are listed back so you can call again with the exact label. Pass an empty string to clear a field that allows clearing. Returns the field's state after the change.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "description": "An exact option label, a search for one, or an empty string to clear the field."
+              }
+            },
+            "required": [
+              "option"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The field is mounted and enabled, has a resolvable label, and no other component claims the same tool name.",
+          "unregisteredWhen": "The field unmounts or becomes disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **Combobox** \"Member\" [empty, options=312, listed=50] → tool `choose-member`\n  - part `option` \"Ada Okafor\" [group=Elders quorum]"
+      },
+      "examples": [
+        {
+          "title": "A grouped member picker",
+          "description": "Hundreds of members grouped by organization, at most five per group until the person types. An agent passes a name, or part of one, to the choose tool.",
+          "code": "<Combobox\n  label=\"Member\"\n  placeholder=\"Search members\"\n  value={memberId}\n  onChange={setMemberId}\n  groupLimit={5}\n  options={members.map((member) => ({\n    value: member.id,\n    label: member.name,\n    group: member.organization,\n    keywords: [member.preferredName],\n  }))}\n/>"
+        },
+        {
+          "title": "Options drawn your own way",
+          "description": "renderOption draws each option with an avatar; the label still drives search, announcement and the agent view.",
+          "code": "<Combobox\n  label=\"Speaker\"\n  value={speaker}\n  onChange={setSpeaker}\n  options={members}\n  renderOption={(option) => (\n    <Stack direction=\"row\" gap=\"snug\" align=\"center\">\n      <Avatar name={option.label} size=\"small\" decorative />\n      <Text as=\"span\">{option.label}</Text>\n    </Stack>\n  )}\n/>"
+        },
+        {
+          "title": "A server-side search",
+          "description": "filter={false} trusts the options as given; the page searches on each onQueryChange and shows the spinner meanwhile.",
+          "code": "<Combobox\n  label=\"Calling\"\n  value={calling}\n  onChange={setCalling}\n  filter={false}\n  onQueryChange={search}\n  loading={searching}\n  options={results}\n  error={calling === \"\" ? \"Choose a calling.\" : undefined}\n  required\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "combobox",
+        "keyboard": [
+          "Typing filters and opens the list",
+          "Down and Up Arrow open the list and move between enabled options",
+          "Ctrl+Home and Ctrl+End jump to the first and last option",
+          "Enter chooses the highlighted option",
+          "Escape closes the list and restores the chosen label"
+        ],
+        "notes": "An editable combobox with list autocomplete. Focus stays in the input and aria-activedescendant follows the highlighted option. Groups are labelled role=group sections. The list is a popover in the top layer, rendered in place, so it opens above a modal Dialog and flips above the field when there is no room below."
+      }
+    },
+    {
       "name": "CopyField",
       "category": "input",
       "summary": "A labelled, read-only value with a Copy control: a setup link, an invite URL, a webhook address. The value truncates with an ellipsis on one line, stays selectable, and the control confirms with Copied for two seconds.",
@@ -1637,20 +1905,44 @@
         },
         "level": {
           "kind": "enum",
-          "description": "Outline depth, rendered as the matching h element. 1 is the page title and there should be one per page.",
+          "description": "Outline depth, rendered as the matching h element. 1 is the page title and there should be one per page. 5 and 6 take the level-4 voice unless size says otherwise.",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "default": "2"
+        },
+        "size": {
+          "kind": "enum",
+          "description": "The type voice, from 1 (display) to 4 (smallest), when it should differ from the level. Use it when a heading's place in the outline and its visual weight disagree, such as a level-2 title inside a dense card that should read small.",
           "values": [
             "1",
             "2",
             "3",
             "4"
-          ],
-          "default": "2"
+          ]
         }
       },
       "state": {
         "level": {
           "description": "The outline depth, and so the type voice in use.",
           "attribute": "data-sprint-level",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        "size": {
+          "description": "The type voice, present only when it differs from the level.",
+          "attribute": "data-sprint-size",
           "values": [
             "1",
             "2",
@@ -1671,6 +1963,11 @@
           "title": "A section title",
           "description": "The default level, for a region inside a page.",
           "code": "<Heading>Every variant</Heading>"
+        },
+        {
+          "title": "A deep heading in a small voice",
+          "description": "The outline needs a level-3 heading, but inside a compact card it should read at the smallest size.",
+          "code": "<Heading level={3} size={4}>Sunday speakers</Heading>"
         }
       ]
     },
@@ -1783,6 +2080,38 @@
         "Card",
         "Panel"
       ]
+    },
+    {
+      "name": "Kbd",
+      "category": "typography",
+      "summary": "A keyboard key or shortcut, drawn as key caps. Pass the combination as text joined with plus signs.",
+      "whenToUse": "Use to tell a person which keys do something: an undo hint in a toast, a shortcut beside a menu item's description, a search field's focus key. Write the combination as one string, such as \"Ctrl+Z\" or \"Shift+Enter\"; each part becomes its own cap.",
+      "whenNotToUse": "Do not use for code or for a value someone types into a field; that is code or a CodeBlock. Do not use it as a control; it does not press anything.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "string",
+          "description": "The keys, joined with \"+\", such as \"Ctrl+Z\". A lone \"+\" is a key in its own right.",
+          "required": true
+        }
+      },
+      "agentView": {
+        "example": "- **Kbd** \"Ctrl+Z\""
+      },
+      "examples": [
+        {
+          "title": "An undo shortcut",
+          "code": "<Kbd>Ctrl+Z</Kbd>"
+        },
+        {
+          "title": "A single key",
+          "description": "One key is one cap.",
+          "code": "<Kbd>/</Kbd>"
+        }
+      ],
+      "a11y": {
+        "notes": "A kbd element nesting one kbd per key, which is the HTML pattern for a key combination. The plus signs between caps are hidden from assistive technology, which reads the keys in order."
+      }
     },
     {
       "name": "Link",
@@ -2688,6 +3017,192 @@
       }
     },
     {
+      "name": "Prose",
+      "category": "typography",
+      "summary": "Typography for long-form rendered content such as Markdown: headings, paragraphs, lists, links, code, tables and quotes, in the theme's voice.",
+      "whenToUse": "Wrap HTML you did not lay out yourself: member notes rendered from Markdown, an agenda's program details, a help article. Pass the original Markdown as source and the agent view carries it verbatim, which is better for an agent than flattened text. Sprint does not parse Markdown; render it with the library of your choice and pass the result as children.",
+      "whenNotToUse": "Do not use for interface copy you write yourself; that is Text and Heading. Do not put interactive Sprint components inside it; Prose styles plain elements.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The rendered content: plain HTML elements such as p, ul, a, code and table.",
+          "required": true
+        },
+        "source": {
+          "kind": "string",
+          "description": "The Markdown the children were rendered from. The agent view shows this instead of the flattened text, keeping lists, links and emphasis intact."
+        },
+        "label": {
+          "kind": "string",
+          "description": "What the content is, such as \"Member notes\". Makes the block a labelled region and names it in the agent view."
+        },
+        "size": {
+          "kind": "enum",
+          "description": "small for notes inside a card or a side panel.",
+          "values": [
+            "small",
+            "normal"
+          ],
+          "default": "normal"
+        }
+      },
+      "state": {
+        "size": {
+          "description": "Present as small for the compact size.",
+          "attribute": "data-sprint-size",
+          "values": [
+            "small"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Prose** \"Member notes\"\n  - part `content` \"Moved in **March**. Plays the organ.\""
+      },
+      "examples": [
+        {
+          "title": "Rendered Markdown",
+          "description": "The page renders Markdown however it likes and passes the original as source, which the agent view carries unchanged.",
+          "code": "<Prose label=\"Member notes\" source={notes}>\n  <Markdown>{notes}</Markdown>\n</Prose>"
+        },
+        {
+          "title": "Compact notes",
+          "code": "<Prose size=\"small\">\n  <p>Prefers <strong>text</strong> after six.</p>\n  <ul>\n    <li>Organ</li>\n    <li>Youth program</li>\n  </ul>\n</Prose>"
+        }
+      ],
+      "a11y": {
+        "role": "region",
+        "notes": "With a label the block is a named region; without one it adds no semantics of its own. The content keeps its own elements, so headings join the page outline."
+      }
+    },
+    {
+      "name": "RadioGroup",
+      "category": "input",
+      "summary": "One choice from a short list of options, each a native radio button with a label and an optional line of description. Registers one select tool enumerating the options.",
+      "whenToUse": "Use when the options need explaining: a role with what it can do, a plan with what it includes, a delivery speed with its cost. Options hold data: { value, label, description?, disabled? }. The group is a fieldset whose legend is the label, so it submits under one name inside a form.",
+      "whenNotToUse": "Do not use for two to four short labels that need no description; that is a SegmentedControl. Do not use for a long list; that is a Select. Do not use for choosing several; that is a set of Checkboxes. Descriptions are plain strings, not components.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "The question the options answer, such as \"Role\". Rendered as the legend and used to derive the tool name.",
+          "required": true
+        },
+        "options": {
+          "kind": "array",
+          "description": "The options in order: { value, label, description?, disabled? }. label is what a person reads and what the select tool accepts. description is a sentence under the label, linked to its radio with aria-describedby and carried into the agent view as part state.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The selected option's value, or an empty string for none. Fully controlled.",
+          "required": true
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the value a person or an agent selects.",
+          "required": true
+        },
+        "hint": {
+          "kind": "string",
+          "description": "Guidance under the group. Replaced by error while one is set."
+        },
+        "error": {
+          "kind": "string",
+          "description": "A validation message that marks the group invalid."
+        },
+        "name": {
+          "kind": "string",
+          "description": "The native form name the selected value submits under."
+        },
+        "disabled": {
+          "kind": "boolean",
+          "description": "Disable every option and unregister the select tool.",
+          "default": false
+        },
+        "required": {
+          "kind": "boolean",
+          "description": "Mark the group as needing an answer.",
+          "default": false
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the group without registering the select tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The selected option's label.",
+          "attribute": "data-sprint-value"
+        },
+        "empty": {
+          "description": "Present while nothing is selected.",
+          "attribute": "data-sprint-empty"
+        },
+        "disabled": {
+          "description": "Present when the group cannot be changed.",
+          "attribute": "data-sprint-disabled"
+        },
+        "required": {
+          "description": "Present when an answer is needed.",
+          "attribute": "data-sprint-required"
+        },
+        "invalid": {
+          "description": "Present while an error is set.",
+          "attribute": "data-sprint-invalid"
+        }
+      },
+      "tools": {
+        "select": {
+          "verb": "select",
+          "description": "Select one of this group's options by its visible label, exactly as a person clicking its radio button would. Only one option is selected at a time, so this replaces the current one. Returns the group's state after the change.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "description": "The visible label of the option to select."
+              }
+            },
+            "required": [
+              "option"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The group is mounted and enabled, has at least one enabled option, and no other component claims the same tool name. The registered schema enumerates the enabled options' labels.",
+          "unregisteredWhen": "The group unmounts, becomes disabled, or loses its last enabled option."
+        }
+      },
+      "agentView": {
+        "example": "- **RadioGroup** \"Role\" [value=Viewer] → tool `select-role`\n  - part `option` \"Viewer\" [checked, description=Sees the board]\n  - part `option` \"Editor\" [description=Changes callings]"
+      },
+      "examples": [
+        {
+          "title": "Options that need explaining",
+          "description": "Each role says what it allows. The descriptions reach screen readers through aria-describedby and agents through part state.",
+          "code": "<RadioGroup\n  label=\"Role\"\n  value={role}\n  onChange={setRole}\n  options={[\n    { value: \"viewer\", label: \"Viewer\", description: \"Sees the board and the agenda.\" },\n    { value: \"editor\", label: \"Editor\", description: \"Moves people between callings.\" },\n    { value: \"admin\", label: \"Admin\", description: \"Also invites and removes people.\" },\n  ]}\n/>"
+        },
+        {
+          "title": "A required choice with an unavailable option",
+          "code": "<RadioGroup\n  label=\"Delivery\"\n  required\n  value={delivery}\n  onChange={setDelivery}\n  error={delivery === \"\" ? \"Choose how to send the invite.\" : undefined}\n  options={[\n    { value: \"email\", label: \"Email\" },\n    { value: \"text\", label: \"Text message\", disabled: true, description: \"No phone number on file.\" },\n  ]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "radiogroup",
+        "keyboard": [
+          "Arrow keys move between options and select",
+          "Tab enters and leaves the group"
+        ],
+        "notes": "A fieldset of native radio inputs sharing one name, so the browser supplies arrow-key movement and form submission. The legend names the group; a description is linked to its own radio."
+      }
+    },
+    {
       "name": "SearchField",
       "category": "input",
       "summary": "A search box inside its own search landmark: a labelled query field with a clear control, Escape to clear, Enter to submit, and an optional page-wide key that focuses it. It registers one search tool that sets the query and submits it.",
@@ -3022,7 +3537,7 @@
       "category": "input",
       "summary": "A dropdown of mutually exclusive options: a select-only combobox that opens a listbox on click or keyboard, carrying its own label, hint, and error. It registers a single select tool whose schema enumerates the option labels currently on offer.",
       "whenToUse": "Use it when one value is chosen from a list too long to lay out flat: a region, a squad, a category. Options are data ({ value, label }), the tool accepts the visible label, and in agent view every option renders as its own control, so an agent picks one without opening anything.",
-      "whenNotToUse": "Do not use it for two to four short options a person should compare at a glance; that is a SegmentedControl. Do not use it for an on/off state, which is a Checkbox or a Switch, and never for navigation.",
+      "whenNotToUse": "Do not use it for two to four short options a person should compare at a glance; that is a SegmentedControl. Do not use it for a list long enough to need searching, grouping or custom option rendering; that is a Combobox. Do not use it for an on/off state, which is a Checkbox or a Switch, and never for navigation.",
       "status": "experimental",
       "props": {
         "label": {
@@ -3224,6 +3739,14 @@
           "kind": "handler",
           "description": "Called with the collapsed state the Shell wants. Use it to remember the choice across visits."
         },
+        "drawerOpen": {
+          "kind": "boolean",
+          "description": "Whether the narrow-viewport drawer is open, when the owner keeps that state: a guided tour that steps into the sidebar, or a page that closes the drawer after an action. Pair it with onDrawerOpenChange."
+        },
+        "onDrawerOpenChange": {
+          "kind": "handler",
+          "description": "Called with the drawer state the Shell wants: true from the menu toggle, false from the close toggle or a link followed inside the drawer."
+        },
         "hideLabel": {
           "kind": "string",
           "description": "Label of the wide-viewport toggle while the sidebar is shown.",
@@ -3263,8 +3786,74 @@
           "title": "A sidebar that can be hidden",
           "description": "With collapsible, a person can put the sidebar away on a wide screen as well as a narrow one, and get the full width for the page.",
           "code": "<Shell\n  collapsible\n  bar={<Link href=\"#/\">ACME</Link>}\n  side={\n    <Nav label=\"Main\">\n      <Link href=\"#/reports\" active>Reports</Link>\n      <Link href=\"#/settings\">Settings</Link>\n    </Nav>\n  }\n>\n  <Text>Quarterly numbers land here.</Text>\n</Shell>"
+        },
+        {
+          "title": "A drawer the page controls",
+          "description": "drawerOpen and onDrawerOpenChange hand the phone drawer to the page, so a guided tour can open it to point at a link and close it again.",
+          "code": "<Shell\n  drawerOpen={drawerOpen}\n  onDrawerOpenChange={setDrawerOpen}\n  bar={<Link href=\"#/\">ACME</Link>}\n  side={\n    <Nav label=\"Main\">\n      <Link href=\"#/reports\" active>Reports</Link>\n    </Nav>\n  }\n>\n  <Button onClick={() => setDrawerOpen(true)}>Show me the menu</Button>\n</Shell>"
         }
       ]
+    },
+    {
+      "name": "Spinner",
+      "category": "feedback",
+      "summary": "A small inline busy mark for work with no measurable progress, sized to sit inside a field or beside a line of text.",
+      "whenToUse": "Use where a whole bar or region would be too much: beside a field that is checking a value, at the end of a line that is saving, inside a combobox while results load. The label says what is happening and is announced politely; showLabel prints it beside the mark.",
+      "whenNotToUse": "Do not use for a region whose data is loading; that is Pending or a component's loading prop. Do not use when the work can be counted; that is Progress. Do not use for a busy button; Button's loading prop marks the button itself.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What is happening, such as \"Checking availability\".",
+          "required": true
+        },
+        "size": {
+          "kind": "enum",
+          "description": "medium matches body text; small fits inside a dense row or a field.",
+          "values": [
+            "small",
+            "medium"
+          ],
+          "default": "medium"
+        },
+        "showLabel": {
+          "kind": "boolean",
+          "description": "Print the label beside the mark instead of keeping it for assistive technology only.",
+          "default": false
+        }
+      },
+      "state": {
+        "loading": {
+          "description": "Always present: a spinner is only rendered while work is running.",
+          "attribute": "data-sprint-loading"
+        },
+        "size": {
+          "description": "Present as small on the compact mark.",
+          "attribute": "data-sprint-size",
+          "values": [
+            "small"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Spinner** \"Saving note\" [loading]"
+      },
+      "examples": [
+        {
+          "title": "Saving beside a line",
+          "description": "The mark sits in the line, and the label is printed beside it.",
+          "code": "<Spinner label=\"Saving note\" showLabel />"
+        },
+        {
+          "title": "A silent mark in a field",
+          "description": "A small mark with the label kept for assistive technology and agents.",
+          "code": "<Spinner label=\"Searching members\" size=\"small\" />"
+        }
+      ],
+      "a11y": {
+        "role": "status",
+        "notes": "A role=status element, so the label is announced politely when the spinner appears. Render it only while work runs, rather than toggling its visibility. The mark is a stepped four-cell pulse, still under reduced motion."
+      }
     },
     {
       "name": "Stack",
@@ -3291,14 +3880,35 @@
         },
         "gap": {
           "kind": "enum",
-          "description": "Space between items, from the space scale.",
+          "description": "Space between items, from the space scale: none, hairline, snug, tight, medium, normal, loose, wide, vast, smallest to largest.",
           "values": [
             "none",
+            "hairline",
+            "snug",
             "tight",
+            "medium",
             "normal",
-            "loose"
+            "loose",
+            "wide",
+            "vast"
           ],
           "default": "normal"
+        },
+        "padding": {
+          "kind": "enum",
+          "description": "Space inside the stack's edges, on the same scale as gap. Use it for a stack that is itself a bordered or filled region; between siblings, prefer the parent's gap.",
+          "values": [
+            "none",
+            "hairline",
+            "snug",
+            "tight",
+            "medium",
+            "normal",
+            "loose",
+            "wide",
+            "vast"
+          ],
+          "default": "none"
         },
         "align": {
           "kind": "enum",
@@ -3364,9 +3974,28 @@
           "attribute": "data-sprint-gap",
           "values": [
             "none",
+            "hairline",
+            "snug",
             "tight",
+            "medium",
             "normal",
-            "loose"
+            "loose",
+            "wide",
+            "vast"
+          ]
+        },
+        "padding": {
+          "description": "The inner spacing step, when there is one.",
+          "attribute": "data-sprint-padding",
+          "values": [
+            "hairline",
+            "snug",
+            "tight",
+            "medium",
+            "normal",
+            "loose",
+            "wide",
+            "vast"
           ]
         },
         "align": {
@@ -3417,6 +4046,11 @@
         {
           "title": "A header bar that stacks on a phone",
           "code": "<Stack direction=\"row\" justify=\"between\" align=\"center\" collapse>\n  <Heading level={1}>Button</Heading>\n  <Tag tone=\"warning\">experimental</Tag>\n</Stack>"
+        },
+        {
+          "title": "A padded, dense list",
+          "description": "padding insets the stack's own content, and a small gap packs rows closely, without a wrapper element or a class.",
+          "code": "<Stack gap=\"snug\" padding=\"medium\">\n  <Text>Opening hymn</Text>\n  <Text>Invocation</Text>\n  <Text>Sacrament hymn</Text>\n</Stack>"
         }
       ]
     },
@@ -3702,6 +4336,103 @@
       }
     },
     {
+      "name": "Tabs",
+      "category": "navigation",
+      "summary": "Sibling views of one subject, one shown at a time, with real tablist, tab and tabpanel semantics. Registers one select tool enumerating the tabs.",
+      "whenToUse": "Use to switch between a few views of the same thing without leaving the page: coming up, past and by member for one set of speakers; details and history for one record. Tabs hold data: each is { value, label, panel, count?, disabled? }, and only the selected tab's panel is mounted. An optional actions slot sits at the end of the tab row.",
+      "whenNotToUse": "Do not use to pick a value that filters or changes something else on the page; that is a SegmentedControl, a radio group. Do not use for navigation between pages with their own URLs; that is a Nav. Do not use when a person needs to compare the views side by side.",
+      "status": "experimental",
+      "props": {
+        "label": {
+          "kind": "string",
+          "description": "What the tabs switch between, such as \"Speakers\". Names the tablist and derives the select tool name.",
+          "required": true
+        },
+        "tabs": {
+          "kind": "array",
+          "description": "The tabs in order: { value, label, panel, count?, disabled? }. panel is the content shown while the tab is selected and may hold any components. count renders as a chip beside the label and reaches the agent view as part state.",
+          "required": true
+        },
+        "value": {
+          "kind": "string",
+          "description": "The selected tab's value, when the page owns that state. Pair it with onChange. A disabled or unknown value falls back to the first enabled tab."
+        },
+        "defaultValue": {
+          "kind": "string",
+          "description": "The tab selected first when the Tabs keep their own state."
+        },
+        "onChange": {
+          "kind": "handler",
+          "description": "Called with the value of the tab a person or an agent selects."
+        },
+        "actions": {
+          "kind": "node",
+          "description": "Controls at the end of the tab row, such as an add Button that applies to every tab."
+        },
+        "agentName": {
+          "kind": "string",
+          "description": "Override the label used to derive the tool name."
+        },
+        "agentTool": {
+          "kind": "boolean",
+          "description": "Set false to render the tabs without registering the select tool.",
+          "default": true
+        }
+      },
+      "state": {
+        "value": {
+          "description": "The selected tab's label.",
+          "attribute": "data-sprint-value"
+        }
+      },
+      "tools": {
+        "select": {
+          "verb": "select",
+          "description": "Show one of these tabs by its visible label, exactly as a person clicking the tab would. Only the selected tab's panel is on the page, so read the page again after switching to see its contents. Returns the tabs' state after the change.",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "tab": {
+                "type": "string",
+                "description": "The visible label of the tab to show."
+              }
+            },
+            "required": [
+              "tab"
+            ]
+          },
+          "readOnly": false,
+          "untrustedContent": true,
+          "registeredWhen": "The tabs are mounted, at least one tab is enabled, and no other component claims the same tool name. The registered schema enumerates the enabled tabs' labels.",
+          "unregisteredWhen": "The tabs unmount or every tab is disabled."
+        }
+      },
+      "agentView": {
+        "example": "- **Tabs** \"Speakers\" [value=Coming up] → tool `select-speakers`\n  - part `tab` \"Coming up\" [count=4, selected]\n  - part `tab` \"Past\""
+      },
+      "examples": [
+        {
+          "title": "Views of one subject",
+          "description": "Only the selected panel is on the page. An agent switches with the select tool or the tab controls in the agent view, then reads the new panel.",
+          "code": "<Tabs\n  label=\"Speakers\"\n  tabs={[\n    { value: \"upcoming\", label: \"Coming up\", count: 4, panel: <UpcomingSpeakers /> },\n    { value: \"past\", label: \"Past\", panel: <PastSpeakers /> },\n    { value: \"member\", label: \"By member\", panel: <SpeakersByMember /> },\n  ]}\n/>"
+        },
+        {
+          "title": "Tabs with an action",
+          "description": "actions sits at the end of the tab row and stays put while the panels change. A disabled tab is visible but cannot be selected.",
+          "code": "<Tabs\n  label=\"Record\"\n  value={view}\n  onChange={setView}\n  actions={<Button size=\"small\">Export</Button>}\n  tabs={[\n    { value: \"details\", label: \"Details\", panel: <Details /> },\n    { value: \"history\", label: \"History\", panel: <History /> },\n    { value: \"audit\", label: \"Audit\", disabled: true, panel: null },\n  ]}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "tablist",
+        "keyboard": [
+          "Left and Right Arrow move to the previous or next enabled tab and show it",
+          "Home and End show the first and last enabled tab",
+          "Tab moves from the selected tab into its panel"
+        ],
+        "notes": "Roving tabindex across the tabs, with selection following focus. The panel is a focusable tabpanel labelled by its tab. A count chip is hidden from assistive technology, so the tab is named by its label alone."
+      }
+    },
+    {
       "name": "Tag",
       "category": "display",
       "summary": "A small chip that classifies the thing next to it: a status, a category, a count, a build string.",
@@ -3731,6 +4462,11 @@
           "kind": "boolean",
           "description": "Render as a solid field of the tone with inverted ink, instead of a keyline. Use for the one chip that must be read first.",
           "default": false
+        },
+        "provisional": {
+          "kind": "boolean",
+          "description": "Draw a dashed keyline for something that is not real yet: a draft, a scenario, a proposed change. It reads as provisional to agents too.",
+          "default": false
         }
       },
       "state": {
@@ -3749,12 +4485,21 @@
         "filled": {
           "description": "Present when the chip is a solid field rather than a keyline.",
           "attribute": "data-sprint-filled"
+        },
+        "provisional": {
+          "description": "Present on a chip for something that is not real yet.",
+          "attribute": "data-sprint-provisional"
         }
       },
       "agentView": {
         "example": "- **Tag** \"experimental\" [filled, tone=warning]"
       },
       "examples": [
+        {
+          "title": "A provisional chip",
+          "description": "A dashed keyline separates a scenario from the live roster without spending a colour.",
+          "code": "<Tag tone=\"info\" provisional>Scenario: fall reshuffle</Tag>"
+        },
         {
           "title": "A release status",
           "code": "<Tag tone=\"warning\" filled>experimental</Tag>"
@@ -3805,6 +4550,34 @@
           ],
           "default": "normal"
         },
+        "weight": {
+          "kind": "enum",
+          "description": "bold for a line that needs to stand out among its neighbours, such as a name in a list row. Prefer a Heading for a title.",
+          "values": [
+            "normal",
+            "bold"
+          ],
+          "default": "normal"
+        },
+        "align": {
+          "kind": "enum",
+          "description": "Horizontal alignment, in the writing direction.",
+          "values": [
+            "start",
+            "center",
+            "end"
+          ],
+          "default": "start"
+        },
+        "lines": {
+          "kind": "number",
+          "description": "Clamp the text to this many lines, 1 to 6, ending in an ellipsis. Only the screen is clamped: assistive technology and the agent view still get the whole text. Pair it with a Tooltip when a sighted person needs the rest."
+        },
+        "italic": {
+          "kind": "boolean",
+          "description": "Set in italic, for a quotation, a title of a work, or a scripture reference.",
+          "default": false
+        },
         "as": {
           "kind": "enum",
           "description": "The element to render. Use span when the text sits inside another line of text.",
@@ -3836,6 +4609,29 @@
             "small",
             "normal"
           ]
+        },
+        "weight": {
+          "description": "Present as bold on emphasised text.",
+          "attribute": "data-sprint-weight",
+          "values": [
+            "bold"
+          ]
+        },
+        "align": {
+          "description": "The alignment, when it is not start.",
+          "attribute": "data-sprint-align",
+          "values": [
+            "center",
+            "end"
+          ]
+        },
+        "lines": {
+          "description": "The line clamp, when one is set. The text itself is never shortened.",
+          "attribute": "data-sprint-lines"
+        },
+        "italic": {
+          "description": "Present on italic text.",
+          "attribute": "data-sprint-italic"
         }
       },
       "agentView": {
@@ -3855,6 +4651,15 @@
           "title": "A live status line",
           "description": "Tone is the whole message here, so an agent reading the attribute learns the same thing a person learns from the colour.",
           "code": "<Text tone={ready ? \"action\" : \"warning\"} size=\"small\">\n  {ready ? \"WebMCP is available in this browser.\" : \"WebMCP is unavailable here.\"}\n</Text>"
+        },
+        {
+          "title": "A clamped line",
+          "description": "lines clamps the screen to two lines with an ellipsis. The agent view and screen readers still get every word.",
+          "code": "<Text lines={2}>{member.notes}</Text>"
+        },
+        {
+          "title": "Emphasis and alignment",
+          "code": "<Text weight=\"bold\" align=\"center\" italic>Come, follow me.</Text>"
         }
       ]
     },
@@ -4090,6 +4895,14 @@
           "description": "Hide the label visually while keeping it as the field's accessible name and agent label. Pair it with a placeholder or a nearby heading so sighted people still know what the field is for.",
           "default": false
         },
+        "icon": {
+          "kind": "node",
+          "description": "A decorative icon drawn inside the start of the field, such as a magnifier on a search box. Hidden from assistive technology."
+        },
+        "trailing": {
+          "kind": "node",
+          "description": "Controls drawn inside the end of the field, such as a clear Button with hideLabel and size=\"small\". It renders only in the human view; give an agent the same action some other way, or rely on the fill tool, which can set the field to empty."
+        },
         "inputRef": {
           "kind": "object",
           "description": "A ref to the underlying <input>, for focusing or measuring it. The component's own ref points at the wrapper."
@@ -4188,6 +5001,11 @@
           "title": "A number with field attributes",
           "description": "type=\"number\" keeps value a string. Native attributes for the input itself, such as min, max and autoFocus, go through inputProps, and inputRef reaches the input for focusing it later.",
           "code": "<TextInput\n  label=\"Link expiry in days\"\n  type=\"number\"\n  value={days}\n  onChange={setDays}\n  inputRef={daysField}\n  inputProps={{ min: 1, max: 90, step: 1 }}\n/>"
+        },
+        {
+          "title": "A search field with a clear control",
+          "description": "The icon sits inside the start of the field and a small icon-only Button clears it from the end. An agent clears it by filling an empty string.",
+          "code": "<TextInput\n  label=\"Filter the board\"\n  hideLabel\n  placeholder=\"Filter by name or calling\"\n  icon={<SearchIcon />}\n  value={query}\n  onChange={setQuery}\n  trailing={\n    query === \"\" ? null : (\n      <Button size=\"small\" icon={<CloseIcon />} hideLabel onClick={() => setQuery(\"\")}>\n        Clear filter\n      </Button>\n    )\n  }\n/>"
         }
       ],
       "a11y": {
@@ -4197,6 +5015,91 @@
           "Tab moves through the field"
         ],
         "notes": "The label element is associated via htmlFor. An error sets aria-invalid and is linked with aria-describedby, as is the hint. Focus is an offset keyline, never a rounded ring."
+      }
+    },
+    {
+      "name": "Toast",
+      "category": "feedback",
+      "summary": "A brief message that floats at the bottom of the screen after something happened, with an optional single action such as Undo, and dismisses itself.",
+      "whenToUse": "Use to confirm an action that already took effect and can still be reversed or followed up: a person moved, a note saved, a share link copied. Render one Toast with open, message and onDismiss; the page owns which toast is showing. The action is data, { label, onSelect, shortcut? }, rendered as a Button that registers its own press tool, and the shortcut is shown as key caps.",
+      "whenNotToUse": "Do not use for an error the person must act on, or anything that must stay visible; that is an Alert in the page. Do not use for a decision; that is a Dialog. Do not show several at once: replace the message instead. Inside an open modal Dialog, render the Toast inside the Dialog, because the page behind it is inert.",
+      "status": "experimental",
+      "props": {
+        "open": {
+          "kind": "boolean",
+          "description": "Whether the toast is showing. A closed toast renders nothing.",
+          "required": true
+        },
+        "message": {
+          "kind": "string",
+          "description": "What happened, in a sentence, such as \"Moved Sister Amaral to Primary.\"",
+          "required": true
+        },
+        "onDismiss": {
+          "kind": "handler",
+          "description": "Called when the toast should go: after duration, or when the dismiss control is pressed. Set open to false in response.",
+          "required": true
+        },
+        "label": {
+          "kind": "string",
+          "description": "A short title above the message, and the toast's accessible name."
+        },
+        "tone": {
+          "kind": "enum",
+          "description": "neutral and info announce politely; warning too. danger announces assertively, but prefer an Alert for errors.",
+          "values": [
+            "neutral",
+            "info",
+            "warning",
+            "danger"
+          ],
+          "default": "neutral"
+        },
+        "action": {
+          "kind": "object",
+          "description": "One follow-up action: { label, onSelect, shortcut? }. It is a Button with its own press tool, named from the label. shortcut is shown as key caps and published as aria-keyshortcuts; the page binds the key itself."
+        },
+        "duration": {
+          "kind": "number",
+          "description": "Milliseconds before onDismiss is called. The timer pauses while the pointer or focus is on the toast. Pass null to keep it until dismissed.",
+          "default": 6000
+        },
+        "dismissLabel": {
+          "kind": "string",
+          "description": "Accessible name of the dismiss control.",
+          "default": "Dismiss"
+        }
+      },
+      "state": {
+        "tone": {
+          "description": "The toast's tone.",
+          "attribute": "data-sprint-tone",
+          "values": [
+            "neutral",
+            "info",
+            "warning",
+            "danger"
+          ]
+        }
+      },
+      "agentView": {
+        "example": "- **Toast** [tone=neutral]\n  - part `message` \"Moved Sister Amaral to Primary.\"\n  - part `dismiss` \"Dismiss\"\n  - **Button** \"Undo\" [size=small, tone=action]"
+      },
+      "examples": [
+        {
+          "title": "An undo toast",
+          "description": "The action is a real Button, so an agent can press Undo through its tool while the toast is up.",
+          "code": "<Toast\n  open={moved !== null}\n  message={movedMessage}\n  action={{ label: \"Undo\", onSelect: undo, shortcut: \"Ctrl+Z\" }}\n  onDismiss={() => setMoved(null)}\n/>"
+        },
+        {
+          "title": "A toast that stays",
+          "description": "duration={null} keeps it until dismissed.",
+          "code": "<Toast\n  open={offline}\n  label=\"Offline\"\n  tone=\"warning\"\n  duration={null}\n  message=\"Changes are saved on this device until the connection returns.\"\n  onDismiss={() => setOffline(false)}\n/>"
+        }
+      ],
+      "a11y": {
+        "role": "status",
+        "notes": "A role=status region, or role=alert for danger, so the message is announced when the toast appears. Render it when the event happens rather than toggling visibility. It opens as a popover in the top layer, at the bottom edge on a phone and the bottom corner on a wide screen. The timer pauses while the pointer or keyboard focus is on it, so nobody loses the action mid-reach."
       }
     },
     {
@@ -4256,6 +5159,50 @@
           "Escape hides it"
         ],
         "notes": "The hint is a role=tooltip element linked to the wrapped element with aria-describedby. It appears after a hover delay or immediately on keyboard focus, never on touch, and is dismissed by Escape, blur, or moving the pointer away. It is a popover in the top layer, rendered inside the wrapped element's DOM, so it shows above a modal Dialog."
+      }
+    },
+    {
+      "name": "VisuallyHidden",
+      "category": "typography",
+      "summary": "Text that is off screen but still read by screen readers and agents. For context a sighted person gets from the layout.",
+      "whenToUse": "Use to say in words what the layout says visually: \"(opens in a new tab)\" after a link, a count's unit, a heading for a region whose purpose is obvious on screen. With focusable, it wraps a skip link that appears only while it has focus.",
+      "whenNotToUse": "Do not use to hide a field's label; TextInput, Textarea, SearchField and Progress take hideLabel, and an icon-only Button takes hideLabel too. Do not hide content that a sighted person also needs.",
+      "status": "experimental",
+      "props": {
+        "children": {
+          "kind": "node",
+          "description": "The hidden text, or a skip link when focusable is set.",
+          "required": true
+        },
+        "focusable": {
+          "kind": "boolean",
+          "description": "Show the content while something inside it has keyboard focus, for a skip link.",
+          "default": false
+        }
+      },
+      "state": {
+        "focusable": {
+          "description": "Present when the content appears while focused.",
+          "attribute": "data-sprint-focusable"
+        }
+      },
+      "agentView": {
+        "example": "- **VisuallyHidden** \"opens in a new tab\""
+      },
+      "examples": [
+        {
+          "title": "Extra words for a screen reader",
+          "description": "The arrow says it to a sighted person; the hidden text says it to everyone else.",
+          "code": "<Link href=\"https://churchofjesuschrist.org\" external>\n  Gospel Library ↗<VisuallyHidden> (opens in a new tab)</VisuallyHidden>\n</Link>"
+        },
+        {
+          "title": "A skip link",
+          "description": "Off screen until a keyboard user tabs to it.",
+          "code": "<VisuallyHidden focusable>\n  <Link href=\"#main\">Skip to the board</Link>\n</VisuallyHidden>"
+        }
+      ],
+      "a11y": {
+        "notes": "Hidden with a one-pixel clip rather than display or visibility, so screen readers still read it. The agent view renders its text as an ordinary line."
       }
     }
   ]

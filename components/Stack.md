@@ -53,13 +53,26 @@ Tracks fill the container and never go below min, so this is one column on a pho
 </Stack>
 ```
 
+### A padded, dense list
+
+padding insets the stack's own content, and a small gap packs rows closely, without a wrapper element or a class.
+
+```tsx
+<Stack gap="snug" padding="medium">
+  <Text>Opening hymn</Text>
+  <Text>Invocation</Text>
+  <Text>Sacrament hymn</Text>
+</Stack>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
 | --- | --- | --- | --- |
 | `children` | node (required) | — | The items to lay out. |
 | `direction` | enum row \\| column \\| grid | `"column"` | Axis. "grid" fills as many equal columns as fit, each at least min wide. |
-| `gap` | enum none \\| tight \\| normal \\| loose | `"normal"` | Space between items, from the space scale. |
+| `gap` | enum none \\| hairline \\| snug \\| tight \\| medium \\| normal \\| loose \\| wide \\| vast | `"normal"` | Space between items, from the space scale: none, hairline, snug, tight, medium, normal, loose, wide, vast, smallest to largest. |
+| `padding` | enum none \\| hairline \\| snug \\| tight \\| medium \\| normal \\| loose \\| wide \\| vast | `"none"` | Space inside the stack's edges, on the same scale as gap. Use it for a stack that is itself a bordered or filled region; between siblings, prefer the parent's gap. |
 | `align` | enum start \\| center \\| end \\| stretch \\| baseline | — | Cross-axis alignment. |
 | `justify` | enum start \\| center \\| end \\| between | — | Main-axis distribution. |
 | `wrap` | boolean | `false` | Let a row wrap onto more lines instead of overflowing. |
@@ -73,7 +86,8 @@ Public API: agents write selectors against these.
 | Attribute | Values | Description |
 | --- | --- | --- |
 | `data-sprint-direction` | row \\| column \\| grid | The axis in use. |
-| `data-sprint-gap` | none \\| tight \\| normal \\| loose | The spacing step in use. |
+| `data-sprint-gap` | none \\| hairline \\| snug \\| tight \\| medium \\| normal \\| loose \\| wide \\| vast | The spacing step in use. |
+| `data-sprint-padding` | hairline \\| snug \\| tight \\| medium \\| normal \\| loose \\| wide \\| vast | The inner spacing step, when there is one. |
 | `data-sprint-align` | start \\| center \\| end \\| stretch \\| baseline | Cross-axis alignment, when one was asked for. |
 | `data-sprint-justify` | start \\| center \\| end \\| between | Main-axis distribution, when one was asked for. |
 | `data-sprint-wrap` | present or absent | Present when a row is allowed to wrap. |

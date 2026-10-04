@@ -46,6 +46,20 @@ Tone is the whole message here, so an agent reading the attribute learns the sam
 </Text>
 ```
 
+### A clamped line
+
+lines clamps the screen to two lines with an ellipsis. The agent view and screen readers still get every word.
+
+```tsx
+<Text lines={2}>{member.notes}</Text>
+```
+
+### Emphasis and alignment
+
+```tsx
+<Text weight="bold" align="center" italic>Come, follow me.</Text>
+```
+
 ## Props
 
 | Prop | Kind | Default | Description |
@@ -53,6 +67,10 @@ Tone is the whole message here, so an agent reading the attribute learns the sam
 | `children` | node (required) | — | The prose. Inline markup such as code or strong is fine; components are not. |
 | `tone` | enum default \\| muted \\| action \\| info \\| warning \\| danger | `"default"` | What the text means, not just how it looks. Agents read this off the attribute. |
 | `size` | enum small \\| normal | `"normal"` | Type size. "small" is the annotation size used for notes and captions. |
+| `weight` | enum normal \\| bold | `"normal"` | bold for a line that needs to stand out among its neighbours, such as a name in a list row. Prefer a Heading for a title. |
+| `align` | enum start \\| center \\| end | `"start"` | Horizontal alignment, in the writing direction. |
+| `lines` | number | — | Clamp the text to this many lines, 1 to 6, ending in an ellipsis. Only the screen is clamped: assistive technology and the agent view still get the whole text. Pair it with a Tooltip when a sighted person needs the rest. |
+| `italic` | boolean | `false` | Set in italic, for a quotation, a title of a work, or a scripture reference. |
 | `as` | enum p \\| span \\| div | `"p"` | The element to render. Use span when the text sits inside another line of text. |
 
 ## State attributes
@@ -63,6 +81,10 @@ Public API: agents write selectors against these.
 | --- | --- | --- |
 | `data-sprint-tone` | default \\| muted \\| action \\| info \\| warning \\| danger | What the text is saying about the thing it describes. |
 | `data-sprint-size` | small \\| normal | The type size in use. |
+| `data-sprint-weight` | bold | Present as bold on emphasised text. |
+| `data-sprint-align` | center \\| end | The alignment, when it is not start. |
+| `data-sprint-lines` | present or absent | The line clamp, when one is set. The text itself is never shortened. |
+| `data-sprint-italic` | present or absent | Present on italic text. |
 
 ## Agent view
 
