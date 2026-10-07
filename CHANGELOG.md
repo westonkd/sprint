@@ -5,6 +5,8 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+## v0.8.1 - 2026-10-06
+
 - **Fixed: a disabled `SegmentedControl` still shows its selection.** Disabled options no longer
   share one inert fill. The checked option keeps the inert fill with full ink and a strong inset
   ring, and the rest sit on the track in inert ink, so a locked control still reads at a glance in
