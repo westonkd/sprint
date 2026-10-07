@@ -108,6 +108,8 @@ const PAIRINGS: readonly (readonly [string, string])[] = [
   ["--sprint-neutral-ink", "--sprint-surface"],
   ["--sprint-neutral-ink", "--sprint-neutral-hover"],
   ["--sprint-inert-ink", "--sprint-inert"],
+  ["--sprint-ink", "--sprint-inert"],
+  ["--sprint-inert-ink", "--sprint-surface"],
   ["--sprint-focus", "--sprint-surface"],
   ["--sprint-focus", "--sprint-surface-raised"],
   ["--sprint-action-mark", "--sprint-surface"],

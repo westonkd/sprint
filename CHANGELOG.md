@@ -5,6 +5,11 @@ heading; `scripts/release.sh` refuses to cut a release while Unreleased is empty
 
 ## Unreleased
 
+- **Fixed: a disabled `SegmentedControl` still shows its selection.** Disabled options no longer
+  share one inert fill. The checked option keeps the inert fill with full ink and a strong inset
+  ring, and the rest sit on the track in inert ink, so a locked control still reads at a glance in
+  every theme.
+
 ## v0.8.0 - 2026-10-03
 
 - **Fixed: a theme island sets its own text colour.** An element carrying `data-sprint-theme` now
